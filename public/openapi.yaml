@@ -1,33 +1,28 @@
 openapi: 3.1.0
 info:
-  title: Ruins API
+  title: Ruins Display API
   version: 1.0.0
+servers:
+  - url: https://ruins-api.vercel.app
 paths:
-  /api/display-room:
+  /display-room:
     get:
-      operationId: getDisplayRoom
-      summary: Get data for a specific room
+      operationId: displayRoom
       parameters:
         - in: query
-          name: room
-          schema:
-            type: string
+          name: name
           required: true
-          description: The room number to fetch
+          schema: { type: string }
       responses:
-        '200':
-          description: Successful room data retrieval
+        "200":
+          description: Markdown containing the image and narration
           content:
-            application/json:
+            text/markdown:
               schema:
-                type: object
-                properties:
-                  title:
-                    type: string
-                  image_url:
-                    type: string
-                  narration:
-                    type: string
-        '404':
+                type: string
+        "404":
           description: Room not found
-
+          content:
+            text/plain:
+              schema:
+                type: string
