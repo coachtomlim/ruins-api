@@ -1,18 +1,36 @@
-// GET /api/display-room?name=Room%201
+// api/display.js
 module.exports = (req, res) => {
-  const name = String(req.query.name || "").trim();
-  const m = name.toLowerCase().match(/^room\s*(\d{1,2})$/);
-  if (!m) return res.status(404).send("Not found");
+  const raw = String(req.query.name || "").trim();
+  const key = raw.toLowerCase();
 
-  const n = m[1];
+  // Rooms + Map
+  const rooms = {
+    "room 3": { file: "Room3.webp", title: "Room 3 – Sarcophagus Hall" },
+    "room3":  { file: "Room3.webp", title: "Room 3 – Sarcophagus Hall" },
+    "room 4": { file: "Room4.webp", title: "Room 4 – Guardroom Delta" },
+    "room4":  { file: "Room4.webp", title: "Room 4 – Guardroom Delta" },
+    "map":    { file: "Map.webp",   title: "Adventure Map" }
+  };
+
+  // Transitions
+  const transitions = {
+    "room3to4": { file: "Room3to4.webp", title: "Transition: Room 3 → Room 4" },
+    "room4to3": { file: "Room4to3.webp", title: "Transition: Room 4 → Room 3" }
+  };
+
+  // Resolve name
+  let entry = rooms[key] || transitions[key];
+  if (!entry) {
+    res.status(404).send("Not found");
+    return;
+  }
+
   const host = `https://${req.headers.host}`;
-  const file = `Room%20${n}.png`; // matches "Room 1.png", etc.
-  const title = `Room ${n}`;
+  const url = `${host}/${entry.file}`;
 
-  const markdown =
-`![${title}](${host}/${file})
+  const markdown = `![${entry.title}](${url})
 
-**${title}**`;
+**${entry.title}**`;
 
   res.setHeader("Content-Type", "text/markdown; charset=utf-8");
   res.status(200).send(markdown);
