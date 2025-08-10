@@ -1,20 +1,34 @@
-// api/display-room.js
-module.exports = (req, res) => {
-  const name = String(req.query.name || "").trim();
+export default function handler(req, res) {
+  const { name } = req.query;
 
-  const FILES = {
-    "Room 3": "Room3.webp",
-    "Room 4": "Room4.webp",
-    "Room3to4": "Room3to4.webp",
-    "Room4to3": "Room4to3.webp",
-    "Map": "Map.webp"
+  if (!name) {
+    return res.status(400).send("Missing 'name' query parameter");
+  }
+
+  // Encode spaces for URLs
+  const encodedName = encodeURIComponent(name);
+
+  // Image base URL
+  const baseUrl = "https://ruins-api.vercel.app";
+
+  // Map request to file name
+  const imageMap = {
+    "Room 3": `${baseUrl}/Room%203.webp`,
+    "Room 4": `${baseUrl}/Room%204.webp`,
+    "Room3to4": `${baseUrl}/Room3to4.webp`,
+    "Room4to3": `${baseUrl}/Room4to3.webp`,
+    "Map": `${baseUrl}/Map.webp`
   };
 
-  if (!FILES[name]) return res.status(404).send("Not found");
+  const imageUrl = imageMap[name];
 
-  const host = `https://${req.headers.host}`;
-  const markdown = `![${name}](${host}/${encodeURIComponent(FILES[name])})\n\n**${name}**`;
+  if (!imageUrl) {
+    return res.status(404).send("Not found");
+  }
 
-  res.setHeader("Content-Type", "text/markdown; charset=utf-8");
+  // Markdown output
+  const markdown = `![${name}](${imageUrl})\n\n**${name}**`;
+
+  res.setHeader("Content-Type", "text/markdown");
   res.status(200).send(markdown);
-};
+}
