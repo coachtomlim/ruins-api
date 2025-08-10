@@ -5,23 +5,27 @@ info:
 servers:
   - url: https://ruins-api.vercel.app
 paths:
-  /display-room:
+  /api/display:
     get:
-      operationId: displayRoom
+      operationId: display
+      summary: Return markdown to render a room, a transition, or the map
       parameters:
         - in: query
           name: name
           required: true
-          schema: { type: string }
+          description: Accepts "Room 3", "Room 4", "Map", "Room3to4", or "Room4to3"
+          schema:
+            type: string
+            enum: ["Room 3", "Room 4", "Map", "Room3to4", "Room4to3"]
       responses:
         "200":
-          description: Markdown containing the image and narration
+          description: Markdown with an image tag for the requested resource
           content:
             text/markdown:
               schema:
                 type: string
         "404":
-          description: Room not found
+          description: Resource not found
           content:
             text/plain:
               schema:
