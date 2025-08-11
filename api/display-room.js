@@ -14,7 +14,8 @@ module.exports = (req, res) => {
   if (!FILES[name]) return res.status(404).send("Not found");
 
   const host = `https://${req.headers.host}`;
-  const markdown = `![${name}](${host}/${encodeURIComponent(FILES[name])})\n\n**${name}**`;
+  const timestamp = Date.now(); // cache-busting
+  const markdown = `![${name}](${host}/${encodeURIComponent(FILES[name])}?t=${timestamp})`;
 
   res.setHeader("Content-Type", "text/markdown; charset=utf-8");
   res.status(200).send(markdown);
