@@ -1,21 +1,23 @@
-// api/display-room.js
-module.exports = (req, res) => {
-  const name = String(req.query.name || "").trim();
+export default function handler(req, res) {
+  const { name } = req.query;
 
-  // Map the exact images you have in /public
-  const FILES = {
-    "Room 3": "Room3.webp",
-    "Room 4": "Room4.webp",
-    "Room3to4": "Room3to4.webp",
-    "Room4to3": "Room4to3.webp",
-    "Map": "Map.webp",
-  };
+  if (!name) {
+    return res.status(400).send("Missing 'name' query parameter.");
+  }
 
-  if (!FILES[name]) return res.status(404).send("Not found");
+  // Encode name for use in URL
+  const encodedName = encodeURIComponent(name);
 
-  const host = `https://${req.headers.host}`;
-  const markdown = `![${name}](${host}/${encodeURIComponent(FILES[name])})\n\n**${name}**`;
+  // Generate cache-busting timestamp
+  const timestamp = Date.now();
 
-  res.setHeader("Content-Type", "text/markdown; charset=utf-8");
-  res.status(200).send(markdown);
-};
+  // Construct image URL with cache-buster
+  const imageUrl = `https://ruins-api.vercel.app/${encodedName}.webp?t=${timestamp}`;
+
+  // Return markdown with image URL
+  const markdown = `![${name}](${imageUrl})`;
+
+  // Example: ![Room 3](https://ruins-api.vercel.app/Room%203.webp?t=1691234567890)
+  res.setHeader("Content-Type", "text/markdown");
+  return res.status(200).send(markdown);
+}
