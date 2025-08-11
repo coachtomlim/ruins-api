@@ -1,21 +1,20 @@
 openapi: 3.1.0
 info:
   title: Ruins Display API
-  version: 1.0.2
+  version: 1.0.1
 servers:
   - url: https://ruins-api.vercel.app
 paths:
   /api/display-room:
     get:
       operationId: displayRoom
-      summary: Return markdown to render an image (room, transition, or map)
-      description: |
-        Returns **text/markdown**. The assistant must reply with this markdown verbatim so the image (including .webp animations) renders.
+      summary: Return markdown to render an image (room, map, or transition)
+      description: Returns **text/markdown** so the assistant can render the image directly.
       parameters:
         - in: query
           name: name
           required: true
-          description: Exact image name (e.g., "Room 3", "Room3to4", "Room 4", "Map").
+          description: Name of the image, e.g., "Room 3", "Room3to4", "Map".
           schema:
             type: string
             example: Room 3
