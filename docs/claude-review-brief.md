@@ -11,6 +11,7 @@ This branch does not implement the engine. It creates reviewable prep artifacts:
 - deterministic engine architecture proposal,
 - test strategy,
 - repo improvement backlog.
+- initial structured content JSON under `content/` with validation.
 
 ## Current Implementation Reality
 
@@ -84,6 +85,10 @@ Please review the new docs with attention to:
 3. `docs/architecture/deterministic-engine-proposal.md`
 4. `docs/schemas/state-schema-draft.md`
 5. `docs/testing/test-strategy.md`
+6. `content/game-config.json`
+7. `content/rooms.json`
+8. `content/monsters.json`
+9. `content/items.json`
 
 ## Suggested Claude Output
 

@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "flags": [
+    {
+      "id": "flag.room05.east_wall_examined",
+      "kind": "room",
+      "description": "Player examined the east wall in Room 5.",
+      "defaultValue": false,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "flag.room05.panel_pushed",
+      "kind": "room",
+      "description": "Player pushed the Room 5 secret panel.",
+      "defaultValue": false,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "flag.secret.hex_portal_available",
+      "kind": "room",
+      "description": "Hexagonal portal trigger has been discovered or made available.",
+      "defaultValue": false,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "flag.secret.hex_portal_used",
+      "kind": "room",
+      "description": "Player used the one-way hex portal.",
+      "defaultValue": false,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "flag.prism.assembled",
+      "kind": "story",
+      "description": "Prism Fragments A, B, and C have been assembled into the Prism of Makidos.",
+      "defaultValue": false,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "flag.room09.store_visited",
+      "kind": "room",
+      "description": "Room 9 magical store has triggered.",
+      "defaultValue": false,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "flag.status.poisoned",
+      "kind": "combat",
+      "description": "Player is poisoned by Room 7 black roots.",
+      "defaultValue": false,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "flag.boss.girdle_triggered",
+      "kind": "combat",
+      "description": "Sound-Deflecting Girdle has triggered in Room 10.",
+      "defaultValue": false,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "flag.boss.defeated",
+      "kind": "story",
+      "description": "Banshee Doppelganger has been defeated.",
+      "defaultValue": false,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "flag.ending.completed",
+      "kind": "story",
+      "description": "Final Sheja cutscene has completed.",
+      "defaultValue": false,
+      "canonStatus": "LOCKED"
+    }
+  ]
+}

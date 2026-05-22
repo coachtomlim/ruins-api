@@ -35,3 +35,6 @@ jobs:
 
       - name: Validate assets
         run: npm run validate:assets
+
+      - name: Validate content
+        run: npm run validate:content

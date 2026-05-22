@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/ruins/monsters.schema.json",
+  "title": "Ruins Monsters",
+  "type": "object",
+  "required": ["schemaVersion", "monsters"],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "monsters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "displayName", "stats", "initiative", "canonStatus"],
+        "properties": {
+          "id": { "type": "string" },
+          "displayName": { "type": "string" },
+          "initiative": { "type": "string" },
+          "canonStatus": { "enum": ["LOCKED", "LIKELY", "CONFLICTED", "UNKNOWN"] }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

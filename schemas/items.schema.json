@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/ruins/items.schema.json",
+  "title": "Ruins Items",
+  "type": "object",
+  "required": ["schemaVersion", "items"],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "displayName", "type", "canonStatus"],
+        "properties": {
+          "id": { "type": "string" },
+          "displayName": { "type": "string" },
+          "type": { "type": "string" },
+          "canonStatus": { "enum": ["LOCKED", "LIKELY", "CONFLICTED", "UNKNOWN"] }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

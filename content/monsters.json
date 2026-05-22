@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "monsters": [
+    {
+      "id": "monster.random_low_tier",
+      "displayName": "Random Low-Tier Monster",
+      "pool": ["Skeletal Warrior", "Kobold", "Juvenile Salamander", "Gnome"],
+      "stats": {
+        "ATF": 5,
+        "DEF": 4,
+        "EVA": 4,
+        "HP": 15
+      },
+      "initiative": "monster_attacks_first",
+      "specialRules": ["Selected from pool; species currently appears cosmetic."],
+      "drops": [],
+      "rewardLogicNotes": "Victory grants 30 percent of monster stats, rounded down, and full heal.",
+      "canonStatus": "LOCKED",
+      "sourceNotes": ["Frozen Alpha", "Full Alpha Specifications"]
+    },
+    {
+      "id": "monster.random_low_tier_scaled",
+      "displayName": "Scaled Random Low-Tier Monster",
+      "pool": ["Skeletal Warrior", "Kobold", "Juvenile Salamander", "Gnome"],
+      "stats": {
+        "scaleFrom": "player_current_stats",
+        "percent": 70,
+        "rounding": "floor"
+      },
+      "initiative": "monster_attacks_first",
+      "specialRules": ["Stats are 70 percent of current player stats depending on room."],
+      "drops": ["item.scroll.pulse_of_calm"],
+      "rewardLogicNotes": "Reward source stats require decision if scaling uses current or generated instance stats.",
+      "canonStatus": "LIKELY",
+      "sourceNotes": ["Frozen Alpha random monster note", "Full Alpha Specifications"]
+    },
+    {
+      "id": "monster.imp",
+      "displayName": "Imp",
+      "stats": {
+        "canonStatus": "CONFLICTED",
+        "requiresDecision": true,
+        "variants": [
+          {
+            "value": {
+              "ATF": 9,
+              "DEF": 4,
+              "EVA": 6,
+              "HP": 20
+            },
+            "sourceNote": "Frozen Alpha key monster stats"
+          },
+          {
+            "value": {
+              "ATF": 9,
+              "DEF": 8,
+              "EVA": 6,
+              "HP": 30
+            },
+            "sourceNote": "Later tuned Alpha specifications"
+          }
+        ]
+      },
+      "initiative": "monster_attacks_first",
+      "weakness": "item.scroll.fog_of_confusion",
+      "specialRules": ["Correct scroll reduces all stats by 50 percent."],
+      "drops": ["item.scroll.heart_beacon"],
+      "rewardLogicNotes": "Reward differs depending on approved stat variant.",
+      "canonStatus": "CONFLICTED",
+      "sourceNotes": ["Frozen Alpha", "Full Alpha Specifications"]
+    },
+    {
+      "id": "monster.musca",
+      "displayName": "Musca",
+      "stats": {
+        "ATF": 10,
+        "DEF": 7,
+        "EVA": 12,
+        "HP": 50
+      },
+      "initiative": "monster_attacks_first",
+      "weakness": "item.scroll.pulse_of_calm",
+      "specialRules": ["High evasion; Pulse of Calm is super effective."],
+      "drops": ["item.prism_fragment_b"],
+      "rewardLogicNotes": "Examples show reward as +3 ATF, +2 DEF, +4 EVA, +15 HP.",
+      "canonStatus": "LOCKED",
+      "sourceNotes": ["Frozen Alpha", "Full Alpha Specifications"]
+    },
+    {
+      "id": "monster.lizardman",
+      "displayName": "Lizardman",
+      "stats": {
+        "canonStatus": "CONFLICTED",
+        "requiresDecision": true,
+        "variants": [
+          {
+            "value": {
+              "ATF": 20,
+              "DEF": 14,
+              "EVA": 14,
+              "HP": 100
+            },
+            "sourceNote": "Frozen Alpha key monster stats"
+          },
+          {
+            "value": {
+              "ATF": 20,
+              "DEF": 14,
+              "EVA": 24,
+              "HP": 100
+            },
+            "sourceNote": "Later tuned Alpha specifications"
+          }
+        ]
+      },
+      "initiative": "monster_attacks_first",
+      "weakness": "item.scroll.heart_beacon",
+      "specialRules": ["Room 7 poison hazard applies before or during this encounter."],
+      "drops": ["item.prism_fragment_c"],
+      "rewardLogicNotes": "Reward differs depending on approved EVA/stat variant.",
+      "canonStatus": "CONFLICTED",
+      "sourceNotes": ["Frozen Alpha", "Full Alpha Specifications"]
+    },
+    {
+      "id": "monster.banshee_doppelganger",
+      "displayName": "Banshee Doppelganger",
+      "stats": {
+        "mirror": "player_base_stats_at_room_10_entry",
+        "excludedModifiers": ["equipment"]
+      },
+      "initiative": "monster_attacks_first",
+      "specialRules": [
+        "If player lacks Sound-Deflecting Girdle, opening shriek causes automatic defeat.",
+        "If Girdle is possessed, it auto-triggers.",
+        "Store equipment applies to player but is not copied by the boss."
+      ],
+      "drops": ["item.merlins_tetrahedronal"],
+      "rewardLogicNotes": "Final sequence is artifact pickup and Sheja cutscene, not normal stat farming.",
+      "canonStatus": "LOCKED",
+      "sourceNotes": ["Frozen Alpha boss mechanics", "Post-test fix 9"]
+    }
+  ]
+}

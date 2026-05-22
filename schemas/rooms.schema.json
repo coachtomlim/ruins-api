@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/ruins/rooms.schema.json",
+  "title": "Ruins Rooms",
+  "type": "object",
+  "required": ["schemaVersion", "rooms"],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "rooms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "exits", "itemsAvailable", "monsters", "canonStatus"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "exits": { "type": "array" },
+          "itemsAvailable": { "type": "array" },
+          "monsters": { "type": "array" },
+          "canonStatus": { "enum": ["LOCKED", "LIKELY", "CONFLICTED", "UNKNOWN"] }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}
