@@ -31,10 +31,18 @@
           <input id="cmd" placeholder="Type command (N, Examine shrine, Pick up item, Inventory)" />
           <button id="send">Enter</button>
         </div>
-        <div class="quick">
+        <div id="exploreQuick" class="quick">
           <button data-cmd="N">N</button><button data-cmd="S">S</button><button data-cmd="E">E</button><button data-cmd="W">W</button>
           <button data-cmd="Inventory">Inventory</button><button data-cmd="Help">Help</button><button data-cmd="Read Journal">Read Journal</button>
           <button data-cmd="Map">Map</button><button data-cmd="Assemble">Assemble</button><button data-cmd="End">End</button>
+        </div>
+        <div id="combatQuick" class="quick" style="display:none;">
+          <button data-cmd="Attack Once">Attack Once</button>
+          <button data-cmd="Fight till the end">Fight till the end</button>
+          <button data-cmd="Run">Run</button>
+          <button id="useFog" data-cmd="Use Item Fog of Confusion">Use Fog</button>
+          <button id="usePulse" data-cmd="Use Item Pulse of Calm">Use Pulse</button>
+          <button id="useHeart" data-cmd="Use Item Heart Beacon">Use Heart</button>
         </div>
       </section>
       <aside class="panel">

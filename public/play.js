@@ -8,6 +8,11 @@
   const locationEl = document.getElementById("location");
   const inventoryEl = document.getElementById("inventory");
   const journalEl = document.getElementById("journal");
+  const combatQuickEl = document.getElementById("combatQuick");
+  const exploreQuickEl = document.getElementById("exploreQuick");
+  const useFogEl = document.getElementById("useFog");
+  const usePulseEl = document.getElementById("usePulse");
+  const useHeartEl = document.getElementById("useHeart");
 
   let data = null;
   let state = null;
@@ -138,6 +143,20 @@
 
     inventoryEl.textContent = `Inventory\n${state.inventory.items.map((x) => `${itemName(x.itemId)} x${x.quantity}`).join("\n") || "Empty"}`;
     journalEl.textContent = `Journal\nUnlocked: ${state.journal.unlockedEntryIds.length}`;
+    syncActionBars();
+  }
+
+  function syncActionBars() {
+    const inCombat = state && state.phase === "combat";
+    if (exploreQuickEl) {
+      exploreQuickEl.style.display = inCombat ? "none" : "flex";
+    }
+    if (combatQuickEl) {
+      combatQuickEl.style.display = inCombat ? "flex" : "none";
+    }
+    if (useFogEl) useFogEl.disabled = !hasItem("item.scroll.fog_of_confusion") || !inCombat;
+    if (usePulseEl) usePulseEl.disabled = !hasItem("item.scroll.pulse_of_calm") || !inCombat;
+    if (useHeartEl) useHeartEl.disabled = !hasItem("item.scroll.heart_beacon") || !inCombat;
   }
 
   function unlockJournal(entryId) {
@@ -644,9 +663,13 @@
 
   function fightTillEnd() {
     let guard = 0;
-    while (state.phase === "combat" && guard < 120) {
+    while (state.phase === "combat" && guard < 1000) {
       processCombatTurn("attack");
       guard += 1;
+    }
+    if (state.phase === "combat") {
+      write("The clash drags on without conclusion. Choose your next action.");
+      updateStatus();
     }
   }
 
