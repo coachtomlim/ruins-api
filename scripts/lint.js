@@ -4,6 +4,7 @@ const { spawnSync } = require("node:child_process");
 
 const root = path.resolve(__dirname, "..");
 const errors = [];
+const jsFiles = [];
 const checkableExtensions = new Set([".js", ".json", ".md", ".yaml", ".yml"]);
 
 function walk(dir) {
@@ -22,6 +23,10 @@ function walk(dir) {
     const rel = path.relative(root, fullPath);
     const lines = text.split(/\r?\n/);
 
+    if (path.extname(entry.name) === ".js") {
+      jsFiles.push(rel);
+    }
+
     lines.forEach((line, index) => {
       if (/[ \t]+$/.test(line)) {
         errors.push(`${rel}:${index + 1}: trailing whitespace`);
@@ -36,7 +41,7 @@ function walk(dir) {
 
 walk(root);
 
-for (const file of ["api/display-room.js", "scripts/lint.js", "scripts/validate-assets.js", "scripts/validate-openapi.js"]) {
+for (const file of jsFiles) {
   const result = spawnSync(process.execPath, ["--check", path.join(root, file)], {
     encoding: "utf8"
   });
