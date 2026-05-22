@@ -2,6 +2,7 @@
   const logEl = document.getElementById("log");
   const cmdEl = document.getElementById("cmd");
   const sendEl = document.getElementById("send");
+  const autoWalkthroughEl = document.getElementById("autoWalkthrough");
   const roomImageEl = document.getElementById("roomImage");
   const roomLabelEl = document.getElementById("roomLabel");
   const statsEl = document.getElementById("stats");
@@ -19,6 +20,7 @@
   let state = null;
   let runtime = null;
   let autoFightActive = false;
+  let autoWalkthroughActive = false;
 
   const roomsById = new Map();
   const transitionById = new Map();
@@ -165,6 +167,7 @@
     if (useFogEl) useFogEl.disabled = !hasItem("item.scroll.fog_of_confusion") || !inCombat;
     if (usePulseEl) usePulseEl.disabled = !hasItem("item.scroll.pulse_of_calm") || !inCombat;
     if (useHeartEl) useHeartEl.disabled = !hasItem("item.scroll.heart_beacon") || !inCombat;
+    if (autoWalkthroughEl) autoWalkthroughEl.disabled = autoWalkthroughActive;
   }
 
   function unlockJournal(entryId) {
@@ -817,8 +820,15 @@
   }
 
   function processCommand(inputRaw) {
+    if (autoWalkthroughActive && !String(inputRaw).startsWith("__auto__:")) {
+      write("Auto Walkthrough is running. Please wait for it to finish.");
+      return;
+    }
     const input = (inputRaw || "").trim();
     if (!input) return;
+    if (input.startsWith("__auto__:")) {
+      return processCommand(input.replace("__auto__:", ""));
+    }
     write(`> ${input}`);
     const lower = input.toLowerCase();
 
@@ -933,6 +943,118 @@
     updateStatus();
   }
 
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async function autoCmd(command, waitMs = 260) {
+    processCommand(`__auto__:${command}`);
+    await sleep(waitMs);
+  }
+
+  async function waitForCombatToEnd(maxMs = 120000) {
+    const start = Date.now();
+    while (state.phase === "combat" && Date.now() - start < maxMs) {
+      await sleep(200);
+    }
+  }
+
+  async function autoFightWithOptionalScroll(scrollName) {
+    if (state.phase !== "combat") return;
+    if (scrollName) {
+      await autoCmd(`Use Item ${scrollName}`, 300);
+    }
+    while (state.phase === "combat") {
+      processCommand("__auto__:Fight till the end");
+      await sleep(450);
+      await waitForCombatToEnd();
+    }
+  }
+
+  async function runAutoWalkthrough() {
+    if (autoWalkthroughActive) return;
+    autoWalkthroughActive = true;
+    updateStatus();
+
+    clearLog();
+    await init();
+    write("AUTO WALKTHROUGH STARTED");
+
+    try {
+      const sequence = [
+        "Offer",
+        "Negotiate",
+        "Bargain",
+        "Yes",
+        "Say",
+        "Examine prism face 1",
+        "Examine prism face 2",
+        "Examine prism face 3",
+        "Examine",
+        "North",
+        "Pick up Fog of Confusion",
+        "Examine shrine",
+        "East",
+        "Examine mirror shards",
+        "Pick up Hexagonal Glass Piece",
+        "North",
+        "Pick up Heart Beacon",
+        "Examine east wall",
+        "Examine panel",
+        "Pick up Sound-Deflecting Girdle",
+        "Pick up Lorebook",
+        "South",
+        "South",
+        "South",
+        "North",
+        "Examine sarcophagus",
+        "Pick up Cure All Stats Potion",
+        "go northwest",
+        "Pick up Pulse of Calm",
+        "West",
+        "Pick up Prism Fragment B",
+        "Examine north wall mural",
+        "South",
+        "South",
+        "Pick up Prism Fragment C",
+        "Use Cure All Stats Potion",
+        "Assemble",
+        "South",
+        "Buy 1",
+        "Equip shield",
+        "Buy 3",
+        "Equip hose",
+        "West",
+        "Examine crystal stand",
+        "Pick up Merlin's Tetrahedronal",
+        "Read Journal"
+      ];
+
+      for (const step of sequence) {
+        if (state.phase === "ended") break;
+        if (state.phase === "combat") {
+          if (state.combat?.monster?.id === "monster.imp") await autoFightWithOptionalScroll("Fog of Confusion");
+          else if (state.combat?.monster?.id === "monster.musca") await autoFightWithOptionalScroll("Pulse of Calm");
+          else if (state.combat?.monster?.id === "monster.lizardman") await autoFightWithOptionalScroll("Heart Beacon");
+          else await autoFightWithOptionalScroll(null);
+        }
+        if (state.phase !== "combat") {
+          await autoCmd(step);
+        }
+      }
+
+      if (state.phase === "combat") {
+        await autoFightWithOptionalScroll(null);
+      }
+      write("AUTO WALKTHROUGH COMPLETE");
+    } catch (error) {
+      write(`AUTO WALKTHROUGH FAILED: ${error.message}`);
+    } finally {
+      autoWalkthroughActive = false;
+      updateStatus();
+    }
+  }
+
   sendEl.addEventListener("click", () => {
     processCommand(cmdEl.value);
     cmdEl.value = "";
@@ -944,6 +1066,11 @@
   document.querySelectorAll("[data-cmd]").forEach((button) => {
     button.addEventListener("click", () => processCommand(button.dataset.cmd));
   });
+  if (autoWalkthroughEl) {
+    autoWalkthroughEl.addEventListener("click", () => {
+      runAutoWalkthrough();
+    });
+  }
 
   init().catch((error) => {
     write(`Failed to initialize game UI: ${error.message}`);
