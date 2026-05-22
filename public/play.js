@@ -641,14 +641,31 @@
 
     if (text === "yes" || text === "y" || text.includes("accept")) {
       state.prologue.accepted = true;
+      state.player.gold += state.prologue.offer;
       state.prologue.awaitingIncantation = true;
+      write(`Sheja nods. '${state.prologue.offer} gold, as agreed.' The coins are transferred to your purse.`);
       write("Sheja nods. You return to your inn room. Say the incantation?");
       return;
     }
-    if (text.includes("1000") || text.includes("1100") || text.includes("1200") || text.includes("more")) {
-      if (state.prologue.offer < 800) state.prologue.offer = 800;
-      else state.prologue.offer = 900;
-      write(`Sheja narrows her eyes. 'My final offer is ${state.prologue.offer} gold.'`);
+    if (text === "offer") {
+      write(`Sheja says, 'The contract stands at ${state.prologue.offer} gold.'`);
+    } else if (
+      text === "negotiate" ||
+      text === "bargain" ||
+      text.includes("1000") ||
+      text.includes("1100") ||
+      text.includes("1200") ||
+      text.includes("900g") ||
+      text.includes("900 gold") ||
+      text.includes("more")
+    ) {
+      if (state.prologue.offer < 800) {
+        state.prologue.offer = 800;
+        write("Sheja narrows her eyes. 'Very well. I can raise it to 800 gold.'");
+      } else {
+        state.prologue.offer = 900;
+        write("Sheja exhales. '900 gold. Final offer.'");
+      }
     } else if (text.includes("quest") || text.includes("ruin") || text.includes("monster") || text.includes("offer")) {
       write("Sheja speaks in a low voice about a forgotten ruin, voices of care, and an artifact hidden deep within.");
     } else {
