@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "assets": [
+    {
+      "id": "map.main",
+      "displayName": "Map",
+      "aliases": [],
+      "filePath": "Map.webp",
+      "type": "map",
+      "roomId": null,
+      "notes": "Current public map asset used by /api/display-room?name=Map."
+    },
+    {
+      "id": "room.01.image",
+      "displayName": "Room 1",
+      "aliases": ["Room1"],
+      "filePath": "Room 1.png",
+      "type": "room_image",
+      "roomId": "room.01",
+      "notes": "Existing asset was previously not exposed by the display-room endpoint."
+    },
+    {
+      "id": "room.03.image",
+      "displayName": "Room 3",
+      "aliases": ["Room3"],
+      "filePath": "Room3.webp",
+      "type": "room_image",
+      "roomId": "room.03",
+      "notes": "Existing endpoint compatibility name: Room 3."
+    },
+    {
+      "id": "room.04.image",
+      "displayName": "Room 4",
+      "aliases": ["Room4"],
+      "filePath": "Room4.webp",
+      "type": "room_image",
+      "roomId": "room.04",
+      "notes": "Existing endpoint compatibility name: Room 4."
+    },
+    {
+      "id": "transition.room03.room04",
+      "displayName": "Room3to4",
+      "aliases": ["Room 3 to Room 4"],
+      "filePath": "Room3to4.webp",
+      "type": "transition",
+      "roomId": null,
+      "notes": "Transition image from Room 3 to Room 4."
+    },
+    {
+      "id": "transition.room04.room03",
+      "displayName": "Room4to3",
+      "aliases": ["Room 4 to Room 3"],
+      "filePath": "Room4to3.webp",
+      "type": "transition",
+      "roomId": null,
+      "notes": "Transition image from Room 4 to Room 3."
+    }
+  ]
+}
