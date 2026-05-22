@@ -454,7 +454,24 @@
     const roomState = state.rooms[node.id];
     const target = (targetText || "").trim().toLowerCase();
     if (!target) {
-      write("Examine what?");
+      const notable = (node.examineTriggers || []).map((t) => t.target).filter(Boolean);
+      const heldItems = roomState.visibleItems.map(itemName);
+      const undefeated = (node.entryTriggers || [])
+        .filter((t) => t.type === "combat" && !roomState.defeatedMonsters.includes(t.monsterId))
+        .map((t) => {
+          const m = monsterById.get(t.monsterId);
+          return m ? m.displayName : t.monsterId;
+        });
+
+      const lines = [];
+      lines.push(`You study ${node.name}.`);
+      lines.push(node.description);
+      if (undefeated.length) lines.push(`Threats present: ${undefeated.join(", ")}.`);
+      if (heldItems.length) lines.push(`Items visible: ${heldItems.join(", ")}.`);
+      if (notable.length) lines.push(`Notable features: ${notable.join(", ")}.`);
+      if (!undefeated.length && !heldItems.length && !notable.length) lines.push("Nothing obvious reveals itself.");
+
+      write(lines.join("\n"));
       return;
     }
     const trigger = (node.examineTriggers || []).find((x) => String(x.target || "").toLowerCase().includes(target));
@@ -768,7 +785,11 @@
     if (lower === "help") return runHelp();
     if (lower === "inventory" || lower === "i") return runInventory();
     if (lower === "read journal" || lower === "journal") return runJournal();
+    if (lower === "examine" || lower === "search" || lower === "inspect" || lower === "look") return runExamine("");
     if (lower.startsWith("examine ")) return runExamine(input.slice(8));
+    if (lower.startsWith("search ")) return runExamine(input.slice(7));
+    if (lower.startsWith("inspect ")) return runExamine(input.slice(8));
+    if (lower.startsWith("look at ")) return runExamine(input.slice(8));
     if (lower.startsWith("pick up ")) return runPick(input.slice(8));
     if (lower.startsWith("pick ")) return runPick(input.slice(5));
     if (lower.startsWith("get ")) return runPick(input.slice(4));
