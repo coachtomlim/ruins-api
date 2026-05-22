@@ -12,6 +12,7 @@ This branch does not implement the engine. It creates reviewable prep artifacts:
 - test strategy,
 - repo improvement backlog.
 - initial structured content JSON under `content/` with validation.
+- minimal executable engine scaffold under `src/engine/`.
 
 ## Current Implementation Reality
 
@@ -66,6 +67,11 @@ Please review the new docs with attention to:
    - Are the proposed tests enough to begin implementation safely?
    - Which tests should block the first engine PR?
 
+9. Engine scaffold:
+   - Are the current executable contracts minimal enough?
+   - Should content loading stay synchronous for the first engine pass?
+   - Are the state/query helpers shaped correctly before mutation APIs are added?
+
 ## Key Open Canon Questions
 
 - Incorrect scroll effect: `5%` or `10%` reduction?
@@ -89,6 +95,10 @@ Please review the new docs with attention to:
 7. `content/rooms.json`
 8. `content/monsters.json`
 9. `content/items.json`
+10. `src/engine/index.js`
+11. `test/engine-state.test.js`
+12. `test/engine-rng.test.js`
+13. `test/engine-registries.test.js`
 
 ## Suggested Claude Output
 

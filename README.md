@@ -82,13 +82,15 @@ Conflicted content must include variants or source notes and should set `require
 - `docs/canon/`: reconstructed canon with `LOCKED`, `LIKELY`, `CONFLICTED`, and `UNKNOWN` labels.
 - `docs/schemas/`: draft future content/state schemas.
 - `docs/architecture/`: deterministic engine architecture proposal.
+- `src/engine/`: executable deterministic engine scaffold. Runtime API is not wired to it yet.
 - `test/`: current API tests.
 - `scripts/`: repo validation scripts.
 
 ## Known Limitations
 
 - The deterministic adventure engine is not implemented.
-- Combat, inventory, journal, save/load, movement, and boss logic currently exist only as docs/schema plans.
+- Engine scaffolding now includes content loading, deterministic RNG, initial state creation, read-only queries, command registry, and transition registry.
+- Combat, inventory mutation, journal mutation, save/load, movement resolution, and boss logic are still not implemented.
 - Canon conflicts are intentionally unresolved in docs.
 - Extracted content is validated but not authoritative runtime behavior yet.
 - The current API returns markdown, not structured game state.
