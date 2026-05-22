@@ -822,16 +822,14 @@
     step();
   }
 
-  function processCommand(inputRaw) {
-    if (autoWalkthroughActive && !String(inputRaw).startsWith("__auto__:")) {
+  function processCommand(inputRaw, options = {}) {
+    const fromAuto = Boolean(options.fromAuto);
+    if (autoWalkthroughActive && !fromAuto) {
       write("Auto Walkthrough is running. Please wait for it to finish.");
       return;
     }
     const input = (inputRaw || "").trim();
     if (!input) return;
-    if (input.startsWith("__auto__:")) {
-      return processCommand(input.replace("__auto__:", ""));
-    }
     write(`> ${input}`);
     const lower = input.toLowerCase();
 
@@ -951,7 +949,7 @@
   }
 
   async function autoCmd(command, waitMs = 260) {
-    processCommand(`__auto__:${command}`);
+    processCommand(command, { fromAuto: true });
     await sleep(waitMs);
   }
 
@@ -968,7 +966,7 @@
       await autoCmd(`Use Item ${scrollName}`, 300);
     }
     while (state.phase === "combat") {
-      processCommand("__auto__:Fight till the end");
+      processCommand("Fight till the end", { fromAuto: true });
       await sleep(450);
       await waitForCombatToEnd();
     }
