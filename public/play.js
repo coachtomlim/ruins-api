@@ -132,9 +132,12 @@
 
   function updateStatus() {
     const room = currentRoom();
-    const roomTitle = room && room.name ? room.name : room ? room.id : "Unknown";
+    const inPrologue = state.phase === "prologue";
+    const roomTitle = inPrologue ? "Adventurer's Inn" : room && room.name ? room.name : room ? room.id : "Unknown";
     roomLabelEl.textContent = `${roomTitle} (${state.phase})`;
-    if (roomsById.has(state.location.currentRoomId)) {
+    if (inPrologue) {
+      roomImageEl.src = `/${encodeURIComponent(data.roomImageAssets.map)}`;
+    } else if (roomsById.has(state.location.currentRoomId)) {
       roomImageEl.src = roomImagePath(state.location.currentRoomId);
     } else {
       roomImageEl.src = `/${encodeURIComponent(data.roomImageAssets.map)}`;
@@ -143,7 +146,7 @@
     const stats = state.player.currentStats;
     statsEl.textContent = `Stats\nATF ${stats.ATF}  DEF ${stats.DEF}\nEVA ${stats.EVA}  HP ${stats.HP}\nGold ${state.player.gold}`;
 
-    const exits = (room && room.exits ? room.exits : []).map((e) => e.direction).join(", ") || "None";
+    const exits = inPrologue ? "None" : (room && room.exits ? room.exits : []).map((e) => e.direction).join(", ") || "None";
     locationEl.textContent = `Location\n${roomTitle}\nExits: ${exits}`;
 
     inventoryEl.textContent = `Inventory\n${state.inventory.items.map((x) => `${itemName(x.itemId)} x${x.quantity}`).join("\n") || "Empty"}`;
