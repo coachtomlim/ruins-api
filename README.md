@@ -4,6 +4,27 @@ This repository is the Vercel API and migration workspace for **Forgotten Ruin o
 
 The current production surface is intentionally small: it serves room/map image markdown for CustomGPT-style rendering. The future target is a deterministic cloud-deployed adventure engine, but the full engine is not implemented yet.
 
+## Playtest UI
+
+A lightweight playable UI is available at:
+
+- `/play.html`
+
+It is powered by:
+
+- `GET /api/game-bootstrap` for initial state and extracted content
+- client-side command handling in `public/play.js`
+
+This playtest currently supports:
+
+- room descriptions and movement attempts
+- examine triggers and item reveal/pickup flows
+- inventory view
+- journal readout
+- prism assembly trigger
+
+Combat resolution, save/load persistence, and full boss progression are still scaffold-only and intentionally not finalized in this UI.
+
 ## Current API
 
 ### `GET /api/display-room?name=...`
@@ -26,6 +47,15 @@ Required compatibility checks:
 - `GET /api/display-room?name=Map`
 - `GET /api/display-room?name=Room%203`
 - `GET /openapi.yaml`
+
+### `GET /api/game-bootstrap`
+
+Returns JSON for UI bootstrap:
+
+- engine metadata
+- content slices (rooms/items/journal/commands)
+- initial deterministic scaffold state
+- room image lookup derived from asset manifest
 
 ## Local Setup
 
