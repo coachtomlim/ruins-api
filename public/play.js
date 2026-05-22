@@ -179,6 +179,58 @@
     }
   }
 
+  function ensureRoomAvailability(roomId) {
+    const room = roomsById.get(roomId);
+    const roomState = state.rooms[roomId];
+    if (!room || !roomState) return;
+
+    function maybeReveal(itemId, condition) {
+      if (!condition) return;
+      if (roomState.pickedUpItems.includes(itemId)) return;
+      if (!roomState.visibleItems.includes(itemId)) {
+        roomState.visibleItems.push(itemId);
+      }
+    }
+
+    for (const entry of room.itemsAvailable || []) {
+      const availability = String(entry.availability || "").toLowerCase();
+      const itemId = entry.itemId;
+      if (!availability) continue;
+
+      if (availability === "visible_after_monster_defeat") {
+        maybeReveal(itemId, roomState.defeatedMonsters.length > 0);
+        continue;
+      }
+      if (availability === "visible_after_imp_defeat") {
+        maybeReveal(itemId, roomState.defeatedMonsters.includes("monster.imp"));
+        continue;
+      }
+      if (availability === "visible_after_lizardman_defeat") {
+        maybeReveal(itemId, roomState.defeatedMonsters.includes("monster.lizardman"));
+        continue;
+      }
+      if (availability === "visible_after_musca_defeat") {
+        maybeReveal(itemId, roomState.defeatedMonsters.includes("monster.musca"));
+        continue;
+      }
+      if (availability === "visible_after_push_panel") {
+        maybeReveal(itemId, Boolean(state.flags["flag.room05.panel_pushed"]));
+        continue;
+      }
+      if (availability === "visible_after_examine_sarcophagus") {
+        maybeReveal(itemId, roomState.examinedTargets.some((x) => String(x).toLowerCase().includes("sarcophagus")));
+        continue;
+      }
+      if (availability === "visible_after_examine_shards") {
+        maybeReveal(itemId, roomState.examinedTargets.some((x) => String(x).toLowerCase().includes("shards")));
+        continue;
+      }
+      if (availability === "visible_after_boss_defeat") {
+        maybeReveal(itemId, Boolean(state.flags["flag.boss.defeated"]));
+      }
+    }
+  }
+
   function revealItems(roomState, trigger) {
     for (const itemId of trigger.revealsItems || []) {
       if (!roomState.visibleItems.includes(itemId) && !roomState.pickedUpItems.includes(itemId)) {
@@ -199,6 +251,7 @@
       updateStatus();
       return;
     }
+    ensureRoomAvailability(room.id);
     let text = `${room.name}\n${room.description}`;
     if (firstVisit) {
       text += "\n\nA chill of unfamiliar stone settles over you.";
@@ -254,7 +307,8 @@
       }
       const damage = Math.max(1, attackerStats.ATF - defenderStats.DEF + roll(4));
       defenderStats.HP -= damage;
-      write(`${attackerName} lands a hit on ${defenderName} for ${damage} damage.`);
+      if (attackerName === "You") write(`You land a hit on ${defenderName} for ${damage} damage.`);
+      else write(`${attackerName} lands a hit on ${defenderName} for ${damage} damage.`);
     }
 
     if (action === "run") {
@@ -309,6 +363,7 @@
         state.flags["flag.boss.defeated"] = true;
       }
       rewardAfterVictory(c);
+      ensureRoomAvailability(c.roomId);
       state.phase = "exploration";
       state.combat = null;
       write(`${c.monsterName} is defeated.`);
@@ -495,6 +550,7 @@
     revealItems(roomState, trigger);
     unlockJournalFromTrigger(trigger);
     roomState.examinedTargets.push(trigger.target);
+    ensureRoomAvailability(node.id);
     write(`You examine ${trigger.target}.`);
     if ((trigger.revealsItems || []).length) write(`Revealed: ${trigger.revealsItems.map(itemName).join(", ")}.`);
     updateStatus();
@@ -524,6 +580,7 @@
     roomState.visibleItems = roomState.visibleItems.filter((id) => id !== itemId);
     roomState.pickedUpItems.push(itemId);
     addItem(itemId, 1);
+    ensureRoomAvailability(node.id);
     if (itemId === "item.prism_fragment_c") unlockJournal("journal.discovery.prism_fragment_c");
     if (itemId === "item.merlins_tetrahedronal") {
       unlockJournal("journal.ending.hero_prophecy");
@@ -550,6 +607,7 @@
     state.flags["flag.prism.assembled"] = true;
     unlockJournal("journal.discovery.prism_assembled");
     unlockJournal("journal.discovery.final_chamber_open");
+    ensureRoomAvailability(state.location.currentRoomId);
     write("The fragments align. The Prism of Makidos awakens in your hands.");
     updateStatus();
   }
