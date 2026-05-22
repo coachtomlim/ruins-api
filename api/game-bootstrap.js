@@ -31,11 +31,14 @@ module.exports = (_req, res) => {
     },
     initialState,
     content: {
+      config: content.config,
       rooms: content.rooms,
       transitions: content.transitionNodes,
+      monsters: content.monsters,
       items: content.items,
       journalEntries: content.journalEntries,
-      commands: content.commands
+      commands: content.commands,
+      scrolls: content.scrolls
     }
   };
 

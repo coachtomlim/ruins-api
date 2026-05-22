@@ -11,14 +11,51 @@
 
   let data = null;
   let state = null;
+  let runtime = null;
 
   const roomsById = new Map();
+  const transitionById = new Map();
   const itemsById = new Map();
   const journalById = new Map();
+  const monsterById = new Map();
+  const commands = [];
+
+  function nowIso() {
+    return new Date().toISOString();
+  }
 
   function write(text) {
     logEl.textContent += (logEl.textContent ? "\n\n" : "") + text;
     logEl.scrollTop = logEl.scrollHeight;
+  }
+
+  function clearLog() {
+    logEl.textContent = "";
+  }
+
+  function floorPct(value, pct) {
+    return Math.floor((value * pct) / 100);
+  }
+
+  function deepClone(value) {
+    return JSON.parse(JSON.stringify(value));
+  }
+
+  function hashSeed(seedText) {
+    let hash = 2166136261;
+    for (let i = 0; i < seedText.length; i += 1) {
+      hash ^= seedText.charCodeAt(i);
+      hash = Math.imul(hash, 16777619) >>> 0;
+    }
+    return hash >>> 0;
+  }
+
+  function rng(seedText) {
+    let seed = hashSeed(seedText || "ruins-seed");
+    return function roll(maxInclusive) {
+      seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+      return (seed % maxInclusive) + 1;
+    };
   }
 
   function itemName(itemId) {
@@ -26,38 +63,93 @@
     return item ? item.displayName : itemId;
   }
 
+  function monsterStats(monster) {
+    if (!monster) return null;
+    if (monster.id === "monster.random_low_tier_scaled") {
+      return {
+        ATF: floorPct(state.player.currentStats.ATF, 70),
+        DEF: floorPct(state.player.currentStats.DEF, 70),
+        EVA: floorPct(state.player.currentStats.EVA, 70),
+        HP: floorPct(state.player.currentStats.HP, 70)
+      };
+    }
+    if (monster.id === "monster.banshee_doppelganger") {
+      return deepClone(state.player.baseStats);
+    }
+    if (monster.stats && monster.stats.ATF) return deepClone(monster.stats);
+    if (monster.stats && monster.stats.variants && monster.stats.variants.length) {
+      return deepClone(monster.stats.variants[0].value);
+    }
+    return null;
+  }
+
+  function hasItem(itemId) {
+    return state.inventory.items.some((x) => x.itemId === itemId && x.quantity > 0);
+  }
+
+  function consumeItem(itemId) {
+    const item = state.inventory.items.find((x) => x.itemId === itemId);
+    if (!item) return false;
+    item.quantity -= 1;
+    if (item.quantity <= 0) {
+      state.inventory.items = state.inventory.items.filter((x) => x.itemId !== itemId);
+    }
+    return true;
+  }
+
+  function addItem(itemId, qty = 1) {
+    const existing = state.inventory.items.find((x) => x.itemId === itemId);
+    if (existing) existing.quantity += qty;
+    else state.inventory.items.push({ itemId, quantity: qty });
+  }
+
   function roomImagePath(roomId) {
     const roomPath = data.roomImageAssets.byRoomId[roomId];
     return roomPath ? `/${encodeURIComponent(roomPath)}` : `/${encodeURIComponent(data.roomImageAssets.map)}`;
   }
 
+  function currentRoomId() {
+    return state.location.currentRoomId;
+  }
+
   function currentRoom() {
-    return roomsById.get(state.location.currentRoomId);
+    return roomsById.get(currentRoomId()) || transitionById.get(currentRoomId()) || null;
+  }
+
+  function isTransitionNode(roomOrTransition) {
+    return Boolean(roomOrTransition && roomOrTransition.id && roomOrTransition.id.startsWith("transition."));
   }
 
   function updateStatus() {
     const room = currentRoom();
-    roomImageEl.src = roomImagePath(room.id);
-    roomLabelEl.textContent = `${room.name} (${room.id})`;
+    const roomTitle = room && room.name ? room.name : room ? room.id : "Unknown";
+    roomLabelEl.textContent = `${roomTitle} (${state.phase})`;
+    if (roomsById.has(state.location.currentRoomId)) {
+      roomImageEl.src = roomImagePath(state.location.currentRoomId);
+    } else {
+      roomImageEl.src = `/${encodeURIComponent(data.roomImageAssets.map)}`;
+    }
 
     const stats = state.player.currentStats;
-    statsEl.textContent = `Stats\nATF ${stats.ATF}  DEF ${stats.DEF}\nEVA ${stats.EVA}  HP ${stats.HP}`;
-    locationEl.textContent = `Location\n${room.shortName}\nExits: ${(room.exits || []).map((e) => e.direction).join(", ") || "None"}`;
-    inventoryEl.textContent = `Inventory\n${state.inventory.items.map((x) => itemName(x.itemId)).join(", ") || "Empty"}`;
+    statsEl.textContent = `Stats\nATF ${stats.ATF}  DEF ${stats.DEF}\nEVA ${stats.EVA}  HP ${stats.HP}\nGold ${state.player.gold}`;
+
+    const exits = (room && room.exits ? room.exits : []).map((e) => e.direction).join(", ") || "None";
+    locationEl.textContent = `Location\n${roomTitle}\nExits: ${exits}`;
+
+    inventoryEl.textContent = `Inventory\n${state.inventory.items.map((x) => `${itemName(x.itemId)} x${x.quantity}`).join("\n") || "Empty"}`;
     journalEl.textContent = `Journal\nUnlocked: ${state.journal.unlockedEntryIds.length}`;
   }
 
-  function describeRoom(room, isFirstVisit) {
-    let text = `${room.name}\n${room.description}`;
-    if (isFirstVisit) {
-      text += "\n\nThis place feels newly charted in your journal.";
+  function unlockJournal(entryId) {
+    if (entryId && !state.journal.unlockedEntryIds.includes(entryId)) {
+      state.journal.unlockedEntryIds.push(entryId);
     }
-    const visible = state.rooms[room.id].visibleItems;
-    if (visible.length) {
-      text += `\n\nYou spot: ${visible.map(itemName).join(", ")}.`;
+  }
+
+  function unlockJournalFromTrigger(trigger) {
+    for (const entryId of trigger.journalUnlocks || []) {
+      unlockJournal(entryId);
     }
-    write(text);
-    updateStatus();
   }
 
   function revealItems(roomState, trigger) {
@@ -68,124 +160,354 @@
     }
   }
 
-  function unlockJournal(trigger) {
-    for (const entryId of trigger.journalUnlocks || []) {
-      if (!state.journal.unlockedEntryIds.includes(entryId)) {
-        state.journal.unlockedEntryIds.push(entryId);
+  function listVisibleItemsText(roomId) {
+    const roomState = state.rooms[roomId];
+    if (!roomState || !roomState.visibleItems.length) return "";
+    return `\n\nYou notice: ${roomState.visibleItems.map(itemName).join(", ")}.`;
+  }
+
+  function showRoom(room, firstVisit) {
+    if (isTransitionNode(room)) {
+      write(`${room.description}\n\nChoose your path.`);
+      updateStatus();
+      return;
+    }
+    let text = `${room.name}\n${room.description}`;
+    if (firstVisit) {
+      text += "\n\nA chill of unfamiliar stone settles over you.";
+    }
+    text += listVisibleItemsText(room.id);
+    write(text);
+    updateStatus();
+  }
+
+  function applyRunPenalty() {
+    const keys = ["ATF", "DEF", "EVA", "HP"];
+    for (const key of keys) {
+      state.player.currentStats[key] = Math.max(1, state.player.currentStats[key] - floorPct(state.player.currentStats[key], 15));
+    }
+    unlockJournal("journal.penalty.run");
+  }
+
+  function fullyHeal() {
+    state.player.currentStats.HP = state.player.baseStats.HP;
+  }
+
+  function rewardAfterVictory(monsterState) {
+    const rewardPct = data.content.config.combat.victoryRewardPercent.value;
+    const src = monsterState.baseStats;
+    for (const key of ["ATF", "DEF", "EVA", "HP"]) {
+      const delta = floorPct(src[key], rewardPct);
+      state.player.baseStats[key] += delta;
+      state.player.currentStats[key] += delta;
+    }
+    fullyHeal();
+    write("The Galanic powers in this Ruin are activated, and you are healed of all your wounds.");
+  }
+
+  function defeatPlayer(message) {
+    state.phase = "ended";
+    write(`${message}\n\nYour journey ends here. Refresh to begin again.`);
+    cmdEl.disabled = true;
+    sendEl.disabled = true;
+    updateStatus();
+  }
+
+  function processCombatTurn(action, itemTargetRaw) {
+    const c = state.combat;
+    if (!c || state.phase !== "combat") return;
+    const roll = runtime.roll;
+
+    function attack(attackerName, attackerStats, defenderName, defenderStats) {
+      const a = attackerStats.EVA + roll(4);
+      const d = defenderStats.EVA + roll(4);
+      if (a < d) {
+        write(`${attackerName} strikes at ${defenderName}, but the blow misses.`);
+        return;
+      }
+      const damage = Math.max(1, attackerStats.ATF - defenderStats.DEF + roll(4));
+      defenderStats.HP -= damage;
+      write(`${attackerName} lands a hit on ${defenderName} for ${damage} damage.`);
+    }
+
+    if (action === "run") {
+      applyRunPenalty();
+      const retreatTo = c.returnToRoomId || "room.01";
+      state.phase = "exploration";
+      state.combat = null;
+      state.location.currentRoomId = retreatTo;
+      write("You break away from combat, but the Ruin exacts a cost.");
+      updateStatus();
+      const room = currentRoom();
+      showRoom(room, false);
+      return;
+    }
+
+    if (action === "use_item") {
+      const query = (itemTargetRaw || "").toLowerCase();
+      const scrollId = ["item.scroll.fog_of_confusion", "item.scroll.pulse_of_calm", "item.scroll.heart_beacon"].find((id) =>
+        itemName(id).toLowerCase().includes(query)
+      );
+      if (!scrollId || !hasItem(scrollId)) {
+        write("You cannot use that item now.");
+      } else {
+        consumeItem(scrollId);
+        const match = c.monster.weakness === scrollId;
+        const pct = match ? 50 : 5;
+        for (const key of ["ATF", "DEF", "EVA", "HP"]) {
+          c.currentStats[key] = Math.max(1, c.currentStats[key] - floorPct(c.currentStats[key], pct));
+        }
+        if (match) write("The effects of the scroll were devastating to the fiend, and all its stats have been reduced by half!");
+        else write("The powers of the scroll are only mildly effective against this monster.");
+      }
+      if (c.currentStats.HP > 0) attack(c.monsterName, c.currentStats, "you", state.player.currentStats);
+    } else {
+      attack("You", state.player.currentStats, c.monsterName, c.currentStats);
+      if (c.currentStats.HP > 0) attack(c.monsterName, c.currentStats, "you", state.player.currentStats);
+    }
+
+    if (state.player.currentStats.HP <= 0) {
+      defeatPlayer("You fall beneath the fiend's assault.");
+      return;
+    }
+    if (c.currentStats.HP <= 0) {
+      const roomState = state.rooms[c.roomId];
+      roomState.defeatedMonsters.push(c.monster.id);
+      for (const dropId of c.drops) {
+        if (!roomState.visibleItems.includes(dropId) && !roomState.pickedUpItems.includes(dropId)) {
+          roomState.visibleItems.push(dropId);
+        }
+      }
+      if (c.monster.id === "monster.banshee_doppelganger") {
+        state.flags["flag.boss.defeated"] = true;
+      }
+      rewardAfterVictory(c);
+      state.phase = "exploration";
+      state.combat = null;
+      write(`${c.monsterName} is defeated.`);
+      updateStatus();
+      return;
+    }
+
+    write(`Combat status: You ${state.player.currentStats.HP} HP | ${c.monsterName} ${c.currentStats.HP} HP`);
+    write("Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>");
+    updateStatus();
+  }
+
+  function startCombatIfTriggered(room, roomState) {
+    if (!room.entryTriggers) return false;
+    const combatTrigger = room.entryTriggers.find((t) => t.type === "combat");
+    if (!combatTrigger) return false;
+    if (roomState.defeatedMonsters.includes(combatTrigger.monsterId)) return false;
+
+    const monster = monsterById.get(combatTrigger.monsterId);
+    const stats = monsterStats(monster);
+    const monsterName =
+      monster.id === "monster.random_low_tier_scaled" || monster.id === "monster.random_low_tier"
+        ? monster.pool[runtime.roll(monster.pool.length) - 1]
+        : monster.displayName;
+
+    if (monster.id === "monster.banshee_doppelganger" && !hasItem("item.sound_deflecting_girdle")) {
+      defeatPlayer("The Banshee's opening shriek rends your senses. Without the Sound-Deflecting Girdle, you perish instantly.");
+      return true;
+    }
+    if (monster.id === "monster.banshee_doppelganger" && hasItem("item.sound_deflecting_girdle")) {
+      state.flags["flag.boss.girdle_triggered"] = true;
+      write("The Sound-Deflecting Girdle flashes and shields you from the Banshee's opening shriek.");
+    }
+
+    state.phase = "combat";
+    state.combat = {
+      roomId: room.id,
+      monster,
+      monsterName,
+      baseStats: deepClone(stats),
+      currentStats: deepClone(stats),
+      drops: monster.drops || [],
+      returnToRoomId:
+        state.location.enteredVia === "one_way_portal"
+          ? "room.06"
+          : state.location.previousRoomId || "room.01"
+    };
+
+    write(`A ${monsterName} confronts you. It lunges first.`);
+    const a = state.combat.currentStats.EVA + runtime.roll(4);
+    const d = state.player.currentStats.EVA + runtime.roll(4);
+    if (a >= d) {
+      const damage = Math.max(1, state.combat.currentStats.ATF - state.player.currentStats.DEF + runtime.roll(4));
+      state.player.currentStats.HP -= damage;
+      write(`${monsterName} strikes first for ${damage} damage.`);
+    } else {
+      write(`${monsterName}'s opening strike misses.`);
+    }
+
+    if (state.player.currentStats.HP <= 0) {
+      defeatPlayer("You are slain before your counterstroke.");
+      return true;
+    }
+
+    write("Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>");
+    updateStatus();
+    return true;
+  }
+
+  function applyEntryTriggers(room, roomState) {
+    for (const trigger of room.entryTriggers || []) {
+      if (trigger.type === "status_effect" && trigger.effect === "reduce_all_stats_30_percent") {
+        if (!state.flags["flag.status.poisoned"]) {
+          for (const key of ["ATF", "DEF", "EVA", "HP"]) {
+            state.player.currentStats[key] = Math.max(1, state.player.currentStats[key] - floorPct(state.player.currentStats[key], 30));
+          }
+          state.flags["flag.status.poisoned"] = true;
+          write("The black roots lash your spirit, draining your strength by thirty percent.");
+        }
+      }
+      if (trigger.type === "store") {
+        if (state.flags["flag.prism.assembled"] && !state.flags["flag.room09.store_visited"]) {
+          state.flags["flag.room09.store_visited"] = true;
+          write("A shimmering Galanic store appears: Buy 1 (Shield 400g), Buy 2 (Minor Potion 350g), Buy 3 (Hose of Speed 450g).");
+        }
       }
     }
   }
 
   function move(directionRaw) {
-    const room = currentRoom();
-    const direction = directionRaw.toLowerCase();
-    const exits = room.exits || [];
-
-    const candidates = exits.filter((exit) => {
-      const d = String(exit.direction || "").toLowerCase();
-      return d === direction || d.startsWith(direction) || d.includes(direction);
-    });
-
-    if (!candidates.length) {
+    if (state.phase !== "exploration") {
+      write("You cannot move while in combat or cutscene.");
+      return;
+    }
+    const node = currentRoom();
+    if (!node || !node.exits) {
       write("That is not a valid move at this time.");
       return;
     }
-
-    const exit = candidates[0];
-    const toId = exit.to;
-    const targetRoom = roomsById.get(toId);
-    if (!targetRoom) {
-      write(`The path toward ${toId} is not yet traversable in this build.`);
+    const direction = directionRaw.toLowerCase();
+    const exit = node.exits.find((e) => {
+      const d = String(e.direction || "").toLowerCase();
+      return d === direction || d.startsWith(direction) || d.includes(direction);
+    });
+    if (!exit) {
+      write("That is not a valid move at this time.");
+      return;
+    }
+    if ((exit.conditions || []).some((flagId) => !state.flags[flagId])) {
+      write("A sealed force blocks your passage.");
       return;
     }
 
     state.location.previousRoomId = state.location.currentRoomId;
-    state.location.currentRoomId = toId;
+    state.location.currentRoomId = exit.to;
+    state.location.enteredVia = exit.oneWay ? "one_way_portal" : "normal";
 
-    const roomState = state.rooms[toId];
+    const next = currentRoom();
+    if (isTransitionNode(next)) {
+      write(`You move ${directionRaw.toUpperCase()}.`);
+      showRoom(next, false);
+      return;
+    }
+    const roomState = state.rooms[next.id];
     const firstVisit = !roomState.visited;
     roomState.visited = true;
-
     write(`You move ${directionRaw.toUpperCase()}.`);
-    describeRoom(targetRoom, firstVisit);
+    applyEntryTriggers(next, roomState);
+    showRoom(next, firstVisit);
+    startCombatIfTriggered(next, roomState);
   }
 
   function runExamine(targetText) {
-    const room = currentRoom();
-    const roomState = state.rooms[room.id];
+    if (state.phase !== "exploration") {
+      write("Not while combat rages.");
+      return;
+    }
+    const node = currentRoom();
+    if (!node || isTransitionNode(node)) {
+      write("There is little to examine here beyond the path itself.");
+      return;
+    }
+    const roomState = state.rooms[node.id];
     const target = (targetText || "").trim().toLowerCase();
     if (!target) {
       write("Examine what?");
       return;
     }
-
-    const trigger = (room.examineTriggers || []).find((x) => String(x.target || "").toLowerCase().includes(target));
+    const trigger = (node.examineTriggers || []).find((x) => String(x.target || "").toLowerCase().includes(target));
     if (!trigger) {
       write("You examine the area but find nothing new.");
       return;
     }
-
     if ((trigger.requiresFlags || []).some((f) => !state.flags[f])) {
       write("Something about this remains dormant.");
       return;
     }
+    if ((trigger.requiresItems || []).some((id) => !hasItem(id))) {
+      write("You lack what is needed to complete that action.");
+      return;
+    }
 
     for (const flag of trigger.setsFlags || []) state.flags[flag] = true;
-    revealItems(roomState, trigger);
-    unlockJournal(trigger);
-    roomState.examinedTargets.push(trigger.target);
-
-    write(`You examine ${trigger.target}. A hidden detail reveals itself.`);
-    if ((trigger.revealsItems || []).length) {
-      write(`Revealed: ${trigger.revealsItems.map(itemName).join(", ")}.`);
+    if (trigger.id === "action.room05.push_panel") {
+      state.flags["flag.room05.panel_pushed"] = true;
     }
+    revealItems(roomState, trigger);
+    unlockJournalFromTrigger(trigger);
+    roomState.examinedTargets.push(trigger.target);
+    write(`You examine ${trigger.target}.`);
+    if ((trigger.revealsItems || []).length) write(`Revealed: ${trigger.revealsItems.map(itemName).join(", ")}.`);
     updateStatus();
   }
 
   function runPick(targetText) {
-    const room = currentRoom();
-    const roomState = state.rooms[room.id];
-    const target = (targetText || "").trim().toLowerCase();
-    const visible = roomState.visibleItems.slice();
-    if (!visible.length) {
+    if (state.phase !== "exploration") {
+      write("Not while combat rages.");
+      return;
+    }
+    const node = currentRoom();
+    if (!node || isTransitionNode(node)) {
       write("There is nothing here to pick up.");
       return;
     }
-
-    const matchId = visible.find((id) => itemName(id).toLowerCase().includes(target));
-    if (!matchId) {
+    const roomState = state.rooms[node.id];
+    const target = (targetText || "").trim().toLowerCase();
+    if (!roomState.visibleItems.length) {
+      write("There is nothing here to pick up.");
+      return;
+    }
+    const itemId = roomState.visibleItems.find((id) => itemName(id).toLowerCase().includes(target));
+    if (!itemId) {
       write("That item is not available to pick up right now.");
       return;
     }
-
-    roomState.visibleItems = roomState.visibleItems.filter((id) => id !== matchId);
-    roomState.pickedUpItems.push(matchId);
-
-    const existing = state.inventory.items.find((x) => x.itemId === matchId);
-    if (existing) existing.quantity += 1;
-    else state.inventory.items.push({ itemId: matchId, quantity: 1 });
-
-    write(`You secure ${itemName(matchId)} in your pack.`);
+    roomState.visibleItems = roomState.visibleItems.filter((id) => id !== itemId);
+    roomState.pickedUpItems.push(itemId);
+    addItem(itemId, 1);
+    if (itemId === "item.prism_fragment_c") unlockJournal("journal.discovery.prism_fragment_c");
+    if (itemId === "item.merlins_tetrahedronal") {
+      unlockJournal("journal.ending.hero_prophecy");
+      state.flags["flag.ending.completed"] = true;
+      write("As you claim Merlin's Tetrahedronal, Sheja appears and the prophecy stirs to life.");
+      write("Sheja rewards you and the quest is complete.");
+    }
+    write(`You secure ${itemName(itemId)} in your pack.`);
     updateStatus();
   }
 
   function runAssemble() {
+    if (state.phase !== "exploration") {
+      write("Not while combat rages.");
+      return;
+    }
     const required = ["item.prism_fragment_a", "item.prism_fragment_b", "item.prism_fragment_c"];
-    const hasAll = required.every((id) => state.inventory.items.some((x) => x.itemId === id && x.quantity > 0));
-    if (!hasAll) {
+    if (!required.every((id) => hasItem(id))) {
       write("You do not yet hold all three Prism Fragments.");
       return;
     }
-    state.inventory.items = state.inventory.items.filter((x) => !required.includes(x.itemId));
-    state.inventory.items.push({ itemId: "item.prism_of_makidos", quantity: 1 });
+    for (const id of required) consumeItem(id);
+    addItem("item.prism_of_makidos", 1);
     state.flags["flag.prism.assembled"] = true;
-    write("The fragments interlock. The Prism of Makidos hums with dormant force.");
+    unlockJournal("journal.discovery.prism_assembled");
+    unlockJournal("journal.discovery.final_chamber_open");
+    write("The fragments align. The Prism of Makidos awakens in your hands.");
     updateStatus();
-  }
-
-  function runHelp() {
-    const names = data.content.commands.map((c) => c.displayName).join(", ");
-    write(`Commands known in this build:\n${names}\n\nMovement accepts N/S/E/W.`);
   }
 
   function runInventory() {
@@ -201,12 +523,163 @@
     write(entries.length ? `Journal Entries:\n${entries.join("\n")}` : "No journal entries unlocked.");
   }
 
+  function runHelp() {
+    write(`Commands:\n${commands.map((c) => c.displayName).join(", ")}\nMovement: N/S/E/W, North/South/East/West.`);
+    if (state.phase === "combat") {
+      write("Combat commands: Attack Once, Fight till the end, Run, Use Item <scroll name>.");
+    }
+  }
+
+  function runBuy(index) {
+    if (state.location.currentRoomId !== "room.09" || !state.flags["flag.room09.store_visited"]) {
+      write("There is no store to buy from here.");
+      return;
+    }
+    const shop = [
+      { id: "item.store.shield_lionheart", price: 400 },
+      { id: "item.store.minor_combat_healing_potion", price: 350 },
+      { id: "item.store.hose_of_speed", price: 450 }
+    ];
+    const offer = shop[index - 1];
+    if (!offer) {
+      write("Unknown store option.");
+      return;
+    }
+    if (state.player.gold < offer.price) {
+      write("You do not have enough gold.");
+      return;
+    }
+    state.player.gold -= offer.price;
+    addItem(offer.id, 1);
+    write(`Purchased ${itemName(offer.id)}.`);
+    updateStatus();
+  }
+
+  function runEquip(targetRaw) {
+    const target = (targetRaw || "").toLowerCase();
+    if (target.includes("shield") && hasItem("item.store.shield_lionheart")) {
+      state.inventory.equipped.shield = "item.store.shield_lionheart";
+      state.player.currentStats.DEF += 2;
+      write("You equip Shield of the Lionheart (+2 DEF).");
+      updateStatus();
+      return;
+    }
+    if (target.includes("hose") && hasItem("item.store.hose_of_speed")) {
+      state.inventory.equipped.hose = "item.store.hose_of_speed";
+      state.player.currentStats.EVA += 1;
+      write("You equip Hose of Speed (+1 EVA).");
+      updateStatus();
+      return;
+    }
+    write("You cannot equip that.");
+  }
+
+  function saveGame() {
+    if (state.phase !== "exploration") {
+      write("You cannot save during combat.");
+      return;
+    }
+    localStorage.setItem("ruins-save-v1", JSON.stringify({ state, runtimeSeed: runtime.seed, savedAt: nowIso() }));
+    write("Game saved.");
+  }
+
+  function loadGame() {
+    const raw = localStorage.getItem("ruins-save-v1");
+    if (!raw) {
+      write("No save found.");
+      return;
+    }
+    const parsed = JSON.parse(raw);
+    state = parsed.state;
+    runtime = { seed: parsed.runtimeSeed, roll: rng(parsed.runtimeSeed) };
+    write("Game loaded.");
+    updateStatus();
+    const room = currentRoom();
+    if (room && room.description) showRoom(room, false);
+  }
+
+  function startRuinEntry() {
+    state.phase = "exploration";
+    state.location.currentRoomId = "room.01";
+    state.location.previousRoomId = null;
+    const roomState = state.rooms["room.01"];
+    roomState.visited = true;
+    write("You utter the incantation. Stone and shadow crash around you as the Ruin takes shape.");
+    showRoom(roomsById.get("room.01"), true);
+  }
+
+  function processPrologue(inputRaw) {
+    const text = inputRaw.toLowerCase();
+    if (state.prologue.awaitingIncantation) {
+      if (text === "say" || text.includes("incantation")) {
+        startRuinEntry();
+      } else {
+        write("Sheja waits. 'Say the incantation when you are ready.'");
+      }
+      return;
+    }
+
+    if (text === "yes" || text === "y" || text.includes("accept")) {
+      state.prologue.accepted = true;
+      state.prologue.awaitingIncantation = true;
+      write("Sheja nods. You return to your inn room. Say the incantation?");
+      return;
+    }
+    if (text.includes("1000") || text.includes("1100") || text.includes("1200") || text.includes("more")) {
+      if (state.prologue.offer < 800) state.prologue.offer = 800;
+      else state.prologue.offer = 900;
+      write(`Sheja narrows her eyes. 'My final offer is ${state.prologue.offer} gold.'`);
+    } else if (text.includes("quest") || text.includes("ruin") || text.includes("monster") || text.includes("offer")) {
+      write("Sheja speaks in a low voice about a forgotten ruin, voices of care, and an artifact hidden deep within.");
+    } else {
+      write("Sheja studies you in silence, waiting for your answer.");
+    }
+
+    state.prologue.interactions += 1;
+    if (state.prologue.interactions >= 5 && !state.prologue.accepted) {
+      write("Sheja rises. 'We are done here. Deal is off.'");
+      defeatPlayer("The quest slips away before it begins.");
+    }
+  }
+
+  function fightTillEnd() {
+    let guard = 0;
+    while (state.phase === "combat" && guard < 120) {
+      processCombatTurn("attack");
+      guard += 1;
+    }
+  }
+
   function processCommand(inputRaw) {
     const input = (inputRaw || "").trim();
     if (!input) return;
-
     write(`> ${input}`);
     const lower = input.toLowerCase();
+
+    if (state.phase === "ended") {
+      write("The adventure is over. Refresh to restart.");
+      return;
+    }
+
+    if (state.phase === "prologue") {
+      processPrologue(input);
+      updateStatus();
+      return;
+    }
+
+    if (state.phase === "combat") {
+      if (lower === "a" || lower === "attack once") return processCombatTurn("attack");
+      if (lower === "b" || lower === "fight till the end" || lower === "fight to end") return fightTillEnd();
+      if (lower === "c" || lower === "run" || lower === "flee") return processCombatTurn("run");
+      if (lower.startsWith("use item ")) return processCombatTurn("use_item", lower.slice(9));
+      if (lower === "fight") {
+        write("Choose: Attack Once, Fight till the end, Run, Use Item <scroll>.");
+        return;
+      }
+      write("Invalid combat command.");
+      return;
+    }
+
     const movementAlias = { n: "north", s: "south", e: "east", w: "west" };
     if (movementAlias[lower]) return move(movementAlias[lower]);
     if (["north", "south", "east", "west"].includes(lower)) return move(lower);
@@ -215,23 +688,44 @@
     if (lower === "inventory" || lower === "i") return runInventory();
     if (lower === "read journal" || lower === "journal") return runJournal();
     if (lower.startsWith("examine ")) return runExamine(input.slice(8));
-    if (lower.startsWith("pick ")) return runPick(input.slice(5));
     if (lower.startsWith("pick up ")) return runPick(input.slice(8));
+    if (lower.startsWith("pick ")) return runPick(input.slice(5));
     if (lower.startsWith("get ")) return runPick(input.slice(4));
     if (lower === "assemble" || lower === "assemble prism") return runAssemble();
     if (lower === "map") {
       roomImageEl.src = `/${encodeURIComponent(data.roomImageAssets.map)}`;
-      write("You unfold the ruin map and study the known paths.");
+      write("You unfold the map and trace your route through the ruin.");
       return;
     }
-    if (lower === "fight" || lower === "run" || lower === "save" || lower === "load game" || lower === "load") {
-      write("That system is scaffolded but not fully implemented in this build yet.");
+    if (lower === "save" || lower === "save game") return saveGame();
+    if (lower === "load" || lower === "load game") return loadGame();
+    if (lower === "fight") {
+      write("No enemy is currently engaging you.");
       return;
     }
-    if (lower === "end" || lower === "quit") {
-      write("Your current expedition closes. Refresh page to begin anew.");
+    if (lower.startsWith("buy ")) return runBuy(Number(lower.slice(4).trim()));
+    if (lower.startsWith("equip ")) return runEquip(lower.slice(6));
+    if (lower.startsWith("use ")) {
+      const target = lower.slice(4);
+      if (target.includes("cure") && hasItem("item.cure_all_stats_potion")) {
+        consumeItem("item.cure_all_stats_potion");
+        for (const key of ["ATF", "DEF", "EVA", "HP"]) {
+          state.player.currentStats[key] = state.player.baseStats[key];
+        }
+        state.flags["flag.status.poisoned"] = false;
+        write("The potion restores your full strength and clears corruption.");
+        updateStatus();
+        return;
+      }
+      write("That item cannot be used right now.");
+      return;
+    }
+    if (lower === "end" || lower === "quit" || lower === "end game") {
+      state.phase = "ended";
+      write("Your current expedition closes.");
       cmdEl.disabled = true;
       sendEl.disabled = true;
+      updateStatus();
       return;
     }
 
@@ -242,14 +736,31 @@
     const res = await fetch("/api/game-bootstrap");
     if (!res.ok) throw new Error(`Bootstrap failed with ${res.status}`);
     data = await res.json();
-    state = data.initialState;
 
     for (const room of data.content.rooms) roomsById.set(room.id, room);
+    for (const node of data.content.transitions) transitionById.set(node.id, node);
     for (const item of data.content.items) itemsById.set(item.id, item);
     for (const entry of data.content.journalEntries) journalById.set(entry.id, entry);
+    for (const monster of data.content.monsters) monsterById.set(monster.id, monster);
+    for (const command of data.content.commands) commands.push(command);
 
-    write("You stand at the edge of a forgotten descent. Type Help to begin.");
-    describeRoom(currentRoom(), true);
+    state = data.initialState;
+    state.phase = "prologue";
+    state.prologue = {
+      interactions: 0,
+      offer: 700,
+      accepted: false,
+      awaitingIncantation: false
+    };
+    state.player.gold = 0;
+
+    const seed = `ruins-${Date.now()}`;
+    runtime = { seed, roll: rng(seed) };
+
+    clearLog();
+    write("A hooded woman approaches you at the Adventurer's Inn. 'I am Sheja. I seek one willing to enter the Forgotten Ruin.'");
+    write("You may ask about the quest, monsters, place, or offer. Accept with Yes.");
+    updateStatus();
   }
 
   sendEl.addEventListener("click", () => {

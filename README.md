@@ -17,13 +17,30 @@ It is powered by:
 
 This playtest currently supports:
 
+- prologue cutscene with Sheja and negotiation interactions
 - room descriptions and movement attempts
 - examine triggers and item reveal/pickup flows
 - inventory view
 - journal readout
 - prism assembly trigger
+- deterministic turn-based combat (monster initiative, to-hit, damage, run penalty)
+- scroll usage in combat (correct vs incorrect effectiveness)
+- Room 9 store commands (`Buy 1`, `Buy 2`, `Buy 3`) and equipment commands
+- local browser save/load (`Save`, `Load Game`)
 
-Combat resolution, save/load persistence, and full boss progression are still scaffold-only and intentionally not finalized in this UI.
+Still in-progress:
+
+- some room/encounter branches are simplified from full canon variants
+- final ending options (read journal / restart menu) are not fully scripted
+- balancing reflects V3 Alpha-first assumptions where canon conflicts still exist
+
+To run locally without Vercel:
+
+```bash
+node scripts/dev-server.js
+```
+
+Then open `http://localhost:4173/play.html`.
 
 ## Current API
 

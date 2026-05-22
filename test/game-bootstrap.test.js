@@ -33,5 +33,7 @@ test("game bootstrap returns initial state and content payload", () => {
   assert.equal(payload.initialState.location.currentRoomId, "room.01");
   assert.equal(Array.isArray(payload.content.rooms), true);
   assert.equal(Array.isArray(payload.content.commands), true);
+  assert.equal(Array.isArray(payload.content.monsters), true);
+  assert.equal(typeof payload.content.config, "object");
   assert.match(payload.roomImageAssets.map, /^Map\./);
 });
