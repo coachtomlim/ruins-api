@@ -17,6 +17,7 @@
   let data = null;
   let state = null;
   let runtime = null;
+  let autoFightActive = false;
 
   const roomsById = new Map();
   const transitionById = new Map();
@@ -662,15 +663,38 @@
   }
 
   function fightTillEnd() {
+    if (autoFightActive || state.phase !== "combat") return;
+    autoFightActive = true;
+    cmdEl.disabled = true;
+    sendEl.disabled = true;
+
     let guard = 0;
-    while (state.phase === "combat" && guard < 1000) {
+    const maxRounds = 400;
+
+    function step() {
+      if (!autoFightActive) return;
+      if (state.phase !== "combat") {
+        autoFightActive = false;
+        cmdEl.disabled = false;
+        sendEl.disabled = false;
+        updateStatus();
+        return;
+      }
+      if (guard >= maxRounds) {
+        autoFightActive = false;
+        cmdEl.disabled = false;
+        sendEl.disabled = false;
+        write("The clash drags on without conclusion. Choose your next action.");
+        updateStatus();
+        return;
+      }
+
       processCombatTurn("attack");
       guard += 1;
+      setTimeout(step, 120);
     }
-    if (state.phase === "combat") {
-      write("The clash drags on without conclusion. Choose your next action.");
-      updateStatus();
-    }
+
+    step();
   }
 
   function processCommand(inputRaw) {
