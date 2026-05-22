@@ -1,0 +1,406 @@
+# Ruins UI Walkthrough Log
+
+- LOG: A hooded woman approaches you at the Adventurer's Inn. 'I am Sheja. I seek one willing to enter the Forgotten Ruin.'
+- LOG: You may ask about the quest, monsters, place, or offer. Accept with Yes.
+- STEP 001 COMMAND: Offer
+- LOG: > Offer
+- LOG: Sheja says, 'The contract stands at 700 gold.'
+- STEP 002 COMMAND: Negotiate
+- LOG: > Negotiate
+- LOG: Sheja narrows her eyes. 'Very well. I can raise it to 800 gold.'
+- STEP 003 COMMAND: Bargain
+- LOG: > Bargain
+- LOG: Sheja exhales. '900 gold. Final offer.'
+- STEP 004 COMMAND: Yes
+- LOG: > Yes
+- LOG: Sheja nods. '900 gold, as agreed.' The coins are transferred to your purse.
+- LOG: Sheja nods. You return to your inn room. Say the incantation?
+- STEP 005 COMMAND: Say
+- LOG: > Say
+- LOG: You utter the incantation. Stone and shadow crash around you as the Ruin takes shape.
+- LOG: Cracked Altar Room
+A large square chamber where broken symbols of old faith linger in the dust. A triangular prism altar stands at the center.
+- LOG: A chill of unfamiliar stone settles over you.
+- STEP 006 COMMAND: Examine prism face 1
+- LOG: > Examine prism face 1
+- LOG: You examine prism face 1.
+- STEP 007 COMMAND: Examine prism face 2
+- LOG: > Examine prism face 2
+- LOG: You examine prism face 2.
+- STEP 008 COMMAND: Examine prism face 3
+- LOG: > Examine prism face 3
+- LOG: You examine prism face 3.
+- STEP 009 COMMAND: Examine
+- LOG: > Examine
+- LOG: You study Cracked Altar Room.
+A large square chamber where broken symbols of old faith linger in the dust. A triangular prism altar stands at the center.
+Notable features: prism face 1, prism face 2, prism face 3.
+- STEP 010 COMMAND: North
+- LOG: > North
+- LOG: You move NORTH.
+- LOG: Shrine of the Silent Coil
+A quiet rectangular shrine dominated by a coiled obsidian sculpture.
+- LOG: A chill of unfamiliar stone settles over you.
+- LOG: A Kobold confronts you. It lunges first.
+- LOG: Kobold's opening strike misses.
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- STEP 011 CLICK: Fight till the end
+- LOG: > Fight till the end
+- LOG: You land a hit on Kobold for 4 damage.
+- LOG: Kobold strikes at you, but the blow misses.
+- LOG: Combat status: You 20 HP | Kobold 11 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Kobold for 5 damage.
+- LOG: Kobold strikes at you, but the blow misses.
+- LOG: Combat status: You 20 HP | Kobold 6 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Kobold for 4 damage.
+- LOG: Kobold strikes at you, but the blow misses.
+- LOG: Combat status: You 20 HP | Kobold 2 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Kobold for 3 damage.
+- LOG: The Galanic powers in this Ruin are activated, and you are healed of all your wounds.
+- LOG: Kobold is defeated.
+- STEP 012 COMMAND: Pick up Fog of Confusion
+- LOG: > Pick up Fog of Confusion
+- LOG: You secure Magic Scroll: Fog of Confusion in your pack.
+- STEP 013 COMMAND: Examine shrine
+- LOG: > Examine shrine
+- LOG: You examine shrine.
+- STEP 014 COMMAND: East
+- LOG: > East
+- LOG: You move EAST.
+- LOG: Cracked Mirror Room
+Broken black mirror shards litter the floor of a large square chamber.
+- LOG: A chill of unfamiliar stone settles over you.
+- LOG: A Skeletal Warrior confronts you. It lunges first.
+- LOG: Skeletal Warrior's opening strike misses.
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- STEP 015 CLICK: Fight till the end
+- LOG: > Fight till the end
+- LOG: You land a hit on Skeletal Warrior for 7 damage.
+- LOG: Skeletal Warrior strikes at you, but the blow misses.
+- LOG: Combat status: You 24 HP | Skeletal Warrior 9 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Skeletal Warrior for 7 damage.
+- LOG: Skeletal Warrior strikes at you, but the blow misses.
+- LOG: Combat status: You 24 HP | Skeletal Warrior 2 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Skeletal Warrior for 5 damage.
+- LOG: The Galanic powers in this Ruin are activated, and you are healed of all your wounds.
+- LOG: Skeletal Warrior is defeated.
+- STEP 016 COMMAND: Examine mirror shards
+- LOG: > Examine mirror shards
+- LOG: You examine mirror shards.
+- LOG: Revealed: Hexagonal Glass Piece.
+- STEP 017 COMMAND: Pick up Hexagonal Glass Piece
+- LOG: > Pick up Hexagonal Glass Piece
+- LOG: You secure Hexagonal Glass Piece in your pack.
+- STEP 018 COMMAND: North
+- LOG: > North
+- LOG: You move NORTH.
+- LOG: Library of Echoes
+Scrolls decay on whispering shelves. An eastern wall panel sits loose.
+- LOG: A chill of unfamiliar stone settles over you.
+- LOG: A Imp confronts you. It lunges first.
+- LOG: Imp's opening strike misses.
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- STEP 019 COMMAND: Use Item Fog of Confusion
+- LOG: > Use Item Fog of Confusion
+- LOG: The effects of the scroll were devastating to the fiend, and all its stats have been reduced by half!
+- LOG: Imp strikes at you, but the blow misses.
+- LOG: Combat status: You 28 HP | Imp 10 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- STEP 020 CLICK: Fight till the end
+- LOG: > Fight till the end
+- LOG: You land a hit on Imp for 9 damage.
+- LOG: Imp strikes at you, but the blow misses.
+- LOG: Combat status: You 28 HP | Imp 1 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Imp for 9 damage.
+- LOG: The Galanic powers in this Ruin are activated, and you are healed of all your wounds.
+- LOG: Imp is defeated.
+- STEP 021 COMMAND: Pick up Heart Beacon
+- LOG: > Pick up Heart Beacon
+- LOG: You secure Magic Scroll: Heart Beacon in your pack.
+- STEP 022 COMMAND: Examine east wall
+- LOG: > Examine east wall
+- LOG: You examine east wall.
+- STEP 023 COMMAND: Examine panel
+- LOG: > Examine panel
+- LOG: You examine panel.
+- LOG: Revealed: Sound-Deflecting Girdle, Lorebook of the First Light.
+- STEP 024 COMMAND: Pick up Sound-Deflecting Girdle
+- LOG: > Pick up Sound-Deflecting Girdle
+- LOG: You secure Sound-Deflecting Girdle in your pack.
+- STEP 025 COMMAND: Pick up Lorebook
+- LOG: > Pick up Lorebook
+- LOG: You secure Lorebook of the First Light in your pack.
+- STEP 026 COMMAND: South
+- LOG: > South
+- LOG: You move SOUTH.
+- LOG: Corrected Room 5 midpoint with options west to dead-end dark passage or south back to Room 6.
+- LOG: Choose your path.
+- STEP 027 COMMAND: South
+- LOG: > South
+- LOG: You move SOUTH.
+- LOG: Cracked Mirror Room
+Broken black mirror shards litter the floor of a large square chamber.
+- LOG: You notice: Magic Scroll: Pulse of Calm.
+- STEP 028 COMMAND: South
+- LOG: > South
+- LOG: You move SOUTH.
+- LOG: Shrine of the Silent Coil
+A quiet rectangular shrine dominated by a coiled obsidian sculpture.
+- STEP 029 COMMAND: North
+- LOG: > North
+- LOG: You move NORTH.
+- LOG: Sarcophagus Hall
+Ancient sarcophagi line the walls beneath a shaft of pale moonlight.
+- LOG: A chill of unfamiliar stone settles over you.
+- STEP 030 COMMAND: Examine sarcophagus
+- LOG: > Examine sarcophagus
+- LOG: You examine sarcophagus.
+- LOG: Revealed: Cure All Stats Potion.
+- STEP 031 COMMAND: Pick up Cure All Stats Potion
+- LOG: > Pick up Cure All Stats Potion
+- LOG: You secure Cure All Stats Potion in your pack.
+- STEP 032 COMMAND: go northwest
+- LOG: > go northwest
+- LOG: You move NORTHWEST.
+- LOG: Guardroom Delta
+A former garrison room with rusted weapons on cracked stone racks.
+- LOG: A chill of unfamiliar stone settles over you.
+- LOG: A Gnome confronts you. It lunges first.
+- LOG: Gnome's opening strike misses.
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- STEP 033 CLICK: Fight till the end
+- LOG: > Fight till the end
+- LOG: You land a hit on Gnome for 8 damage.
+- LOG: Gnome strikes at you, but the blow misses.
+- LOG: Combat status: You 34 HP | Gnome 15 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Gnome for 8 damage.
+- LOG: Gnome strikes at you, but the blow misses.
+- LOG: Combat status: You 34 HP | Gnome 7 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Gnome for 8 damage.
+- LOG: The Galanic powers in this Ruin are activated, and you are healed of all your wounds.
+- LOG: Gnome is defeated.
+- STEP 034 COMMAND: Pick up Pulse of Calm
+- LOG: > Pick up Pulse of Calm
+- LOG: You secure Magic Scroll: Pulse of Calm in your pack.
+- STEP 035 COMMAND: West
+- LOG: > West
+- LOG: You move WEST.
+- LOG: Chapel of Glass
+Light pours through fractured glass and a mural marks the north wall.
+- LOG: A chill of unfamiliar stone settles over you.
+- LOG: A Musca confronts you. It lunges first.
+- LOG: Musca strikes first for 3 damage.
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- STEP 036 COMMAND: Use Item Pulse of Calm
+- LOG: > Use Item Pulse of Calm
+- LOG: The effects of the scroll were devastating to the fiend, and all its stats have been reduced by half!
+- LOG: Musca strikes at you, but the blow misses.
+- LOG: Combat status: You 37 HP | Musca 25 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- STEP 037 CLICK: Fight till the end
+- LOG: > Fight till the end
+- LOG: You land a hit on Musca for 9 damage.
+- LOG: Musca strikes at you, but the blow misses.
+- LOG: Combat status: You 37 HP | Musca 16 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Musca for 12 damage.
+- LOG: Musca strikes at you, but the blow misses.
+- LOG: Combat status: You 37 HP | Musca 4 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Musca for 9 damage.
+- LOG: The Galanic powers in this Ruin are activated, and you are healed of all your wounds.
+- LOG: Musca is defeated.
+- STEP 038 COMMAND: Pick up Prism Fragment B
+- LOG: > Pick up Prism Fragment B
+- LOG: You secure Prism Fragment B in your pack.
+- STEP 039 COMMAND: Examine north wall mural
+- LOG: > Examine north wall mural
+- LOG: You examine north wall mural.
+- STEP 040 COMMAND: South
+- LOG: > South
+- LOG: You move SOUTH.
+- LOG: Guardroom Delta
+A former garrison room with rusted weapons on cracked stone racks.
+- STEP 041 COMMAND: South
+- LOG: > South
+- LOG: You move SOUTH.
+- LOG: The black roots lash your spirit, draining your strength by thirty percent.
+- LOG: Chamber of Black Roots
+Vile roots creep from the walls like veins and the air smells of rot.
+- LOG: A chill of unfamiliar stone settles over you.
+- LOG: A Lizardman confronts you. It lunges first.
+- LOG: Lizardman strikes first for 13 damage.
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- STEP 042 COMMAND: Use Item Heart Beacon
+- LOG: > Use Item Heart Beacon
+- LOG: The effects of the scroll were devastating to the fiend, and all its stats have been reduced by half!
+- LOG: Lizardman strikes at you, but the blow misses.
+- LOG: Combat status: You 26 HP | Lizardman 50 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- STEP 043 CLICK: Fight till the end
+- LOG: > Fight till the end
+- LOG: You land a hit on Lizardman for 7 damage.
+- LOG: Lizardman strikes at you, but the blow misses.
+- LOG: Combat status: You 26 HP | Lizardman 43 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Lizardman for 6 damage.
+- LOG: Lizardman strikes at you, but the blow misses.
+- LOG: Combat status: You 26 HP | Lizardman 37 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Lizardman for 5 damage.
+- LOG: Lizardman strikes at you, but the blow misses.
+- LOG: Combat status: You 26 HP | Lizardman 32 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Lizardman for 7 damage.
+- LOG: Lizardman strikes at you, but the blow misses.
+- LOG: Combat status: You 26 HP | Lizardman 25 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- STEP 044 COMMAND: Pick up Prism Fragment C
+- LOG: You land a hit on Lizardman for 6 damage.
+- LOG: Lizardman strikes at you, but the blow misses.
+- LOG: Combat status: You 26 HP | Lizardman 19 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Lizardman for 8 damage.
+- LOG: Lizardman strikes at you, but the blow misses.
+- LOG: Combat status: You 26 HP | Lizardman 11 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Lizardman for 8 damage.
+- LOG: Lizardman strikes at you, but the blow misses.
+- LOG: Combat status: You 26 HP | Lizardman 3 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Lizardman for 8 damage.
+- LOG: The Galanic powers in this Ruin are activated, and you are healed of all your wounds.
+- LOG: Lizardman is defeated.
+- LOG: > Pick up Prism Fragment C
+- LOG: You secure Prism Fragment C in your pack.
+- STEP 045 COMMAND: Use Cure All Stats Potion
+- LOG: > Use Cure All Stats Potion
+- LOG: The potion restores your full strength and clears corruption.
+- STEP 046 COMMAND: Assemble
+- LOG: > Assemble
+- LOG: The fragments align. The Prism of Makidos awakens in your hands.
+- STEP 047 COMMAND: South
+- LOG: > South
+- LOG: You move SOUTH.
+- LOG: A shimmering Galanic store appears: Buy 1 (Shield 400g), Buy 2 (Minor Potion 350g), Buy 3 (Hose of Speed 450g).
+- LOG: Room of Cares
+A quiet room with an old seal or Galanic mirror that reacts to the assembled Prism.
+- LOG: A chill of unfamiliar stone settles over you.
+- STEP 048 COMMAND: Buy 1
+- LOG: > Buy 1
+- LOG: Purchased Shield of the Lionheart.
+- STEP 049 COMMAND: Equip shield
+- LOG: > Equip shield
+- LOG: You equip Shield of the Lionheart (+2 DEF).
+- STEP 050 COMMAND: Buy 3
+- LOG: > Buy 3
+- LOG: Purchased Hose of Speed.
+- STEP 051 COMMAND: Equip hose
+- LOG: > Equip hose
+- LOG: You equip Hose of Speed (+1 EVA).
+- STEP 052 COMMAND: West
+- LOG: > West
+- LOG: You move WEST.
+- LOG: The Banshee's Chamber
+A large enclosure where the air is thick with anticipation and illusion.
+- LOG: A chill of unfamiliar stone settles over you.
+- LOG: The Sound-Deflecting Girdle flashes and shields you from the Banshee's opening shriek.
+- LOG: A Banshee Doppelganger confronts you. It lunges first.
+- LOG: Banshee Doppelganger's opening strike misses.
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- STEP 053 CLICK: Fight till the end
+- LOG: > Fight till the end
+- LOG: You land a hit on Banshee Doppelganger for 8 damage.
+- LOG: Banshee Doppelganger lands a hit on you for 5 damage.
+- LOG: Combat status: You 80 HP | Banshee Doppelganger 77 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Banshee Doppelganger for 6 damage.
+- LOG: Banshee Doppelganger lands a hit on you for 6 damage.
+- LOG: Combat status: You 74 HP | Banshee Doppelganger 71 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Banshee Doppelganger for 8 damage.
+- LOG: Banshee Doppelganger strikes at you, but the blow misses.
+- LOG: Combat status: You 74 HP | Banshee Doppelganger 63 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Banshee Doppelganger for 6 damage.
+- LOG: Banshee Doppelganger lands a hit on you for 7 damage.
+- LOG: Combat status: You 67 HP | Banshee Doppelganger 57 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- STEP 054 CLICK: Fight till the end
+- LOG: > Fight till the end
+- LOG: You strikes at Banshee Doppelganger, but the blow misses.
+- LOG: Banshee Doppelganger strikes at you, but the blow misses.
+- LOG: Combat status: You 67 HP | Banshee Doppelganger 57 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Banshee Doppelganger for 8 damage.
+- LOG: Banshee Doppelganger strikes at you, but the blow misses.
+- LOG: Combat status: You 67 HP | Banshee Doppelganger 49 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You strikes at Banshee Doppelganger, but the blow misses.
+- LOG: Banshee Doppelganger strikes at you, but the blow misses.
+- LOG: Combat status: You 67 HP | Banshee Doppelganger 49 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- STEP 055 COMMAND: Examine crystal stand
+- LOG: You land a hit on Banshee Doppelganger for 8 damage.
+- LOG: Banshee Doppelganger strikes at you, but the blow misses.
+- LOG: Combat status: You 67 HP | Banshee Doppelganger 41 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Banshee Doppelganger for 7 damage.
+- LOG: Banshee Doppelganger strikes at you, but the blow misses.
+- LOG: Combat status: You 67 HP | Banshee Doppelganger 34 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You strikes at Banshee Doppelganger, but the blow misses.
+- LOG: Banshee Doppelganger strikes at you, but the blow misses.
+- LOG: Combat status: You 67 HP | Banshee Doppelganger 34 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Banshee Doppelganger for 8 damage.
+- LOG: Banshee Doppelganger strikes at you, but the blow misses.
+- LOG: Combat status: You 67 HP | Banshee Doppelganger 26 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Banshee Doppelganger for 8 damage.
+- LOG: Banshee Doppelganger strikes at you, but the blow misses.
+- LOG: Combat status: You 67 HP | Banshee Doppelganger 18 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Banshee Doppelganger for 8 damage.
+- LOG: Banshee Doppelganger lands a hit on you for 4 damage.
+- LOG: Combat status: You 63 HP | Banshee Doppelganger 10 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Banshee Doppelganger for 9 damage.
+- LOG: Banshee Doppelganger strikes at you, but the blow misses.
+- LOG: Combat status: You 63 HP | Banshee Doppelganger 1 HP
+- LOG: Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+- LOG: You land a hit on Banshee Doppelganger for 8 damage.
+- LOG: The Galanic powers in this Ruin are activated, and you are healed of all your wounds.
+- LOG: Banshee Doppelganger is defeated.
+- LOG: > Examine crystal stand
+- LOG: You examine crystal stand.
+- LOG: Revealed: Merlin's Tetrahedronal.
+- STEP 056 COMMAND: Pick up Merlin's Tetrahedronal
+- LOG: > Pick up Merlin's Tetrahedronal
+- LOG: As you claim Merlin's Tetrahedronal, Sheja appears and the prophecy stirs to life.
+- LOG: Sheja rewards you and the quest is complete.
+- LOG: You secure Merlin's Tetrahedronal in your pack.
+- STEP 057 COMMAND: Read Journal
+- LOG: > Read Journal
+- LOG: Journal Entries:
+- Quest Objective: Retrieve Merlin's Tetrahedronal hidden within the Ruins of the Dark Galan. Begin with Prism Fragment A.
+- Fog of Confusion: Fog of Confusion is super effective against the Imp.
+- Pulse of Calm: Pulse of Calm is super effective against the Musca.
+- Heart Beacon: Heart Beacon is super effective against the Lizardman.
+- Prophecy of the Armour of Light: A champion shall don the Armour of Light, with the Tetrahedronal beside them as a key to dispelling darkness.
+- Galania and Xerces: Galania was betrayed by Xerces, who aligned with darkness and the Cult of Asherah.
+- Cure All Stats Potion: The Cure All Stats Potion restores full strength and cleanses corruption.
+- Final Prism Fragment: The third and final Prism Fragment has been recovered. Assembly is now possible.
+- Prism of Makidos: The Prism of Makidos is whole and can dissolve the Galanic Seal.
+- Final Chamber: The final chamber is open; beyond it lies the soul of the ruin and the final battle.
+- Hero of the Prophecy: Hero who overcame the Voices of Care and awakened the Prophecy of the Stone.
+- RESULT: final phase is exploration
+- ARTIFACT: screenshot C:\Users\Thomas\Documents\New project\ruins-api\docs\walkthrough-final-ui.png

@@ -464,10 +464,20 @@
       return;
     }
     const direction = directionRaw.toLowerCase();
-    const exit = node.exits.find((e) => {
-      const d = String(e.direction || "").toLowerCase();
-      return d === direction || d.startsWith(direction) || d.includes(direction);
-    });
+    const exits = node.exits || [];
+    const scoreExit = (rawDirection) => {
+      const d = String(rawDirection || "").toLowerCase();
+      if (d === direction) return 400;
+      if (d.startsWith(`${direction}_`) || d.startsWith(`${direction}-`) || d.startsWith(direction)) return 300;
+      if (d.includes(`_${direction}_`) || d.endsWith(`_${direction}`) || d.startsWith(`${direction}_`)) return 200;
+      if (d.includes(direction)) return 100;
+      return 0;
+    };
+    const candidates = exits
+      .map((e) => ({ e, score: scoreExit(e.direction) }))
+      .filter((x) => x.score > 0)
+      .sort((a, b) => b.score - a.score);
+    const exit = candidates.length ? candidates[0].e : null;
     if (!exit) {
       write("That is not a valid move at this time.");
       return;
