@@ -10,6 +10,7 @@
   const journalEl = document.getElementById("journal");
   const combatQuickEl = document.getElementById("combatQuick");
   const exploreQuickEl = document.getElementById("exploreQuick");
+  const prologueQuickEl = document.getElementById("prologueQuick");
   const useFogEl = document.getElementById("useFog");
   const usePulseEl = document.getElementById("usePulse");
   const useHeartEl = document.getElementById("useHeart");
@@ -60,7 +61,8 @@
     let seed = hashSeed(seedText || "ruins-seed");
     return function roll(maxInclusive) {
       seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
-      return (seed % maxInclusive) + 1;
+      const mixed = seed >>> 16;
+      return (mixed % maxInclusive) + 1;
     };
   }
 
@@ -148,9 +150,14 @@
   }
 
   function syncActionBars() {
-    const inCombat = state && state.phase === "combat";
+    const phase = state ? state.phase : "prologue";
+    const inCombat = phase === "combat";
+    const inPrologue = phase === "prologue";
     if (exploreQuickEl) {
-      exploreQuickEl.style.display = inCombat ? "none" : "flex";
+      exploreQuickEl.style.display = inCombat || inPrologue ? "none" : "flex";
+    }
+    if (prologueQuickEl) {
+      prologueQuickEl.style.display = inPrologue ? "flex" : "none";
     }
     if (combatQuickEl) {
       combatQuickEl.style.display = inCombat ? "flex" : "none";
@@ -666,7 +673,17 @@
         state.prologue.offer = 900;
         write("Sheja exhales. '900 gold. Final offer.'");
       }
-    } else if (text.includes("quest") || text.includes("ruin") || text.includes("monster") || text.includes("offer")) {
+    } else if (text.includes("quest") || text.includes("ruin")) {
+      write("Sheja says the artifact is Merlin's Tetrahedronal, buried behind ten cursed chambers.");
+    } else if (text.includes("monster")) {
+      write("Sheja warns of the Voices of Care: fiends that test will, wit, and battlecraft.");
+    } else if (text.includes("place") || text.includes("where")) {
+      write("Sheja names the destination: the Forgotten Ruin in the Edela wilds, sealed from common paths.");
+    } else if (text.includes("deal off") || text.includes("no")) {
+      write("Sheja rises. 'Then we are done. Deal is off.'");
+      defeatPlayer("The quest slips away before it begins.");
+      return;
+    } else if (text.includes("offer")) {
       write("Sheja speaks in a low voice about a forgotten ruin, voices of care, and an artifact hidden deep within.");
     } else {
       write("Sheja studies you in silence, waiting for your answer.");
