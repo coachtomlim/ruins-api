@@ -25,3 +25,7 @@ Still intentionally not implemented:
 The placeholder modules for combat, inventory, journal, events, and session exist only to reserve module boundaries.
 
 Planned module boundaries are documented in [../../docs/architecture/deterministic-engine-proposal.md](../../docs/architecture/deterministic-engine-proposal.md).
+
+Current canon basis for future implementation:
+
+- `Adventure Game Design V3 - Alpha.docx` is the primary authority unless the user overrides a specific rule.

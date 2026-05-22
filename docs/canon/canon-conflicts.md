@@ -4,7 +4,7 @@ This document lists conflicts that must be resolved explicitly. Future code must
 
 ## C001: Incorrect Scroll Reduction
 
-- Frozen Alpha: incorrect scroll reduces monster stats by `5%`.
+- `Adventure Game Design V3 - Alpha`: incorrect scroll reduces monster stats by `5%`.
 - Later Alpha/Beta docs: incorrect scroll reduces monster stats by `10%`.
 - Impact: combat balance, deterministic tests, player strategy.
 - Proposed handling until resolved: schema should allow versioned `minorEffectPercent`; tests should mark both cases as pending variants.
@@ -25,7 +25,7 @@ This document lists conflicts that must be resolved explicitly. Future code must
 
 ## C004: Room 9 Role
 
-- Frozen Alpha: Room 9 magical store appears after Prism assembly and before boss.
+- `Adventure Game Design V3 - Alpha`: Room 9 magical store appears after Prism assembly and before boss.
 - Later docs: Room 9 is mainly a Galanic Mirror / seal assembly chamber.
 - Impact: command flow, store timing, Room 10 unlock, frontend layout.
 - Proposed handling until resolved: model Room 9 as capable of multiple conditional events, but keep store/seal as separate event definitions.

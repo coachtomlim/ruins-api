@@ -15,8 +15,8 @@
 - `LOCKED`: Negotiation can raise the reward to a maximum of `900 gold`.
 - `LOCKED`: Player receives Prism Fragment A and the Adventurer's Journal.
 - `LOCKED`: On acceptance, the player says/uses an incantation and is teleported to Edela Forest / Ruin entrance.
-- `CONFLICTED`: Inn name appears as generic Adventurer's Inn in frozen Alpha and `The Hollow Hound` in later reconstruction.
-- `CONFLICTED`: Negotiation logic is described as freeform up to five interactions in frozen/post-test material and as structured choices in later specs.
+- `CONFLICTED`: Inn name appears as generic Adventurer's Inn in `Adventure Game Design V3 - Alpha` and `The Hollow Hound` in later reconstruction.
+- `CONFLICTED`: Negotiation logic is described as freeform up to five interactions in `Adventure Game Design V3 - Alpha`/post-test material and as structured choices in later specs.
 
 ## In-Ruin Timeline
 
@@ -34,6 +34,6 @@
 
 ## Version Timeline
 
-- `LOCKED`: Alpha Frozen Build exported on 2025-05-07.
-- `LIKELY`: May 13 files represent a later Beta/reconstruction pass adding fuller structure and schema-like exports.
+- `LOCKED`: `Adventure Game Design V3 - Alpha` is the approved implementation base (per Thomas, confirmed May 22, 2026).
+- `LIKELY`: Earlier frozen and May 13 reconstruction files remain supporting evidence and migration context.
 - `UNKNOWN`: Whether Beta materials are approved canon or planning artifacts for future migration.

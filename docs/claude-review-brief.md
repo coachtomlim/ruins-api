@@ -40,7 +40,7 @@ Please review the new docs with attention to:
 2. Canon preservation:
    - Are `LOCKED`, `LIKELY`, `CONFLICTED`, and `UNKNOWN` labels used conservatively?
    - Are any rules silently resolved that should be flagged?
-   - Should `Forgotten_Ruin_Alpha_Edition_Frozen.txt` remain the top authority, or should May 13 Beta materials supersede it?
+   - Thomas has directed that `Adventure Game Design V3 - Alpha.docx` should be used as the base authority. Please review whether any remaining docs or content still incorrectly privilege older frozen material.
 
 3. Deterministic guarantees:
    - Is RNG state sufficiently explicit?

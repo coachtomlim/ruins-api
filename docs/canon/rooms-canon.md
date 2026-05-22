@@ -69,7 +69,7 @@
 ## Room 9: Room of Cares
 
 - `LOCKED`: Prism assembly/unlock is associated with Room 9 progression.
-- `LOCKED`: Frozen Alpha says magical store appears only if Prism has been assembled and store not yet triggered.
+- `LOCKED`: `Adventure Game Design V3 - Alpha` says magical store appears only if Prism has been assembled and store not yet triggered.
 - `LOCKED`: Store contains Shield, Minor Combat Healing Potion, Hose of Speed.
 - `CONFLICTED`: Later docs frame Room 9 primarily as a Galanic Mirror / seal chamber rather than store-first logic.
 - `UNKNOWN`: Whether Room 9 should prompt for missing Girdle and offer teleport to Room 5; appears in later notes but is not clearly frozen.

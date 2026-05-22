@@ -6,16 +6,16 @@ This folder reconstructs the gameplay canon for **Forgotten Ruin of the Dark Gal
 
 Use this order when interpreting conflicts:
 
-1. `LOCKED`: Frozen Alpha and post-test fix documents that explicitly say the Alpha design is locked.
-2. `LIKELY`: Later Alpha/Beta reconstruction documents that align with the frozen build or fill gaps without changing behavior.
+1. `LOCKED`: `Adventure Game Design V3 - Alpha.docx` is the primary implementation base unless Thomas explicitly overrides a specific rule.
+2. `LIKELY`: Frozen Alpha, post-test fixes, and later reconstruction documents that align with `Adventure Game Design V3 - Alpha` or fill gaps without changing behavior.
 3. `CONFLICTED`: Later documents or JSON exports that disagree with the frozen build or each other.
 4. `UNKNOWN`: Details that are implied but not sufficiently specified for deterministic implementation.
 
 ## Source Materials Reviewed
 
+- `Adventure Game Design V3 - Alpha.docx` (current base authority per Thomas)
 - `Forgotten_Ruin_Alpha_Edition_Frozen.txt`
 - `Forgotten_Ruin_Alpha_GPT_Instructions_UPDATED.txt`
-- `Adventure Game Design V3 - Alpha.docx`
 - `FULL ALPHA SPECIFICATIONS FOR CUSTOM CHATGPT ALPHA.docx`
 - `JSON SCRIPT FOR THE RUINS OF THE DARK GALAN.docx`
 - `Forgotten_Ruin_Combat_System_Alpha.json`
@@ -41,3 +41,8 @@ No future engine code should invent or normalize canon silently. If a rule is `C
 - preserve both variants behind explicit version tags, or
 - wait for human canon approval, or
 - mark a test as pending with the unresolved question linked here.
+
+Current working assumption:
+
+- `Adventure Game Design V3 - Alpha.docx` is the implementation base.
+- Older frozen material remains important evidence, but final tie-breaks follow `Adventure Game Design V3 - Alpha.docx` unless Thomas explicitly overrides.

@@ -40,7 +40,7 @@
       "monsters": [],
       "journalUnlocks": [],
       "canonStatus": "LOCKED",
-      "sourceNotes": ["Frozen Alpha", "forgotten_ruin_map_data.json"],
+      "sourceNotes": ["Adventure Game Design V3 - Alpha", "forgotten_ruin_map_data.json"],
       "unresolvedQuestions": []
     },
     {
@@ -88,7 +88,7 @@
       "monsters": ["monster.random_low_tier"],
       "journalUnlocks": ["journal.lore.armour_of_light_prophecy"],
       "canonStatus": "LOCKED",
-      "sourceNotes": ["Frozen Alpha", "Full Alpha Specifications"],
+      "sourceNotes": ["Adventure Game Design V3 - Alpha", "Full Alpha Specifications"],
       "unresolvedQuestions": []
     },
     {
@@ -361,7 +361,7 @@
       "monsters": ["monster.lizardman"],
       "journalUnlocks": ["journal.discovery.prism_fragment_c"],
       "canonStatus": "LOCKED",
-      "sourceNotes": ["Frozen Alpha", "Full Alpha Specifications"],
+      "sourceNotes": ["Adventure Game Design V3 - Alpha", "Full Alpha Specifications"],
       "unresolvedQuestions": [
         "Whether poison reapplies on every re-entry after cure."
       ]
@@ -411,7 +411,7 @@
       "monsters": ["monster.musca"],
       "journalUnlocks": ["journal.lore.galania_xerces_asherah"],
       "canonStatus": "LOCKED",
-      "sourceNotes": ["Frozen Alpha", "Full Alpha Specifications"],
+      "sourceNotes": ["Adventure Game Design V3 - Alpha", "Full Alpha Specifications"],
       "unresolvedQuestions": []
     },
     {
@@ -453,7 +453,7 @@
       "monsters": [],
       "journalUnlocks": ["journal.discovery.prism_assembled"],
       "canonStatus": "CONFLICTED",
-      "sourceNotes": ["Frozen Alpha store logic", "Later Beta seal chamber design"],
+      "sourceNotes": ["Adventure Game Design V3 - Alpha store logic", "Later Beta seal chamber design"],
       "unresolvedQuestions": [
         "Whether Room 9 should run store, seal assembly, or both in sequence.",
         "Whether missing Girdle teleport guidance is approved canon."
@@ -499,7 +499,7 @@
       "monsters": ["monster.banshee_doppelganger"],
       "journalUnlocks": ["journal.ending.hero_prophecy"],
       "canonStatus": "LOCKED",
-      "sourceNotes": ["Frozen Alpha", "Post-test fix 9"],
+      "sourceNotes": ["Adventure Game Design V3 - Alpha", "Post-test fix 9"],
       "unresolvedQuestions": [
         "Whether artifact pickup requires examine stand first or can be picked up immediately after victory."
       ]

@@ -7,7 +7,7 @@ This draft describes the runtime state the deterministic engine should own. API 
 ```ts
 interface GameState {
   schemaVersion: string;
-  canonVariant: "alpha_frozen" | "alpha_with_post_test_fixes" | "beta_candidate";
+  canonVariant: "adventure_game_design_v3_alpha" | "alpha_frozen_reference" | "beta_candidate";
   sessionId: string;
   phase: "prologue" | "exploration" | "combat" | "store" | "ending" | "game_over";
   player: PlayerState;

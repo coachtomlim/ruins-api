@@ -20,7 +20,7 @@
 - `LOCKED`: Quest/key items include Prism Fragments, assembled Prism, Hexagonal Glass Piece, Sound-Deflecting Girdle, and Merlin's Tetrahedronal.
 - `LOCKED`: Scrolls are single-use combat consumables.
 - `LOCKED`: Cure All Stats Potion is a single-use restorative item.
-- `LOCKED`: Store items include Shield, Minor Combat Healing Potion, and Hose of Speed in the frozen Alpha store model.
+- `LOCKED`: Store items include Shield, Minor Combat Healing Potion, and Hose of Speed in the `Adventure Game Design V3 - Alpha` store model.
 - `LIKELY`: Readable lore objects should add journal entries rather than behave like normal consumables.
 
 ## Use and Equipment
@@ -36,7 +36,7 @@
 
 ## Store
 
-- `LOCKED`: Frozen Alpha says Room 9 store appears only if the Prism has been assembled and the store has not yet triggered.
+- `LOCKED`: `Adventure Game Design V3 - Alpha` says Room 9 store appears only if the Prism has been assembled and the store has not yet triggered.
 - `LOCKED`: Store items and prices:
   - Shield of the Lionheart: `400g`, `+2 DEF`
   - Minor Combat Healing Potion: `350g`, auto-heal at `HP < 10`

@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "id": "ruins.alpha.config",
-  "canonVariant": "alpha_with_post_test_fixes",
+  "canonVariant": "adventure_game_design_v3_alpha",
   "startingStats": {
     "canonStatus": "LOCKED",
-    "sourceNotes": ["Frozen Alpha", "Full Alpha Specifications"],
+    "sourceNotes": ["Adventure Game Design V3 - Alpha", "Full Alpha Specifications"],
     "value": {
       "ATF": 6,
       "DEF": 6,
@@ -14,7 +14,7 @@
   },
   "dice": {
     "canonStatus": "LOCKED",
-    "sourceNotes": ["Frozen Alpha combat rules"],
+    "sourceNotes": ["Adventure Game Design V3 - Alpha combat rules"],
     "attackRoll": "1d4",
     "damageRoll": "1d4"
   },
@@ -22,7 +22,7 @@
     "monsterInitiative": {
       "canonStatus": "LOCKED",
       "value": "monster_attacks_first",
-      "sourceNotes": ["Frozen Alpha", "Post-test fix 7"]
+      "sourceNotes": ["Adventure Game Design V3 - Alpha", "Post-test fix 7"]
     },
     "toHitRule": {
       "canonStatus": "LOCKED",
@@ -95,7 +95,7 @@
       "variants": [
         {
           "value": 5,
-          "sourceNote": "Forgotten_Ruin_Alpha_Edition_Frozen.txt"
+            "sourceNote": "Frozen Alpha reference retained as conflicting evidence against Adventure Game Design V3 - Alpha base"
         },
         {
           "value": 10,
@@ -122,6 +122,6 @@
     "bossId": "monster.banshee_doppelganger",
     "mirrors": "player_base_stats_at_room_10_entry",
     "excludes": ["equipment_modifiers"],
-    "sourceNotes": ["Frozen Alpha boss rules", "Room 9 store logic"]
+    "sourceNotes": ["Adventure Game Design V3 - Alpha boss rules", "Room 9 store logic"]
   }
 }

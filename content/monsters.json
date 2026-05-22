@@ -16,7 +16,7 @@
       "drops": [],
       "rewardLogicNotes": "Victory grants 30 percent of monster stats, rounded down, and full heal.",
       "canonStatus": "LOCKED",
-      "sourceNotes": ["Frozen Alpha", "Full Alpha Specifications"]
+      "sourceNotes": ["Adventure Game Design V3 - Alpha", "Full Alpha Specifications"]
     },
     {
       "id": "monster.random_low_tier_scaled",
@@ -32,7 +32,7 @@
       "drops": ["item.scroll.pulse_of_calm"],
       "rewardLogicNotes": "Reward source stats require decision if scaling uses current or generated instance stats.",
       "canonStatus": "LIKELY",
-      "sourceNotes": ["Frozen Alpha random monster note", "Full Alpha Specifications"]
+      "sourceNotes": ["Adventure Game Design V3 - Alpha random monster note", "Full Alpha Specifications"]
     },
     {
       "id": "monster.imp",
@@ -48,7 +48,7 @@
               "EVA": 6,
               "HP": 20
             },
-            "sourceNote": "Frozen Alpha key monster stats"
+            "sourceNote": "Adventure Game Design V3 - Alpha key monster stats"
           },
           {
             "value": {
@@ -67,7 +67,7 @@
       "drops": ["item.scroll.heart_beacon"],
       "rewardLogicNotes": "Reward differs depending on approved stat variant.",
       "canonStatus": "CONFLICTED",
-      "sourceNotes": ["Frozen Alpha", "Full Alpha Specifications"]
+      "sourceNotes": ["Adventure Game Design V3 - Alpha", "Full Alpha Specifications"]
     },
     {
       "id": "monster.musca",
@@ -84,7 +84,7 @@
       "drops": ["item.prism_fragment_b"],
       "rewardLogicNotes": "Examples show reward as +3 ATF, +2 DEF, +4 EVA, +15 HP.",
       "canonStatus": "LOCKED",
-      "sourceNotes": ["Frozen Alpha", "Full Alpha Specifications"]
+      "sourceNotes": ["Adventure Game Design V3 - Alpha", "Full Alpha Specifications"]
     },
     {
       "id": "monster.lizardman",
@@ -100,7 +100,7 @@
               "EVA": 14,
               "HP": 100
             },
-            "sourceNote": "Frozen Alpha key monster stats"
+            "sourceNote": "Adventure Game Design V3 - Alpha key monster stats"
           },
           {
             "value": {
@@ -119,7 +119,7 @@
       "drops": ["item.prism_fragment_c"],
       "rewardLogicNotes": "Reward differs depending on approved EVA/stat variant.",
       "canonStatus": "CONFLICTED",
-      "sourceNotes": ["Frozen Alpha", "Full Alpha Specifications"]
+      "sourceNotes": ["Adventure Game Design V3 - Alpha", "Full Alpha Specifications"]
     },
     {
       "id": "monster.banshee_doppelganger",
@@ -137,7 +137,7 @@
       "drops": ["item.merlins_tetrahedronal"],
       "rewardLogicNotes": "Final sequence is artifact pickup and Sheja cutscene, not normal stat farming.",
       "canonStatus": "LOCKED",
-      "sourceNotes": ["Frozen Alpha boss mechanics", "Post-test fix 9"]
+      "sourceNotes": ["Adventure Game Design V3 - Alpha boss mechanics", "Post-test fix 9"]
     }
   ]
 }
