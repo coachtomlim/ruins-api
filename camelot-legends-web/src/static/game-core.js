@@ -1,6 +1,6 @@
-export const SAVE_VERSION = 1;
+export const SAVE_VERSION = 2;
 
-export const DEMO_ROUTE = ["area-001", "area-002", "area-003"];
+export const DEMO_ROUTE = ["area-001", "area-002", "area-003", "area-004", "area-005"];
 
 export const DEMO_DIALOGUE_IDS = [
   "dialogue-text-006",
@@ -19,6 +19,14 @@ export const DEMO_SKILL_IDS = [
   "skill-panda-fire-2-name",
 ];
 
+export const DEMO_OBJECTIVES = [
+  { id: "hear-warning", label: "Hear Mystery's warning", areaId: "area-001" },
+  { id: "recover-amethyst", label: "Search the road and recover the Amethyst", areaId: "area-002" },
+  { id: "recover-armor", label: "Recover and equip Lithic Armor", areaId: "area-003" },
+  { id: "reach-castle-road", label: "Push toward Castle Camelot", areaId: "area-004" },
+  { id: "defeat-raider", label: "Defeat the raider before the castle", areaId: "area-005" },
+];
+
 export function createNewGame(now = new Date().toISOString()) {
   return {
     version: SAVE_VERSION,
@@ -33,6 +41,8 @@ export function createNewGame(now = new Date().toISOString()) {
       maxHp: 32,
       attack: 7,
       defense: 2,
+      gold: 0,
+      xp: 0,
     },
     enemy: null,
     inventory: [],
@@ -44,8 +54,33 @@ export function createNewGame(now = new Date().toISOString()) {
       foundItem: false,
       battleWon: false,
       demoComplete: false,
+      reachedCastleRoad: false,
     },
     log: ["A new legend begins."],
+  };
+}
+
+export function normalizeState(state) {
+  if (!state) return state;
+  const fresh = createNewGame(state.createdAt);
+  return {
+    ...fresh,
+    ...state,
+    version: SAVE_VERSION,
+    routeIndex: currentRouteIndex(state),
+    player: {
+      ...fresh.player,
+      ...state.player,
+    },
+    equipment: {
+      ...fresh.equipment,
+      ...state.equipment,
+    },
+    flags: {
+      ...fresh.flags,
+      ...state.flags,
+    },
+    log: Array.isArray(state.log) ? state.log : ["Save migrated."],
   };
 }
 
@@ -64,12 +99,17 @@ export function canGoBack(state) {
 export function goNext(state) {
   if (!canGoNext(state)) return state;
   const nextIndex = currentRouteIndex(state) + 1;
+  const nextAreaId = DEMO_ROUTE[nextIndex];
   return {
     ...state,
-    currentAreaId: DEMO_ROUTE[nextIndex],
+    currentAreaId: nextAreaId,
     routeIndex: nextIndex,
     mode: "scene",
-    log: [`Moved to ${DEMO_ROUTE[nextIndex]}.`, ...state.log].slice(0, 8),
+    flags: {
+      ...state.flags,
+      reachedCastleRoad: nextAreaId === "area-004" ? true : state.flags.reachedCastleRoad,
+    },
+    log: [`Moved to ${nextAreaId}.`, ...state.log].slice(0, 8),
   };
 }
 
@@ -129,9 +169,9 @@ export function startBattle(state) {
     enemy: {
       id: "bandit-scout",
       name: "Roadside Raider",
-      hp: 24,
-      maxHp: 24,
-      attack: 5,
+      hp: 34,
+      maxHp: 34,
+      attack: 6,
     },
     log: ["A roadside raider blocks the path.", ...state.log].slice(0, 8),
   };
@@ -152,12 +192,20 @@ export function playerAttack(state, skillId = "basic-attack") {
       ...state,
       mode: "scene",
       enemy: null,
+      player: {
+        ...state.player,
+        gold: state.player.gold + 15,
+        xp: state.player.xp + 20,
+      },
+      inventory: state.inventory.includes("potion")
+        ? state.inventory
+        : [...state.inventory, "potion"],
       flags: {
         ...state.flags,
         battleWon: true,
-        demoComplete: state.currentAreaId === DEMO_ROUTE[2],
+        demoComplete: state.currentAreaId === DEMO_ROUTE[DEMO_ROUTE.length - 1],
       },
-      log: [`${playerMessage} Victory is secured.`, ...state.log].slice(0, 8),
+      log: [`${playerMessage} Victory is secured. Reward: 15 gold, 20 XP, Potion.`, ...state.log].slice(0, 8),
     };
   }
 
@@ -202,6 +250,22 @@ export function markDialogueSeen(state) {
     },
     log: ["Mystery's warning has been heard.", ...state.log].slice(0, 8),
   };
+}
+
+export function objectiveStatus(state) {
+  return DEMO_OBJECTIVES.map((objective) => {
+    let complete = false;
+    if (objective.id === "hear-warning") complete = state.flags.introDialogue;
+    if (objective.id === "recover-amethyst") complete = state.flags.foundItem;
+    if (objective.id === "recover-armor") complete = state.equipment.armor === DEMO_EQUIPMENT_ID;
+    if (objective.id === "reach-castle-road") complete = state.flags.reachedCastleRoad;
+    if (objective.id === "defeat-raider") complete = state.flags.battleWon;
+    return {
+      ...objective,
+      complete,
+      active: state.currentAreaId === objective.areaId && !complete,
+    };
+  });
 }
 
 export function serializableState(state) {

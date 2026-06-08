@@ -13,8 +13,8 @@ The first playable demo uses temporary rules because original combat formulas we
 ## Enemy
 
 - Name: Roadside Raider
-- HP: 24
-- Attack: 5
+- HP: 34
+- Attack: 6
 
 ## Turn Flow
 
@@ -30,5 +30,11 @@ The first playable demo uses temporary rules because original combat formulas we
 - `Lightning Shot`: player attack + 5.
 - `Battle Cry`: player attack + 3.
 - Enemy retaliation: enemy attack - player defense, minimum 1.
+
+## Victory Rewards
+
+- 15 gold
+- 20 XP
+- Potion added to inventory if not already present
 
 These rules are intentionally simple and should be replaced once better historical combat evidence is found or a final design direction is chosen.

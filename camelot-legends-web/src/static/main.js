@@ -12,6 +12,8 @@ import {
   goBack,
   goNext,
   markDialogueSeen,
+  normalizeState,
+  objectiveStatus,
   playerAttack,
   removeInventoryItem,
   restAtCamp,
@@ -43,12 +45,16 @@ function cleanText(value) {
     .replaceAll("â€™", "'")
     .replaceAll("â€œ", '"')
     .replaceAll("â€�", '"')
-    .replaceAll("â€“", "-");
+    .replaceAll("â€“", "-")
+    .replaceAll("Ã¢â‚¬â„¢", "'")
+    .replaceAll("Ã¢â‚¬Å“", '"')
+    .replaceAll("Ã¢â‚¬ï¿½", '"')
+    .replaceAll("Ã¢â‚¬â€œ", "-");
 }
 
 function recordLabel(record, fallback) {
   if (!record) return fallback;
-  if (record.displayName && !record.displayName.includes("_")) return record.displayName;
+  if (record.displayName && !record.displayName.includes("_")) return cleanText(record.displayName);
   return fallback;
 }
 
@@ -61,7 +67,7 @@ function recordDescription(record, fallback = "") {
 }
 
 function setState(nextState, message = "") {
-  state = nextState;
+  state = normalizeState(nextState);
   if (message) status = message;
   render();
 }
@@ -79,7 +85,7 @@ async function restore() {
     render();
     return;
   }
-  state = saved;
+  state = normalizeState(saved);
   activePanel = "scene";
   status = "Save loaded.";
   render();
@@ -99,7 +105,6 @@ function startNewGame() {
 }
 
 function renderMenu() {
-  const loadButton = `<button data-action="load">Load Game</button>`;
   return `
     <main class="menu-screen">
       <section class="hero-panel">
@@ -108,7 +113,7 @@ function renderMenu() {
         <p class="lead">A single-player reconstruction prototype using recovered story, mission, item, skill, and dialogue records.</p>
         <div class="menu-actions">
           <button class="primary" data-action="new">Start New Game</button>
-          ${loadButton}
+          <button data-action="load">Load Game</button>
         </div>
         <p class="status">${status}</p>
       </section>
@@ -116,30 +121,54 @@ function renderMenu() {
   `;
 }
 
+function activeObjective() {
+  return objectiveStatus(state).find((objective) => objective.active);
+}
+
+function canAdvanceCurrentArea() {
+  const objective = activeObjective();
+  if (!objective) return true;
+  return objective.id === "reach-castle-road" || objective.id === "defeat-raider";
+}
+
+function sceneVisualPath() {
+  if (state.currentAreaId === "area-005") {
+    return "./public/assets/recovered/characters-v2.png";
+  }
+  return "./public/assets/recovered/level-design-example.png";
+}
+
 function renderScenePanel() {
   const area = currentArea();
   const mission = lookup("missions", state.currentAreaId.replace("area", "mission"));
   const foundItem = state.inventory.includes(DEMO_PICKUP_ID);
   const hasArmor = state.inventory.includes(DEMO_EQUIPMENT_ID);
-  const canBattle = state.currentAreaId === DEMO_ROUTE[2] && !state.flags.battleWon;
+  const objective = activeObjective();
+  const canBattle =
+    state.currentAreaId === DEMO_ROUTE[DEMO_ROUTE.length - 1] && !state.flags.battleWon;
 
   return `
     <section class="scene-card">
       <div class="visual-band">
+        <img src="${sceneVisualPath()}" alt="" />
         <span>${state.currentAreaId}</span>
       </div>
       <div class="scene-copy">
         <p class="eyebrow">${recordLabel(mission, "Mission")}</p>
         <h2>${recordLabel(area, "Recovered Scene")}</h2>
         <p>${recordDescription(area, "Recovered scene text is unavailable for this record.")}</p>
+        <div class="objective-callout">
+          <strong>Current objective</strong>
+          <span>${objective ? objective.label : "Continue the route."}</span>
+        </div>
       </div>
       <div class="action-grid">
         <button data-action="dialogue">Speak With Mystery</button>
-        <button data-action="pickup" ${foundItem ? "disabled" : ""}>Search the Road</button>
-        <button data-action="take-armor" ${hasArmor ? "disabled" : ""}>Recover Armor</button>
+        <button data-action="pickup" ${foundItem || state.currentAreaId !== "area-002" ? "disabled" : ""}>Search the Road</button>
+        <button data-action="take-armor" ${hasArmor || state.currentAreaId !== "area-003" ? "disabled" : ""}>Recover Armor</button>
         <button data-action="rest">Rest</button>
         <button data-action="back" ${canGoBack(state) ? "" : "disabled"}>Previous Area</button>
-        <button data-action="next" ${canGoNext(state) ? "" : "disabled"}>Next Area</button>
+        <button data-action="next" ${canGoNext(state) && canAdvanceCurrentArea() ? "" : "disabled"}>Next Area</button>
         <button class="danger" data-action="battle" ${canBattle ? "" : "disabled"}>Face Raider</button>
       </div>
     </section>
@@ -196,8 +225,8 @@ function renderCharacterPanel() {
     .map(
       (character) => `
         <li>
-          <strong>${character.displayName}</strong>
-          <span>${character.description}</span>
+          <strong>${recordLabel(character, character.id)}</strong>
+          <span>${recordDescription(character, character.description)}</span>
         </li>
       `,
     )
@@ -210,6 +239,8 @@ function renderCharacterPanel() {
         <span>HP ${state.player.hp}/${state.player.maxHp}</span>
         <span>ATK ${state.player.attack}</span>
         <span>DEF ${state.player.defense}</span>
+        <span>XP ${state.player.xp}</span>
+        <span>Gold ${state.player.gold}</span>
       </div>
       <ul class="item-list">${characters}</ul>
     </section>
@@ -233,6 +264,33 @@ function renderSkillsPanel() {
       <p class="eyebrow">Skills</p>
       <h2>Usable Demo Skills</h2>
       <ul class="item-list">${skills}</ul>
+    </section>
+  `;
+}
+
+function renderJournalPanel() {
+  const objectives = objectiveStatus(state)
+    .map((objective) => {
+      const stateClass = objective.complete ? "complete" : objective.active ? "active" : "";
+      const marker = objective.complete ? "Done" : objective.active ? "Now" : "Soon";
+      const area = lookup("areas", objective.areaId);
+      return `
+        <li class="objective-row ${stateClass}">
+          <div>
+            <strong>${objective.label}</strong>
+            <span>${recordLabel(area, objective.areaId)}</span>
+          </div>
+          <em>${marker}</em>
+        </li>
+      `;
+    })
+    .join("");
+  return `
+    <section class="panel-card">
+      <p class="eyebrow">Mission Journal</p>
+      <h2>The Start of Legends</h2>
+      <p>Temporary Beta route assembled from recovered episode records 1-5.</p>
+      <ul class="item-list">${objectives}</ul>
     </section>
   `;
 }
@@ -296,13 +354,14 @@ function renderActivePanel() {
   if (activePanel === "inventory") return renderInventoryPanel();
   if (activePanel === "character") return renderCharacterPanel();
   if (activePanel === "skills") return renderSkillsPanel();
+  if (activePanel === "journal") return renderJournalPanel();
   if (activePanel === "map") return renderMapPanel();
   return renderScenePanel();
 }
 
 function renderGame() {
   const complete = state.flags.demoComplete
-    ? `<div class="complete-banner">Demo path complete: Area 1 -> Area 2 -> Area 3 -> battle victory.</div>`
+    ? `<div class="complete-banner">Demo path complete: opening route -> battle victory -> reward claimed.</div>`
     : "";
   const log = state.log.map((line) => `<li>${line}</li>`).join("");
   return `
@@ -332,6 +391,7 @@ function renderGame() {
         <button data-panel="character">Character</button>
         <button data-panel="inventory">Inventory</button>
         <button data-panel="skills">Skills</button>
+        <button data-panel="journal">Journal</button>
         <button data-panel="map">Map</button>
       </nav>
     </main>

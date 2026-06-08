@@ -24,7 +24,9 @@ await page.goto("http://localhost:4173", { waitUntil: "networkidle" });
 await page.getByRole("button", { name: "Start New Game" }).click();
 await page.getByRole("button", { name: "Speak With Mystery" }).click();
 await page.getByRole("button", { name: "Continue" }).click();
+await page.getByRole("button", { name: "Next Area" }).click();
 await page.getByRole("button", { name: "Search the Road" }).click();
+await page.getByRole("button", { name: "Next Area" }).click();
 await page.getByRole("button", { name: "Recover Armor" }).click();
 await page.getByRole("button", { name: "Inventory" }).click();
 await page.getByRole("button", { name: "Equip" }).click();
@@ -47,7 +49,8 @@ await page.getByRole("button", { name: "Load", exact: true }).click();
 const bodyText = await page.locator("body").innerText();
 const result = {
   complete: bodyText.includes("Demo path complete"),
-  hasArea: bodyText.includes("Ep. 03: Among the Ashes"),
+  hasArea: bodyText.includes("Ep. 05: Storm the Castle"),
+  hasReward: bodyText.includes("Reward: 15 gold, 20 XP"),
   hasSaveFeedback:
     bodyText.includes("Save loaded") || bodyText.includes("Saved to IndexedDB"),
   consoleErrors,
@@ -56,7 +59,7 @@ const result = {
 await page.screenshot({ path: "demo-mobile-verify.png", fullPage: true });
 await browser.close();
 
-if (!result.complete || !result.hasArea || !result.hasSaveFeedback || consoleErrors.length) {
+if (!result.complete || !result.hasArea || !result.hasReward || !result.hasSaveFeedback || consoleErrors.length) {
   console.error(JSON.stringify(result, null, 2));
   process.exit(1);
 }

@@ -27,4 +27,9 @@ Generated from `C:\Users\Thomas\My Drive\CamleotLegends-GameFiles` with Unity `L
 
 ## Currently Wired Assets
 
-No archive image/model assets are wired into the first playable demo yet. The demo uses neutral CSS visuals while content, save/load, navigation, inventory, and combat are proven.
+Two recovered PNG assets are wired into the playable browser demo:
+
+- `public/assets/recovered/level-design-example.png`
+- `public/assets/recovered/characters-v2.png`
+
+These are local reconstruction assets only. The broader archive still needs conversion, optimization, naming, and rights review before public release.

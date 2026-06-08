@@ -2,7 +2,7 @@
 
 ## Temporary Route Links
 
-No recovered runtime navigation graph was found. The first demo route links `area-001`, `area-002`, and `area-003` as a temporary playable path.
+No recovered runtime navigation graph was found. The first demo route links `area-001`, `area-002`, `area-003`, `area-004`, and `area-005` as a temporary playable path.
 
 ## Combat Stats
 
@@ -18,7 +18,7 @@ Dialogue text records exist, but exact speaker-to-line sequencing is incomplete.
 
 ## Asset Binding
 
-No runtime asset binding has been completed. Visuals are neutral placeholders until licensing and conversion decisions are made.
+Two recovered PNG assets are wired into the local demo. This is enough for browser/mobile visual proof, but the wider asset pipeline, optimization plan, animation format, and rights review remain incomplete.
 
 ## Dependency Locking
 
