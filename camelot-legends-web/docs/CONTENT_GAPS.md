@@ -6,11 +6,11 @@ No recovered runtime navigation graph was found. The first demo route links `are
 
 ## Combat Stats
 
-No recovered combat formulas, enemy stats, player stat curves, or encounter tables were found. The first battle uses temporary rules documented in `COMBAT_RULES.md`.
+No recovered combat formulas, enemy stats, player stat curves, or encounter tables were found. The first battle now uses rebuilt provisional rules documented in `COMBAT_RULES.md`.
 
 ## Item Mechanics
 
-The demo can recover `Amethyst` and `Lithic Armor`, but most item/equipment records do not include recoverable stat rules. Armor gives a temporary defense boost so equip/unequip can be proven.
+The demo can recover `Amethyst`, `Lithic Armor`, and `Potion`, but most item/equipment records do not include recoverable stat rules. Armor, potion healing, and Amethyst combat bonus are provisional first-demo mechanics.
 
 ## Dialogue Speaker Mapping
 

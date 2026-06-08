@@ -21,11 +21,11 @@ page.on("console", (message) => {
 page.on("pageerror", (error) => consoleErrors.push(error.message));
 
 await page.goto("http://localhost:4173", { waitUntil: "networkidle" });
-await page.getByRole("button", { name: "Start New Game" }).click();
+await page.getByRole("button", { name: "Start Level 1" }).click();
 await page.getByRole("button", { name: "Speak With Mystery" }).click();
 await page.getByRole("button", { name: "Continue" }).click();
 await page.getByRole("button", { name: "Next Area" }).click();
-await page.getByRole("button", { name: "Search the Road" }).click();
+await page.getByRole("button", { name: "Search Road Cache" }).click();
 await page.getByRole("button", { name: "Next Area" }).click();
 await page.getByRole("button", { name: "Recover Armor" }).click();
 await page.getByRole("button", { name: "Inventory" }).click();
@@ -35,13 +35,11 @@ await page.getByRole("button", { name: "Next Area" }).click();
 await page.getByRole("button", { name: "Next Area" }).click();
 await page.getByRole("button", { name: "Face Raider" }).click();
 
-for (let index = 0; index < 4; index += 1) {
-  const bodyText = await page.locator("body").innerText();
-  if (bodyText.includes("Demo path complete")) break;
-  const lightning = page.getByRole("button", { name: "Lightning Shot" });
-  if ((await lightning.count()) === 0) break;
-  await lightning.click();
-}
+await page.getByRole("button", { name: /Lightning Shot/ }).click();
+await page.getByRole("button", { name: /Lightning Shot/ }).click();
+await page.getByRole("button", { name: /Battle Cry/ }).click();
+await page.getByRole("button", { name: /Lightning Shot/ }).click();
+await page.getByRole("button", { name: /Strike/ }).click();
 
 await page.getByRole("button", { name: "Save", exact: true }).click();
 await page.getByRole("button", { name: "Load", exact: true }).click();
@@ -65,12 +63,13 @@ const offlineText = await page.locator("body").innerText();
 await page.context().setOffline(false);
 
 const result = {
-  complete: bodyText.includes("Demo path complete"),
+  complete: bodyText.includes("Level 1 complete"),
   hasArea: bodyText.includes("Ep. 05: Storm the Castle"),
-  hasReward: bodyText.includes("Reward: 15 gold, 20 XP"),
+  hasReward: bodyText.includes("Reward: 25 gold, 35 XP"),
+  hasVictoryPanel: bodyText.includes("Forgon scout is defeated"),
   hasManifest: pwaStatus.manifestHref.includes("manifest.webmanifest"),
   serviceWorkerReady: pwaStatus.serviceWorkerReady,
-  offlineReady: offlineText.includes("Camelot Legends") && offlineText.includes("Start New Game"),
+  offlineReady: offlineText.includes("Camelot Legends") && offlineText.includes("Start Level 1"),
   hasSaveFeedback:
     bodyText.includes("Save loaded") || bodyText.includes("Saved to IndexedDB"),
   consoleErrors,
@@ -82,6 +81,7 @@ if (
   !result.complete ||
   !result.hasArea ||
   !result.hasReward ||
+  !result.hasVictoryPanel ||
   !result.hasManifest ||
   !result.serviceWorkerReady ||
   !result.offlineReady ||

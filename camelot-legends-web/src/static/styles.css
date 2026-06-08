@@ -73,8 +73,32 @@ button:disabled {
 }
 
 .hero-panel {
+  position: relative;
   width: min(760px, 100%);
   padding: clamp(24px, 6vw, 48px);
+  overflow: hidden;
+}
+
+.title-panel {
+  min-height: min(720px, calc(100vh - 48px));
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+
+.title-panel img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.38;
+  filter: saturate(0.95) contrast(1.08);
+}
+
+.title-panel > *:not(img) {
+  position: relative;
+  z-index: 1;
 }
 
 .eyebrow {
@@ -249,9 +273,10 @@ p {
 }
 
 .stat-row,
-.combatants {
+.combatants,
+.reward-row {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
   gap: 10px;
   margin-top: 16px;
 }
@@ -261,7 +286,8 @@ p {
 }
 
 .combatants > div,
-.stat-row span {
+.stat-row span,
+.reward-row span {
   padding: 12px;
   border-radius: 8px;
   background: rgba(245, 241, 231, 0.08);
@@ -337,6 +363,59 @@ meter {
   background: #b7dc8b;
 }
 
+.battle-visual {
+  position: relative;
+  min-height: 160px;
+  margin: -18px -18px 18px;
+  display: flex;
+  align-items: end;
+  padding: 18px;
+  overflow: hidden;
+  background: #1d2526;
+}
+
+.battle-visual img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.44;
+}
+
+.battle-visual .eyebrow {
+  position: relative;
+  z-index: 1;
+}
+
+.battle-intent {
+  display: grid;
+  gap: 4px;
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(234, 160, 131, 0.12);
+}
+
+.battle-intent span,
+.battle-actions button span {
+  color: #d6d1c5;
+}
+
+.battle-actions button {
+  display: grid;
+  gap: 4px;
+  text-align: left;
+}
+
+.battle-actions button strong {
+  color: inherit;
+}
+
+.victory-card {
+  border-color: rgba(183, 220, 139, 0.42);
+}
+
 @media (max-width: 820px) {
   .top-bar,
   .game-layout {
@@ -350,7 +429,6 @@ meter {
   }
 
   .action-grid,
-  .stat-row,
   .combatants {
     grid-template-columns: 1fr;
   }

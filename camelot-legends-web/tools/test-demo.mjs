@@ -4,12 +4,14 @@ import { fileURLToPath } from "node:url";
 import {
   DEMO_EQUIPMENT_ID,
   DEMO_PICKUP_ID,
-  addInventoryItem,
+  DEMO_POTION_ID,
   createNewGame,
   equipArmor,
   goNext,
   markDialogueSeen,
-  playerAttack,
+  performBattleAction,
+  recoverArmor,
+  searchRoadCache,
   startBattle,
 } from "../src/static/game-core.js";
 
@@ -38,24 +40,30 @@ assert(state.currentAreaId === "area-001", "new game starts at area-001");
 state = markDialogueSeen(state);
 state = goNext(state);
 assert(state.currentAreaId === "area-002", "navigation reaches area-002 after dialogue");
-state = addInventoryItem(state, DEMO_PICKUP_ID);
+state = searchRoadCache(state);
 assert(state.inventory.includes(DEMO_PICKUP_ID), "pickup adds item");
+assert(state.inventory.includes(DEMO_POTION_ID), "road cache adds potion");
 state = goNext(state);
 assert(state.currentAreaId === "area-003", "navigation reaches area-003 after pickup");
-state = addInventoryItem(state, DEMO_EQUIPMENT_ID);
+state = recoverArmor(state);
 state = equipArmor(state, DEMO_EQUIPMENT_ID);
 assert(state.player.defense === 4, "equipment updates defense");
+assert(state.player.maxMp === 20, "equipment updates max MP");
 state = goNext(goNext(state));
 assert(state.currentAreaId === "area-005", "navigation reaches final demo area");
 state = startBattle(state);
 assert(state.mode === "battle", "battle starts");
-for (let i = 0; i < 4 && state.mode === "battle"; i += 1) {
-  state = playerAttack(state, "skill-cra-air-2-name");
-}
+state = performBattleAction(state, "lightning-shot");
+assert(state.enemy.hp === 48, "lightning shot uses amethyst bonus");
+state = performBattleAction(state, "lightning-shot");
+state = performBattleAction(state, "battle-cry");
+state = performBattleAction(state, "lightning-shot");
+state = performBattleAction(state, "strike");
 assert(state.flags.battleWon, "battle can be won");
 assert(state.flags.demoComplete, "demo completes after final battle");
-assert(state.player.gold === 15, "victory grants gold");
-assert(state.player.xp === 20, "victory grants xp");
-assert(state.inventory.includes("potion"), "victory grants potion");
+assert(state.mode === "victory", "victory screen is reached");
+assert(state.player.gold === 25, "victory grants gold");
+assert(state.player.xp === 35, "victory grants xp");
+assert(state.inventory.includes(DEMO_POTION_ID), "victory grants potion");
 
 console.log("Demo tests passed");

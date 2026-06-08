@@ -1,26 +1,32 @@
 import {
+  BATTLE_ACTIONS,
   DEMO_DIALOGUE_IDS,
   DEMO_EQUIPMENT_ID,
   DEMO_PICKUP_ID,
+  DEMO_POTION_ID,
   DEMO_ROUTE,
   DEMO_SKILL_IDS,
-  addInventoryItem,
   canGoBack,
   canGoNext,
   createNewGame,
+  currentEnemyIntent,
   equipArmor,
   goBack,
   goNext,
   markDialogueSeen,
   normalizeState,
   objectiveStatus,
-  playerAttack,
+  performBattleAction,
+  recoverArmor,
   removeInventoryItem,
   restAtCamp,
+  retryBattle,
+  searchRoadCache,
   serializableState,
   startBattle,
 } from "./game-core.js";
 import { byId, loadContent, usableSkills } from "./content-loader.js";
+import { FIRST_LEVEL } from "./level-data.js";
 import { registerServiceWorker } from "./pwa.js";
 import { loadGame, resetSave, saveGame } from "./save-load.js";
 
@@ -101,19 +107,20 @@ async function clearSave() {
 function startNewGame() {
   state = createNewGame();
   activePanel = "scene";
-  status = "New game started.";
+  status = "Level 1 started.";
   render();
 }
 
 function renderMenu() {
   return `
     <main class="menu-screen">
-      <section class="hero-panel">
+      <section class="hero-panel title-panel">
+        <img src="./public/assets/recovered/level-design-example.png" alt="" />
         <p class="eyebrow">Recovered Browser Demo</p>
         <h1>Camelot Legends</h1>
-        <p class="lead">A single-player reconstruction prototype using recovered story, mission, item, skill, and dialogue records.</p>
+        <p class="lead">${FIRST_LEVEL.subtitle}</p>
         <div class="menu-actions">
-          <button class="primary" data-action="new">Start New Game</button>
+          <button class="primary" data-action="new">Start Level 1</button>
           <button data-action="load">Load Game</button>
         </div>
         <p class="status">${status}</p>
@@ -165,7 +172,7 @@ function renderScenePanel() {
       </div>
       <div class="action-grid">
         <button data-action="dialogue">Speak With Mystery</button>
-        <button data-action="pickup" ${foundItem || state.currentAreaId !== "area-002" ? "disabled" : ""}>Search the Road</button>
+        <button data-action="pickup" ${foundItem || state.currentAreaId !== "area-002" ? "disabled" : ""}>Search Road Cache</button>
         <button data-action="take-armor" ${hasArmor || state.currentAreaId !== "area-003" ? "disabled" : ""}>Recover Armor</button>
         <button data-action="rest">Rest</button>
         <button data-action="back" ${canGoBack(state) ? "" : "disabled"}>Previous Area</button>
@@ -238,6 +245,7 @@ function renderCharacterPanel() {
       <h2>${state.player.name}</h2>
       <div class="stat-row">
         <span>HP ${state.player.hp}/${state.player.maxHp}</span>
+        <span>MP ${state.player.mp}/${state.player.maxMp}</span>
         <span>ATK ${state.player.attack}</span>
         <span>DEF ${state.player.defense}</span>
         <span>XP ${state.player.xp}</span>
@@ -314,39 +322,76 @@ function renderMapPanel() {
 function renderBattlePanel() {
   const enemy = state.enemy;
   if (!enemy) return renderScenePanel();
+  const intent = currentEnemyIntent(enemy);
+  const potionCount = state.inventory.filter((id) => id === DEMO_POTION_ID).length;
+  const actions = BATTLE_ACTIONS.map((action) => {
+    const disabled =
+      state.player.mp < action.mpCost ||
+      (action.id === "potion" && potionCount === 0) ||
+      (action.id === "potion" && state.player.hp >= state.player.maxHp);
+    const cost = action.mpCost ? ` (${action.mpCost} MP)` : "";
+    const suffix = action.id === "potion" ? ` x${potionCount}` : cost;
+    return `
+      <button data-action="battle-action" data-battle-action="${action.id}" ${disabled ? "disabled" : ""}>
+        <strong>${action.label}${suffix}</strong>
+        <span>${action.description}</span>
+      </button>
+    `;
+  }).join("");
   return `
     <section class="battle-card">
-      <p class="eyebrow">Battle Prototype</p>
+      <div class="battle-visual">
+        <img src="./public/assets/recovered/characters-v2.png" alt="" />
+        <p class="eyebrow">Level 1 Encounter</p>
+      </div>
       <h2>${enemy.name}</h2>
+      <div class="battle-intent">
+        <strong>Enemy intent</strong>
+        <span>${intent ? intent.label : "The enemy watches for an opening."}</span>
+      </div>
       <div class="combatants">
         <div>
           <strong>${state.player.name}</strong>
           <meter min="0" max="${state.player.maxHp}" value="${state.player.hp}"></meter>
-          <span>HP ${state.player.hp}/${state.player.maxHp}</span>
+          <span>HP ${state.player.hp}/${state.player.maxHp} | MP ${state.player.mp}/${state.player.maxMp} | Guard ${state.player.guard}</span>
         </div>
         <div>
           <strong>${enemy.name}</strong>
           <meter min="0" max="${enemy.maxHp}" value="${enemy.hp}"></meter>
-          <span>HP ${enemy.hp}/${enemy.maxHp}</span>
+          <span>HP ${enemy.hp}/${enemy.maxHp} | Guard ${enemy.guard}</span>
         </div>
       </div>
-      <div class="action-grid">
-        <button data-action="attack" data-skill="basic-attack">Basic Attack</button>
-        <button data-action="attack" data-skill="skill-cra-air-2-name">Lightning Shot</button>
-        <button data-action="attack" data-skill="skill-panda-fire-2-name">Battle Cry</button>
-      </div>
+      <div class="action-grid battle-actions">${actions}</div>
     </section>
   `;
 }
 
 function renderActivePanel() {
   if (state.mode === "battle") return renderBattlePanel();
+  if (state.mode === "victory") {
+    const area = currentArea();
+    return `
+      <section class="panel-card victory-card">
+        <p class="eyebrow">Level Complete</p>
+        <h2>${FIRST_LEVEL.title}</h2>
+        <p><strong>${recordLabel(area, state.currentAreaId)}</strong></p>
+        <p>The Forgon scout is defeated and the path into Castle Camelot is open.</p>
+        <div class="reward-row">
+          <span>+25 gold</span>
+          <span>+35 XP</span>
+          <span>Potion recovered</span>
+        </div>
+        <button class="primary" data-action="save">Save Victory</button>
+      </section>
+    `;
+  }
   if (state.mode === "defeat") {
     return `
       <section class="panel-card">
         <p class="eyebrow">Defeat</p>
         <h2>The road falls silent.</h2>
-        <p>Restoring a save or starting a new game will return the demo to a playable state.</p>
+        <p>Mystery can regroup at full health and try the encounter again.</p>
+        <button class="primary" data-action="retry">Retry Battle</button>
         <button data-action="new">Start Again</button>
       </section>
     `;
@@ -362,7 +407,7 @@ function renderActivePanel() {
 
 function renderGame() {
   const complete = state.flags.demoComplete
-    ? `<div class="complete-banner">Demo path complete: opening route -> battle victory -> reward claimed.</div>`
+    ? `<div class="complete-banner">Level 1 complete: warning -> road cache -> armor -> castle road -> Forgon scout victory.</div>`
     : "";
   const log = state.log.map((line) => `<li>${line}</li>`).join("");
   return `
@@ -442,9 +487,9 @@ root.addEventListener("click", async (event) => {
     activePanel = "scene";
     setState(markDialogueSeen(state));
   } else if (action === "pickup") {
-    setState(addInventoryItem(state, DEMO_PICKUP_ID), "Amethyst recovered from the road.");
+    setState(searchRoadCache(state), "Amethyst and Potion recovered from the road.");
   } else if (action === "take-armor") {
-    setState(addInventoryItem(state, DEMO_EQUIPMENT_ID), "Lithic Armor recovered.");
+    setState(recoverArmor(state), "Lithic Armor recovered.");
   } else if (action === "remove-item") {
     setState(removeInventoryItem(state, id));
   } else if (action === "equip") {
@@ -459,8 +504,10 @@ root.addEventListener("click", async (event) => {
     setState(goBack(state));
   } else if (action === "battle") {
     setState(startBattle(state));
-  } else if (action === "attack") {
-    setState(playerAttack(state, skill));
+  } else if (action === "battle-action") {
+    setState(performBattleAction(state, button.dataset.battleAction || skill));
+  } else if (action === "retry") {
+    setState(retryBattle(state));
   }
 });
 

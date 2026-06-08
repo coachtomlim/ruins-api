@@ -44,3 +44,15 @@ Reason: this turns recovered content into a testable playable loop without inven
 The demo includes `public/manifest.webmanifest`, `service-worker.js`, and `src/static/pwa.js`.
 
 Reason: the stated target includes local browser and mobile device play. The service worker caches the static shell, recovered content JSON, and wired assets so offline-capable testing can begin without a backend.
+
+## 8. First-Level Data Module
+
+The first playable level now has a dedicated data module at `src/static/level-data.js` for route, objectives, selected dialogue, battle setup, enemy intent sequence, and rewards.
+
+Reason: this is the smallest stable step toward many levels without introducing a full authoring pipeline before the first demo is solid.
+
+## 9. Rebuilt Combat Mechanics
+
+The first combat loop now includes MP costs, guard, visible enemy intent, potion healing, armor stat changes, Amethyst skill bonus, defeat retry, and a victory screen.
+
+Reason: recovered combat formulas were missing, but the game needs a playable fighting system before broader content expansion.

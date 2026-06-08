@@ -1,31 +1,64 @@
-export const SAVE_VERSION = 2;
+import { FIRST_LEVEL } from "./level-data.js";
 
-export const DEMO_ROUTE = ["area-001", "area-002", "area-003", "area-004", "area-005"];
+export const SAVE_VERSION = 3;
 
-export const DEMO_DIALOGUE_IDS = [
-  "dialogue-text-006",
-  "dialogue-text-057",
-  "dialogue-text-063",
-  "dialogue-text-064",
-  "dialogue-text-065",
-  "dialogue-text-066",
+export const DEMO_ROUTE = FIRST_LEVEL.route;
+export const DEMO_DIALOGUE_IDS = FIRST_LEVEL.dialogueIds;
+export const DEMO_PICKUP_ID = FIRST_LEVEL.pickupId;
+export const DEMO_EQUIPMENT_ID = FIRST_LEVEL.armorId;
+export const DEMO_POTION_ID = FIRST_LEVEL.potionId;
+export const DEMO_SKILL_IDS = FIRST_LEVEL.skillIds;
+export const DEMO_OBJECTIVES = FIRST_LEVEL.objectives;
+
+export const BATTLE_ACTIONS = [
+  {
+    id: "strike",
+    label: "Strike",
+    description: "Reliable weapon attack. Restores 2 MP.",
+    mpCost: 0,
+  },
+  {
+    id: "lightning-shot",
+    label: "Lightning Shot",
+    description: "High damage recovered air skill. Costs 5 MP.",
+    mpCost: 5,
+  },
+  {
+    id: "battle-cry",
+    label: "Battle Cry",
+    description: "Light damage and guard for the next enemy turn. Costs 3 MP.",
+    mpCost: 3,
+  },
+  {
+    id: "guard",
+    label: "Guard",
+    description: "Brace for impact and recover 4 MP.",
+    mpCost: 0,
+  },
+  {
+    id: "potion",
+    label: "Potion",
+    description: "Use a recovered Potion to heal 40 HP.",
+    mpCost: 0,
+  },
 ];
 
-export const DEMO_PICKUP_ID = "amethystr";
-export const DEMO_EQUIPMENT_ID = "armor-t1-5";
-export const DEMO_SKILL_IDS = [
-  "skill-cra-air-2-name",
-  "skill-cra-air-2-description-level-1",
-  "skill-panda-fire-2-name",
-];
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
 
-export const DEMO_OBJECTIVES = [
-  { id: "hear-warning", label: "Hear Mystery's warning", areaId: "area-001" },
-  { id: "recover-amethyst", label: "Search the road and recover the Amethyst", areaId: "area-002" },
-  { id: "recover-armor", label: "Recover and equip Lithic Armor", areaId: "area-003" },
-  { id: "reach-castle-road", label: "Push toward Castle Camelot", areaId: "area-004" },
-  { id: "defeat-raider", label: "Defeat the raider before the castle", areaId: "area-005" },
-];
+function addLog(state, lines) {
+  const nextLines = Array.isArray(lines) ? lines : [lines];
+  return [...nextLines, ...(state.log || [])].slice(0, 10);
+}
+
+function addUniqueItems(inventory, itemIds) {
+  const next = [...inventory];
+  for (const itemId of itemIds) {
+    if (!next.includes(itemId)) next.push(itemId);
+  }
+  return next;
+}
 
 export function createNewGame(now = new Date().toISOString()) {
   return {
@@ -37,10 +70,13 @@ export function createNewGame(now = new Date().toISOString()) {
     routeIndex: 0,
     player: {
       name: "Mystery",
-      hp: 32,
-      maxHp: 32,
-      attack: 7,
+      hp: 42,
+      maxHp: 42,
+      mp: 14,
+      maxMp: 14,
+      attack: 8,
       defense: 2,
+      guard: 0,
       gold: 0,
       xp: 0,
     },
@@ -55,6 +91,7 @@ export function createNewGame(now = new Date().toISOString()) {
       battleWon: false,
       demoComplete: false,
       reachedCastleRoad: false,
+      victoryClaimed: false,
     },
     log: ["A new legend begins."],
   };
@@ -63,14 +100,19 @@ export function createNewGame(now = new Date().toISOString()) {
 export function normalizeState(state) {
   if (!state) return state;
   const fresh = createNewGame(state.createdAt);
+  const routeIndex = currentRouteIndex(state);
   return {
     ...fresh,
     ...state,
     version: SAVE_VERSION,
-    routeIndex: currentRouteIndex(state),
+    currentAreaId: DEMO_ROUTE[routeIndex] || DEMO_ROUTE[0],
+    routeIndex,
     player: {
       ...fresh.player,
       ...state.player,
+      hp: clamp(state.player?.hp ?? fresh.player.hp, 0, state.player?.maxHp ?? fresh.player.maxHp),
+      mp: clamp(state.player?.mp ?? fresh.player.mp, 0, state.player?.maxMp ?? fresh.player.maxMp),
+      guard: state.player?.guard ?? 0,
     },
     equipment: {
       ...fresh.equipment,
@@ -109,7 +151,7 @@ export function goNext(state) {
       ...state.flags,
       reachedCastleRoad: nextAreaId === "area-004" ? true : state.flags.reachedCastleRoad,
     },
-    log: [`Moved to ${nextAreaId}.`, ...state.log].slice(0, 8),
+    log: addLog(state, `Moved to ${nextAreaId}.`),
   };
 }
 
@@ -121,7 +163,7 @@ export function goBack(state) {
     currentAreaId: DEMO_ROUTE[nextIndex],
     routeIndex: nextIndex,
     mode: "scene",
-    log: [`Returned to ${DEMO_ROUTE[nextIndex]}.`, ...state.log].slice(0, 8),
+    log: addLog(state, `Returned to ${DEMO_ROUTE[nextIndex]}.`),
   };
 }
 
@@ -134,19 +176,44 @@ export function addInventoryItem(state, itemId) {
       ...state.flags,
       foundItem: itemId === DEMO_PICKUP_ID ? true : state.flags.foundItem,
     },
-    log: [`Recovered item: ${itemId}.`, ...state.log].slice(0, 8),
+    log: addLog(state, `Recovered item: ${itemId}.`),
+  };
+}
+
+export function searchRoadCache(state) {
+  const inventory = addUniqueItems(state.inventory, [DEMO_PICKUP_ID, DEMO_POTION_ID]);
+  return {
+    ...state,
+    inventory,
+    flags: {
+      ...state.flags,
+      foundItem: true,
+    },
+    log: addLog(state, "Recovered the Amethyst and a Potion from the road cache."),
+  };
+}
+
+export function recoverArmor(state) {
+  return {
+    ...state,
+    inventory: addUniqueItems(state.inventory, [DEMO_EQUIPMENT_ID]),
+    log: addLog(state, "Recovered Lithic Armor from the ashes."),
   };
 }
 
 export function removeInventoryItem(state, itemId) {
+  if (itemId === state.equipment.armor) return state;
   return {
     ...state,
     inventory: state.inventory.filter((id) => id !== itemId),
-    log: [`Removed item: ${itemId}.`, ...state.log].slice(0, 8),
+    log: addLog(state, `Removed item: ${itemId}.`),
   };
 }
 
 export function equipArmor(state, equipmentId) {
+  const wasEquipped = state.equipment.armor === equipmentId;
+  const maxHp = wasEquipped ? state.player.maxHp : state.player.maxHp + 4;
+  const maxMp = wasEquipped ? state.player.maxMp : state.player.maxMp + 6;
   return {
     ...state,
     equipment: {
@@ -155,10 +222,35 @@ export function equipArmor(state, equipmentId) {
     },
     player: {
       ...state.player,
+      maxHp,
+      hp: clamp(state.player.hp + (wasEquipped ? 0 : 4), 0, maxHp),
+      maxMp,
+      mp: clamp(state.player.mp + (wasEquipped ? 0 : 6), 0, maxMp),
       defense: 4,
     },
-    log: [`Equipped ${equipmentId}.`, ...state.log].slice(0, 8),
+    log: addLog(state, `Equipped ${equipmentId}.`),
   };
+}
+
+function createBattleEnemy() {
+  const enemy = FIRST_LEVEL.battle.enemy;
+  return {
+    id: enemy.id,
+    recoveredId: enemy.recoveredId,
+    name: enemy.name,
+    hp: enemy.hp,
+    maxHp: enemy.hp,
+    attack: enemy.attack,
+    defense: enemy.defense,
+    guard: 0,
+    intentIndex: 0,
+    turn: 1,
+  };
+}
+
+export function currentEnemyIntent(enemy) {
+  if (!enemy) return null;
+  return FIRST_LEVEL.battle.intents[enemy.intentIndex % FIRST_LEVEL.battle.intents.length];
 }
 
 export function startBattle(state) {
@@ -166,68 +258,182 @@ export function startBattle(state) {
   return {
     ...state,
     mode: "battle",
-    enemy: {
-      id: "bandit-scout",
-      name: "Roadside Raider",
-      hp: 34,
-      maxHp: 34,
-      attack: 6,
+    enemy: createBattleEnemy(),
+    player: {
+      ...state.player,
+      guard: 0,
     },
-    log: ["A roadside raider blocks the path.", ...state.log].slice(0, 8),
+    log: addLog(state, "A Forgon scout blocks the castle road."),
   };
 }
 
-export function playerAttack(state, skillId = "basic-attack") {
-  if (!state.enemy || state.mode !== "battle") return state;
-  const skillBonus = skillId.includes("air-2") ? 5 : skillId.includes("panda") ? 3 : 0;
-  const damage = Math.max(1, state.player.attack + skillBonus);
-  const enemyHp = Math.max(0, state.enemy.hp - damage);
-  const playerMessage =
-    skillId === "basic-attack"
-      ? `Mystery strikes for ${damage}.`
-      : `Mystery uses ${skillId} for ${damage}.`;
+export function retryBattle(state) {
+  return {
+    ...state,
+    mode: "battle",
+    enemy: createBattleEnemy(),
+    player: {
+      ...state.player,
+      hp: state.player.maxHp,
+      mp: state.player.maxMp,
+      guard: 0,
+    },
+    log: addLog(state, "Mystery regroups and faces the scout again."),
+  };
+}
 
-  if (enemyHp <= 0) {
+function actionDamage(state, actionId) {
+  const amethystBonus = state.inventory.includes(DEMO_PICKUP_ID) ? 3 : 0;
+  if (actionId === "strike") return state.player.attack + 2;
+  if (actionId === "lightning-shot") return state.player.attack + 10 + amethystBonus;
+  if (actionId === "battle-cry") return state.player.attack + 4;
+  return 0;
+}
+
+function enemyTurn(state, enemyAfterPlayer) {
+  const intent = currentEnemyIntent(enemyAfterPlayer);
+  if (!intent) return state;
+
+  if (intent.type === "guard") {
     return {
       ...state,
-      mode: "scene",
-      enemy: null,
-      player: {
-        ...state.player,
-        gold: state.player.gold + 15,
-        xp: state.player.xp + 20,
+      enemy: {
+        ...enemyAfterPlayer,
+        guard: intent.guard,
+        intentIndex: enemyAfterPlayer.intentIndex + 1,
+        turn: enemyAfterPlayer.turn + 1,
       },
-      inventory: state.inventory.includes("potion")
-        ? state.inventory
-        : [...state.inventory, "potion"],
-      flags: {
-        ...state.flags,
-        battleWon: true,
-        demoComplete: state.currentAreaId === DEMO_ROUTE[DEMO_ROUTE.length - 1],
-      },
-      log: [`${playerMessage} Victory is secured. Reward: 15 gold, 20 XP, Potion.`, ...state.log].slice(0, 8),
+      log: addLog(state, `${enemyAfterPlayer.name} braces behind its shield.`),
     };
   }
 
-  const retaliation = Math.max(1, state.enemy.attack - state.player.defense);
-  const playerHp = Math.max(0, state.player.hp - retaliation);
+  const rawDamage = Math.max(1, intent.power + enemyAfterPlayer.attack - state.player.defense);
+  const reducedDamage = Math.max(1, rawDamage - (state.player.guard || 0));
+  const playerHp = clamp(state.player.hp - reducedDamage, 0, state.player.maxHp);
   const defeated = playerHp <= 0;
   return {
     ...state,
     mode: defeated ? "defeat" : "battle",
     enemy: {
-      ...state.enemy,
-      hp: enemyHp,
+      ...enemyAfterPlayer,
+      intentIndex: enemyAfterPlayer.intentIndex + 1,
+      turn: enemyAfterPlayer.turn + 1,
     },
     player: {
       ...state.player,
       hp: playerHp,
+      guard: 0,
     },
-    log: [
-      `${playerMessage} ${state.enemy.name} answers for ${retaliation}.`,
-      ...state.log,
-    ].slice(0, 8),
+    log: addLog(
+      state,
+      defeated
+        ? `${enemyAfterPlayer.name} lands a decisive blow for ${reducedDamage}.`
+        : `${enemyAfterPlayer.name} hits for ${reducedDamage}.`,
+    ),
   };
+}
+
+function applyVictory(state, enemyName, playerMessage) {
+  const rewards = FIRST_LEVEL.battle.rewards;
+  return {
+    ...state,
+    mode: "victory",
+    enemy: null,
+    player: {
+      ...state.player,
+      guard: 0,
+      gold: state.player.gold + rewards.gold,
+      xp: state.player.xp + rewards.xp,
+    },
+    inventory: addUniqueItems(state.inventory, rewards.items),
+    flags: {
+      ...state.flags,
+      battleWon: true,
+      demoComplete: state.currentAreaId === DEMO_ROUTE[DEMO_ROUTE.length - 1],
+      victoryClaimed: true,
+    },
+    log: addLog(
+      state,
+      `${playerMessage} ${enemyName} falls. Reward: ${rewards.gold} gold, ${rewards.xp} XP, Potion.`,
+    ),
+  };
+}
+
+export function performBattleAction(state, actionId = "strike") {
+  if (!state.enemy || state.mode !== "battle") return state;
+  const action = BATTLE_ACTIONS.find((entry) => entry.id === actionId) || BATTLE_ACTIONS[0];
+  if (state.player.mp < action.mpCost) {
+    return {
+      ...state,
+      log: addLog(state, `${action.label} needs ${action.mpCost} MP.`),
+    };
+  }
+
+  if (actionId === "potion") {
+    if (!state.inventory.includes(DEMO_POTION_ID)) {
+      return {
+        ...state,
+        log: addLog(state, "No Potion is available."),
+      };
+    }
+    const healed = clamp(state.player.hp + 40, 0, state.player.maxHp);
+    const nextState = {
+      ...state,
+      inventory: state.inventory.filter((id, index) => id !== DEMO_POTION_ID || index !== state.inventory.indexOf(DEMO_POTION_ID)),
+      player: {
+        ...state.player,
+        hp: healed,
+      },
+      log: addLog(state, "Potion restores 40 HP."),
+    };
+    return enemyTurn(nextState, nextState.enemy);
+  }
+
+  if (actionId === "guard") {
+    const nextState = {
+      ...state,
+      player: {
+        ...state.player,
+        mp: clamp(state.player.mp + 4, 0, state.player.maxMp),
+        guard: 7,
+      },
+      log: addLog(state, "Mystery guards and recovers 4 MP."),
+    };
+    return enemyTurn(nextState, nextState.enemy);
+  }
+
+  const damageBeforeGuard = Math.max(1, actionDamage(state, actionId) - state.enemy.defense);
+  const damage = Math.max(1, damageBeforeGuard - (state.enemy.guard || 0));
+  const enemyHp = clamp(state.enemy.hp - damage, 0, state.enemy.maxHp);
+  const mpGain = actionId === "strike" ? 2 : 0;
+  const guardGain = actionId === "battle-cry" ? 5 : 0;
+  const playerMessage = `${action.label} deals ${damage}.`;
+  const afterPlayer = {
+    ...state,
+    enemy: {
+      ...state.enemy,
+      hp: enemyHp,
+      guard: 0,
+    },
+    player: {
+      ...state.player,
+      mp: clamp(state.player.mp - action.mpCost + mpGain, 0, state.player.maxMp),
+      guard: guardGain,
+    },
+    log: addLog(state, playerMessage),
+  };
+
+  if (enemyHp <= 0) {
+    return applyVictory(afterPlayer, state.enemy.name, playerMessage);
+  }
+
+  return enemyTurn(afterPlayer, afterPlayer.enemy);
+}
+
+export function playerAttack(state, skillId = "strike") {
+  const mappedAction =
+    skillId.includes("air-2") ? "lightning-shot" : skillId.includes("panda") ? "battle-cry" : skillId;
+  return performBattleAction(state, mappedAction);
 }
 
 export function restAtCamp(state) {
@@ -236,8 +442,10 @@ export function restAtCamp(state) {
     player: {
       ...state.player,
       hp: state.player.maxHp,
+      mp: state.player.maxMp,
+      guard: 0,
     },
-    log: ["The party catches its breath and recovers.", ...state.log].slice(0, 8),
+    log: addLog(state, "The party catches its breath and recovers."),
   };
 }
 
@@ -248,7 +456,7 @@ export function markDialogueSeen(state) {
       ...state.flags,
       introDialogue: true,
     },
-    log: ["Mystery's warning has been heard.", ...state.log].slice(0, 8),
+    log: addLog(state, "Mystery's warning has been heard."),
   };
 }
 

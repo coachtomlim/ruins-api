@@ -1,4 +1,4 @@
-const CACHE_NAME = "camelot-legends-web-v2";
+const CACHE_NAME = "camelot-legends-web-v3";
 
 const APP_SHELL = [
   "./",
@@ -9,6 +9,7 @@ const APP_SHELL = [
   "./public/assets/recovered/level-design-example.png",
   "./src/static/content-loader.js",
   "./src/static/game-core.js",
+  "./src/static/level-data.js",
   "./src/static/main.js",
   "./src/static/pwa.js",
   "./src/static/save-load.js",
