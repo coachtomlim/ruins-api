@@ -21,6 +21,7 @@ import {
   startBattle,
 } from "./game-core.js";
 import { byId, loadContent, usableSkills } from "./content-loader.js";
+import { registerServiceWorker } from "./pwa.js";
 import { loadGame, resetSave, saveGame } from "./save-load.js";
 
 const root = document.querySelector("#root");
@@ -483,3 +484,4 @@ async function boot() {
 }
 
 boot();
+registerServiceWorker();

@@ -47,3 +47,7 @@ Phone `localhost` points to the phone itself, not this desktop.
 Start New Game -> Area 1 dialogue -> Area 2 road search -> Area 3 armor recovery/equip -> Area 4 castle road -> Area 5 raider battle -> victory rewards -> save/load.
 
 The current build is still a reconstruction prototype, but the first route now has objective gating, a mission journal, recovered archive visuals, a combat win condition, and persistent single-player save/load.
+
+## Mobile App Shell
+
+The demo includes a web app manifest and service worker cache so the local browser build can be tested as an installable/offline-capable prototype on supported mobile browsers. The current service worker caches the demo shell, recovered content JSON, and wired PNG assets.

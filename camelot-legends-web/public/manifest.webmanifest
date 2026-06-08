@@ -1,0 +1,19 @@
+{
+  "name": "Camelot Legends",
+  "short_name": "Camelot",
+  "description": "Playable single-player browser reconstruction demo for Camelot Legends.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#151719",
+  "theme_color": "#151719",
+  "icons": [
+    {
+      "src": "./assets/icons/camelot-legends.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

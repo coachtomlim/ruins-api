@@ -38,3 +38,9 @@ Reason: these make the browser/mobile route visibly game-like while leaving deep
 The route requires the player to complete local objectives before moving forward: hear the warning, recover the Amethyst, equip Lithic Armor, reach the castle road, and defeat the raider.
 
 Reason: this turns recovered content into a testable playable loop without inventing a larger quest system yet.
+
+## 7. Local PWA Shell
+
+The demo includes `public/manifest.webmanifest`, `service-worker.js`, and `src/static/pwa.js`.
+
+Reason: the stated target includes local browser and mobile device play. The service worker caches the static shell, recovered content JSON, and wired assets so offline-capable testing can begin without a backend.

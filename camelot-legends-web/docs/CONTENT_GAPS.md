@@ -23,3 +23,7 @@ Two recovered PNG assets are wired into the local demo. This is enough for brows
 ## Dependency Locking
 
 Dependency locking is blocked because `npm` is not available in this environment.
+
+## Mobile Packaging
+
+The local web app now has manifest and service worker scaffolding, but native packaging, app-store signing, push services, and production mobile deployment are intentionally out of scope for the first demo.

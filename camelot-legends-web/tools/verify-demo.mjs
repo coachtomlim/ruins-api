@@ -47,19 +47,47 @@ await page.getByRole("button", { name: "Save", exact: true }).click();
 await page.getByRole("button", { name: "Load", exact: true }).click();
 
 const bodyText = await page.locator("body").innerText();
+const pwaStatus = await page.evaluate(async () => {
+  const manifestHref = document.querySelector('link[rel="manifest"]')?.getAttribute("href") || "";
+  let serviceWorkerReady = false;
+  if ("serviceWorker" in navigator) {
+    serviceWorkerReady = await Promise.race([
+      navigator.serviceWorker.ready.then(() => true),
+      new Promise((resolve) => setTimeout(() => resolve(false), 3000)),
+    ]);
+  }
+  return { manifestHref, serviceWorkerReady };
+});
+await page.screenshot({ path: "demo-mobile-verify.png", fullPage: true });
+await page.context().setOffline(true);
+await page.reload({ waitUntil: "networkidle" });
+const offlineText = await page.locator("body").innerText();
+await page.context().setOffline(false);
+
 const result = {
   complete: bodyText.includes("Demo path complete"),
   hasArea: bodyText.includes("Ep. 05: Storm the Castle"),
   hasReward: bodyText.includes("Reward: 15 gold, 20 XP"),
+  hasManifest: pwaStatus.manifestHref.includes("manifest.webmanifest"),
+  serviceWorkerReady: pwaStatus.serviceWorkerReady,
+  offlineReady: offlineText.includes("Camelot Legends") && offlineText.includes("Start New Game"),
   hasSaveFeedback:
     bodyText.includes("Save loaded") || bodyText.includes("Saved to IndexedDB"),
   consoleErrors,
 };
 
-await page.screenshot({ path: "demo-mobile-verify.png", fullPage: true });
 await browser.close();
 
-if (!result.complete || !result.hasArea || !result.hasReward || !result.hasSaveFeedback || consoleErrors.length) {
+if (
+  !result.complete ||
+  !result.hasArea ||
+  !result.hasReward ||
+  !result.hasManifest ||
+  !result.serviceWorkerReady ||
+  !result.offlineReady ||
+  !result.hasSaveFeedback ||
+  consoleErrors.length
+) {
   console.error(JSON.stringify(result, null, 2));
   process.exit(1);
 }
