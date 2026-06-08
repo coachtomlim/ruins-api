@@ -1113,7 +1113,7 @@
     };
     state.player.gold = 0;
 
-    const seed = `ruins-${Date.now()}`;
+    const seed = window.__RUINS_TEST_SEED__ || `ruins-${Date.now()}`;
     runtime = { seed, roll: rng(seed) };
 
     clearLog();

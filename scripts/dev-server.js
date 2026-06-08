@@ -5,7 +5,7 @@ const path = require("node:path");
 const displayRoom = require("../api/display-room");
 const gameBootstrap = require("../api/game-bootstrap");
 
-const port = Number(process.env.PORT || 4173);
+const port = Number(process.env.RUINS_PORT || process.env.PORT || 4273);
 const publicDir = path.resolve(__dirname, "..", "public");
 
 const mimeByExt = {

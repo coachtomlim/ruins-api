@@ -40,7 +40,9 @@ To run locally without Vercel:
 node scripts/dev-server.js
 ```
 
-Then open `http://localhost:4173/play.html`.
+Then open `http://localhost:4273/play.html`.
+
+Set `RUINS_PORT` or `PORT` if you need another local port.
 
 ## Current API
 

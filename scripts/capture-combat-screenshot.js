@@ -4,6 +4,7 @@ const path = require("node:path");
 const edgePath = "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe";
 const outPath = path.resolve(__dirname, "..", "docs", "beta", "beta-3-combat-hud.png");
 const userDataDir = path.resolve(__dirname, "..", `.tmp-edge-combat-${Date.now()}`);
+const ruinsPort = process.env.RUINS_PORT || process.env.PORT || "4273";
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -57,7 +58,7 @@ async function main() {
     });
     await new Promise((resolve) => cdp.ws.addEventListener("open", resolve, { once: true }));
 
-    const target = await cdp("Target.createTarget", { url: "http://localhost:4173/play.html" });
+    const target = await cdp("Target.createTarget", { url: `http://localhost:${ruinsPort}/play.html` });
     const attached = await cdp("Target.attachToTarget", { targetId: target.targetId, flatten: true });
     const sessionId = attached.sessionId;
     await cdp("Runtime.enable", {}, sessionId);

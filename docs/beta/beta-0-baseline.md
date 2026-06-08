@@ -11,7 +11,7 @@ The local Alpha lock document reviewed for this baseline is:
 Key baseline references from that document:
 
 - Locked Alpha branch: `engine-prep-v1`
-- Local play entry: `http://localhost:4173/play.html`
+- Local play entry: `http://localhost:4273/play.html`
 - Bootstrap API: `/api/game-bootstrap`
 - Compatibility API: `/api/display-room`
 - Walkthrough log: `docs/walkthrough-log.md`

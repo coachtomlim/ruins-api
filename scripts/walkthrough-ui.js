@@ -77,7 +77,8 @@ async function run() {
     await runCombatPlan(scrollIfCombat);
   }
 
-  await page.goto("http://localhost:4173/play.html", { waitUntil: "networkidle" });
+  const port = process.env.RUINS_PORT || process.env.PORT || "4273";
+  await page.goto(`http://localhost:${port}/play.html`, { waitUntil: "networkidle" });
   await page.waitForTimeout(500);
   await collectLogDelta();
 

@@ -121,9 +121,10 @@ async function run() {
     },
     setTimeout: (listener) => setTimeout(listener, 0),
     window: {
+      __RUINS_TEST_SEED__: "ruins-beta-dom-smoke",
       requestAnimationFrame: (listener) => setTimeout(listener, 0),
       location: {
-        href: "http://localhost:4173/play.html"
+        href: "http://localhost:4273/play.html"
       }
     },
     requestAnimationFrame: (listener) => setTimeout(listener, 0)

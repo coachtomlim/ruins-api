@@ -69,43 +69,51 @@ A quiet rectangular shrine dominated by a coiled obsidian sculpture.
 
 A chill of unfamiliar stone settles over you.
 
-A Kobold confronts you. It lunges first.
+A Skeletal Warrior confronts you. It lunges first.
 
-Kobold's opening strike misses.
+Skeletal Warrior's opening strike misses.
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
 > Fight till the end
 
-You land a hit on Kobold for 4 damage.
+You strikes at Skeletal Warrior, but the blow misses.
 
-Kobold strikes at you, but the blow misses.
+Skeletal Warrior strikes at you, but the blow misses.
 
-Combat status: You 20 HP | Kobold 11 HP
-
-Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
-
-You land a hit on Kobold for 6 damage.
-
-Kobold strikes at you, but the blow misses.
-
-Combat status: You 20 HP | Kobold 5 HP
+Combat status: You 20 HP | Skeletal Warrior 15 HP
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
-You land a hit on Kobold for 3 damage.
+You land a hit on Skeletal Warrior for 6 damage.
 
-Kobold strikes at you, but the blow misses.
+Skeletal Warrior lands a hit on you for 2 damage.
 
-Combat status: You 20 HP | Kobold 2 HP
+Combat status: You 18 HP | Skeletal Warrior 9 HP
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
-You land a hit on Kobold for 5 damage.
+You land a hit on Skeletal Warrior for 4 damage.
+
+Skeletal Warrior lands a hit on you for 3 damage.
+
+Combat status: You 15 HP | Skeletal Warrior 5 HP
+
+Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+
+You land a hit on Skeletal Warrior for 4 damage.
+
+Skeletal Warrior strikes at you, but the blow misses.
+
+Combat status: You 15 HP | Skeletal Warrior 1 HP
+
+Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+
+You land a hit on Skeletal Warrior for 5 damage.
 
 The Galanic powers in this Ruin are activated, and you are healed of all your wounds.
 
-Kobold is defeated.
+Skeletal Warrior is defeated.
 
 > Pick up Fog of Confusion
 
@@ -127,35 +135,35 @@ Broken black mirror shards litter the floor of a large square chamber.
 
 A chill of unfamiliar stone settles over you.
 
-A Skeletal Warrior confronts you. It lunges first.
+A Kobold confronts you. It lunges first.
 
-Skeletal Warrior's opening strike misses.
+Kobold strikes first for 1 damage.
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
 > Fight till the end
 
-You land a hit on Skeletal Warrior for 7 damage.
+You land a hit on Kobold for 6 damage.
 
-Skeletal Warrior strikes at you, but the blow misses.
+Kobold strikes at you, but the blow misses.
 
-Combat status: You 24 HP | Skeletal Warrior 9 HP
-
-Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
-
-You land a hit on Skeletal Warrior for 7 damage.
-
-Skeletal Warrior strikes at you, but the blow misses.
-
-Combat status: You 24 HP | Skeletal Warrior 2 HP
+Combat status: You 23 HP | Kobold 10 HP
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
-You land a hit on Skeletal Warrior for 6 damage.
+You land a hit on Kobold for 6 damage.
+
+Kobold strikes at you, but the blow misses.
+
+Combat status: You 23 HP | Kobold 4 HP
+
+Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+
+You land a hit on Kobold for 4 damage.
 
 The Galanic powers in this Ruin are activated, and you are healed of all your wounds.
 
-Skeletal Warrior is defeated.
+Kobold is defeated.
 
 > Examine mirror shards
 
@@ -178,7 +186,7 @@ A chill of unfamiliar stone settles over you.
 
 A Imp confronts you. It lunges first.
 
-Imp's opening strike misses.
+Imp strikes first for 4 damage.
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
@@ -188,7 +196,7 @@ The effects of the scroll were devastating to the fiend, and all its stats have 
 
 Imp strikes at you, but the blow misses.
 
-Combat status: You 28 HP | Imp 10 HP
+Combat status: You 24 HP | Imp 10 HP
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
@@ -198,7 +206,7 @@ You land a hit on Imp for 9 damage.
 
 Imp strikes at you, but the blow misses.
 
-Combat status: You 28 HP | Imp 1 HP
+Combat status: You 24 HP | Imp 1 HP
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
@@ -288,43 +296,43 @@ A former garrison room with rusted weapons on cracked stone racks.
 
 A chill of unfamiliar stone settles over you.
 
-A Gnome confronts you. It lunges first.
+A Juvenile Salamander confronts you. It lunges first.
 
-Gnome's opening strike misses.
+Juvenile Salamander's opening strike misses.
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
 > Fight till the end
 
-You land a hit on Gnome for 6 damage.
+You land a hit on Juvenile Salamander for 7 damage.
 
-Gnome strikes at you, but the blow misses.
+Juvenile Salamander strikes at you, but the blow misses.
 
-Combat status: You 34 HP | Gnome 17 HP
-
-Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
-
-You land a hit on Gnome for 6 damage.
-
-Gnome strikes at you, but the blow misses.
-
-Combat status: You 34 HP | Gnome 11 HP
+Combat status: You 34 HP | Juvenile Salamander 16 HP
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
-You land a hit on Gnome for 6 damage.
+You land a hit on Juvenile Salamander for 7 damage.
 
-Gnome strikes at you, but the blow misses.
+Juvenile Salamander strikes at you, but the blow misses.
 
-Combat status: You 34 HP | Gnome 5 HP
+Combat status: You 34 HP | Juvenile Salamander 9 HP
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
-You land a hit on Gnome for 8 damage.
+You land a hit on Juvenile Salamander for 8 damage.
+
+Juvenile Salamander strikes at you, but the blow misses.
+
+Combat status: You 34 HP | Juvenile Salamander 1 HP
+
+Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+
+You land a hit on Juvenile Salamander for 8 damage.
 
 The Galanic powers in this Ruin are activated, and you are healed of all your wounds.
 
-Gnome is defeated.
+Juvenile Salamander is defeated.
 
 > Pick up Pulse of Calm
 
@@ -341,7 +349,7 @@ A chill of unfamiliar stone settles over you.
 
 A Musca confronts you. It lunges first.
 
-Musca strikes first for 3 damage.
+Musca strikes first for 2 damage.
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
@@ -351,29 +359,29 @@ The effects of the scroll were devastating to the fiend, and all its stats have 
 
 Musca strikes at you, but the blow misses.
 
-Combat status: You 37 HP | Musca 25 HP
+Combat status: You 38 HP | Musca 25 HP
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
 > Fight till the end
 
-You land a hit on Musca for 10 damage.
-
-Musca strikes at you, but the blow misses.
-
-Combat status: You 37 HP | Musca 15 HP
-
-Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
-
 You land a hit on Musca for 9 damage.
 
 Musca strikes at you, but the blow misses.
 
-Combat status: You 37 HP | Musca 6 HP
+Combat status: You 38 HP | Musca 16 HP
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
 You land a hit on Musca for 12 damage.
+
+Musca strikes at you, but the blow misses.
+
+Combat status: You 38 HP | Musca 4 HP
+
+Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+
+You land a hit on Musca for 11 damage.
 
 The Galanic powers in this Ruin are activated, and you are healed of all your wounds.
 
@@ -423,11 +431,11 @@ Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
 > Fight till the end
 
-You land a hit on Lizardman for 6 damage.
+You land a hit on Lizardman for 8 damage.
 
 Lizardman strikes at you, but the blow misses.
 
-Combat status: You 24 HP | Lizardman 44 HP
+Combat status: You 24 HP | Lizardman 42 HP
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
@@ -435,43 +443,35 @@ You land a hit on Lizardman for 6 damage.
 
 Lizardman strikes at you, but the blow misses.
 
-Combat status: You 24 HP | Lizardman 38 HP
+Combat status: You 24 HP | Lizardman 36 HP
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
-You land a hit on Lizardman for 5 damage.
+You land a hit on Lizardman for 6 damage.
 
 Lizardman strikes at you, but the blow misses.
 
-Combat status: You 24 HP | Lizardman 33 HP
+Combat status: You 24 HP | Lizardman 30 HP
+
+Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+
+You land a hit on Lizardman for 8 damage.
+
+Lizardman strikes at you, but the blow misses.
+
+Combat status: You 24 HP | Lizardman 22 HP
+
+Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+
+You land a hit on Lizardman for 8 damage.
+
+Lizardman strikes at you, but the blow misses.
+
+Combat status: You 24 HP | Lizardman 14 HP
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
 You land a hit on Lizardman for 7 damage.
-
-Lizardman strikes at you, but the blow misses.
-
-Combat status: You 24 HP | Lizardman 26 HP
-
-Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
-
-You land a hit on Lizardman for 7 damage.
-
-Lizardman strikes at you, but the blow misses.
-
-Combat status: You 24 HP | Lizardman 19 HP
-
-Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
-
-You land a hit on Lizardman for 6 damage.
-
-Lizardman strikes at you, but the blow misses.
-
-Combat status: You 24 HP | Lizardman 13 HP
-
-Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
-
-You land a hit on Lizardman for 6 damage.
 
 Lizardman strikes at you, but the blow misses.
 
@@ -479,15 +479,15 @@ Combat status: You 24 HP | Lizardman 7 HP
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
-You land a hit on Lizardman for 5 damage.
+You land a hit on Lizardman for 6 damage.
 
 Lizardman strikes at you, but the blow misses.
 
-Combat status: You 24 HP | Lizardman 2 HP
+Combat status: You 24 HP | Lizardman 1 HP
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
-You land a hit on Lizardman for 8 damage.
+You land a hit on Lizardman for 7 damage.
 
 The Galanic powers in this Ruin are activated, and you are healed of all your wounds.
 
@@ -545,17 +545,25 @@ The Sound-Deflecting Girdle flashes and shields you from the Banshee's opening s
 
 A Banshee Doppelganger confronts you. It lunges first.
 
-Banshee Doppelganger's opening strike misses.
+Banshee Doppelganger strikes first for 5 damage.
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
 > Fight till the end
 
+You land a hit on Banshee Doppelganger for 9 damage.
+
+Banshee Doppelganger lands a hit on you for 4 damage.
+
+Combat status: You 76 HP | Banshee Doppelganger 76 HP
+
+Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+
 You land a hit on Banshee Doppelganger for 8 damage.
 
 Banshee Doppelganger strikes at you, but the blow misses.
 
-Combat status: You 85 HP | Banshee Doppelganger 77 HP
+Combat status: You 76 HP | Banshee Doppelganger 68 HP
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
@@ -563,55 +571,7 @@ You land a hit on Banshee Doppelganger for 7 damage.
 
 Banshee Doppelganger strikes at you, but the blow misses.
 
-Combat status: You 85 HP | Banshee Doppelganger 70 HP
-
-Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
-
-You land a hit on Banshee Doppelganger for 8 damage.
-
-Banshee Doppelganger strikes at you, but the blow misses.
-
-Combat status: You 85 HP | Banshee Doppelganger 62 HP
-
-Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
-
-You land a hit on Banshee Doppelganger for 6 damage.
-
-Banshee Doppelganger lands a hit on you for 4 damage.
-
-Combat status: You 81 HP | Banshee Doppelganger 56 HP
-
-Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
-
-You land a hit on Banshee Doppelganger for 8 damage.
-
-Banshee Doppelganger strikes at you, but the blow misses.
-
-Combat status: You 81 HP | Banshee Doppelganger 48 HP
-
-Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
-
-You land a hit on Banshee Doppelganger for 8 damage.
-
-Banshee Doppelganger strikes at you, but the blow misses.
-
-Combat status: You 81 HP | Banshee Doppelganger 40 HP
-
-Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
-
-You land a hit on Banshee Doppelganger for 6 damage.
-
-Banshee Doppelganger strikes at you, but the blow misses.
-
-Combat status: You 81 HP | Banshee Doppelganger 34 HP
-
-Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
-
-You land a hit on Banshee Doppelganger for 6 damage.
-
-Banshee Doppelganger strikes at you, but the blow misses.
-
-Combat status: You 81 HP | Banshee Doppelganger 28 HP
+Combat status: You 76 HP | Banshee Doppelganger 61 HP
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
@@ -619,7 +579,31 @@ You land a hit on Banshee Doppelganger for 9 damage.
 
 Banshee Doppelganger lands a hit on you for 6 damage.
 
-Combat status: You 75 HP | Banshee Doppelganger 19 HP
+Combat status: You 70 HP | Banshee Doppelganger 52 HP
+
+Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+
+You land a hit on Banshee Doppelganger for 7 damage.
+
+Banshee Doppelganger lands a hit on you for 4 damage.
+
+Combat status: You 66 HP | Banshee Doppelganger 45 HP
+
+Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+
+You land a hit on Banshee Doppelganger for 7 damage.
+
+Banshee Doppelganger strikes at you, but the blow misses.
+
+Combat status: You 66 HP | Banshee Doppelganger 38 HP
+
+Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+
+You land a hit on Banshee Doppelganger for 7 damage.
+
+Banshee Doppelganger strikes at you, but the blow misses.
+
+Combat status: You 66 HP | Banshee Doppelganger 31 HP
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
@@ -627,19 +611,43 @@ You land a hit on Banshee Doppelganger for 6 damage.
 
 Banshee Doppelganger strikes at you, but the blow misses.
 
-Combat status: You 75 HP | Banshee Doppelganger 13 HP
+Combat status: You 66 HP | Banshee Doppelganger 25 HP
+
+Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+
+You land a hit on Banshee Doppelganger for 7 damage.
+
+Banshee Doppelganger lands a hit on you for 6 damage.
+
+Combat status: You 60 HP | Banshee Doppelganger 18 HP
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
 You land a hit on Banshee Doppelganger for 8 damage.
 
-Banshee Doppelganger lands a hit on you for 7 damage.
+Banshee Doppelganger strikes at you, but the blow misses.
 
-Combat status: You 68 HP | Banshee Doppelganger 5 HP
+Combat status: You 60 HP | Banshee Doppelganger 10 HP
+
+Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+
+You strikes at Banshee Doppelganger, but the blow misses.
+
+Banshee Doppelganger strikes at you, but the blow misses.
+
+Combat status: You 60 HP | Banshee Doppelganger 10 HP
 
 Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
 
 You land a hit on Banshee Doppelganger for 8 damage.
+
+Banshee Doppelganger lands a hit on you for 6 damage.
+
+Combat status: You 54 HP | Banshee Doppelganger 2 HP
+
+Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>
+
+You land a hit on Banshee Doppelganger for 7 damage.
 
 The Galanic powers in this Ruin are activated, and you are healed of all your wounds.
 
