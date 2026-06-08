@@ -1,0 +1,802 @@
+[
+  {
+    "id": "area-001",
+    "displayName": "Ep. 01: The Start of Legends",
+    "description": "The Kingdom of Camelot has been shaken, and the people are in disarray. But a mysterious young traveler still holds hope to revive the kingdom and push back the invading darkness. She wanders the war-torn land in search of strong allies to aid in her quest.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 29-30"
+  },
+  {
+    "id": "area-002",
+    "displayName": "Ep. 02: Journey Forth",
+    "description": "Alliances have been forged, and promises have been made. But the journey has just begun and it is already brindled with dangers. With enemies appearing where there should be none, could our mysterious stranger’s warning of Castle Camelot’s threat be true?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 51-52"
+  },
+  {
+    "id": "area-003",
+    "displayName": "Ep. 03: Among the Ashes",
+    "description": "The journey has been smooth for the moment, but is it too easy? Our heroes have avoided any major enemy forces and have continued their united stance towards returning to Castle Camelot. But could stronger enemies be hiding out of plain sight?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 73-74"
+  },
+  {
+    "id": "area-004",
+    "displayName": "Ep. 04: Danger Rising",
+    "description": "Through the guidance of our mysterious stranger, our heroes have gotten very close to Castle Camelot without much trouble. But the ease in battles thus far creates lingering doubts. Could all this just be a trap waiting to happen?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 95-96"
+  },
+  {
+    "id": "area-005",
+    "displayName": "Ep. 05: Storm the Castle",
+    "description": "Our heroes finally arrive at Castle Camelot, and as our stranger has prophesied, the fortress is under siege!  Our heroes rush in to protect the castle, but in the lingering shadows, a powerful entity lies in wait to welcome their expected arrival.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 117-118"
+  },
+  {
+    "id": "area-006",
+    "displayName": "Ep. 06: Bold Alliance",
+    "description": "Castle Camelot has been saved and new comrades have joined our heroes. But the Kingdom is in shambles and Bretunia is still under Morgana’s dark influence. How will our heroes seek to return light to the land?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 139-140"
+  },
+  {
+    "id": "area-007",
+    "displayName": "Ep. 07: Hit and Run",
+    "description": "Our heroes continue to make their way towards Castle Ludium which has been overthrown by Morgana’s army, making double haste to prevent Castle Ludium from totally crumbling under the enemy’s occupation. But getting there is getting progressively difficult.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 161-162"
+  },
+  {
+    "id": "area-008",
+    "displayName": "Ep. 08: Rushing Forward",
+    "description": "Waves of mercenaries and bandits continue to appear to obstruct the paths of our heroes, and their increasing numbers are getting our heroes worried over the state of Castle Ludium. Is the stronghold still standing? What of the survival of its people?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 183-184"
+  },
+  {
+    "id": "area-009",
+    "displayName": "Ep. 09: March into the Fire",
+    "description": "Our heroes have not reached the castle yet, but signs of destruction are already within plain view. The current situation for Castle Ludium does not look good at all. Under such bleak conditions, our heroes grow more concerned. Are they too late?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 205-206"
+  },
+  {
+    "id": "area-010",
+    "displayName": "Ep. 10: Fight for Liberty",
+    "description": "To the relief of our heroes, Castle Ludium is still intact. But they find it strange that their enemies have not pound the castle into gravel yet. What are their intentions? Meanwhile, there is a terrible power, greater than that of our heroes, lurking within the castle walls.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 9-10"
+  },
+  {
+    "id": "area-011",
+    "displayName": "Ep. 11: M for Mystery",
+    "description": "With Castle Ludium secured, our heroes move west in their journey to rid Bretunia of Morgana’s evil. Where will our heroes go, and what new enemies will our heroes meet? At the same time, questions loom over our mysterious stranger’s origins.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 11-12"
+  },
+  {
+    "id": "area-012",
+    "displayName": "Ep. 12: Death’s Playground",
+    "description": "The journey continues as our heroes travel across the county of Gerdenbur, a land once ravaged by Morganic troops. Even now, traces of evil cover the land while the restless souls of the dead continue to roam and seek out blood.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 13-14"
+  },
+  {
+    "id": "area-013",
+    "displayName": "Ep. 13: Higher Peaks",
+    "description": "The ground on which our heroes tread begins to take an elevated turn as they make their way towards their destination situated beyond the hills. The journey is getting tougher but our heroes remain steadfast in their conviction to carry out their goal.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 15-16"
+  },
+  {
+    "id": "area-014",
+    "displayName": "Ep. 14: Stone Graveyard",
+    "description": "The chaos and devastation that have swept the land during the recent war grow more evident as our heroes slowly transverse the uneven terrain. The haunting cries of lost souls echo off the earth and the air stings with the chill of death.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 17-18"
+  },
+  {
+    "id": "area-015",
+    "displayName": "Ep. 15: Rough Encounter",
+    "description": "Our heroes arrive at their destination which was once an abandoned town. But the area has been so badly damaged that little signs of civilization remain. Will our heroes find the mysterious artifact they are looking for? Or will they find something entirely different?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 19-20"
+  },
+  {
+    "id": "area-016",
+    "displayName": "Ep. 16: Uneasy Turn",
+    "description": "Our heroes continue west in search for their strange artifact, but what exactly is it? Mysteries stack on top of mysteries as the journey progresses, leaving the travelling companions in doubt over the relevance and purpose of their quest.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 21-22"
+  },
+  {
+    "id": "area-017",
+    "displayName": "Ep. 17: Shaken Faith",
+    "description": "Near the border of Gerdenbur, more enemies appear to block the passage of our heroes. It will take grit and determination to plough through these monsters, but with our heroes in such disarray, can they muster the unity needed to overcome their adversaries?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 23-24"
+  },
+  {
+    "id": "area-018",
+    "displayName": "Ep. 18: Cut-throats and Thugs",
+    "description": "The journey takes our heroes into the new territory of Baranor, which is mostly covered by forests and mountains. As they travel along the coastal land, they find their path constantly interrupted by mercenaries and thieves.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 25-26"
+  },
+  {
+    "id": "area-019",
+    "displayName": "Ep. 19: Smash and Break In",
+    "description": "As our heroes approach Lizarton Bay, it is becoming apparent that the region is overrun by hoodlums and convicts. What happened to the peaceful town of Lizarton? Against the tide of barbarous felons, our heroes huddle together and force their way through.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 27-28"
+  },
+  {
+    "id": "area-020",
+    "displayName": "Ep. 20: Beware the Dealer",
+    "description": "Having reached the town of Lizarton, our heroes find its people being held hostage and abused by a band of scoundrels. They make quick haste to track down the raiders’ leader who so happens to be holding the artifact they are seeking.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 31-32"
+  },
+  {
+    "id": "area-021",
+    "displayName": "Ep. 21: Bearer of Bad News",
+    "description": "With the town of Lizarton liberated, our heroes make their way to find the next mysterious artifact. But terrible news arrives to inform our heroes of an attack happening at Castle Merlebrae. It is another rush to rescue a castle under siege.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 33-34"
+  },
+  {
+    "id": "area-022",
+    "displayName": "Ep. 22: Keep up the Pace",
+    "description": "Time is of the essence as our heroes set their sights for their new destination of Castle Merlebrae. However, as expected, swarms of enemies continue to appear to obstruct their advancement. This does not bond well for the castle’s fate.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 35-36"
+  },
+  {
+    "id": "area-023",
+    "displayName": "Ep. 23: Unclear Passage",
+    "description": "To cross the mountainous terrain, our heroes enter a cavern that leads to a nearby abandoned town. But even in this enclosure of rock void of life, defenses of enemies lurk menacingly in the shadows, searching for blood. Is nowhere safe from Morgana’s monsters?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 37-38"
+  },
+  {
+    "id": "area-024",
+    "displayName": "Ep. 24: Into the Fray Once More",
+    "description": "After exiting the underground caverns, our heroes are finally close to Castle Merlebrae. Nevertheless, our heroes cannot afford to rest as their mission demands great urgency. All they need now is to breakthrough one more surge of enemies.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 39-40"
+  },
+  {
+    "id": "area-025",
+    "displayName": "Ep. 25: Evacuate the Premise",
+    "description": "Our heroes arrive at Castle Merlebrae only to find the castle on its last breath. Its people are trying to escape but are constantly blocked by swells of enemies. Our heroes must aid in the people’s retreat while fending off the source of the attack.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 41-42"
+  },
+  {
+    "id": "area-026",
+    "displayName": "Ep. 26: Welcome to the Forest",
+    "description": "Castle Merlebrae has been saved, but its security is still being threatened by Imam and his Kadir tribe. To resolve the conflict and ensure the safety of the castle, our heroes venture forth into Blackbird Forest to find the tribe’s resting sanctuary.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 43-44"
+  },
+  {
+    "id": "area-027",
+    "displayName": "Ep. 27: Curtain of Anonymity",
+    "description": "Blackbird forest is like a mischievous beast. Its mystical atmosphere constantly plays tricks on the senses of our heroes. As they travel deeper into the shadows of the forest, they can feel the icy glares of aggressors increasing with every step.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 45-46"
+  },
+  {
+    "id": "area-028",
+    "displayName": "Ep. 28: Hide and Seek",
+    "description": "Unable to clearly detect their enemies in the forest, our heroes decide to move towards a more bare terrain. But being in the open also makes them more vulnerable, and our heroes must remain vigilant to avoid unwanted attention.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 47-48"
+  },
+  {
+    "id": "area-029",
+    "displayName": "Ep. 29: Behind the Veil",
+    "description": "The detour taken by our heroes has led them out of Blackbird Forest and into the Black Marsh. Ironically, the environment mimics the feelings they share: a sense of dread and uneasiness towards the upcoming confrontation with Imam.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 49-50"
+  },
+  {
+    "id": "area-030",
+    "displayName": "Ep. 30: One Way or the Other",
+    "description": "The final meeting between our heroes and Imam has arrived. As they tread cautiously into the domain of the Kadir tribe, they mull over the chief’s reasons for siding with Morgana. The truth can be harsh, and leaders have to endure the responsibilities of their decisions.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 53-54"
+  },
+  {
+    "id": "area-031",
+    "displayName": "Ep. 31: Daylight Robbery",
+    "description": "The region of Baranor is protected once again by the Kadir tribe through the resolve of its new leader. Our heroes can finally return to their quest to recover the mysterious artifacts. But the morale of our heroes is low, making them oblivious to the menace that stalks them.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 55-56"
+  },
+  {
+    "id": "area-032",
+    "displayName": "Ep. 32: Fight and Flight",
+    "description": "Our heroes give chase to the thief that has stolen the important artifact, but rows of enemies continue to hinder their pursuit. With the artifact’s power dormant, our heroes may not be able to locate it if they lose sight of it now.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 57-58"
+  },
+  {
+    "id": "area-033",
+    "displayName": "Ep. 33: Off the Beaten Track",
+    "description": "The enemies that are constantly appearing are preventing our heroes from closing the distance between them and the thief. To make matters worse, our heroes are getting exhausted from chasing all day, and are having difficulty keeping the thief in view.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 59-60"
+  },
+  {
+    "id": "area-034",
+    "displayName": "Ep. 34: Around the Corner",
+    "description": "After traversing multiple terrains, the thief continues to elude our heroes. Just how long do they need to keep hunting after the thief? Fortunately, the gap between the two parties is decreasing, and the frustrating chase looks to be ending soon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 61-62"
+  },
+  {
+    "id": "area-035",
+    "displayName": "Ep. 35: Den of Blackguards",
+    "description": "The thief has taken refuge within a monastery. Called the Hermitage of Mascon, it is supposed to be unoccupied due to the war. But now it is populated by bandits and outlaws. Who is the enigmatic thief? And what traps lie in stall for our heroes?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 63-64"
+  },
+  {
+    "id": "area-036",
+    "displayName": "Ep. 36: Uncertain Apprehension",
+    "description": "The search for the artifacts resumes after the tussle with Davious. Our heroes are content with continuing their quest, but Mystery seems deeply anxious. The experiences she has been through thus far are casting shadows in her mind. Just what is plaguing her thoughts?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 65-66"
+  },
+  {
+    "id": "area-037",
+    "displayName": "Ep. 37: Due Justification",
+    "description": "While Mystery’s hesitation has been subdued for now, her questions do contain specks of truth. Where would the search for the artifacts lead our heroes? What new locations would they visit? And would our heroes be prepared to face the dangers that follow?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 67-68"
+  },
+  {
+    "id": "area-038",
+    "displayName": "Ep. 38: Making Headway",
+    "description": "Our heroes have reached the border separating the county of Mascon with Windermere. They are making quick progress in their mission while defeating the enemies that stand in their way. Nothing seems to be able to halt the advancement of our heroes.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 69-70"
+  },
+  {
+    "id": "area-039",
+    "displayName": "Ep. 39: Bustling Breeze",
+    "description": "The journey of our heroes is cruising smoothly thus far and there seems to be little indication of trouble. But perils can occur suddenly and without warning. Our heroes must not be complacent over their recent victories.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 71-72"
+  },
+  {
+    "id": "area-040",
+    "displayName": "Ep. 40: Turmoil and Turbulence",
+    "description": "If one overlooks the roaming monsters, the country side of Windermere can be very calm and peaceful. But a torrent of terror is about to tear the land asunder. He carries with him a storm of rage as he preys on our heroes with bloodlust. His revenge has finally arrived.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "GameBible lines 75-76"
+  },
+  {
+    "id": "area-041",
+    "displayName": "AREA_41_NAME",
+    "description": "AREA_41_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 77-78"
+  },
+  {
+    "id": "area-042",
+    "displayName": "AREA_42_NAME",
+    "description": "AREA_42_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 79-80"
+  },
+  {
+    "id": "area-043",
+    "displayName": "AREA_43_NAME",
+    "description": "AREA_43_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 81-82"
+  },
+  {
+    "id": "area-044",
+    "displayName": "AREA_44_NAME",
+    "description": "AREA_44_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 83-84"
+  },
+  {
+    "id": "area-045",
+    "displayName": "AREA_45_NAME",
+    "description": "AREA_45_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 85-86"
+  },
+  {
+    "id": "area-046",
+    "displayName": "AREA_46_NAME",
+    "description": "AREA_46_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 87-88"
+  },
+  {
+    "id": "area-047",
+    "displayName": "AREA_47_NAME",
+    "description": "AREA_47_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 89-90"
+  },
+  {
+    "id": "area-048",
+    "displayName": "AREA_48_NAME",
+    "description": "AREA_48_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 91-92"
+  },
+  {
+    "id": "area-049",
+    "displayName": "AREA_49_NAME",
+    "description": "AREA_49_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 93-94"
+  },
+  {
+    "id": "area-050",
+    "displayName": "AREA_50_NAME",
+    "description": "AREA_50_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 97-98"
+  },
+  {
+    "id": "area-051",
+    "displayName": "AREA_51_NAME",
+    "description": "AREA_51_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 99-100"
+  },
+  {
+    "id": "area-052",
+    "displayName": "AREA_52_NAME",
+    "description": "AREA_52_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 101-102"
+  },
+  {
+    "id": "area-053",
+    "displayName": "AREA_53_NAME",
+    "description": "AREA_53_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 103-104"
+  },
+  {
+    "id": "area-054",
+    "displayName": "AREA_54_NAME",
+    "description": "AREA_54_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 105-106"
+  },
+  {
+    "id": "area-055",
+    "displayName": "AREA_55_NAME",
+    "description": "AREA_55_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 107-108"
+  },
+  {
+    "id": "area-056",
+    "displayName": "AREA_56_NAME",
+    "description": "AREA_56_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 109-110"
+  },
+  {
+    "id": "area-057",
+    "displayName": "AREA_57_NAME",
+    "description": "AREA_57_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 111-112"
+  },
+  {
+    "id": "area-058",
+    "displayName": "AREA_58_NAME",
+    "description": "AREA_58_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 113-114"
+  },
+  {
+    "id": "area-059",
+    "displayName": "AREA_59_NAME",
+    "description": "AREA_59_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 115-116"
+  },
+  {
+    "id": "area-060",
+    "displayName": "AREA_60_NAME",
+    "description": "AREA_60_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 119-120"
+  },
+  {
+    "id": "area-061",
+    "displayName": "AREA_61_NAME",
+    "description": "AREA_61_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 121-122"
+  },
+  {
+    "id": "area-062",
+    "displayName": "AREA_62_NAME",
+    "description": "AREA_62_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 123-124"
+  },
+  {
+    "id": "area-063",
+    "displayName": "AREA_63_NAME",
+    "description": "AREA_63_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 125-126"
+  },
+  {
+    "id": "area-064",
+    "displayName": "AREA_64_NAME",
+    "description": "AREA_64_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 127-128"
+  },
+  {
+    "id": "area-065",
+    "displayName": "AREA_65_NAME",
+    "description": "AREA_65_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 129-130"
+  },
+  {
+    "id": "area-066",
+    "displayName": "AREA_66_NAME",
+    "description": "AREA_66_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 131-132"
+  },
+  {
+    "id": "area-067",
+    "displayName": "AREA_67_NAME",
+    "description": "AREA_67_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 133-134"
+  },
+  {
+    "id": "area-068",
+    "displayName": "AREA_68_NAME",
+    "description": "AREA_68_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 135-136"
+  },
+  {
+    "id": "area-069",
+    "displayName": "AREA_69_NAME",
+    "description": "AREA_69_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 137-138"
+  },
+  {
+    "id": "area-070",
+    "displayName": "AREA_70_NAME",
+    "description": "AREA_70_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 141-142"
+  },
+  {
+    "id": "area-071",
+    "displayName": "AREA_71_NAME",
+    "description": "AREA_71_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 143-144"
+  },
+  {
+    "id": "area-072",
+    "displayName": "AREA_72_NAME",
+    "description": "AREA_72_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 145-146"
+  },
+  {
+    "id": "area-073",
+    "displayName": "AREA_73_NAME",
+    "description": "AREA_73_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 147-148"
+  },
+  {
+    "id": "area-074",
+    "displayName": "AREA_74_NAME",
+    "description": "AREA_74_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 149-150"
+  },
+  {
+    "id": "area-075",
+    "displayName": "AREA_75_NAME",
+    "description": "AREA_75_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 151-152"
+  },
+  {
+    "id": "area-076",
+    "displayName": "AREA_76_NAME",
+    "description": "AREA_76_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 153-154"
+  },
+  {
+    "id": "area-077",
+    "displayName": "AREA_77_NAME",
+    "description": "AREA_77_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 155-156"
+  },
+  {
+    "id": "area-078",
+    "displayName": "AREA_78_NAME",
+    "description": "AREA_78_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 157-158"
+  },
+  {
+    "id": "area-079",
+    "displayName": "AREA_79_NAME",
+    "description": "AREA_79_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 159-160"
+  },
+  {
+    "id": "area-080",
+    "displayName": "AREA_80_NAME",
+    "description": "AREA_80_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 163-164"
+  },
+  {
+    "id": "area-081",
+    "displayName": "AREA_81_NAME",
+    "description": "AREA_81_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 165-166"
+  },
+  {
+    "id": "area-082",
+    "displayName": "AREA_82_NAME",
+    "description": "AREA_82_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 167-168"
+  },
+  {
+    "id": "area-083",
+    "displayName": "AREA_83_NAME",
+    "description": "AREA_83_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 169-170"
+  },
+  {
+    "id": "area-084",
+    "displayName": "AREA_84_NAME",
+    "description": "AREA_84_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 171-172"
+  },
+  {
+    "id": "area-085",
+    "displayName": "AREA_85_NAME",
+    "description": "AREA_85_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 173-174"
+  },
+  {
+    "id": "area-086",
+    "displayName": "AREA_86_NAME",
+    "description": "AREA_86_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 175-176"
+  },
+  {
+    "id": "area-087",
+    "displayName": "AREA_87_NAME",
+    "description": "AREA_87_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 177-178"
+  },
+  {
+    "id": "area-088",
+    "displayName": "AREA_88_NAME",
+    "description": "AREA_88_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 179-180"
+  },
+  {
+    "id": "area-089",
+    "displayName": "AREA_89_NAME",
+    "description": "AREA_89_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 181-182"
+  },
+  {
+    "id": "area-090",
+    "displayName": "AREA_90_NAME",
+    "description": "AREA_90_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 185-186"
+  },
+  {
+    "id": "area-091",
+    "displayName": "AREA_91_NAME",
+    "description": "AREA_91_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 187-188"
+  },
+  {
+    "id": "area-092",
+    "displayName": "AREA_92_NAME",
+    "description": "AREA_92_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 189-190"
+  },
+  {
+    "id": "area-093",
+    "displayName": "AREA_93_NAME",
+    "description": "AREA_93_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 191-192"
+  },
+  {
+    "id": "area-094",
+    "displayName": "AREA_94_NAME",
+    "description": "AREA_94_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 193-194"
+  },
+  {
+    "id": "area-095",
+    "displayName": "AREA_95_NAME",
+    "description": "AREA_95_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 195-196"
+  },
+  {
+    "id": "area-096",
+    "displayName": "AREA_96_NAME",
+    "description": "AREA_96_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 197-198"
+  },
+  {
+    "id": "area-097",
+    "displayName": "AREA_97_NAME",
+    "description": "AREA_97_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 199-200"
+  },
+  {
+    "id": "area-098",
+    "displayName": "AREA_98_NAME",
+    "description": "AREA_98_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 201-202"
+  },
+  {
+    "id": "area-099",
+    "displayName": "AREA_99_NAME",
+    "description": "AREA_99_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 203-204"
+  },
+  {
+    "id": "area-100",
+    "displayName": "AREA_100_NAME",
+    "description": "AREA_100_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "GameBible lines 7-8"
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "class-paladin",
+    "displayName": "Paladin",
+    "description": "Recovered from GDD line: Paladin: Geoffrey (Male Human)",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "HIGH",
+    "notes": "Class taxonomy is design-derived; no runtime class system survives."
+  },
+  {
+    "id": "class-mage",
+    "displayName": "Mage",
+    "description": "Recovered from GDD line: Mage: Elisabeth (Female Elf)",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "HIGH",
+    "notes": "Class taxonomy is design-derived; no runtime class system survives."
+  },
+  {
+    "id": "class-warrior",
+    "displayName": "Warrior",
+    "description": "Recovered from GDD line: Warrior: Baldwine (Male Human)",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "HIGH",
+    "notes": "Class taxonomy is design-derived; no runtime class system survives."
+  },
+  {
+    "id": "class-healer",
+    "displayName": "Healer / Galan",
+    "description": "Recovered from script reference to Galan/healer.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "MEDIUM",
+    "notes": "Class taxonomy is design-derived; no runtime class system survives."
+  },
+  {
+    "id": "class-rogue",
+    "displayName": "Rogue",
+    "description": "Recovered from script description of a mysterious rogue.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "MEDIUM",
+    "notes": "Class taxonomy is design-derived; no runtime class system survives."
+  },
+  {
+    "id": "class-archer",
+    "displayName": "Archer",
+    "description": "Recovered from script description of an elite archer.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "MEDIUM",
+    "notes": "Class taxonomy is design-derived; no runtime class system survives."
+  }
+]

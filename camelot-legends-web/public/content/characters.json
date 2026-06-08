@@ -1,0 +1,130 @@
+[
+  {
+    "id": "geoffrey",
+    "displayName": "Geoffrey",
+    "description": "Paladin: Geoffrey (Male Human)",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "HIGH",
+    "notes": "Named in GDD/script or instantiated in Unity sample scene."
+  },
+  {
+    "id": "elisabeth",
+    "displayName": "Elisabeth",
+    "description": "Mage: Elisabeth (Female Elf)",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "HIGH",
+    "notes": "Named in GDD/script or instantiated in Unity sample scene."
+  },
+  {
+    "id": "baldwine",
+    "displayName": "Baldwine",
+    "description": "Warrior: Baldwine (Male Human)",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "HIGH",
+    "notes": "Named in GDD/script or instantiated in Unity sample scene."
+  },
+  {
+    "id": "rosemary",
+    "displayName": "Rosemary",
+    "description": "Rosemary (Female Human)",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "HIGH",
+    "notes": "Named in GDD/script or instantiated in Unity sample scene."
+  },
+  {
+    "id": "mystery",
+    "displayName": "Mystery",
+    "description": "Stranger: Mystery (Female Human)",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "HIGH",
+    "notes": "Named in GDD/script or instantiated in Unity sample scene."
+  },
+  {
+    "id": "vivian",
+    "displayName": "Vivian",
+    "description": "Twin Lady of the Lake",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "HIGH",
+    "notes": "Named in GDD/script or instantiated in Unity sample scene."
+  },
+  {
+    "id": "vivien",
+    "displayName": "Vivien",
+    "description": "Twin Lady of the Lake",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "HIGH",
+    "notes": "Named in GDD/script or instantiated in Unity sample scene."
+  },
+  {
+    "id": "davious",
+    "displayName": "Davious",
+    "description": "The Bandit King",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "HIGH",
+    "notes": "Named in GDD/script or instantiated in Unity sample scene."
+  },
+  {
+    "id": "imam",
+    "displayName": "Imam",
+    "description": "Chief of the Kadir Clan",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "HIGH",
+    "notes": "Named in GDD/script or instantiated in Unity sample scene."
+  },
+  {
+    "id": "forgon",
+    "displayName": "Forgon",
+    "description": "Blade of Morgan",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "HIGH",
+    "notes": "Named in GDD/script or instantiated in Unity sample scene."
+  },
+  {
+    "id": "winford",
+    "displayName": "Winford",
+    "description": "Shield of Morgan",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "HIGH",
+    "notes": "Named in GDD/script or instantiated in Unity sample scene."
+  },
+  {
+    "id": "mordred",
+    "displayName": "Mordred",
+    "description": "The Bane Prince",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "HIGH",
+    "notes": "Named in GDD/script or instantiated in Unity sample scene."
+  },
+  {
+    "id": "aubriet",
+    "displayName": "Aubriet",
+    "description": "Daz/Unity character prefab",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\4Characters-for-Unity\\Assets\\Scenes\\SampleScene.unity",
+    "confidence": "MEDIUM",
+    "notes": "Named in GDD/script or instantiated in Unity sample scene."
+  },
+  {
+    "id": "estella",
+    "displayName": "Estella",
+    "description": "Daz/Unity character prefab",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\4Characters-for-Unity\\Assets\\Scenes\\SampleScene.unity",
+    "confidence": "HIGH",
+    "notes": "Named in GDD/script or instantiated in Unity sample scene."
+  },
+  {
+    "id": "riadok",
+    "displayName": "Riadok",
+    "description": "Daz/Unity character prefab",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\4Characters-for-Unity\\Assets\\Scenes\\SampleScene.unity",
+    "confidence": "HIGH",
+    "notes": "Named in GDD/script or instantiated in Unity sample scene."
+  },
+  {
+    "id": "tosham",
+    "displayName": "Tosham",
+    "description": "Daz/Unity character prefab",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\4Characters-for-Unity\\Assets\\Scenes\\SampleScene.unity",
+    "confidence": "HIGH",
+    "notes": "Named in GDD/script or instantiated in Unity sample scene."
+  }
+]

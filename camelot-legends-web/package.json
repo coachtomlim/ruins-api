@@ -1,0 +1,31 @@
+{
+  "name": "camelot-legends-web",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "node tools/serve-static.mjs",
+    "build": "node tools/build-static.mjs",
+    "test": "node tools/test-demo.mjs",
+    "verify:demo": "node tools/verify-demo.mjs",
+    "extract:phase1": "python tools/extract_phase1.py",
+    "validate:content": "node tools/validate-content.mjs"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "futureStack": {
+    "note": "Vite + React + TypeScript remains the intended Phase 2 stack once npm is available. The current playable demo is dependency-free because this environment has node.exe but no npm.",
+    "dependencies": {
+      "@vitejs/plugin-react": "^5.0.0",
+      "idb": "^8.0.0",
+      "react": "^19.0.0",
+      "react-dom": "^19.0.0",
+      "vite": "^7.0.0"
+    },
+    "devDependencies": {
+      "@types/react": "^19.0.0",
+      "@types/react-dom": "^19.0.0",
+      "typescript": "^5.0.0"
+    }
+  }
+}

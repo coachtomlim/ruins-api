@@ -1,0 +1,3778 @@
+[
+  {
+    "id": "dialogue-npc-001",
+    "displayName": "Adala",
+    "description": "Adala",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "NPC name key DIALOG_NPC_NAME_1 at line 442"
+  },
+  {
+    "id": "dialogue-npc-002",
+    "displayName": "Baldwine",
+    "description": "Baldwine",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "NPC name key DIALOG_NPC_NAME_2 at line 450"
+  },
+  {
+    "id": "dialogue-npc-003",
+    "displayName": "Claramond",
+    "description": "Claramond",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "NPC name key DIALOG_NPC_NAME_3 at line 452"
+  },
+  {
+    "id": "dialogue-npc-004",
+    "displayName": "Elisabeth",
+    "description": "Elisabeth",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "NPC name key DIALOG_NPC_NAME_4 at line 453"
+  },
+  {
+    "id": "dialogue-npc-005",
+    "displayName": "Geoffrey",
+    "description": "Geoffrey",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "NPC name key DIALOG_NPC_NAME_5 at line 454"
+  },
+  {
+    "id": "dialogue-npc-006",
+    "displayName": "Jaleel",
+    "description": "Jaleel",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "NPC name key DIALOG_NPC_NAME_6 at line 455"
+  },
+  {
+    "id": "dialogue-npc-007",
+    "displayName": "Rosemary",
+    "description": "Rosemary",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "NPC name key DIALOG_NPC_NAME_7 at line 456"
+  },
+  {
+    "id": "dialogue-npc-008",
+    "displayName": "Zubair",
+    "description": "Zubair",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "NPC name key DIALOG_NPC_NAME_8 at line 457"
+  },
+  {
+    "id": "dialogue-npc-009",
+    "displayName": "Mystery",
+    "description": "Mystery",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "NPC name key DIALOG_NPC_NAME_9 at line 458"
+  },
+  {
+    "id": "dialogue-npc-010",
+    "displayName": "Stranger",
+    "description": "Stranger",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "NPC name key DIALOG_NPC_NAME_10 at line 443"
+  },
+  {
+    "id": "dialogue-npc-011",
+    "displayName": "Davious",
+    "description": "Davious",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "NPC name key DIALOG_NPC_NAME_11 at line 444"
+  },
+  {
+    "id": "dialogue-npc-012",
+    "displayName": "Forgon",
+    "description": "Forgon",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "NPC name key DIALOG_NPC_NAME_12 at line 445"
+  },
+  {
+    "id": "dialogue-npc-013",
+    "displayName": "Imam",
+    "description": "Imam",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "NPC name key DIALOG_NPC_NAME_13 at line 446"
+  },
+  {
+    "id": "dialogue-npc-015",
+    "displayName": "Orlordin",
+    "description": "Orlordin",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "NPC name key DIALOG_NPC_NAME_15 at line 447"
+  },
+  {
+    "id": "dialogue-npc-017",
+    "displayName": "Yikael",
+    "description": "Yikael",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "NPC name key DIALOG_NPC_NAME_17 at line 448"
+  },
+  {
+    "id": "dialogue-npc-018",
+    "displayName": "Grigori",
+    "description": "Grigori",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "NPC name key DIALOG_NPC_NAME_18 at line 449"
+  },
+  {
+    "id": "dialogue-npc-023",
+    "displayName": "Unknown Shadow",
+    "description": "Unknown Shadow",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "NPC name key DIALOG_NPC_NAME_23 at line 451"
+  },
+  {
+    "id": "dialogue-text-001",
+    "displayName": "Dialogue Text 1",
+    "description": "Halt! Who goes there? Reveal yourself or face our wrath!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_1 at line 459"
+  },
+  {
+    "id": "dialogue-text-002",
+    "displayName": "Dialogue Text 2",
+    "description": "I mean no harm, Shaman.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_2 at line 570"
+  },
+  {
+    "id": "dialogue-text-003",
+    "displayName": "Dialogue Text 3",
+    "description": "This is your first and last warning. Ignore it, and my arrows will show no mercy.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_3 at line 681"
+  },
+  {
+    "id": "dialogue-text-004",
+    "displayName": "Dialogue Text 4",
+    "description": "Is this how the once-proud elder of the Elvish Whitewood Archer treats her guest, with threats of death without justification?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_4 at line 792"
+  },
+  {
+    "id": "dialogue-text-005",
+    "displayName": "Dialogue Text 5",
+    "description": "This is neither the time for theatrics or manners. Explain your purpose, stranger. And choose your words wisely…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_5 at line 859"
+  },
+  {
+    "id": "dialogue-text-006",
+    "displayName": "Dialogue Text 6",
+    "description": "Straight to the point and without hesitation. That is to be expected from a Paladin of such status. Very well, listen to my request.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_6 at line 870"
+  },
+  {
+    "id": "dialogue-text-007",
+    "displayName": "Dialogue Text 7",
+    "description": "As you have decided, my name is of no importance, but my purpose rings true with righteousness. I am here to enlist your help, brave souls.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_7 at line 881"
+  },
+  {
+    "id": "dialogue-text-008",
+    "displayName": "Dialogue Text 8",
+    "description": "And why should we help you, stranger?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_8 at line 892"
+  },
+  {
+    "id": "dialogue-text-009",
+    "displayName": "Dialogue Text 9",
+    "description": "You may convince yourself that survival is your only option, but my goal answers your true desire: to rid the land of Morgana’s foul monsters.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_9 at line 903"
+  },
+  {
+    "id": "dialogue-text-010",
+    "displayName": "Dialogue Text 10",
+    "description": "Ha! You think a mere weakling like yourself could stand up against the savageness that is Morgana’s horde?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_10 at line 460"
+  },
+  {
+    "id": "dialogue-text-011",
+    "displayName": "Dialogue Text 11",
+    "description": "No, that is why I need your help. I may possess the insight to topple the dark forces, but without the strength to do so, my knowledge is useless.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_11 at line 471"
+  },
+  {
+    "id": "dialogue-text-012",
+    "displayName": "Dialogue Text 12",
+    "description": "I find it hard to trust such abilities from a stranger.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_12 at line 482"
+  },
+  {
+    "id": "dialogue-text-013",
+    "displayName": "Dialogue Text 13",
+    "description": "True. So to honor your service, I shall first and foremost help you take back Castle Camelot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_13 at line 493"
+  },
+  {
+    "id": "dialogue-text-014",
+    "displayName": "Dialogue Text 14",
+    "description": "What nonsense are you sprouting? Castle Camelot has fallen?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_14 at line 504"
+  },
+  {
+    "id": "dialogue-text-015",
+    "displayName": "Dialogue Text 15",
+    "description": "Not quite. But if we do not return to the castle soon, I am afraid that Castle Camelot will finally meet its end.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_15 at line 515"
+  },
+  {
+    "id": "dialogue-text-016",
+    "displayName": "Dialogue Text 16",
+    "description": "If what you say is true, then we cannot afford to be stationed here any longer. We must hurry back to defend the castle!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_16 at line 526"
+  },
+  {
+    "id": "dialogue-text-017",
+    "displayName": "Dialogue Text 17",
+    "description": "You are making us play a very dangerous gamble here, stranger. Our armies were ordered to stay here by Duke Cador to defend the outskirts of the kingdom.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_17 at line 537"
+  },
+  {
+    "id": "dialogue-text-018",
+    "displayName": "Dialogue Text 18",
+    "description": "… But I cannot risk the possibility of Castle Camelot falling. I, Sir Geoffrey, will heed your warning and follow you back to the castle.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_18 at line 548"
+  },
+  {
+    "id": "dialogue-text-019",
+    "displayName": "Dialogue Text 19",
+    "description": "I, Zubair, shall also be of service.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_19 at line 559"
+  },
+  {
+    "id": "dialogue-text-020",
+    "displayName": "Dialogue Text 20",
+    "description": "If my friends agree to help you, then I, Adala, shall assist as well. But I have my eyes on you little girl. Do not think for a moment that I trust you.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_20 at line 571"
+  },
+  {
+    "id": "dialogue-text-021",
+    "displayName": "Dialogue Text 21",
+    "description": "Then it is settled. We shall venture forth towards Castle Camelot and protect the kingdom under your guidance. Do not disappoint us.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_21 at line 582"
+  },
+  {
+    "id": "dialogue-text-022",
+    "displayName": "Dialogue Text 22",
+    "description": "It seems we have made it in time.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_22 at line 593"
+  },
+  {
+    "id": "dialogue-text-023",
+    "displayName": "Dialogue Text 23",
+    "description": "Wait! Do you feel that?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_23 at line 604"
+  },
+  {
+    "id": "dialogue-text-024",
+    "displayName": "Dialogue Text 24",
+    "description": "Indeed, there is a suffocating aura of malice that is flooding the castle walls.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_24 at line 615"
+  },
+  {
+    "id": "dialogue-text-025",
+    "displayName": "Dialogue Text 25",
+    "description": "This sensation… it is similar to that of Morgana!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_25 at line 626"
+  },
+  {
+    "id": "dialogue-text-026",
+    "displayName": "Dialogue Text 26",
+    "description": "Ha, ha, ha, ha… so some of Camelot’s whelps have returned to roam their lost home.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_26 at line 637"
+  },
+  {
+    "id": "dialogue-text-027",
+    "displayName": "Dialogue Text 27",
+    "description": "Are you the one responsible for attacking the castle?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_27 at line 648"
+  },
+  {
+    "id": "dialogue-text-028",
+    "displayName": "Dialogue Text 28",
+    "description": "Of course! Only I, Forgon, the Blade of Morgan, could create such carnage! Sadly, that Duke Cador was quite the let-down. That acting king really was no King Arthur.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_28 at line 659"
+  },
+  {
+    "id": "dialogue-text-029",
+    "displayName": "Dialogue Text 29",
+    "description": "What did you do to the Duke?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_29 at line 670"
+  },
+  {
+    "id": "dialogue-text-030",
+    "displayName": "Dialogue Text 30",
+    "description": "I don’t remember; I think his head should be lying somewhere in the throne room.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_30 at line 682"
+  },
+  {
+    "id": "dialogue-text-031",
+    "displayName": "Dialogue Text 31",
+    "description": "You degenerate monster! I will end you!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_31 at line 693"
+  },
+  {
+    "id": "dialogue-text-032",
+    "displayName": "Dialogue Text 32",
+    "description": "My, my, what fighting words. Seeing as how I am still in a good mood, I shall let you strays leave the premise quietly. I will not hurt you. Not too much anyway.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_32 at line 704"
+  },
+  {
+    "id": "dialogue-text-033",
+    "displayName": "Dialogue Text 33",
+    "description": "That is not going to happen, foul thing! We will put a stop to your massacre!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_33 at line 715"
+  },
+  {
+    "id": "dialogue-text-034",
+    "displayName": "Dialogue Text 34",
+    "description": "You shall have your wish then, if you can survive my sword. I do hope you would put up some decent entertainment. Ha, ha, ha, ha…!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_34 at line 726"
+  },
+  {
+    "id": "dialogue-text-035",
+    "displayName": "Dialogue Text 35",
+    "description": "Focus! We have to defeat him if we want any hope of saving Castle Camelot. Prepare yourself!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_35 at line 737"
+  },
+  {
+    "id": "dialogue-text-036",
+    "displayName": "Dialogue Text 36",
+    "description": "Impossible! What sorcery is this? I cannot be beaten this easily!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_36 at line 748"
+  },
+  {
+    "id": "dialogue-text-037",
+    "displayName": "Dialogue Text 37",
+    "description": "What is the matter, Blade of Morgan? Are you unable to hold your own without the help of your master?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_37 at line 759"
+  },
+  {
+    "id": "dialogue-text-038",
+    "displayName": "Dialogue Text 38",
+    "description": "Silence, hag! There is no way I could have lost to the likes of you!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_38 at line 770"
+  },
+  {
+    "id": "dialogue-text-039",
+    "displayName": "Dialogue Text 39",
+    "description": "Arrogance is the root of defeat. Your pride has been your downfall.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_39 at line 781"
+  },
+  {
+    "id": "dialogue-text-040",
+    "displayName": "Dialogue Text 40",
+    "description": "Fool! My power is beyond your imagination! Even in my sleep I could easily crush you like bugs! Something is amiss; something is interfering with my strength.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_40 at line 793"
+  },
+  {
+    "id": "dialogue-text-041",
+    "displayName": "Dialogue Text 41",
+    "description": "… It is you, isn’t it little girl? You are behind this. You are not what you seem.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_41 at line 804"
+  },
+  {
+    "id": "dialogue-text-042",
+    "displayName": "Dialogue Text 42",
+    "description": "…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_42 at line 815"
+  },
+  {
+    "id": "dialogue-text-043",
+    "displayName": "Dialogue Text 43",
+    "description": "Just admit it, demon! You have lost! It is time to meet your end!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_43 at line 826"
+  },
+  {
+    "id": "dialogue-text-044",
+    "displayName": "Dialogue Text 44",
+    "description": "My end? Hardly. This is just a minor setback. Enjoy your pathetic victory while it lasts. This kingdom will fall to us. And I will relish in dismembering your bodies.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_44 at line 837"
+  },
+  {
+    "id": "dialogue-text-045",
+    "displayName": "Dialogue Text 45",
+    "description": "And you, little girl; I will figure out your bag of tricks and when I do, you will have the honor of dying first by my hands…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_45 at line 848"
+  },
+  {
+    "id": "dialogue-text-046",
+    "displayName": "Dialogue Text 46",
+    "description": "He disappeared?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_46 at line 855"
+  },
+  {
+    "id": "dialogue-text-047",
+    "displayName": "Dialogue Text 47",
+    "description": "It is teleportation magic. The fact that he has such ability proves that he is far stronger than what we have battled.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_47 at line 856"
+  },
+  {
+    "id": "dialogue-text-048",
+    "displayName": "Dialogue Text 48",
+    "description": "Coward! Come back and face me!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_48 at line 857"
+  },
+  {
+    "id": "dialogue-text-049",
+    "displayName": "Dialogue Text 49",
+    "description": "Calm down, Sir Geoffrey. We are lucky to have survived our ordeal. For now, we should be grateful for this win and celebrate the safety of the castle.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_49 at line 858"
+  },
+  {
+    "id": "dialogue-text-050",
+    "displayName": "Dialogue Text 50",
+    "description": "We have accomplished something great today, and this marks the beginning of a great journey to free the lands from the grasp of Morgana’s dark clutches.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_50 at line 860"
+  },
+  {
+    "id": "dialogue-text-051",
+    "displayName": "Dialogue Text 51",
+    "description": "Thank you so much for saving us from our plight.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_51 at line 861"
+  },
+  {
+    "id": "dialogue-text-052",
+    "displayName": "Dialogue Text 52",
+    "description": "Should your rescue come any later, we might have been killed by the Blade of Morgan.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_52 at line 862"
+  },
+  {
+    "id": "dialogue-text-053",
+    "displayName": "Dialogue Text 53",
+    "description": "Ha, I could have taken on that demon alone if I wanted to.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_53 at line 863"
+  },
+  {
+    "id": "dialogue-text-054",
+    "displayName": "Dialogue Text 54",
+    "description": "Don’t be an idiot. That monster’s power is undeniable.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_54 at line 864"
+  },
+  {
+    "id": "dialogue-text-055",
+    "displayName": "Dialogue Text 55",
+    "description": "True. It is a miracle that our saviors managed to fend him off.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_55 at line 865"
+  },
+  {
+    "id": "dialogue-text-056",
+    "displayName": "Dialogue Text 56",
+    "description": "What were you all doing in Castle Camelot?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_56 at line 866"
+  },
+  {
+    "id": "dialogue-text-057",
+    "displayName": "Dialogue Text 57",
+    "description": "We were summoned by Duke Cador to the castle to undertake a quest, but when we arrived, the castle was already under attack.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_57 at line 867"
+  },
+  {
+    "id": "dialogue-text-058",
+    "displayName": "Dialogue Text 58",
+    "description": "We tried to fight off the enemies, but their numbers were great. Furthermore, under the command of Forgon, they were too powerful.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_58 at line 868"
+  },
+  {
+    "id": "dialogue-text-059",
+    "displayName": "Dialogue Text 59",
+    "description": "In the end, we failed to protect the safety of Duke Cador. I am very sorry…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_59 at line 869"
+  },
+  {
+    "id": "dialogue-text-060",
+    "displayName": "Dialogue Text 60",
+    "description": "Don’t be. From what I have heard, you all have fought bravely to ensure the Duke’s household and his son Constantine could flee safely to a remote hideout.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_60 at line 871"
+  },
+  {
+    "id": "dialogue-text-061",
+    "displayName": "Dialogue Text 61",
+    "description": "The Duke himself stayed behind to make a last stand against the onslaught and buy more time for his family and loved ones to evacuate.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_61 at line 872"
+  },
+  {
+    "id": "dialogue-text-062",
+    "displayName": "Dialogue Text 62",
+    "description": "It was a virtuous death, and he has received a respectable burial. For now, Castle Camelot will need some time to recover.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_62 at line 873"
+  },
+  {
+    "id": "dialogue-text-063",
+    "displayName": "Dialogue Text 63",
+    "description": "Unfortunately, we cannot loiter around waiting for the enemy to strike back. We need to carry on with our quest.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_63 at line 874"
+  },
+  {
+    "id": "dialogue-text-064",
+    "displayName": "Dialogue Text 64",
+    "description": "Our quest? I don’t remember ever agreeing to help you beyond this point.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_64 at line 875"
+  },
+  {
+    "id": "dialogue-text-065",
+    "displayName": "Dialogue Text 65",
+    "description": "Don’t be difficult, Adala. She has upheld her promise to save Castle Camelot. She has earned our trust and we should offer our services in return.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_65 at line 876"
+  },
+  {
+    "id": "dialogue-text-066",
+    "displayName": "Dialogue Text 66",
+    "description": "If so, count me in. You saved my life and I, Claramond, am forever in your debt.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_66 at line 877"
+  },
+  {
+    "id": "dialogue-text-067",
+    "displayName": "Dialogue Text 67",
+    "description": "So will I, Elisabeth, be of assistance.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_67 at line 878"
+  },
+  {
+    "id": "dialogue-text-068",
+    "displayName": "Dialogue Text 68",
+    "description": "Well, we were supposed to be on a quest, so I guess this is fine too. I am Sir Baldwine by the way.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_68 at line 879"
+  },
+  {
+    "id": "dialogue-text-069",
+    "displayName": "Dialogue Text 69",
+    "description": "And I am Rosemary.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_69 at line 880"
+  },
+  {
+    "id": "dialogue-text-070",
+    "displayName": "Dialogue Text 70",
+    "description": "I, Jaleel, would also be honored to join.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_70 at line 882"
+  },
+  {
+    "id": "dialogue-text-071",
+    "displayName": "Dialogue Text 71",
+    "description": "It warms my heart that new friends have joined us, but what should we do now?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_71 at line 883"
+  },
+  {
+    "id": "dialogue-text-072",
+    "displayName": "Dialogue Text 72",
+    "description": "I still think it would be suicide to take on Morgana’s forces directly.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_72 at line 884"
+  },
+  {
+    "id": "dialogue-text-073",
+    "displayName": "Dialogue Text 73",
+    "description": "Agreed, we cannot be blindly marching towards our deaths. Tell us, stranger, what do you intend to do now that Castle Camelot has been saved?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_73 at line 885"
+  },
+  {
+    "id": "dialogue-text-074",
+    "displayName": "Dialogue Text 74",
+    "description": "The first thing we need to do is to solidify our defenses around the region.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_74 at line 886"
+  },
+  {
+    "id": "dialogue-text-075",
+    "displayName": "Dialogue Text 75",
+    "description": "We will need a strong foundation for our resistance army if we wish to push back Morgana’s hold over the land.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_75 at line 887"
+  },
+  {
+    "id": "dialogue-text-076",
+    "displayName": "Dialogue Text 76",
+    "description": "Do you have a plan?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_76 at line 888"
+  },
+  {
+    "id": "dialogue-text-077",
+    "displayName": "Dialogue Text 77",
+    "description": "I recommend taking back Castle Ludium first. That stronghold would provide a good base of operations to deploy our defenses to protect the south of Bretunia.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_77 at line 889"
+  },
+  {
+    "id": "dialogue-text-078",
+    "displayName": "Dialogue Text 78",
+    "description": "This is odd.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_78 at line 890"
+  },
+  {
+    "id": "dialogue-text-079",
+    "displayName": "Dialogue Text 79",
+    "description": "What is?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_79 at line 891"
+  },
+  {
+    "id": "dialogue-text-080",
+    "displayName": "Dialogue Text 80",
+    "description": "Don’t you see? The castle has already been raided, so why have our enemies left it standing? They could have easily burned it to the ground.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_80 at line 893"
+  },
+  {
+    "id": "dialogue-text-081",
+    "displayName": "Dialogue Text 81",
+    "description": "While it can be argued that the enemy wishes to use the stronghold as a base, there have been no accounts of Morgana’s forces leaving any castle in the kingdom in one piece.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_81 at line 894"
+  },
+  {
+    "id": "dialogue-text-082",
+    "displayName": "Dialogue Text 82",
+    "description": "I expect the answers to your questions will appear soon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_82 at line 895"
+  },
+  {
+    "id": "dialogue-text-083",
+    "displayName": "Dialogue Text 83",
+    "description": "Greetings, one and all, to my humble abode. If I had known we had guests, I would have rolled out the welcoming committee.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_83 at line 896"
+  },
+  {
+    "id": "dialogue-text-084",
+    "displayName": "Dialogue Text 84",
+    "description": "If I am not mistaken, you are the nuisance who thwarted Forgon’s siege of Castle Camelot. I can only imagine the indignity the Blade of Morgan had to face.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_84 at line 897"
+  },
+  {
+    "id": "dialogue-text-085",
+    "displayName": "Dialogue Text 85",
+    "description": "Identify yourself, foul being!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_85 at line 898"
+  },
+  {
+    "id": "dialogue-text-086",
+    "displayName": "Dialogue Text 86",
+    "description": "Foul? I would have you know that I keep good hygiene, despite the company that I keep.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_86 at line 899"
+  },
+  {
+    "id": "dialogue-text-087",
+    "displayName": "Dialogue Text 87",
+    "description": "Don’t play dumb with us. The stench of bloodshed is just oozing from your body.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_87 at line 900"
+  },
+  {
+    "id": "dialogue-text-088",
+    "displayName": "Dialogue Text 88",
+    "description": "Oh, then I take that as a compliment. But where are my manners? I am Orlordin, the Indigo Dragonlord.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_88 at line 901"
+  },
+  {
+    "id": "dialogue-text-089",
+    "displayName": "Dialogue Text 89",
+    "description": "Dragonlord?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_89 at line 902"
+  },
+  {
+    "id": "dialogue-text-090",
+    "displayName": "Dialogue Text 90",
+    "description": "Ah yes, you peons probably have not heard of the term. Then again, I only became one not long ago. It is a very big deal. An elite title if you must pry.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_90 at line 904"
+  },
+  {
+    "id": "dialogue-text-091",
+    "displayName": "Dialogue Text 91",
+    "description": "I don’t care who you are. Take your underlings and leave the premise or prepare to face your judgment!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_91 at line 905"
+  },
+  {
+    "id": "dialogue-text-092",
+    "displayName": "Dialogue Text 92",
+    "description": "You dare to command me on anything? I do not take orders from the likes of you! I am a Dragonlord, and YOU SHALL FEAR ME!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_92 at line 906"
+  },
+  {
+    "id": "dialogue-text-093",
+    "displayName": "Dialogue Text 93",
+    "description": "This power…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_93 at line 907"
+  },
+  {
+    "id": "dialogue-text-094",
+    "displayName": "Dialogue Text 94",
+    "description": "It is suddenly emitting from him. So much…we can’t… there is no way we can defeat him!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_94 at line 908"
+  },
+  {
+    "id": "dialogue-text-095",
+    "displayName": "Dialogue Text 95",
+    "description": "Do not falter! If we work together, we can still stand a chance at defeating him. Stay strong!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_95 at line 909"
+  },
+  {
+    "id": "dialogue-text-096",
+    "displayName": "Dialogue Text 96",
+    "description": "Now that was unexpected…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_96 at line 910"
+  },
+  {
+    "id": "dialogue-text-097",
+    "displayName": "Dialogue Text 97",
+    "description": "This is absurd! No one can take so much damage and still be unscathed.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_97 at line 911"
+  },
+  {
+    "id": "dialogue-text-098",
+    "displayName": "Dialogue Text 98",
+    "description": "The same cannot be said for us. We are entirely exhausted…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_98 at line 912"
+  },
+  {
+    "id": "dialogue-text-099",
+    "displayName": "Dialogue Text 99",
+    "description": "If he launches another round of attacks, we may not survive.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_99 at line 913"
+  },
+  {
+    "id": "dialogue-text-100",
+    "displayName": "Dialogue Text 100",
+    "description": "Strange… I sense a notable decrease in my strength. Is this what Forgon felt back at Castle Camelot? Fascinating…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_100 at line 461"
+  },
+  {
+    "id": "dialogue-text-101",
+    "displayName": "Dialogue Text 101",
+    "description": "This is your doing, is it not? That is a very interesting ability you have, mysterious girl. I would love to study it more.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_101 at line 462"
+  },
+  {
+    "id": "dialogue-text-102",
+    "displayName": "Dialogue Text 102",
+    "description": "No, I didn’t do anything…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_102 at line 463"
+  },
+  {
+    "id": "dialogue-text-103",
+    "displayName": "Dialogue Text 103",
+    "description": "Oblivious or feigned innocence? It does not matter; this place is beginning to bore me. I shall make my leave.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_103 at line 464"
+  },
+  {
+    "id": "dialogue-text-104",
+    "displayName": "Dialogue Text 104",
+    "description": "Your lies do not deceive us, wicked thing. What are you playing at?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_104 at line 465"
+  },
+  {
+    "id": "dialogue-text-105",
+    "displayName": "Dialogue Text 105",
+    "description": "I am serious. I am letting you all live so that you can provide further amusement for my pleasure. It is never fun when it is a one-sided victory.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_105 at line 466"
+  },
+  {
+    "id": "dialogue-text-106",
+    "displayName": "Dialogue Text 106",
+    "description": "Besides, I can’t wait to see the flustered faces of Morgana or The Bane Prince when I tell them a key strategic point has been reclaimed by the enemy.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_106 at line 467"
+  },
+  {
+    "id": "dialogue-text-107",
+    "displayName": "Dialogue Text 107",
+    "description": "The Bane Prince?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_107 at line 468"
+  },
+  {
+    "id": "dialogue-text-108",
+    "displayName": "Dialogue Text 108",
+    "description": "Oops, spoilers. I have mentioned too much already. I better take my leave before I reveal even more secrets.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_108 at line 469"
+  },
+  {
+    "id": "dialogue-text-109",
+    "displayName": "Dialogue Text 109",
+    "description": "You intentionally left the castle standing, didn’t you? You wanted our forces to come and retake the castle.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_109 at line 470"
+  },
+  {
+    "id": "dialogue-text-110",
+    "displayName": "Dialogue Text 110",
+    "description": "See, such insight. I am beginning to like you all already. I do hope you folks manage to survive until our next encounter. Especially you, stranger; I will be watching you.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_110 at line 472"
+  },
+  {
+    "id": "dialogue-text-111",
+    "displayName": "Dialogue Text 111",
+    "description": "…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_111 at line 473"
+  },
+  {
+    "id": "dialogue-text-112",
+    "displayName": "Dialogue Text 112",
+    "description": "He…he just left?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_112 at line 474"
+  },
+  {
+    "id": "dialogue-text-113",
+    "displayName": "Dialogue Text 113",
+    "description": "While that is a fortunate turn of events, I can’t help but feel our future journey will be an increasingly perilous one.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_113 at line 475"
+  },
+  {
+    "id": "dialogue-text-114",
+    "displayName": "Dialogue Text 114",
+    "description": "Nevertheless, a victory is a victory. We shall wait here for reinforcements to strengthen this fort and re-establish the kingdom’s defenses.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_114 at line 476"
+  },
+  {
+    "id": "dialogue-text-115",
+    "displayName": "Dialogue Text 115",
+    "description": "Once that is done, we will continue our quest.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_115 at line 477"
+  },
+  {
+    "id": "dialogue-text-116",
+    "displayName": "Dialogue Text 116",
+    "description": "The defenses around Castle Camelot and Castle Ludium have been restored. It is time for us to leave.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_116 at line 478"
+  },
+  {
+    "id": "dialogue-text-117",
+    "displayName": "Dialogue Text 117",
+    "description": "Where to?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_117 at line 479"
+  },
+  {
+    "id": "dialogue-text-118",
+    "displayName": "Dialogue Text 118",
+    "description": "South-west. There is a small town with something there I need to retrieve.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_118 at line 480"
+  },
+  {
+    "id": "dialogue-text-119",
+    "displayName": "Dialogue Text 119",
+    "description": "Before we leave, there is something I need to ask you, stranger. Just who are you?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_119 at line 481"
+  },
+  {
+    "id": "dialogue-text-120",
+    "displayName": "Dialogue Text 120",
+    "description": "… As I have mentioned before, my name is of no importance. And I have not wronged any of you, so you can trust me.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_120 at line 483"
+  },
+  {
+    "id": "dialogue-text-121",
+    "displayName": "Dialogue Text 121",
+    "description": "It is true we have survived many encounters as a result of your guidance, and you have our sincere thanks.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_121 at line 484"
+  },
+  {
+    "id": "dialogue-text-122",
+    "displayName": "Dialogue Text 122",
+    "description": "But it would seem that you possess some very unique abilities that have an adverse effect on our enemies. Just what is it? And where do you come from?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_122 at line 485"
+  },
+  {
+    "id": "dialogue-text-123",
+    "displayName": "Dialogue Text 123",
+    "description": "I think we should just leave…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_123 at line 486"
+  },
+  {
+    "id": "dialogue-text-124",
+    "displayName": "Dialogue Text 124",
+    "description": "We are not leaving until we get some answers! I have not trusted you before, and I still don’t. If you truly wish to be our comrade, you better reveal to us your true identity.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_124 at line 487"
+  },
+  {
+    "id": "dialogue-text-125",
+    "displayName": "Dialogue Text 125",
+    "description": "That is a bit forceful, isn’t it? She must have her reasons for not saying.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_125 at line 488"
+  },
+  {
+    "id": "dialogue-text-126",
+    "displayName": "Dialogue Text 126",
+    "description": "No, Adala is right. If we are to continue on this journey, I should be truthful to everybody. In all honesty, I am not sure who I am.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_126 at line 489"
+  },
+  {
+    "id": "dialogue-text-127",
+    "displayName": "Dialogue Text 127",
+    "description": "Excuse me?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_127 at line 490"
+  },
+  {
+    "id": "dialogue-text-128",
+    "displayName": "Dialogue Text 128",
+    "description": "I just don’t remember. My earliest memories were when I woke up in D’mier and a voice told me to seek you all out. The voice referred to himself as Merlin.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_128 at line 491"
+  },
+  {
+    "id": "dialogue-text-129",
+    "displayName": "Dialogue Text 129",
+    "description": "Merlin? You mean the Arch-mage who disappeared years ago?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_129 at line 492"
+  },
+  {
+    "id": "dialogue-text-130",
+    "displayName": "Dialogue Text 130",
+    "description": "I think so. In any case, despite my loss of memories, I have a very detailed understanding of the world around me, and a clear direction for what must be done.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_130 at line 494"
+  },
+  {
+    "id": "dialogue-text-131",
+    "displayName": "Dialogue Text 131",
+    "description": "I imagine that could be the effect of magic that Merlin has casted on me. But I have no magical powers or special skills to speak of that could aid you in combat.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_131 at line 495"
+  },
+  {
+    "id": "dialogue-text-132",
+    "displayName": "Dialogue Text 132",
+    "description": "Then why is it our enemies have claimed that you have something to do with their lessened powers?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_132 at line 496"
+  },
+  {
+    "id": "dialogue-text-133",
+    "displayName": "Dialogue Text 133",
+    "description": "I have no clue as to why those villains think I have anything to do with weakening them. I did not do anything.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_133 at line 497"
+  },
+  {
+    "id": "dialogue-text-134",
+    "displayName": "Dialogue Text 134",
+    "description": "That aside, what is your reason for leading this quest? From what I have gathered, you are throwing yourself into battle despite being inadequately trained.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_134 at line 498"
+  },
+  {
+    "id": "dialogue-text-135",
+    "displayName": "Dialogue Text 135",
+    "description": "This may sound irrational, but the only thing driving me now is these instructions in my head telling me what to do and where to go.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_135 at line 499"
+  },
+  {
+    "id": "dialogue-text-136",
+    "displayName": "Dialogue Text 136",
+    "description": "I am… afraid… that if I don’t do these instructions, I would have no purpose and lose all meaning to exist. And I… don’t want that.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_136 at line 500"
+  },
+  {
+    "id": "dialogue-text-137",
+    "displayName": "Dialogue Text 137",
+    "description": "I see. We are sorry if such probing brought forth so much pain and anguish from you. Speaking for the group, I give you our greatest apologies.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_137 at line 501"
+  },
+  {
+    "id": "dialogue-text-138",
+    "displayName": "Dialogue Text 138",
+    "description": "But if it was Merlin who sent you, then he must have his reasons. Lord knows how much that old man loves to work in mysterious ways, even when as King Arthur’s advisor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_138 at line 502"
+  },
+  {
+    "id": "dialogue-text-139",
+    "displayName": "Dialogue Text 139",
+    "description": "But we cannot keep referring to you as a “stranger” after what we have been through together. You will need a name.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_139 at line 503"
+  },
+  {
+    "id": "dialogue-text-140",
+    "displayName": "Dialogue Text 140",
+    "description": "Hmmm… I know! How about “Mystery”? Since she herself is so mysterious?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_140 at line 505"
+  },
+  {
+    "id": "dialogue-text-141",
+    "displayName": "Dialogue Text 141",
+    "description": "“Mystery”… I like that. It has a nice ring to it.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_141 at line 506"
+  },
+  {
+    "id": "dialogue-text-142",
+    "displayName": "Dialogue Text 142",
+    "description": "So be it then. Now, Mystery, lead the way and we shall follow.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_142 at line 507"
+  },
+  {
+    "id": "dialogue-text-143",
+    "displayName": "Dialogue Text 143",
+    "description": "Something is wrong.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_143 at line 508"
+  },
+  {
+    "id": "dialogue-text-144",
+    "displayName": "Dialogue Text 144",
+    "description": "What do you mean?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_144 at line 509"
+  },
+  {
+    "id": "dialogue-text-145",
+    "displayName": "Dialogue Text 145",
+    "description": "We are where we need to be, but I do not sense the object that I am looking for.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_145 at line 510"
+  },
+  {
+    "id": "dialogue-text-146",
+    "displayName": "Dialogue Text 146",
+    "description": "You are telling me that we came all this way for nothing?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_146 at line 511"
+  },
+  {
+    "id": "dialogue-text-147",
+    "displayName": "Dialogue Text 147",
+    "description": "I don’t understand… The instructions were never wrong before.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_147 at line 512"
+  },
+  {
+    "id": "dialogue-text-148",
+    "displayName": "Dialogue Text 148",
+    "description": "Shh! Did you hear that?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_148 at line 513"
+  },
+  {
+    "id": "dialogue-text-149",
+    "displayName": "Dialogue Text 149",
+    "description": "Hear what? I don’t hear anything other than the silence of dead whispers.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_149 at line 514"
+  },
+  {
+    "id": "dialogue-text-150",
+    "displayName": "Dialogue Text 150",
+    "description": "No, listen. There is a mild rumbling noise, and a slight tremble of the ground.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_150 at line 516"
+  },
+  {
+    "id": "dialogue-text-151",
+    "displayName": "Dialogue Text 151",
+    "description": "RRRRRRRRRAAAAAAAAWWWWWWWWRRRRRRRRR!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_151 at line 517"
+  },
+  {
+    "id": "dialogue-text-152",
+    "displayName": "Dialogue Text 152",
+    "description": "Ah! That thing appeared out of nowhere!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_152 at line 518"
+  },
+  {
+    "id": "dialogue-text-153",
+    "displayName": "Dialogue Text 153",
+    "description": "It was hiding under the earth all this time!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_153 at line 519"
+  },
+  {
+    "id": "dialogue-text-154",
+    "displayName": "Dialogue Text 154",
+    "description": "Ha, ha! Now that is one hulking piece of monster! This journey may not be an entire waste after all!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_154 at line 520"
+  },
+  {
+    "id": "dialogue-text-155",
+    "displayName": "Dialogue Text 155",
+    "description": "Don’t get too cocky, Baldwine. The power this giant wields is not to be taken lightly. One false move and we may become a permanent addition to this dead scenery.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_155 at line 521"
+  },
+  {
+    "id": "dialogue-text-156",
+    "displayName": "Dialogue Text 156",
+    "description": "Regardless, this monster is not going to let us just loiter out of here. If we want to survive, we will have to defeat it.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_156 at line 522"
+  },
+  {
+    "id": "dialogue-text-157",
+    "displayName": "Dialogue Text 157",
+    "description": "Prepare yourselves, everyone! This battle will not be an easy one.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_157 at line 523"
+  },
+  {
+    "id": "dialogue-text-158",
+    "displayName": "Dialogue Text 158",
+    "description": "Now that is what I call a battle!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_158 at line 524"
+  },
+  {
+    "id": "dialogue-text-159",
+    "displayName": "Dialogue Text 159",
+    "description": "Defeating that monster was surprisingly more difficult than I thought.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_159 at line 525"
+  },
+  {
+    "id": "dialogue-text-160",
+    "displayName": "Dialogue Text 160",
+    "description": "Why didn’t you just use your powers to weaken that beast, Mystery? Surely that should be an easy task considering the villains we have faced in the past.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_160 at line 527"
+  },
+  {
+    "id": "dialogue-text-161",
+    "displayName": "Dialogue Text 161",
+    "description": "As I have mentioned, I had nothing to do with that. And even if I did, I have no idea how.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_161 at line 528"
+  },
+  {
+    "id": "dialogue-text-162",
+    "displayName": "Dialogue Text 162",
+    "description": "You little…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_162 at line 529"
+  },
+  {
+    "id": "dialogue-text-163",
+    "displayName": "Dialogue Text 163",
+    "description": "Stop it you two! There is no need for such bickering. Besides there is no point in relying on a power we know nothing about.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_163 at line 530"
+  },
+  {
+    "id": "dialogue-text-164",
+    "displayName": "Dialogue Text 164",
+    "description": "So what now? From what I understand, the artifact we are looking for is not here. So is the quest over?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_164 at line 531"
+  },
+  {
+    "id": "dialogue-text-165",
+    "displayName": "Dialogue Text 165",
+    "description": "No. The residue is faint, but I can sense the trail of its essence leading further west. We should follow it.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_165 at line 532"
+  },
+  {
+    "id": "dialogue-text-166",
+    "displayName": "Dialogue Text 166",
+    "description": "If we only knew what “it” is?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_166 at line 533"
+  },
+  {
+    "id": "dialogue-text-167",
+    "displayName": "Dialogue Text 167",
+    "description": "Can’t you tell us what the object we are pursuing looks like? And why is it so important?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_167 at line 534"
+  },
+  {
+    "id": "dialogue-text-168",
+    "displayName": "Dialogue Text 168",
+    "description": "I am sorry, but I have no clue. I only know that I need to retrieve it for the purpose of this quest. When it is presented to me, I will know.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_168 at line 535"
+  },
+  {
+    "id": "dialogue-text-169",
+    "displayName": "Dialogue Text 169",
+    "description": "Hmph, figures.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_169 at line 536"
+  },
+  {
+    "id": "dialogue-text-170",
+    "displayName": "Dialogue Text 170",
+    "description": "That is enough. I know many of you have doubts regarding the validity of our quest, but I trust Mystery as much as I trust the Arch-mage Merlin.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_170 at line 538"
+  },
+  {
+    "id": "dialogue-text-171",
+    "displayName": "Dialogue Text 171",
+    "description": "We should leave for our new destination quickly, before the trail runs cold.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_171 at line 539"
+  },
+  {
+    "id": "dialogue-text-172",
+    "displayName": "Dialogue Text 172",
+    "description": "The artifact we seek should be in that direction near the coast.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_172 at line 540"
+  },
+  {
+    "id": "dialogue-text-173",
+    "displayName": "Dialogue Text 173",
+    "description": "This is ridiculous.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_173 at line 541"
+  },
+  {
+    "id": "dialogue-text-174",
+    "displayName": "Dialogue Text 174",
+    "description": "Adala?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_174 at line 542"
+  },
+  {
+    "id": "dialogue-text-175",
+    "displayName": "Dialogue Text 175",
+    "description": "Why are we even following this girl? The kingdom is under attack, and we are on a wild scavenger hunt for something we don’t even know!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_175 at line 543"
+  },
+  {
+    "id": "dialogue-text-176",
+    "displayName": "Dialogue Text 176",
+    "description": "I agree. This quest is starting to feel dubious. For all we know this girl may be the enemy leading us into a trap.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_176 at line 544"
+  },
+  {
+    "id": "dialogue-text-177",
+    "displayName": "Dialogue Text 177",
+    "description": "Comrades, she has been through many battles with us. She can be trusted.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_177 at line 545"
+  },
+  {
+    "id": "dialogue-text-178",
+    "displayName": "Dialogue Text 178",
+    "description": "Trusted? She hardly ever fights in any of those battles! She also seems to have some secret connection with the villains we have fought. How can she be trustworthy?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_178 at line 546"
+  },
+  {
+    "id": "dialogue-text-179",
+    "displayName": "Dialogue Text 179",
+    "description": "While I do not want to jump to conclusions, it is true that there are too many unknowns surrounding our mission.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_179 at line 547"
+  },
+  {
+    "id": "dialogue-text-180",
+    "displayName": "Dialogue Text 180",
+    "description": "Without any confirmation, it is difficult to find a reason to rally for. I understand your circumstance, Mystery; but we need more information.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_180 at line 549"
+  },
+  {
+    "id": "dialogue-text-181",
+    "displayName": "Dialogue Text 181",
+    "description": "I am sorry, but the instructions in my mind do not give me the full picture either. What I do know, is that this artifact we are searching for is of utmost importance.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_181 at line 550"
+  },
+  {
+    "id": "dialogue-text-182",
+    "displayName": "Dialogue Text 182",
+    "description": "Is there anything more you can tell us?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_182 at line 551"
+  },
+  {
+    "id": "dialogue-text-183",
+    "displayName": "Dialogue Text 183",
+    "description": "I think… I vaguely recognize that this piece of artifact is one of many pieces, and together they will form something powerful and necessary.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_183 at line 552"
+  },
+  {
+    "id": "dialogue-text-184",
+    "displayName": "Dialogue Text 184",
+    "description": "My friends, I know some of you are still skeptical, but our kingdom is under troubled times, and this could very well be the only hope we have to restore order.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_184 at line 553"
+  },
+  {
+    "id": "dialogue-text-185",
+    "displayName": "Dialogue Text 185",
+    "description": "Have faith, and let us confront our challenges together.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_185 at line 554"
+  },
+  {
+    "id": "dialogue-text-186",
+    "displayName": "Dialogue Text 186",
+    "description": "What do we have here? It has been some time since I have seen new guests. Welcome, travelers, to my kingdom of desire.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_186 at line 555"
+  },
+  {
+    "id": "dialogue-text-187",
+    "displayName": "Dialogue Text 187",
+    "description": "Cut the useless pretense, criminal. You are nothing more than a tyrant who bullies the innocent into doing your bidding. Leave this place and release your hold over the town.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_187 at line 556"
+  },
+  {
+    "id": "dialogue-text-188",
+    "displayName": "Dialogue Text 188",
+    "description": "You sure are one to speak about tyranny. Your beloved King Arthur was just as much a dictator who concerned himself with only war and strife. Look at his kingdom now?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_188 at line 557"
+  },
+  {
+    "id": "dialogue-text-189",
+    "displayName": "Dialogue Text 189",
+    "description": "If Arthur could be king, why not I, Davious? But my kingdom will be one of great joy and bliss, where everyone is free to pursue their heart’s desire as long as they fight for it.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_189 at line 558"
+  },
+  {
+    "id": "dialogue-text-190",
+    "displayName": "Dialogue Text 190",
+    "description": "Noble words, but your reign appears to wish for everyone to pursue a life of corruption and anarchy brought forth by the mindless murder of each other.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_190 at line 560"
+  },
+  {
+    "id": "dialogue-text-191",
+    "displayName": "Dialogue Text 191",
+    "description": "You are no king; you are a madman.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_191 at line 561"
+  },
+  {
+    "id": "dialogue-text-192",
+    "displayName": "Dialogue Text 192",
+    "description": "Ha, ha, ha, ha, perhaps. But let us dive into the question at hand, shall we? You can’t be here for my head with the Kingdom of Camelot in such a sorry state of war.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_192 at line 562"
+  },
+  {
+    "id": "dialogue-text-193",
+    "displayName": "Dialogue Text 193",
+    "description": "So that begs the question, what are you here for?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_193 at line 563"
+  },
+  {
+    "id": "dialogue-text-194",
+    "displayName": "Dialogue Text 194",
+    "description": "You possess an artifact we want, an object you took from a town in the hills of Gerdenbur. We would like it back.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_194 at line 564"
+  },
+  {
+    "id": "dialogue-text-195",
+    "displayName": "Dialogue Text 195",
+    "description": "So demanding… who is to say that the object even belongs to you? And why should I give you back? But suppose I have this object of yours, what are you willing to give for it?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_195 at line 565"
+  },
+  {
+    "id": "dialogue-text-196",
+    "displayName": "Dialogue Text 196",
+    "description": "…?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_196 at line 566"
+  },
+  {
+    "id": "dialogue-text-197",
+    "displayName": "Dialogue Text 197",
+    "description": "Equal trade, child. I give you what you want; you give me what I want. I know! I will give you your object, in exchange for the continued occupation of this town. How’s that?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_197 at line 567"
+  },
+  {
+    "id": "dialogue-text-198",
+    "displayName": "Dialogue Text 198",
+    "description": "We… we cannot accept such terms!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_198 at line 568"
+  },
+  {
+    "id": "dialogue-text-199",
+    "displayName": "Dialogue Text 199",
+    "description": "That is extortion!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_199 at line 569"
+  },
+  {
+    "id": "dialogue-text-200",
+    "displayName": "Dialogue Text 200",
+    "description": "Call it whatever you want. A trade is a trade.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_200 at line 572"
+  },
+  {
+    "id": "dialogue-text-201",
+    "displayName": "Dialogue Text 201",
+    "description": "I should just shoot you where you stand!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_201 at line 573"
+  },
+  {
+    "id": "dialogue-text-202",
+    "displayName": "Dialogue Text 202",
+    "description": "Now, don’t be hasty archer. This is my territory, and we don’t want any unnecessary slaughter. I do hold the town’s people hostage you know.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_202 at line 574"
+  },
+  {
+    "id": "dialogue-text-203",
+    "displayName": "Dialogue Text 203",
+    "description": "You scoundrel! How dare you!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_203 at line 575"
+  },
+  {
+    "id": "dialogue-text-204",
+    "displayName": "Dialogue Text 204",
+    "description": "So what will it be? Do you choose the town or your precious artifact?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_204 at line 576"
+  },
+  {
+    "id": "dialogue-text-205",
+    "displayName": "Dialogue Text 205",
+    "description": "The town.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_205 at line 577"
+  },
+  {
+    "id": "dialogue-text-206",
+    "displayName": "Dialogue Text 206",
+    "description": "…What?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_206 at line 578"
+  },
+  {
+    "id": "dialogue-text-207",
+    "displayName": "Dialogue Text 207",
+    "description": "While the artifact is important, its purpose is to save the kingdom. But then what use is it, if there is nothing left to save. I cannot let you continue to oppress the people like that.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_207 at line 579"
+  },
+  {
+    "id": "dialogue-text-208",
+    "displayName": "Dialogue Text 208",
+    "description": "Besides, I can tell that you will not give us either anyway. So effectively, I am taking both.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_208 at line 580"
+  },
+  {
+    "id": "dialogue-text-209",
+    "displayName": "Dialogue Text 209",
+    "description": "… Suit yourself. Men, by order of the Bandit King, kill the townspeople at once!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_209 at line 581"
+  },
+  {
+    "id": "dialogue-text-210",
+    "displayName": "Dialogue Text 210",
+    "description": "No, you will not! Everyone split into two teams! One team will stay to fight Davious, the other will quickly race to protect the townspeople. Trust me! We can succeed!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_210 at line 583"
+  },
+  {
+    "id": "dialogue-text-211",
+    "displayName": "Dialogue Text 211",
+    "description": "Now this is something I can rally to! Let’s do this!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_211 at line 584"
+  },
+  {
+    "id": "dialogue-text-212",
+    "displayName": "Dialogue Text 212",
+    "description": "Ugh! How can this be? My power… I should not lose!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_212 at line 585"
+  },
+  {
+    "id": "dialogue-text-213",
+    "displayName": "Dialogue Text 213",
+    "description": "The townspeople have been saved, and you have been defeated. Give us the artifact now, and we may spare your life.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_213 at line 586"
+  },
+  {
+    "id": "dialogue-text-214",
+    "displayName": "Dialogue Text 214",
+    "description": "Ha! I have no idea what you are talking about!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_214 at line 587"
+  },
+  {
+    "id": "dialogue-text-215",
+    "displayName": "Dialogue Text 215",
+    "description": "I think… I think I finally know what it is. I have seen a vision. The artifact we seek is a medallion hidden in his left pouch.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_215 at line 588"
+  },
+  {
+    "id": "dialogue-text-216",
+    "displayName": "Dialogue Text 216",
+    "description": "You mean this? I grabbed it during the fight.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_216 at line 589"
+  },
+  {
+    "id": "dialogue-text-217",
+    "displayName": "Dialogue Text 217",
+    "description": "What? No! Give it back! I stole it! It is mine!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_217 at line 590"
+  },
+  {
+    "id": "dialogue-text-218",
+    "displayName": "Dialogue Text 218",
+    "description": "How does it feel to have something taken from you? This is the “kingdom” you wanted to create, isn’t it?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_218 at line 591"
+  },
+  {
+    "id": "dialogue-text-219",
+    "displayName": "Dialogue Text 219",
+    "description": "This medallion holds a power of incredible fortune, making its holder extremely lucky. He has been hoarding this power to accumulate his riches and army.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_219 at line 592"
+  },
+  {
+    "id": "dialogue-text-220",
+    "displayName": "Dialogue Text 220",
+    "description": "To think you had such power, and squandered it on such selfish pursuits.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_220 at line 594"
+  },
+  {
+    "id": "dialogue-text-221",
+    "displayName": "Dialogue Text 221",
+    "description": "Damn you all! I will have my revenge!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_221 at line 595"
+  },
+  {
+    "id": "dialogue-text-222",
+    "displayName": "Dialogue Text 222",
+    "description": "Ah! My eyes! He just threw a smoke bomb!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_222 at line 596"
+  },
+  {
+    "id": "dialogue-text-223",
+    "displayName": "Dialogue Text 223",
+    "description": "I can’t see!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_223 at line 597"
+  },
+  {
+    "id": "dialogue-text-224",
+    "displayName": "Dialogue Text 224",
+    "description": "He is getting away!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_224 at line 598"
+  },
+  {
+    "id": "dialogue-text-225",
+    "displayName": "Dialogue Text 225",
+    "description": "I think I can still shoot him…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_225 at line 599"
+  },
+  {
+    "id": "dialogue-text-226",
+    "displayName": "Dialogue Text 226",
+    "description": "No, let him go. There has been enough bloodshed today.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_226 at line 600"
+  },
+  {
+    "id": "dialogue-text-227",
+    "displayName": "Dialogue Text 227",
+    "description": "At least we have gotten what we came here for. And this should be put our worries to rest regarding the legitimacy of our mission.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_227 at line 601"
+  },
+  {
+    "id": "dialogue-text-228",
+    "displayName": "Dialogue Text 228",
+    "description": "Thank you all for believing in me.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_228 at line 602"
+  },
+  {
+    "id": "dialogue-text-229",
+    "displayName": "Dialogue Text 229",
+    "description": "No, thank you. It was your quick thinking that saved us and the entire town. We owe you a debt of gratitude.  Now let’s go, we have more artifacts to find.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_229 at line 603"
+  },
+  {
+    "id": "dialogue-text-230",
+    "displayName": "Dialogue Text 230",
+    "description": "So with this artifact we have taken from Davious, will its power of good fortune spread amongst us as well? Will our battles become easier?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_230 at line 605"
+  },
+  {
+    "id": "dialogue-text-231",
+    "displayName": "Dialogue Text 231",
+    "description": "When we were fighting Davious, I noticed its power suddenly disappearing. No, more accurately speaking, it became dormant. I don’t think it will be of help to us.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_231 at line 606"
+  },
+  {
+    "id": "dialogue-text-232",
+    "displayName": "Dialogue Text 232",
+    "description": "Just great, we went through all that trouble to collect a useless piece of metal.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_232 at line 607"
+  },
+  {
+    "id": "dialogue-text-233",
+    "displayName": "Dialogue Text 233",
+    "description": "While its power remains dormant, I am positive that this artifact will become very important in the future. We should not dismiss it so easily.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_233 at line 608"
+  },
+  {
+    "id": "dialogue-text-234",
+    "displayName": "Dialogue Text 234",
+    "description": "Understood, we will guard it carefully. Now let’s find the next artifact.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_234 at line 609"
+  },
+  {
+    "id": "dialogue-text-235",
+    "displayName": "Dialogue Text 235",
+    "description": "Sadly, I have some bad news. I have heard that Castle Merlebrae in the north has come under attack from enemy forces. It won’t be long before the castle is lost.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_235 at line 610"
+  },
+  {
+    "id": "dialogue-text-236",
+    "displayName": "Dialogue Text 236",
+    "description": "Then what are we waiting for? We must hurry over to help them!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_236 at line 611"
+  },
+  {
+    "id": "dialogue-text-237",
+    "displayName": "Dialogue Text 237",
+    "description": "It would seem that your search for the next artifact might have to wait, Mystery.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_237 at line 612"
+  },
+  {
+    "id": "dialogue-text-238",
+    "displayName": "Dialogue Text 238",
+    "description": "That is fine. As I have mentioned before, the kingdom’s well-being takes priority over the artifacts. We should go and help first.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_238 at line 613"
+  },
+  {
+    "id": "dialogue-text-239",
+    "displayName": "Dialogue Text 239",
+    "description": "…? What is the matter, Jaleel? You look worried.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_239 at line 614"
+  },
+  {
+    "id": "dialogue-text-240",
+    "displayName": "Dialogue Text 240",
+    "description": "I… I worry for my close friend. His Kadir tribe has protected Castle Merlebrae since the days of King Arthur. With the castle under siege, I am concerned for his well-being.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_240 at line 616"
+  },
+  {
+    "id": "dialogue-text-241",
+    "displayName": "Dialogue Text 241",
+    "description": "I see. If that is the case, we have no time to waste. Let us proceed to the castle.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_241 at line 617"
+  },
+  {
+    "id": "dialogue-text-242",
+    "displayName": "Dialogue Text 242",
+    "description": "No, this can’t be!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_242 at line 618"
+  },
+  {
+    "id": "dialogue-text-243",
+    "displayName": "Dialogue Text 243",
+    "description": "Is something wrong?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_243 at line 619"
+  },
+  {
+    "id": "dialogue-text-244",
+    "displayName": "Dialogue Text 244",
+    "description": "Some of these attackers of the castle… they are from the Kadir tribe!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_244 at line 620"
+  },
+  {
+    "id": "dialogue-text-245",
+    "displayName": "Dialogue Text 245",
+    "description": "What? But I thought your friend’s tribe is supposed to be protecting the castle!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_245 at line 621"
+  },
+  {
+    "id": "dialogue-text-246",
+    "displayName": "Dialogue Text 246",
+    "description": "I don’t understand. What is spurring this traitorous behavior?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_246 at line 622"
+  },
+  {
+    "id": "dialogue-text-247",
+    "displayName": "Dialogue Text 247",
+    "description": "What do we have here? Why, if it isn’t the travelling band of hypocrites, murderers, fools and liars?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_247 at line 623"
+  },
+  {
+    "id": "dialogue-text-248",
+    "displayName": "Dialogue Text 248",
+    "description": "You are the cause of all of this, aren’t you? I can sense the same aura emanating from you as that of Forgon, the Blade of Morgan.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_248 at line 624"
+  },
+  {
+    "id": "dialogue-text-249",
+    "displayName": "Dialogue Text 249",
+    "description": "That is very perceptive of you. But I am not the same as that failure you fought. I am Yikael, the Orb of Morgan, and you will learn to heed my name.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_249 at line 625"
+  },
+  {
+    "id": "dialogue-text-250",
+    "displayName": "Dialogue Text 250",
+    "description": "You witch! What spell did you cast on my brethren?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_250 at line 627"
+  },
+  {
+    "id": "dialogue-text-251",
+    "displayName": "Dialogue Text 251",
+    "description": "I did nothing of the sort. They merely recognized where their allegiance should be. And it is not too late for you to join them. They are like your family, right?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_251 at line 628"
+  },
+  {
+    "id": "dialogue-text-252",
+    "displayName": "Dialogue Text 252",
+    "description": "Your words drip with poison, temptress. I cannot forgive you for such mockery. We will ensure your defeat to free the tribe from your dark clutches.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_252 at line 629"
+  },
+  {
+    "id": "dialogue-text-253",
+    "displayName": "Dialogue Text 253",
+    "description": "As much as I would like to stay and feel your bones crumbling beneath my feet, I am needed somewhere else. I shall leave your demise to my new associate instead.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_253 at line 630"
+  },
+  {
+    "id": "dialogue-text-254",
+    "displayName": "Dialogue Text 254",
+    "description": "…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_254 at line 631"
+  },
+  {
+    "id": "dialogue-text-255",
+    "displayName": "Dialogue Text 255",
+    "description": "Brother Imam! What are you doing? As chief of the Kadir tribe, you cannot allow this!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_255 at line 632"
+  },
+  {
+    "id": "dialogue-text-256",
+    "displayName": "Dialogue Text 256",
+    "description": "I have nothing to say to you. If you side with our enemies, I will destroy you on behalf of the tribe.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_256 at line 633"
+  },
+  {
+    "id": "dialogue-text-257",
+    "displayName": "Dialogue Text 257",
+    "description": "I do not sense any foul magic controlling him. I am afraid he is doing this out of his own free will.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_257 at line 634"
+  },
+  {
+    "id": "dialogue-text-258",
+    "displayName": "Dialogue Text 258",
+    "description": "So we have to fight him?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_258 at line 635"
+  },
+  {
+    "id": "dialogue-text-259",
+    "displayName": "Dialogue Text 259",
+    "description": "For the sake of the castle and its people, we have no choice.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_259 at line 636"
+  },
+  {
+    "id": "dialogue-text-260",
+    "displayName": "Dialogue Text 260",
+    "description": "Brace yourself; this battle will be a challenging one.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_260 at line 638"
+  },
+  {
+    "id": "dialogue-text-261",
+    "displayName": "Dialogue Text 261",
+    "description": "You have made strong allies for yourself, Jaleel. I see no point in dragging this fight any further. I will retreat for now, but this battle will continue on my terms.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_261 at line 639"
+  },
+  {
+    "id": "dialogue-text-262",
+    "displayName": "Dialogue Text 262",
+    "description": "Heed my warning, Jaleel; you will regret joining them in their meaningless campaign…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_262 at line 640"
+  },
+  {
+    "id": "dialogue-text-263",
+    "displayName": "Dialogue Text 263",
+    "description": "Wait! Imam!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_263 at line 641"
+  },
+  {
+    "id": "dialogue-text-264",
+    "displayName": "Dialogue Text 264",
+    "description": "He is gone, and so have his herd of warriors.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_264 at line 642"
+  },
+  {
+    "id": "dialogue-text-265",
+    "displayName": "Dialogue Text 265",
+    "description": "There are still a few enemies around, but we have largely succeeded in protecting the castle.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_265 at line 643"
+  },
+  {
+    "id": "dialogue-text-266",
+    "displayName": "Dialogue Text 266",
+    "description": "While Castle Merlebrae is safe at the moment, I fear Imam may lead his tribe to attack the castle again.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_266 at line 644"
+  },
+  {
+    "id": "dialogue-text-267",
+    "displayName": "Dialogue Text 267",
+    "description": "Be that as it may, what can we do about it?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_267 at line 645"
+  },
+  {
+    "id": "dialogue-text-268",
+    "displayName": "Dialogue Text 268",
+    "description": "It would seem we have to pay his tribal home a visit. I know where it is. We have to settle this before it escalates even further.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_268 at line 646"
+  },
+  {
+    "id": "dialogue-text-269",
+    "displayName": "Dialogue Text 269",
+    "description": "Are you sure? After all, he is like a brother to you.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_269 at line 647"
+  },
+  {
+    "id": "dialogue-text-270",
+    "displayName": "Dialogue Text 270",
+    "description": "That is precisely the reason why I must intervene. I must understand why my sworn brother has turned against the kingdom we have vowed to protect.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_270 at line 649"
+  },
+  {
+    "id": "dialogue-text-271",
+    "displayName": "Dialogue Text 271",
+    "description": "I cannot accept that wretched Yikael is absent in all of this. She must have had a role to play in starting this feud.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_271 at line 650"
+  },
+  {
+    "id": "dialogue-text-272",
+    "displayName": "Dialogue Text 272",
+    "description": "Our quest to find the other artifacts will need to be delayed yet again. I hope you do not mind, Mystery. The severity of this situation demands immediate attention.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_272 at line 651"
+  },
+  {
+    "id": "dialogue-text-273",
+    "displayName": "Dialogue Text 273",
+    "description": "I understand. Family… family is important. It is one of the core foundations of this kingdom. I will see to it that this family dispute is resolved.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_273 at line 652"
+  },
+  {
+    "id": "dialogue-text-274",
+    "displayName": "Dialogue Text 274",
+    "description": "This forest feels reminiscent of our homeland, with the exception of the monsters of course.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_274 at line 653"
+  },
+  {
+    "id": "dialogue-text-275",
+    "displayName": "Dialogue Text 275",
+    "description": "Indeed, the mystic ambience of this forest does remind me of home.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_275 at line 654"
+  },
+  {
+    "id": "dialogue-text-276",
+    "displayName": "Dialogue Text 276",
+    "description": "Not to sound rude or disrespectful, but I have been meaning to ask, why are you elves involved in this war?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_276 at line 655"
+  },
+  {
+    "id": "dialogue-text-277",
+    "displayName": "Dialogue Text 277",
+    "description": "Past records indicate that the elves retreated away from this earthen plane to avoid the conflicts that plague this land. Then why is it you fight with us now?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_277 at line 656"
+  },
+  {
+    "id": "dialogue-text-278",
+    "displayName": "Dialogue Text 278",
+    "description": "It is true that we elves detest the petty squabbles that revolve around human politics and wish not to align ourselves with such governance.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_278 at line 657"
+  },
+  {
+    "id": "dialogue-text-279",
+    "displayName": "Dialogue Text 279",
+    "description": "But we are not so arrogant to ignore a dire threat when we see one. Morgana’s ambition does not end with the conquest of this land alone.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_279 at line 658"
+  },
+  {
+    "id": "dialogue-text-280",
+    "displayName": "Dialogue Text 280",
+    "description": "Greed begets more greed. Eventually, she will hunt for our homeland in search for more power, and it would be too late to stop her then.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_280 at line 660"
+  },
+  {
+    "id": "dialogue-text-281",
+    "displayName": "Dialogue Text 281",
+    "description": "Her desires will twist the foundations of this world, and pointless conflicts will arise. The state of Imam’s tribe is evidence to support this fact.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_281 at line 661"
+  },
+  {
+    "id": "dialogue-text-282",
+    "displayName": "Dialogue Text 282",
+    "description": "My blood brother is not corrupted with power! He is just confused, and I will reason with him to set aside this mistaken path.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_282 at line 662"
+  },
+  {
+    "id": "dialogue-text-283",
+    "displayName": "Dialogue Text 283",
+    "description": "Yet, while we have Jaleel to guide us to the Kadir tribe’s home, I don’t think our passage will be without opposition.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_283 at line 663"
+  },
+  {
+    "id": "dialogue-text-284",
+    "displayName": "Dialogue Text 284",
+    "description": "I do not know about you, but I think we are being watched…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_284 at line 664"
+  },
+  {
+    "id": "dialogue-text-285",
+    "displayName": "Dialogue Text 285",
+    "description": "Indeed, there are enemies around us. But do not engage them senselessly. We do not want to harm Imam’s tribe more than we need to.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_285 at line 665"
+  },
+  {
+    "id": "dialogue-text-286",
+    "displayName": "Dialogue Text 286",
+    "description": "That is easy for you to say.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_286 at line 666"
+  },
+  {
+    "id": "dialogue-text-287",
+    "displayName": "Dialogue Text 287",
+    "description": "Sir Geoffrey is right. We should avoid needless bloodshed as much as we can. I will try to lead us away from concentrated forces. Family blood must not be spilled carelessly.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_287 at line 667"
+  },
+  {
+    "id": "dialogue-text-288",
+    "displayName": "Dialogue Text 288",
+    "description": "Chief Imam, since the days of King Arthur, the Kadir tribe has sworn to protect the kingdom at the cost of their lives. Why have you broken your oath of loyalty?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_288 at line 668"
+  },
+  {
+    "id": "dialogue-text-289",
+    "displayName": "Dialogue Text 289",
+    "description": "Such gullible thinking. Only a fool would choose loyalty over survival. King Arthur is dead and the Kingdom of Camelot is in utter chaos. It is worthless to cling on to such an oath.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_289 at line 669"
+  },
+  {
+    "id": "dialogue-text-290",
+    "displayName": "Dialogue Text 290",
+    "description": "Everyday, Morgana’s forces grow stronger. It is only a matter of time until she has conquered the whole of Bretunia. It is to the benefit of the tribe to join them.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_290 at line 671"
+  },
+  {
+    "id": "dialogue-text-291",
+    "displayName": "Dialogue Text 291",
+    "description": "You cannot be of such weak faith, Imam! Believe in us, we will revive the kingdom and vanquish Morgana’s horde!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_291 at line 672"
+  },
+  {
+    "id": "dialogue-text-292",
+    "displayName": "Dialogue Text 292",
+    "description": "Were you around when Morgana’s minions threatened to kill every last infant of our tribe unless we agreed to join their side? You know nothing of their wrath!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_292 at line 673"
+  },
+  {
+    "id": "dialogue-text-293",
+    "displayName": "Dialogue Text 293",
+    "description": "Please listen, Chief Imam. We have a plan to stop Morgana and her army.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_293 at line 674"
+  },
+  {
+    "id": "dialogue-text-294",
+    "displayName": "Dialogue Text 294",
+    "description": "We have travelled a long journey to collect certain artifacts that could destroy Morgana’s hold over the land.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_294 at line 675"
+  },
+  {
+    "id": "dialogue-text-295",
+    "displayName": "Dialogue Text 295",
+    "description": "If you could trust us and protect the kingdom in its time of need, we promise to free your tribe from this threat of oppression and suffering!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_295 at line 676"
+  },
+  {
+    "id": "dialogue-text-296",
+    "displayName": "Dialogue Text 296",
+    "description": "We assure you that this is no lie. This quest is sanctioned by Merlin himself.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_296 at line 677"
+  },
+  {
+    "id": "dialogue-text-297",
+    "displayName": "Dialogue Text 297",
+    "description": "You are indeed fools. You put your trust in an arrogant old man who did not even appear when the kingdom needed him most. He merely let it fall to ruin.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_297 at line 678"
+  },
+  {
+    "id": "dialogue-text-298",
+    "displayName": "Dialogue Text 298",
+    "description": "Is that… true? This memory… Argh, my head…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_298 at line 679"
+  },
+  {
+    "id": "dialogue-text-299",
+    "displayName": "Dialogue Text 299",
+    "description": "Whoa, young lady! Are you alright? You look like you are about to collapse.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_299 at line 680"
+  },
+  {
+    "id": "dialogue-text-300",
+    "displayName": "Dialogue Text 300",
+    "description": "This discussion is over. I have made the choice for my tribe, and my decision is final. If you wish to go against Morgana, I will snap your neck right here and now.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_300 at line 683"
+  },
+  {
+    "id": "dialogue-text-301",
+    "displayName": "Dialogue Text 301",
+    "description": "Brother, please listen to reason!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_301 at line 684"
+  },
+  {
+    "id": "dialogue-text-302",
+    "displayName": "Dialogue Text 302",
+    "description": "I am sorry to say that Chief Imam is precisely listening to reason. It is through reason that he has made this difficult choice. To him, our hope is that of uncertainty and madness.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_302 at line 685"
+  },
+  {
+    "id": "dialogue-text-303",
+    "displayName": "Dialogue Text 303",
+    "description": "It saddens me to say this, but we will have to battle him to the death. One way or the other, this dispute will end here.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_303 at line 686"
+  },
+  {
+    "id": "dialogue-text-304",
+    "displayName": "Dialogue Text 304",
+    "description": "Hah… you have gotten strong, Jaleel. I… am proud of you…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_304 at line 687"
+  },
+  {
+    "id": "dialogue-text-305",
+    "displayName": "Dialogue Text 305",
+    "description": "Hush brother, save your strength! We can still heal you! Claramond, please help him!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_305 at line 688"
+  },
+  {
+    "id": "dialogue-text-306",
+    "displayName": "Dialogue Text 306",
+    "description": "Jaleel, I…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_306 at line 689"
+  },
+  {
+    "id": "dialogue-text-307",
+    "displayName": "Dialogue Text 307",
+    "description": "Still holding on to hope I see… that is what differentiates you and me. Your friend and I both know well that my wounds are too deep to heal.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_307 at line 690"
+  },
+  {
+    "id": "dialogue-text-308",
+    "displayName": "Dialogue Text 308",
+    "description": "No brother! Don’t say such things!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_308 at line 691"
+  },
+  {
+    "id": "dialogue-text-309",
+    "displayName": "Dialogue Text 309",
+    "description": "Do not dismay, Jaleel… As according to our tribal code, the only way for you to redirect the course of my people… is to let me die and take my place as chief.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_309 at line 692"
+  },
+  {
+    "id": "dialogue-text-310",
+    "displayName": "Dialogue Text 310",
+    "description": "But beware my brother, there are many… of our kind who do not agree with the values of Camelot… and would rather see the kingdom overthrown.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_310 at line 694"
+  },
+  {
+    "id": "dialogue-text-311",
+    "displayName": "Dialogue Text 311",
+    "description": "This… this fate… is too cruel.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_311 at line 695"
+  },
+  {
+    "id": "dialogue-text-312",
+    "displayName": "Dialogue Text 312",
+    "description": "Imam has fought bravely for his beliefs, and his intentions have been for the protection of his own tribe. It is a worthy endeavor. This is an honorable death.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_312 at line 696"
+  },
+  {
+    "id": "dialogue-text-313",
+    "displayName": "Dialogue Text 313",
+    "description": "What is the point of honor in death? There is no honor in just giving away your life for tragedy.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_313 at line 697"
+  },
+  {
+    "id": "dialogue-text-314",
+    "displayName": "Dialogue Text 314",
+    "description": "You may be right, but I did what I did on my terms… I could choose how to meet my death.  That is a luxury that many are not fortunate to get.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_314 at line 698"
+  },
+  {
+    "id": "dialogue-text-315",
+    "displayName": "Dialogue Text 315",
+    "description": "I do not regret my actions… and I hope you do not regret your actions too, Jaleel. Lead the tribe in your own way wisely. Continue to be strong, as you are now…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_315 at line 699"
+  },
+  {
+    "id": "dialogue-text-316",
+    "displayName": "Dialogue Text 316",
+    "description": "Brother!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_316 at line 700"
+  },
+  {
+    "id": "dialogue-text-317",
+    "displayName": "Dialogue Text 317",
+    "description": "He… he has passed on.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_317 at line 701"
+  },
+  {
+    "id": "dialogue-text-318",
+    "displayName": "Dialogue Text 318",
+    "description": "I… I am sorry for your loss, Jaleel.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_318 at line 702"
+  },
+  {
+    "id": "dialogue-text-319",
+    "displayName": "Dialogue Text 319",
+    "description": "This does not feel… right.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_319 at line 703"
+  },
+  {
+    "id": "dialogue-text-320",
+    "displayName": "Dialogue Text 320",
+    "description": "Such is the state of war, young Mystery. People are pulled by strings they cannot control, and at times loved ones are lost to the tides of discord.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_320 at line 705"
+  },
+  {
+    "id": "dialogue-text-321",
+    "displayName": "Dialogue Text 321",
+    "description": "I can understand the reason, but yet at the same time… I don’t.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_321 at line 706"
+  },
+  {
+    "id": "dialogue-text-322",
+    "displayName": "Dialogue Text 322",
+    "description": "And Imam spoke of the truth. All of this could have been prevented. Merlin, why did you forsake the kingdom?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_322 at line 707"
+  },
+  {
+    "id": "dialogue-text-323",
+    "displayName": "Dialogue Text 323",
+    "description": "Rosemary, what is family?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_323 at line 708"
+  },
+  {
+    "id": "dialogue-text-324",
+    "displayName": "Dialogue Text 324",
+    "description": "…?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_324 at line 709"
+  },
+  {
+    "id": "dialogue-text-325",
+    "displayName": "Dialogue Text 325",
+    "description": "I mean, I know the definition of family, but I do not have any memory of having one. Is protecting one’s family really worth dying for?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_325 at line 710"
+  },
+  {
+    "id": "dialogue-text-326",
+    "displayName": "Dialogue Text 326",
+    "description": "Look kid, you are asking the wrong person. I grew up alone with no parents or family to speak of, so I have not the slightest clue.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_326 at line 711"
+  },
+  {
+    "id": "dialogue-text-327",
+    "displayName": "Dialogue Text 327",
+    "description": "What I do know, however, is that dying does not solve anything. Living does. So do not expect me to simply throw away my life for something I do not believe in.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_327 at line 712"
+  },
+  {
+    "id": "dialogue-text-328",
+    "displayName": "Dialogue Text 328",
+    "description": "Pardon me for overhearing your conversation. But I have to ask Rosemary, if that is your sentiment, then why are you fighting in this war for our side?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_328 at line 713"
+  },
+  {
+    "id": "dialogue-text-329",
+    "displayName": "Dialogue Text 329",
+    "description": "Simple. I have the skills, so if I do nothing, then that is the same as waiting for death. And it is apparent that you have to sacrifice your will to join Morgana, so why bother?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_329 at line 714"
+  },
+  {
+    "id": "dialogue-text-330",
+    "displayName": "Dialogue Text 330",
+    "description": "Hey, what is taking you three so long? We are not taking a leisure stroll here!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_330 at line 716"
+  },
+  {
+    "id": "dialogue-text-331",
+    "displayName": "Dialogue Text 331",
+    "description": "My apologizes, Sir Baldwine. Now let us make haste and join up with the group.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_331 at line 717"
+  },
+  {
+    "id": "dialogue-text-332",
+    "displayName": "Dialogue Text 332",
+    "description": "Sure. As for you Mystery, take heed that I fight for myself and myself alone. Do not think I will sacrifice myself to save you or the others. Now quicken your steps and hurry.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_332 at line 718"
+  },
+  {
+    "id": "dialogue-text-333",
+    "displayName": "Dialogue Text 333",
+    "description": "Ah, wait for me…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_333 at line 719"
+  },
+  {
+    "id": "dialogue-text-334",
+    "displayName": "Dialogue Text 334",
+    "description": "…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_334 at line 720"
+  },
+  {
+    "id": "dialogue-text-335",
+    "displayName": "Dialogue Text 335",
+    "description": "What the…? Hey! Give it back!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_335 at line 721"
+  },
+  {
+    "id": "dialogue-text-336",
+    "displayName": "Dialogue Text 336",
+    "description": "What happened?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_336 at line 722"
+  },
+  {
+    "id": "dialogue-text-337",
+    "displayName": "Dialogue Text 337",
+    "description": "A… a thing suddenly appeared and stole my pouch! The medallion is in it! The thief has just run away with the artifact!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_337 at line 723"
+  },
+  {
+    "id": "dialogue-text-338",
+    "displayName": "Dialogue Text 338",
+    "description": "Quick! After it!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_338 at line 724"
+  },
+  {
+    "id": "dialogue-text-339",
+    "displayName": "Dialogue Text 339",
+    "description": "Unfortunately we have other “guests” we need to entertain.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_339 at line 725"
+  },
+  {
+    "id": "dialogue-text-340",
+    "displayName": "Dialogue Text 340",
+    "description": "Where did these enemies suddenly appeared from?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_340 at line 727"
+  },
+  {
+    "id": "dialogue-text-341",
+    "displayName": "Dialogue Text 341",
+    "description": "We are surrounded!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_341 at line 728"
+  },
+  {
+    "id": "dialogue-text-342",
+    "displayName": "Dialogue Text 342",
+    "description": "Friends, we have to crack through these enemies as fast as we can. We cannot lose sight of the artifact!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_342 at line 729"
+  },
+  {
+    "id": "dialogue-text-343",
+    "displayName": "Dialogue Text 343",
+    "description": "I am glad that you heroes managed to attend the main event. So did you like the reception?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_343 at line 730"
+  },
+  {
+    "id": "dialogue-text-344",
+    "displayName": "Dialogue Text 344",
+    "description": "Davious. I should have known you were the thief.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_344 at line 731"
+  },
+  {
+    "id": "dialogue-text-345",
+    "displayName": "Dialogue Text 345",
+    "description": "What can I say? As the Bandit King, I steal what I want, and I want what I steal.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_345 at line 732"
+  },
+  {
+    "id": "dialogue-text-346",
+    "displayName": "Dialogue Text 346",
+    "description": "Give us back our artifact that you stole!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_346 at line 733"
+  },
+  {
+    "id": "dialogue-text-347",
+    "displayName": "Dialogue Text 347",
+    "description": "Give you back “your” artifact? It is mine! You stole it from me! And I have not forgotten about you, “Rosemary”. Or should I call you “Token”?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_347 at line 734"
+  },
+  {
+    "id": "dialogue-text-348",
+    "displayName": "Dialogue Text 348",
+    "description": "…!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_348 at line 735"
+  },
+  {
+    "id": "dialogue-text-349",
+    "displayName": "Dialogue Text 349",
+    "description": "Yes, it took me a while to remember your face, but I am in the mercenary business. Besides, your reputation does precede you.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_349 at line 736"
+  },
+  {
+    "id": "dialogue-text-350",
+    "displayName": "Dialogue Text 350",
+    "description": "“Token”? You mean the assassin who tried to kill Duke Cador? That felon was imprisoned and killed!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_350 at line 738"
+  },
+  {
+    "id": "dialogue-text-351",
+    "displayName": "Dialogue Text 351",
+    "description": "Does it not intrigue you that there was no public execution of this assassin? No “king” would let such an atrocity go unpunished. Then again, Cador was never a king.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_351 at line 739"
+  },
+  {
+    "id": "dialogue-text-352",
+    "displayName": "Dialogue Text 352",
+    "description": "You shut your mouth cretin, or I will break your jaw and smash it to pieces!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_352 at line 740"
+  },
+  {
+    "id": "dialogue-text-353",
+    "displayName": "Dialogue Text 353",
+    "description": "Struck a nerve? Cador was such a useless man that he could not even protect the kingdom that Arthur left him. Maybe I should just take the throne since the position is open.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_353 at line 741"
+  },
+  {
+    "id": "dialogue-text-354",
+    "displayName": "Dialogue Text 354",
+    "description": "Why you…!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_354 at line 742"
+  },
+  {
+    "id": "dialogue-text-355",
+    "displayName": "Dialogue Text 355",
+    "description": "Do not be provoked by his words, Sir Geoffrey. He is trying to sow turmoil amongst us to give him the advantage. Right now, we need to focus on the task at hand.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_355 at line 743"
+  },
+  {
+    "id": "dialogue-text-356",
+    "displayName": "Dialogue Text 356",
+    "description": "Not to mention we are deep in his domain. All the goons here seem to be working for him. He has obviously led us into a trap.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_356 at line 744"
+  },
+  {
+    "id": "dialogue-text-357",
+    "displayName": "Dialogue Text 357",
+    "description": "It was not easy to assemble this group of low-lives. But they come as a gift from someone who has also graciously offered a reward for your heads.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_357 at line 745"
+  },
+  {
+    "id": "dialogue-text-358",
+    "displayName": "Dialogue Text 358",
+    "description": "And pray tell, who may this unknown benefactor be?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_358 at line 746"
+  },
+  {
+    "id": "dialogue-text-359",
+    "displayName": "Dialogue Text 359",
+    "description": "Secrets of the trade, dear. You would probably do better if you ask for the secrets kept away by your rogue assassin. For all you know, she may be a spy.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_359 at line 747"
+  },
+  {
+    "id": "dialogue-text-360",
+    "displayName": "Dialogue Text 360",
+    "description": "…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_360 at line 749"
+  },
+  {
+    "id": "dialogue-text-361",
+    "displayName": "Dialogue Text 361",
+    "description": "Enough nonsense! Your words will not distract us from our goal. Any questions can be answered after we defeat you!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_361 at line 750"
+  },
+  {
+    "id": "dialogue-text-362",
+    "displayName": "Dialogue Text 362",
+    "description": "If we loiter too long in this place, we would be greatly outnumbered. Gather your strength. We need to defeat Davious quickly.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_362 at line 751"
+  },
+  {
+    "id": "dialogue-text-363",
+    "displayName": "Dialogue Text 363",
+    "description": "The other mercenaries… they are fleeing?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_363 at line 752"
+  },
+  {
+    "id": "dialogue-text-364",
+    "displayName": "Dialogue Text 364",
+    "description": "That goes to show the extent of their “loyalty”. There was nothing other than money that binds them to the ploy of Davious. They would rather save their own skins.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_364 at line 753"
+  },
+  {
+    "id": "dialogue-text-365",
+    "displayName": "Dialogue Text 365",
+    "description": "Argh… I cannot die here…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_365 at line 754"
+  },
+  {
+    "id": "dialogue-text-366",
+    "displayName": "Dialogue Text 366",
+    "description": "It is a pity that you have wasted your life like this.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_366 at line 755"
+  },
+  {
+    "id": "dialogue-text-367",
+    "displayName": "Dialogue Text 367",
+    "description": "For all the crimes you have committed, all the people you have hurt and all the lives you have mercilessly murdered, it is time you experienced the feelings associated with death.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_367 at line 756"
+  },
+  {
+    "id": "dialogue-text-368",
+    "displayName": "Dialogue Text 368",
+    "description": "Ha, you say such words… yet you keep a murderer like that assassin as a companion... Do you have any idea… of the horrifying offenses she has done?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_368 at line 757"
+  },
+  {
+    "id": "dialogue-text-369",
+    "displayName": "Dialogue Text 369",
+    "description": "I admit, Davious, that I have done a great deal of misdeeds. When you are struggling for survival, sins are the last thing you would be worried about.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_369 at line 758"
+  },
+  {
+    "id": "dialogue-text-370",
+    "displayName": "Dialogue Text 370",
+    "description": "As a mercenary, reputation teaches others to fear you and increases your chances to live another day. I did all those things to prove to others that I am not weak.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_370 at line 760"
+  },
+  {
+    "id": "dialogue-text-371",
+    "displayName": "Dialogue Text 371",
+    "description": "Rosemary…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_371 at line 761"
+  },
+  {
+    "id": "dialogue-text-372",
+    "displayName": "Dialogue Text 372",
+    "description": "But during my imprisonment, Duke Cador gave me a second chance. He showed me that there are other paths that lead to tomorrow. He gave me hope in the darkness.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_372 at line 762"
+  },
+  {
+    "id": "dialogue-text-373",
+    "displayName": "Dialogue Text 373",
+    "description": "Sadly, he died before I could return the favor. I joined this quest, wishing that it could provide me a chance to repay my debt to him and atone for my wrongdoings.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_373 at line 763"
+  },
+  {
+    "id": "dialogue-text-374",
+    "displayName": "Dialogue Text 374",
+    "description": "Such drivel… It appears you are only… a weak-willed simpleton… who holds no ambition… thanks to the lecture of a powerless dead man.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_374 at line 764"
+  },
+  {
+    "id": "dialogue-text-375",
+    "displayName": "Dialogue Text 375",
+    "description": "Like you are one to talk. You are about to die alone without having contributed anything to this world.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_375 at line 765"
+  },
+  {
+    "id": "dialogue-text-376",
+    "displayName": "Dialogue Text 376",
+    "description": "No… I am destined… for greater things… I am a king…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_376 at line 766"
+  },
+  {
+    "id": "dialogue-text-377",
+    "displayName": "Dialogue Text 377",
+    "description": "You may claim the title of “Bandit King”, but it is only a kingdom of one. A king is a leader who could inspire the souls of his people even after he has passed.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_377 at line 767"
+  },
+  {
+    "id": "dialogue-text-378",
+    "displayName": "Dialogue Text 378",
+    "description": "Through wisdom, strength and restraint, a king rules with his people close to his heart. In this light, Duke Cador is a far better king than you will ever be.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_378 at line 768"
+  },
+  {
+    "id": "dialogue-text-379",
+    "displayName": "Dialogue Text 379",
+    "description": "You… I… curse you… curse you all…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_379 at line 769"
+  },
+  {
+    "id": "dialogue-text-380",
+    "displayName": "Dialogue Text 380",
+    "description": "He… he is dead.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_380 at line 771"
+  },
+  {
+    "id": "dialogue-text-381",
+    "displayName": "Dialogue Text 381",
+    "description": "Reclaim your artifact, Mystery. We must leave this place immediately. We only endanger ourselves by staying here.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_381 at line 772"
+  },
+  {
+    "id": "dialogue-text-382",
+    "displayName": "Dialogue Text 382",
+    "description": "Hurry now, we must leave this premise at once.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_382 at line 773"
+  },
+  {
+    "id": "dialogue-text-383",
+    "displayName": "Dialogue Text 383",
+    "description": "What is the matter, young Mystery? You look troubled.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_383 at line 774"
+  },
+  {
+    "id": "dialogue-text-384",
+    "displayName": "Dialogue Text 384",
+    "description": "Zubair, what do you know of Duke Cador?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_384 at line 775"
+  },
+  {
+    "id": "dialogue-text-385",
+    "displayName": "Dialogue Text 385",
+    "description": "The duke was a passionate leader and a close friend of mine. Some may argue that his compassion hampers his strength and authority, but his followers respect him for it.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_385 at line 776"
+  },
+  {
+    "id": "dialogue-text-386",
+    "displayName": "Dialogue Text 386",
+    "description": "Is that why Sir Geoffrey gets so angered when others insult the duke?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_386 at line 777"
+  },
+  {
+    "id": "dialogue-text-387",
+    "displayName": "Dialogue Text 387",
+    "description": "Sir Geoffrey served Duke Cador from a young age, and sees the duke as a mentor and a moral compass. To him, Duke Cador represented more than just ideals; he was like family.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_387 at line 778"
+  },
+  {
+    "id": "dialogue-text-388",
+    "displayName": "Dialogue Text 388",
+    "description": "I see, that is… nice.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_388 at line 779"
+  },
+  {
+    "id": "dialogue-text-389",
+    "displayName": "Dialogue Text 389",
+    "description": "Mystery, you seem perplexed. Do Zubair’s words confuse you?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_389 at line 780"
+  },
+  {
+    "id": "dialogue-text-390",
+    "displayName": "Dialogue Text 390",
+    "description": "No… it is just that… everyone seems to have a strong reason for fighting in this quest, but I don’t. I am just a road sign.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_390 at line 782"
+  },
+  {
+    "id": "dialogue-text-391",
+    "displayName": "Dialogue Text 391",
+    "description": "Mystery, don’t say that, you are a very important companion.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_391 at line 783"
+  },
+  {
+    "id": "dialogue-text-392",
+    "displayName": "Dialogue Text 392",
+    "description": "How can you be so sure? What if everything I know is a lie? What if this “Merlin” that I insist to know is merely leading us astray? He did abandon the kingdom after all!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_392 at line 784"
+  },
+  {
+    "id": "dialogue-text-393",
+    "displayName": "Dialogue Text 393",
+    "description": "While I am doubtful over this “Merlin” allusion, I do know that you Mystery are the closest bet we have to turn the tides of calamity and save the Kingdom of Camelot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_393 at line 785"
+  },
+  {
+    "id": "dialogue-text-394",
+    "displayName": "Dialogue Text 394",
+    "description": "Whatever the outcome might be, it is a risk we are all willing to take.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_394 at line 786"
+  },
+  {
+    "id": "dialogue-text-395",
+    "displayName": "Dialogue Text 395",
+    "description": "That is… a burden too great for me to bear. I am not worthy of such trust. I do not even trust myself.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_395 at line 787"
+  },
+  {
+    "id": "dialogue-text-396",
+    "displayName": "Dialogue Text 396",
+    "description": "Then put your trust in our judgment instead. And in turn, we will lend you the strength and the confidence needed to believe in yourself as well.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_396 at line 788"
+  },
+  {
+    "id": "dialogue-text-397",
+    "displayName": "Dialogue Text 397",
+    "description": "Sorry to interrupt such a heartfelt moment, but we have enemies approaching our way. They seem to be the remnant forces of Davious, back to claim the bounty on our lives.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_397 at line 789"
+  },
+  {
+    "id": "dialogue-text-398",
+    "displayName": "Dialogue Text 398",
+    "description": "They will be solely disappointed when we show them what we are capable of. Lead the way, Mystery, and don’t worry; we got your back.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_398 at line 790"
+  },
+  {
+    "id": "dialogue-text-399",
+    "displayName": "Dialogue Text 399",
+    "description": "I have been waiting a long time for this. I have come to wipe away the humiliation that I have endured from our past battle.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_399 at line 791"
+  },
+  {
+    "id": "dialogue-text-400",
+    "displayName": "Dialogue Text 400",
+    "description": "Forgon!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_400 at line 794"
+  },
+  {
+    "id": "dialogue-text-401",
+    "displayName": "Dialogue Text 401",
+    "description": "You worms have proven to be quite the nuisance in our conquest over Camelot. Your feeble escapades have gotten… intolerable.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_401 at line 795"
+  },
+  {
+    "id": "dialogue-text-402",
+    "displayName": "Dialogue Text 402",
+    "description": "I am curious though. What are you collecting? And do not play dumb with me, worms. I do know of the little side-quest that you are currently engaged in.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_402 at line 796"
+  },
+  {
+    "id": "dialogue-text-403",
+    "displayName": "Dialogue Text 403",
+    "description": "You would be a fool to think we would tell you anything.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_403 at line 797"
+  },
+  {
+    "id": "dialogue-text-404",
+    "displayName": "Dialogue Text 404",
+    "description": "Fine then, have it your way. It does not concern me in the slightest. I would rather satisfy my enjoyment in slicing your bodies into morsels and ripping your souls into specks.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_404 at line 798"
+  },
+  {
+    "id": "dialogue-text-405",
+    "displayName": "Dialogue Text 405",
+    "description": "We… we will not be easily frightened! We have the power of Merlin on our side!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_405 at line 799"
+  },
+  {
+    "id": "dialogue-text-406",
+    "displayName": "Dialogue Text 406",
+    "description": "Merlin? Ha! Now I know your mission is based on a delirious dream! Merlin is dead, you wishful scum! My Master killed him years ago even before the death of Arthur.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_406 at line 800"
+  },
+  {
+    "id": "dialogue-text-407",
+    "displayName": "Dialogue Text 407",
+    "description": "You are lying!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_407 at line 801"
+  },
+  {
+    "id": "dialogue-text-408",
+    "displayName": "Dialogue Text 408",
+    "description": "Believe in whatever you want. My Master would never allow a force like Merlin to breathe and threaten her reign. His absence during Camelot’s fall is evidence to that.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_408 at line 802"
+  },
+  {
+    "id": "dialogue-text-409",
+    "displayName": "Dialogue Text 409",
+    "description": "It… it does not matter! We… we have defeated you before and we will do so again!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_409 at line 803"
+  },
+  {
+    "id": "dialogue-text-410",
+    "displayName": "Dialogue Text 410",
+    "description": "Do not assume that I have forgotten about you, girl. I may not have figured out your abilities, but I do know this: it is not working now…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_410 at line 805"
+  },
+  {
+    "id": "dialogue-text-411",
+    "displayName": "Dialogue Text 411",
+    "description": "He vanished… Where did he go?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_411 at line 806"
+  },
+  {
+    "id": "dialogue-text-412",
+    "displayName": "Dialogue Text 412",
+    "description": "Mystery, watch out!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_412 at line 807"
+  },
+  {
+    "id": "dialogue-text-413",
+    "displayName": "Dialogue Text 413",
+    "description": "…!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_413 at line 808"
+  },
+  {
+    "id": "dialogue-text-414",
+    "displayName": "Dialogue Text 414",
+    "description": "I would like to fulfill my previous promise to you, little girl. So how does it feel, to have a sword pierce through your heart?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_414 at line 809"
+  },
+  {
+    "id": "dialogue-text-415",
+    "displayName": "Dialogue Text 415",
+    "description": "His sword… it just went through her. How did he move so fast?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_415 at line 810"
+  },
+  {
+    "id": "dialogue-text-416",
+    "displayName": "Dialogue Text 416",
+    "description": "Mystery! Get away from her, you monster!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_416 at line 811"
+  },
+  {
+    "id": "dialogue-text-417",
+    "displayName": "Dialogue Text 417",
+    "description": "Do not be impatient, vermin. You will all meet your end here. Your blood will spill just like the blood of your fallen companion.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_417 at line 812"
+  },
+  {
+    "id": "dialogue-text-418",
+    "displayName": "Dialogue Text 418",
+    "description": "Quickly, Claramond! You have to go and heal her!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_418 at line 813"
+  },
+  {
+    "id": "dialogue-text-419",
+    "displayName": "Dialogue Text 419",
+    "description": "I will… Argh!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_419 at line 814"
+  },
+  {
+    "id": "dialogue-text-420",
+    "displayName": "Dialogue Text 420",
+    "description": "I am not giving you the chance to revive her. I have encased her in a protective barrier. It will take some time for you worms to break it. Before that, I will slaughter you all.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_420 at line 816"
+  },
+  {
+    "id": "dialogue-text-421",
+    "displayName": "Dialogue Text 421",
+    "description": "YOU WILL PAY DEMON SPAWN! I WILL SLAY YOU!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_421 at line 817"
+  },
+  {
+    "id": "dialogue-text-422",
+    "displayName": "Dialogue Text 422",
+    "description": "Such seething rage. Perfect complement to the pain that is about to follow. Come then, heroes of Camelot. My blade hungers for your flesh.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_422 at line 818"
+  },
+  {
+    "id": "dialogue-text-423",
+    "displayName": "Dialogue Text 423",
+    "description": "AAAAAHHHHHHHHHHHHHHHHHHHHHHHHHH!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_423 at line 819"
+  },
+  {
+    "id": "dialogue-text-424",
+    "displayName": "Dialogue Text 424",
+    "description": "Forgon, he is falling apart!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_424 at line 820"
+  },
+  {
+    "id": "dialogue-text-425",
+    "displayName": "Dialogue Text 425",
+    "description": "I cannot accept this! How can I lose to the likes of you scum! I have executed that little wretch! There is nothing suppressing me from killing you!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_425 at line 821"
+  },
+  {
+    "id": "dialogue-text-426",
+    "displayName": "Dialogue Text 426",
+    "description": "Simple, we have gotten stronger while you have remained the same. You were satisfied by the power that was given to you by Morgana and neglected to improve.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_426 at line 822"
+  },
+  {
+    "id": "dialogue-text-427",
+    "displayName": "Dialogue Text 427",
+    "description": "No… I am at my peak! I should be stronger than any of you!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_427 at line 823"
+  },
+  {
+    "id": "dialogue-text-428",
+    "displayName": "Dialogue Text 428",
+    "description": "Then that just shows your limit. Your ignorance has brought about your final demise.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_428 at line 824"
+  },
+  {
+    "id": "dialogue-text-429",
+    "displayName": "Dialogue Text 429",
+    "description": "Hurry, we need to remove that barrier at once! We have to save Mystery!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_429 at line 825"
+  },
+  {
+    "id": "dialogue-text-430",
+    "displayName": "Dialogue Text 430",
+    "description": "I am trying my best!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_430 at line 827"
+  },
+  {
+    "id": "dialogue-text-431",
+    "displayName": "Dialogue Text 431",
+    "description": "…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_431 at line 828"
+  },
+  {
+    "id": "dialogue-text-432",
+    "displayName": "Dialogue Text 432",
+    "description": "Mystery, please endure for a bit longer!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_432 at line 829"
+  },
+  {
+    "id": "dialogue-text-433",
+    "displayName": "Dialogue Text 433",
+    "description": "There is no hope… My blade ran through her heart without question. She is already dead…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_433 at line 830"
+  },
+  {
+    "id": "dialogue-text-434",
+    "displayName": "Dialogue Text 434",
+    "description": "That is enough from you! After taking Duke Cador’s life, after causing so much grief and pain, you will not take another life!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_434 at line 831"
+  },
+  {
+    "id": "dialogue-text-435",
+    "displayName": "Dialogue Text 435",
+    "description": "Such anger and anguish… you would make a fine addition to my Master’s army… Curses, my power… it is leaving me… At least, I have seized one more soul…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_435 at line 832"
+  },
+  {
+    "id": "dialogue-text-436",
+    "displayName": "Dialogue Text 436",
+    "description": "HA… HA… HA… HA… ha… ha… ha… ha…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_436 at line 833"
+  },
+  {
+    "id": "dialogue-text-437",
+    "displayName": "Dialogue Text 437",
+    "description": "Forgon has crumbled to dust…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_437 at line 834"
+  },
+  {
+    "id": "dialogue-text-438",
+    "displayName": "Dialogue Text 438",
+    "description": "I have removed the barrier. But Mystery…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_438 at line 835"
+  },
+  {
+    "id": "dialogue-text-439",
+    "displayName": "Dialogue Text 439",
+    "description": "Damn it!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_439 at line 836"
+  },
+  {
+    "id": "dialogue-text-440",
+    "displayName": "Dialogue Text 440",
+    "description": "Wait, what is this?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_440 at line 838"
+  },
+  {
+    "id": "dialogue-text-441",
+    "displayName": "Dialogue Text 441",
+    "description": "The artifact… the medallion in Mystery’s pouch… it is glowing…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_441 at line 839"
+  },
+  {
+    "id": "dialogue-text-442",
+    "displayName": "Dialogue Text 442",
+    "description": "I can sense intense magic flowing through her body…",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_442 at line 840"
+  },
+  {
+    "id": "dialogue-text-443",
+    "displayName": "Dialogue Text 443",
+    "description": "Look! Her wound! It is healing completely!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_443 at line 841"
+  },
+  {
+    "id": "dialogue-text-444",
+    "displayName": "Dialogue Text 444",
+    "description": "Wheeze… Gasp!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_444 at line 842"
+  },
+  {
+    "id": "dialogue-text-445",
+    "displayName": "Dialogue Text 445",
+    "description": "Mystery! You are alive!",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_445 at line 843"
+  },
+  {
+    "id": "dialogue-text-446",
+    "displayName": "Dialogue Text 446",
+    "description": "What… what happened? Where… where is Forgon?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_446 at line 844"
+  },
+  {
+    "id": "dialogue-text-447",
+    "displayName": "Dialogue Text 447",
+    "description": "He is gone, and he won’t be bothering us ever again.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_447 at line 845"
+  },
+  {
+    "id": "dialogue-text-448",
+    "displayName": "Dialogue Text 448",
+    "description": "Did I… did I just die?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_448 at line 846"
+  },
+  {
+    "id": "dialogue-text-449",
+    "displayName": "Dialogue Text 449",
+    "description": "Apparently not. I have never seen such magic before. It was as if… I was witnessing the birth of Excalibur.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_449 at line 847"
+  },
+  {
+    "id": "dialogue-text-450",
+    "displayName": "Dialogue Text 450",
+    "description": "Thank the heavens you are alright Mystery. You are indeed blessed by the magic of Merlin. I can only imagine such magic coming from an Arch-mage like him.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_450 at line 849"
+  },
+  {
+    "id": "dialogue-text-451",
+    "displayName": "Dialogue Text 451",
+    "description": "But Forgon… he said Merlin was dead.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_451 at line 850"
+  },
+  {
+    "id": "dialogue-text-452",
+    "displayName": "Dialogue Text 452",
+    "description": "It would seem he was wrong. The power of Merlin protects you Mystery, and that gives us more faith than ever in the purpose of our quest.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_452 at line 851"
+  },
+  {
+    "id": "dialogue-text-453",
+    "displayName": "Dialogue Text 453",
+    "description": "Merlin or not, we have started a quest to determine the fate of this land. We are not going to give up now.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_453 at line 852"
+  },
+  {
+    "id": "dialogue-text-454",
+    "displayName": "Dialogue Text 454",
+    "description": "We have accomplished a legendary feat today, and we will be making more legends in the days to come. In the name of Camelot, let us proceed on with our journey.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_454 at line 853"
+  },
+  {
+    "id": "dialogue-text-455",
+    "displayName": "Dialogue Text 455",
+    "description": "I understand. Let us continue, together.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Dialogue text key DIALOG_TEXT_455 at line 854"
+  }
+]
