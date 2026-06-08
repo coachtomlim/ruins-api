@@ -32,4 +32,21 @@ Two recovered PNG assets are wired into the playable browser demo:
 - `public/assets/recovered/level-design-example.png`
 - `public/assets/recovered/characters-v2.png`
 
+Current usage:
+
+- Title screen: `level-design-example.png`
+- Level 1 area visual: `level-design-example.png`
+- Survivor encounter: current shared Level 1 visual, no dedicated survivor image yet
+- Scout approach: current shared Level 1 visual, no dedicated approach image yet
+- Forgon Scout battle: `characters-v2.png`
+- Victory screen: current UI-only panel with recovered route context
+
+Deferred:
+
+- Dedicated survivor portrait or crowd image
+- Dedicated Castle Camelot approach background
+- Dedicated Forgon Scout/enemy sprite
+- Item icons for Amethyst, Lithic Armor, and Potion
+- Optimized mobile WebP exports
+
 These are local reconstruction assets only. The broader archive still needs conversion, optimization, naming, and rights review before public release.

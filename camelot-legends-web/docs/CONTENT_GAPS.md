@@ -6,7 +6,7 @@ No recovered runtime navigation graph was found. The first demo route links `are
 
 ## Level Interaction Authorship
 
-The first level now has rebuilt interactions for rallying survivors and scouting the castle approach. These are provisional pacing beats anchored to recovered episode text, not recovered runtime quest scripts.
+The first level now has rebuilt interactions for rallying survivors and scouting the castle approach. These are provisional pacing beats anchored to recovered episode text, not recovered runtime quest scripts. The `Castle Survivor` role and the short interaction lines are authored bridge dialogue.
 
 ## Combat Stats
 
@@ -19,6 +19,8 @@ The demo can recover `Amethyst`, `Lithic Armor`, and `Potion`, but most item/equ
 ## Dialogue Speaker Mapping
 
 Dialogue text records exist, but exact speaker-to-line sequencing is incomplete. The first demo displays selected recovered dialogue lines under a provisional `Mystery's Warning` interaction.
+
+No recovered dialogue sequence was found for the survivor encounter or castle approach scouting beat.
 
 ## Asset Binding
 

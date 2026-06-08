@@ -9,14 +9,17 @@ import {
   canGoBack,
   canGoNext,
   availableLevelInteractions,
+  choiceIsAvailable,
   completeLevelInteraction,
   createNewGame,
   currentEnemyIntent,
   equipArmor,
   goBack,
   goNext,
+  levelInteractionById,
   markDialogueSeen,
   normalizeState,
+  openLevelInteraction,
   objectiveStatus,
   performBattleAction,
   recoverArmor,
@@ -113,6 +116,13 @@ function startNewGame() {
   render();
 }
 
+function returnToTitle() {
+  state = null;
+  activePanel = "scene";
+  status = "Returned to title.";
+  render();
+}
+
 function renderMenu() {
   return `
     <main class="menu-screen">
@@ -160,13 +170,22 @@ function renderScenePanel() {
   const interactionButtons = interactions
     .map(
       (interaction) => `
-        <button data-action="level-interaction" data-id="${interaction.id}">
+        <button data-action="open-interaction" data-id="${interaction.id}">
           <strong>${interaction.label}</strong>
-          <span>${interaction.rewardText}</span>
+          <span>${interaction.description}</span>
         </button>
       `,
     )
     .join("");
+  const result = state.lastInteractionResult
+    ? `
+      <div class="result-callout">
+        <strong>${state.lastInteractionResult.label}</strong>
+        <span>${state.lastInteractionResult.result}</span>
+        <em>${state.lastInteractionResult.rewardText}</em>
+      </div>
+    `
+    : "";
 
   return `
     <section class="scene-card">
@@ -182,6 +201,7 @@ function renderScenePanel() {
           <strong>Current objective</strong>
           <span>${objective ? objective.label : "Continue the route."}</span>
         </div>
+        ${result}
       </div>
       <div class="action-grid">
         <button data-action="dialogue">Speak With Mystery</button>
@@ -193,6 +213,38 @@ function renderScenePanel() {
         <button data-action="next" ${canGoNext(state) && canAdvanceCurrentArea() ? "" : "disabled"}>Next Area</button>
         <button class="danger" data-action="battle" ${canBattle ? "" : "disabled"}>Engage Forgon Scout</button>
       </div>
+    </section>
+  `;
+}
+
+function renderInteractionPanel() {
+  const interaction = levelInteractionById(state.activeInteractionId);
+  if (!interaction) return renderScenePanel();
+  const choices = interaction.choices
+    .map((choice) => {
+      const disabled = choiceIsAvailable(state, choice) ? "" : "disabled";
+      const locked = disabled ? "<em>Requires survivor information</em>" : `<em>${choice.rewardText}</em>`;
+      return `
+        <button data-action="resolve-interaction" data-id="${choice.id}" ${disabled}>
+          <strong>${choice.label}</strong>
+          <span>${choice.description}</span>
+          ${locked}
+        </button>
+      `;
+    })
+    .join("");
+  const lines = interaction.lines.map((line) => `<p>${line}</p>`).join("");
+  return `
+    <section class="panel-card interaction-card">
+      <p class="eyebrow">${interaction.eyebrow}</p>
+      <h2>${interaction.label}</h2>
+      <div class="speaker-row">
+        <strong>${interaction.speaker}</strong>
+        <span>${interaction.description}</span>
+      </div>
+      <div class="dialogue-lines">${lines}</div>
+      <div class="action-grid choice-grid">${choices}</div>
+      ${interaction.optional ? `<button data-action="cancel-interaction">Return to Scene</button>` : ""}
     </section>
   `;
 }
@@ -389,18 +441,33 @@ function renderActivePanel() {
   if (state.mode === "battle") return renderBattlePanel();
   if (state.mode === "victory") {
     const area = currentArea();
+    const approachSummary = state.flags.usedSurvivorInfo
+      ? "Use Survivor Information shaped the approach and forced the scout onto the defensive."
+      : state.flags.tookCover
+        ? "Taking cover helped Mystery weather the first attack."
+        : state.flags.preparedEquipment
+          ? "Preparing equipment helped Mystery enter the fight focused."
+          : "Mystery met the approach directly and survived the ambush.";
     return `
       <section class="panel-card victory-card">
         <p class="eyebrow">Level Complete</p>
         <h2>${FIRST_LEVEL.title}</h2>
         <p><strong>${recordLabel(area, state.currentAreaId)}</strong></p>
-        <p>The Forgon scout is defeated and the path into Castle Camelot is open.</p>
+        <p>The Forgon scout is defeated and the path into Castle Camelot is open. Mystery recovered the Amethyst, secured armor from the ashes, and learned that the attack on Camelot was no accident.</p>
+        <p>${approachSummary}</p>
+        <p>Next destination: hold at Castle Camelot and prepare for the next recovered episode.</p>
         <div class="reward-row">
           <span>+25 gold</span>
           <span>+35 XP</span>
           <span>Potion recovered</span>
+          <span>HP ${state.player.hp}/${state.player.maxHp}</span>
+          <span>MP ${state.player.mp}/${state.player.maxMp}</span>
         </div>
-        <button class="primary" data-action="save">Save Victory</button>
+        <div class="menu-actions">
+          <button class="primary" data-action="save">Save and Continue Later</button>
+          <button data-action="title">Return to Title</button>
+          <button data-action="new">Replay Level 1</button>
+        </div>
       </section>
     `;
   }
@@ -415,6 +482,7 @@ function renderActivePanel() {
       </section>
     `;
   }
+  if (state.mode === "interaction") return renderInteractionPanel();
   if (activePanel === "dialogue") return renderDialoguePanel();
   if (activePanel === "inventory") return renderInventoryPanel();
   if (activePanel === "character") return renderCharacterPanel();
@@ -494,6 +562,7 @@ root.addEventListener("click", async (event) => {
   const skill = button.dataset.skill;
 
   if (action === "new") return startNewGame();
+  if (action === "title") return returnToTitle();
   if (action === "load") return restore();
   if (action === "save" && state) return persist();
   if (action === "reset-save") return clearSave();
@@ -509,8 +578,16 @@ root.addEventListener("click", async (event) => {
     setState(searchRoadCache(state), "Amethyst and Potion recovered from the road.");
   } else if (action === "take-armor") {
     setState(recoverArmor(state), "Lithic Armor recovered.");
-  } else if (action === "level-interaction") {
-    setState(completeLevelInteraction(state, id));
+  } else if (action === "open-interaction") {
+    setState(openLevelInteraction(state, id));
+  } else if (action === "resolve-interaction") {
+    setState(completeLevelInteraction(state, state.activeInteractionId, id));
+  } else if (action === "cancel-interaction") {
+    setState({
+      ...state,
+      mode: "scene",
+      activeInteractionId: null,
+    });
   } else if (action === "remove-item") {
     setState(removeInventoryItem(state, id));
   } else if (action === "equip") {

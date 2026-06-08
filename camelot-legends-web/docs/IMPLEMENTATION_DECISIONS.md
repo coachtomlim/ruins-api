@@ -62,3 +62,15 @@ Reason: recovered combat formulas were missing, but the game needs a playable fi
 Level 1 includes one optional support beat in area 003 and one required preparation beat in area 004 before the Forgon Scout battle.
 
 Reason: the first demo needs to feel like a playable level rather than a direct path into a single fight, while still keeping scope tight enough to verify on every pass.
+
+## 11. Authored Interaction Screens
+
+`Rally Survivors` and `Scout Castle Approach` now open authored choice screens instead of resolving as immediate buttons.
+
+Reason: no recovered runtime quest scripts were found, but the vertical slice needs readable story beats and meaningful player choices. Bridge dialogue is minimal and explicitly documented as authored reconstruction.
+
+## 12. Service Worker Cache Versioning
+
+Every runtime or content-path change must bump `CACHE_NAME` in `service-worker.js`.
+
+Reason: otherwise mobile browsers can keep stale JavaScript, level data, or assets after the local server changes. During testing, clear site data for `localhost:4173` or the LAN host if behavior does not match source.

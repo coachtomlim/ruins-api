@@ -32,8 +32,14 @@ await page.getByRole("button", { name: "Inventory" }).click();
 await page.getByRole("button", { name: "Equip" }).click();
 await page.getByRole("button", { name: "Scene" }).click();
 await page.getByRole("button", { name: /Rally Survivors/ }).click();
+await page.getByRole("button", { name: /Rally the Survivors/ }).click();
 await page.getByRole("button", { name: "Next Area" }).click();
 await page.getByRole("button", { name: /Scout Castle Approach/ }).click();
+await page.getByRole("button", { name: /Use Survivor Information/ }).click();
+await page.getByRole("button", { name: "Save", exact: true }).click();
+await page.getByText(/Saved to IndexedDB|saved fallback/).waitFor();
+await page.getByRole("button", { name: "Load", exact: true }).click();
+await page.getByText("Save loaded.").waitFor();
 await page.getByRole("button", { name: "Next Area" }).click();
 await page.getByRole("button", { name: "Engage Forgon Scout" }).click();
 
@@ -69,7 +75,9 @@ const result = {
   hasArea: bodyText.includes("Ep. 05: Storm the Castle"),
   hasReward: bodyText.includes("Reward: 25 gold, 35 XP"),
   hasLevelBeats:
-    bodyText.includes("survivors") && bodyText.includes("castle approach"),
+    bodyText.includes("survivors") &&
+    bodyText.includes("castle approach") &&
+    bodyText.includes("Use Survivor Information"),
   hasVictoryPanel: bodyText.includes("Forgon scout is defeated"),
   hasManifest: pwaStatus.manifestHref.includes("manifest.webmanifest"),
   serviceWorkerReady: pwaStatus.serviceWorkerReady,

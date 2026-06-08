@@ -1,4 +1,4 @@
-const CACHE_NAME = "camelot-legends-web-v4";
+const CACHE_NAME = "camelot-legends-web-v5";
 
 const APP_SHELL = [
   "./",

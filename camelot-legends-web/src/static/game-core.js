@@ -82,6 +82,13 @@ export function createNewGame(now = new Date().toISOString()) {
       xp: 0,
     },
     enemy: null,
+    activeInteractionId: null,
+    lastInteractionResult: null,
+    battlePlan: {
+      guardBonus: 0,
+      enemyIntentIndex: 0,
+      note: "",
+    },
     inventory: [],
     equipment: {
       armor: null,
@@ -92,8 +99,15 @@ export function createNewGame(now = new Date().toISOString()) {
       battleWon: false,
       demoComplete: false,
       reachedCastleRoad: false,
+      survivorEncounterResolved: false,
       ralliedSurvivors: false,
+      foundSurvivorSupplies: false,
+      movedOnCautiously: false,
       scoutedApproach: false,
+      approachedOpenly: false,
+      tookCover: false,
+      preparedEquipment: false,
+      usedSurvivorInfo: false,
       victoryClaimed: false,
     },
     log: ["A new legend begins."],
@@ -120,6 +134,10 @@ export function normalizeState(state) {
     equipment: {
       ...fresh.equipment,
       ...state.equipment,
+    },
+    battlePlan: {
+      ...fresh.battlePlan,
+      ...state.battlePlan,
     },
     flags: {
       ...fresh.flags,
@@ -161,20 +179,65 @@ export function goNext(state) {
 export function availableLevelInteractions(state) {
   return LEVEL_INTERACTIONS.filter(
     (interaction) =>
-      interaction.areaId === state.currentAreaId && !state.flags[interaction.flag],
+      interaction.areaId === state.currentAreaId && !state.flags[interaction.resolvedFlag],
   );
 }
 
-export function completeLevelInteraction(state, interactionId) {
+export function levelInteractionById(interactionId) {
+  return LEVEL_INTERACTIONS.find((entry) => entry.id === interactionId) || null;
+}
+
+export function openLevelInteraction(state, interactionId) {
   const interaction = LEVEL_INTERACTIONS.find((entry) => entry.id === interactionId);
-  if (!interaction || interaction.areaId !== state.currentAreaId || state.flags[interaction.flag]) {
+  if (!interaction || interaction.areaId !== state.currentAreaId || state.flags[interaction.resolvedFlag]) {
     return state;
   }
-  const rewards = interaction.rewards || {};
-  const nextMaxHp = state.player.maxHp + (rewards.maxHp || 0);
-  const nextMaxMp = state.player.maxMp + (rewards.maxMp || 0);
   return {
     ...state,
+    mode: "interaction",
+    activeInteractionId: interaction.id,
+    lastInteractionResult: null,
+    log: addLog(state, `${interaction.label} begins.`),
+  };
+}
+
+export function choiceIsAvailable(state, choice) {
+  if (!choice.requiresAnyFlag) return true;
+  return choice.requiresAnyFlag.some((flag) => state.flags[flag]);
+}
+
+export function completeLevelInteraction(state, interactionId, choiceId) {
+  const interaction = LEVEL_INTERACTIONS.find((entry) => entry.id === interactionId);
+  const choice = interaction?.choices?.find((entry) => entry.id === choiceId);
+  if (
+    !interaction ||
+    !choice ||
+    interaction.areaId !== state.currentAreaId ||
+    state.flags[interaction.resolvedFlag] ||
+    !choiceIsAvailable(state, choice)
+  ) {
+    return state;
+  }
+  const rewards = choice.rewards || {};
+  const nextMaxHp = state.player.maxHp + (rewards.maxHp || 0);
+  const nextMaxMp = state.player.maxMp + (rewards.maxMp || 0);
+  const nextBattlePlan = {
+    ...state.battlePlan,
+    ...(choice.battlePlan || {}),
+    note: choice.result || "",
+  };
+  return {
+    ...state,
+    mode: "scene",
+    activeInteractionId: null,
+    lastInteractionResult: {
+      interactionId: interaction.id,
+      choiceId: choice.id,
+      label: choice.label,
+      result: choice.result,
+      rewardText: choice.rewardText,
+    },
+    battlePlan: nextBattlePlan,
     player: {
       ...state.player,
       maxHp: nextMaxHp,
@@ -188,9 +251,9 @@ export function completeLevelInteraction(state, interactionId) {
     inventory: rewards.items ? addUniqueItems(state.inventory, rewards.items) : state.inventory,
     flags: {
       ...state.flags,
-      [interaction.flag]: true,
+      ...choice.flags,
     },
-    log: addLog(state, `${interaction.label}: ${interaction.rewardText}.`),
+    log: addLog(state, [`${choice.label}: ${choice.result}`, `Reward: ${choice.rewardText}.`]),
   };
 }
 
@@ -271,7 +334,7 @@ export function equipArmor(state, equipmentId) {
   };
 }
 
-function createBattleEnemy() {
+function createBattleEnemy(state) {
   const enemy = FIRST_LEVEL.battle.enemy;
   return {
     id: enemy.id,
@@ -282,7 +345,7 @@ function createBattleEnemy() {
     attack: enemy.attack,
     defense: enemy.defense,
     guard: 0,
-    intentIndex: 0,
+    intentIndex: state.battlePlan?.enemyIntentIndex || 0,
     turn: 1,
   };
 }
@@ -294,11 +357,14 @@ export function currentEnemyIntent(enemy) {
 
 export function startBattle(state) {
   if (state.flags.battleWon) return state;
-  const startingGuard = state.flags.scoutedApproach ? Math.max(state.player.guard || 0, 4) : 0;
+  const startingGuard = state.flags.scoutedApproach
+    ? Math.max(state.player.guard || 0, state.battlePlan?.guardBonus || 0)
+    : 0;
   return {
     ...state,
     mode: "battle",
-    enemy: createBattleEnemy(),
+    enemy: createBattleEnemy(state),
+    activeInteractionId: null,
     player: {
       ...state.player,
       guard: startingGuard,
@@ -306,7 +372,7 @@ export function startBattle(state) {
     log: addLog(
       state,
       startingGuard > 0
-        ? "A Forgon scout blocks the castle road. Mystery is ready for the ambush."
+        ? `A Forgon scout blocks the castle road. ${state.battlePlan?.note || "Mystery is ready for the ambush."}`
         : "A Forgon scout blocks the castle road.",
     ),
   };
@@ -316,7 +382,8 @@ export function retryBattle(state) {
   return {
     ...state,
     mode: "battle",
-    enemy: createBattleEnemy(),
+    enemy: createBattleEnemy(state),
+    activeInteractionId: null,
     player: {
       ...state.player,
       hp: state.player.maxHp,
@@ -519,6 +586,10 @@ export function objectiveStatus(state) {
       active: state.currentAreaId === objective.areaId && !complete,
     };
   });
+}
+
+export function returnToTitleState() {
+  return null;
 }
 
 export function serializableState(state) {

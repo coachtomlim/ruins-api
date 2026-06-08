@@ -340,6 +340,25 @@ meter {
   color: #d6d1c5;
 }
 
+.result-callout {
+  display: grid;
+  gap: 5px;
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(183, 220, 139, 0.12);
+}
+
+.result-callout span,
+.result-callout em {
+  color: #d6d1c5;
+}
+
+.result-callout em {
+  font-style: normal;
+  font-weight: 800;
+}
+
 .objective-row em {
   align-self: start;
   border-radius: 999px;
@@ -420,6 +439,39 @@ meter {
 
 .victory-card {
   border-color: rgba(183, 220, 139, 0.42);
+}
+
+.interaction-card {
+  border-color: rgba(169, 214, 194, 0.34);
+}
+
+.speaker-row {
+  display: grid;
+  gap: 4px;
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(169, 214, 194, 0.1);
+}
+
+.speaker-row span {
+  color: #d6d1c5;
+}
+
+.choice-grid button {
+  display: grid;
+  gap: 4px;
+  text-align: left;
+}
+
+.choice-grid button em {
+  color: #a9d6c2;
+  font-size: 0.82rem;
+  font-style: normal;
+}
+
+.choice-grid button:disabled em {
+  color: #c9c2b5;
 }
 
 .field-notes {
