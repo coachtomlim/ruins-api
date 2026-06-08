@@ -8,6 +8,7 @@
     "build": "node tools/build-static.mjs",
     "test": "node tools/test-demo.mjs",
     "verify:demo": "node tools/verify-demo.mjs",
+    "verify:visual": "node tools/verify-visual-slice.mjs",
     "extract:phase1": "python tools/extract_phase1.py",
     "validate:content": "node tools/validate-content.mjs"
   },

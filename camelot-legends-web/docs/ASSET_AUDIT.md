@@ -27,26 +27,37 @@ Generated from `C:\Users\Thomas\My Drive\CamleotLegends-GameFiles` with Unity `L
 
 ## Currently Wired Assets
 
-Two recovered PNG assets are wired into the playable browser demo:
+Recovered assets wired into the playable browser demo:
 
 - `public/assets/recovered/level-design-example.png`
 - `public/assets/recovered/characters-v2.png`
+- `public/assets/recovered/characters/party-characters-v2.png`
+- `public/assets/recovered/maps/grasslands.png`
+- `public/assets/recovered/maps/deadforesttile.png`
+- `public/assets/recovered/maps/mapcastlebrown.png`
+- `public/assets/recovered/maps/mapcastlewhite.png`
+- `public/assets/recovered/battle/battle-field-background.png`
+- `public/assets/recovered/enemies/forgon.png`
+- `public/assets/recovered/enemies/forgon-idle.gif`
+- `public/assets/recovered/enemies/bandit1-new-spritesheet.png` (copied for future reference, not rendered)
 
 Current usage:
 
 - Title screen: `level-design-example.png`
-- Level 1 area visual: `level-design-example.png`
-- Survivor encounter: current shared Level 1 visual, no dedicated survivor image yet
-- Scout approach: current shared Level 1 visual, no dedicated approach image yet
-- Forgon Scout battle: `characters-v2.png`
-- Victory screen: current UI-only panel with recovered route context
+- Level 1 area visual: recovered map/tile-sheet images
+- Survivor encounter: map scene plus survivor marker
+- Scout approach: castle approach map plus scout marker
+- Forgon Scout battle: recovered battle background plus Forgon GIF
+- Victory screen: castle map visual plus party image
 
 Deferred:
 
 - Dedicated survivor portrait or crowd image
-- Dedicated Castle Camelot approach background
-- Dedicated Forgon Scout/enemy sprite
+- Cropped party sprites instead of full party image
+- Cropped Forgon frames from sprite sheet instead of GIF/full sheet
 - Item icons for Amethyst, Lithic Armor, and Potion
 - Optimized mobile WebP exports
+
+Source path and dimension details are recorded in `public/content/visual-asset-bindings.json`.
 
 These are local reconstruction assets only. The broader archive still needs conversion, optimization, naming, and rights review before public release.

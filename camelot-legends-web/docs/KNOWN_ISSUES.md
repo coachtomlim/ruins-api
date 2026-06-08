@@ -17,8 +17,11 @@
 
 ## Assets
 
-- Only two recovered PNG assets are currently wired.
-- No dedicated survivor, scout approach, item icon, or enemy sprite assets are wired yet.
+- Level 1 now renders recovered map sheets, party art, battle background, and Forgon animation.
+- Survivor and scout are currently marker overlays, not dedicated character sprites.
+- Party art is a full recovered party image, not frame-cropped walking sprites.
+- Forgon uses a recovered GIF for visibility; the PNG sprite sheet still needs frame extraction.
+- No item icons for Amethyst, Lithic Armor, or Potion are wired yet.
 - Many archive assets still require conversion, optimization, naming, and review.
 
 ## Mobile/PWA

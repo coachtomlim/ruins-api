@@ -32,6 +32,7 @@ import {
 } from "./game-core.js";
 import { byId, loadContent, usableSkills } from "./content-loader.js";
 import { FIRST_LEVEL } from "./level-data.js";
+import { VISUAL_ASSETS, visualLayoutForArea } from "./level1-visual-layout.js";
 import { registerServiceWorker } from "./pwa.js";
 import { loadGame, resetSave, saveGame } from "./save-load.js";
 
@@ -42,6 +43,8 @@ let maps = {};
 let state = null;
 let activePanel = "scene";
 let status = "Loading recovered Camelot Legends content...";
+
+const DIALOGUE_SPEAKERS = new Map();
 
 function lookup(collectionName, id) {
   return maps[collectionName]?.get(id) || null;
@@ -158,6 +161,51 @@ function sceneVisualPath() {
   return "./public/assets/recovered/level-design-example.png";
 }
 
+function actorClass(type) {
+  return `scene-actor scene-actor-${type}`;
+}
+
+function renderActor(actor) {
+  const style = `left:${actor.x}%; top:${actor.y}%;`;
+  if (actor.type === "party") {
+    return `
+      <div class="${actorClass(actor.type)}" style="${style}" data-visual-actor="${actor.id}">
+        <img src="${VISUAL_ASSETS.party}" alt="${actor.label}" />
+        <span>${actor.label}</span>
+      </div>
+    `;
+  }
+  const marker = actor.type === "enemy" ? "!" : actor.type === "npc" ? "?" : actor.type === "item" ? "*" : "+";
+  return `
+    <div class="${actorClass(actor.type)}" style="${style}" data-visual-actor="${actor.id}">
+      <b>${marker}</b>
+      <span>${actor.label}</span>
+    </div>
+  `;
+}
+
+function renderSceneVisual() {
+  const layout = visualLayoutForArea(state.currentAreaId);
+  const actors = layout.actors
+    .filter((actor) => {
+      if (actor.id === "cache" && state.flags.foundItem) return false;
+      if (actor.id === "armor" && state.equipment.armor === DEMO_EQUIPMENT_ID) return false;
+      if (actor.id === "survivor" && state.flags.survivorEncounterResolved) return false;
+      if (actor.id === "scout-shadow" && state.flags.scoutedApproach) return false;
+      return true;
+    })
+    .map(renderActor)
+    .join("");
+  return `
+    <div class="level-map" data-visual="level-map">
+      <img class="level-map-bg" src="${layout.background}" alt="${layout.label}" data-visual="map-background" />
+      <div class="isometric-grid" aria-hidden="true"></div>
+      ${actors}
+      <span class="area-badge">${state.currentAreaId}</span>
+    </div>
+  `;
+}
+
 function renderScenePanel() {
   const area = currentArea();
   const mission = lookup("missions", state.currentAreaId.replace("area", "mission"));
@@ -189,10 +237,7 @@ function renderScenePanel() {
 
   return `
     <section class="scene-card">
-      <div class="visual-band">
-        <img src="${sceneVisualPath()}" alt="" />
-        <span>${state.currentAreaId}</span>
-      </div>
+      ${renderSceneVisual()}
       <div class="scene-copy">
         <p class="eyebrow">${recordLabel(mission, "Mission")}</p>
         <h2>${recordLabel(area, "Recovered Scene")}</h2>
@@ -252,7 +297,15 @@ function renderInteractionPanel() {
 function renderDialoguePanel() {
   const lines = DEMO_DIALOGUE_IDS.map((id) => lookup("dialogue", id))
     .filter(Boolean)
-    .map((line) => `<p>${recordDescription(line, line.displayName)}</p>`)
+    .map((line) => {
+      const speaker = DIALOGUE_SPEAKERS.get(line.id);
+      return `
+        <div class="dialogue-line" data-dialogue-id="${line.id}">
+          <strong>${speaker ? speaker.speakerName : "Speaker Unknown"}</strong>
+          <p>${recordDescription(line, line.displayName)}</p>
+        </div>
+      `;
+    })
     .join("");
   return `
     <section class="panel-card">
@@ -411,8 +464,16 @@ function renderBattlePanel() {
   }).join("");
   return `
     <section class="battle-card">
-      <div class="battle-visual">
-        <img src="./public/assets/recovered/characters-v2.png" alt="" />
+      <div class="battle-field" data-visual="battle-field">
+        <img class="battle-bg" src="${VISUAL_ASSETS.battleBackground}" alt="Battle field" data-visual="battle-background" />
+        <div class="battle-sprite battle-party" data-visual="battle-party">
+          <img src="${VISUAL_ASSETS.party}" alt="Mystery's party" />
+          <span>${state.player.name}</span>
+        </div>
+        <div class="battle-sprite battle-enemy" data-visual="forgon-enemy">
+          <img src="${VISUAL_ASSETS.forgon}" alt="${enemy.name}" />
+          <span>${enemy.name}</span>
+        </div>
         <p class="eyebrow">Level 1 Encounter</p>
       </div>
       <h2>${enemy.name}</h2>
@@ -450,6 +511,10 @@ function renderActivePanel() {
           : "Mystery met the approach directly and survived the ambush.";
     return `
       <section class="panel-card victory-card">
+        <div class="victory-visual" data-visual="victory-visual">
+          <img src="${VISUAL_ASSETS.maps.castleWhite}" alt="Castle Camelot secured" />
+          <img src="${VISUAL_ASSETS.party}" alt="Mystery's party" />
+        </div>
         <p class="eyebrow">Level Complete</p>
         <h2>${FIRST_LEVEL.title}</h2>
         <p><strong>${recordLabel(area, state.currentAreaId)}</strong></p>
@@ -621,6 +686,10 @@ async function boot() {
       equipment: byId(content.equipment),
       characters: byId(content.characters),
     };
+    DIALOGUE_SPEAKERS.clear();
+    for (const record of content.dialogueSpeakers || []) {
+      DIALOGUE_SPEAKERS.set(record.dialogueId, record);
+    }
     status = "Recovered content loaded. Ready to start.";
     render();
   } catch (error) {

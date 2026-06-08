@@ -3,12 +3,14 @@ const CONTENT_FILES = {
   areas: "areas.json",
   scenes: "scenes.json",
   characters: "characters.json",
+  dialogueSpeakers: "dialogue-speaker-map.json",
   dialogue: "dialogue.json",
   missions: "missions.json",
   items: "items.json",
   equipment: "equipment.json",
   skills: "skills.json",
   assets: "asset-manifest.json",
+  visualAssets: "visual-asset-bindings.json",
 };
 
 const contentBases = ["./public/content/", "./content/", "/content/"];
@@ -57,6 +59,28 @@ function assertAssets(records) {
   }
 }
 
+function assertVisualAssets(records) {
+  if (!Array.isArray(records)) {
+    throw new Error("visualAssets must be an array");
+  }
+  for (const record of records) {
+    if (!record.id || !record.runtimePath || !record.originalArchivePath || !record.intendedUse) {
+      throw new Error("visual-asset-bindings contains an invalid asset record");
+    }
+  }
+}
+
+function assertDialogueSpeakers(records) {
+  if (!Array.isArray(records)) {
+    throw new Error("dialogueSpeakers must be an array");
+  }
+  for (const record of records) {
+    if (!record.dialogueId || !record.speakerName || !record.source || !record.confidence) {
+      throw new Error("dialogue-speaker-map contains an invalid speaker record");
+    }
+  }
+}
+
 export async function loadContent() {
   const entries = await Promise.all(
     Object.entries(CONTENT_FILES).map(async ([key, fileName]) => [
@@ -68,6 +92,10 @@ export async function loadContent() {
   for (const [name, records] of Object.entries(content)) {
     if (name === "assets") {
       assertAssets(records);
+    } else if (name === "visualAssets") {
+      assertVisualAssets(records);
+    } else if (name === "dialogueSpeakers") {
+      assertDialogueSpeakers(records);
     } else {
       assertRecords(name, records);
     }

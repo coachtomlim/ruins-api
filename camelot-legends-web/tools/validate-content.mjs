@@ -20,6 +20,8 @@ const contentFiles = [
 ];
 
 const assetFiles = ["asset-manifest.json"];
+const visualAssetFiles = ["visual-asset-bindings.json"];
+const dialogueSpeakerFiles = ["dialogue-speaker-map.json"];
 const allowedConfidence = new Set(["HIGH", "MEDIUM", "LOW"]);
 
 function assert(condition, message) {
@@ -65,6 +67,35 @@ for (const fileName of assetFiles) {
     assert(["yes", "no"].includes(record.needsConversion), `${fileName}[${index}] has invalid needsConversion`);
     assert(allowedConfidence.has(record.confidence), `${fileName}[${index}] has invalid confidence`);
     assert(record.licensingNotes !== undefined, `${fileName}[${index}] is missing licensingNotes`);
+  }
+  console.log(`${fileName}: ${records.length} records`);
+}
+
+for (const fileName of visualAssetFiles) {
+  const records = await readJson(fileName);
+  assert(Array.isArray(records), `${fileName} must contain an array`);
+  const ids = new Set();
+  for (const [index, record] of records.entries()) {
+    assert(record.id, `${fileName}[${index}] is missing id`);
+    assert(!ids.has(record.id), `${fileName} has duplicate id ${record.id}`);
+    ids.add(record.id);
+    assert(record.runtimePath, `${fileName}[${index}] is missing runtimePath`);
+    assert(record.originalArchivePath, `${fileName}[${index}] is missing originalArchivePath`);
+    assert(record.intendedUse, `${fileName}[${index}] is missing intendedUse`);
+    assert(allowedConfidence.has(record.confidence), `${fileName}[${index}] has invalid confidence`);
+    assert(typeof record.fileSize === "number", `${fileName}[${index}] has invalid fileSize`);
+  }
+  console.log(`${fileName}: ${records.length} records`);
+}
+
+for (const fileName of dialogueSpeakerFiles) {
+  const records = await readJson(fileName);
+  assert(Array.isArray(records), `${fileName} must contain an array`);
+  for (const [index, record] of records.entries()) {
+    assert(record.dialogueId, `${fileName}[${index}] is missing dialogueId`);
+    assert(record.speakerName, `${fileName}[${index}] is missing speakerName`);
+    assert(record.source, `${fileName}[${index}] is missing source`);
+    assert(allowedConfidence.has(record.confidence), `${fileName}[${index}] has invalid confidence`);
   }
   console.log(`${fileName}: ${records.length} records`);
 }

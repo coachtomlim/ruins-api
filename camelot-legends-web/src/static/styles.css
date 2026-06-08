@@ -187,6 +187,97 @@ p {
     );
 }
 
+.level-map {
+  position: relative;
+  min-height: 360px;
+  overflow: hidden;
+  isolation: isolate;
+  background: #1d2526;
+}
+
+.level-map-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: auto;
+  opacity: 0.9;
+}
+
+.isometric-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.28;
+  background:
+    linear-gradient(30deg, transparent 48%, rgba(245, 241, 231, 0.32) 49%, rgba(245, 241, 231, 0.32) 51%, transparent 52%) 0 0 / 72px 42px,
+    linear-gradient(150deg, transparent 48%, rgba(245, 241, 231, 0.24) 49%, rgba(245, 241, 231, 0.24) 51%, transparent 52%) 0 0 / 72px 42px;
+  pointer-events: none;
+}
+
+.area-badge {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 3;
+  border-radius: 999px;
+  padding: 6px 10px;
+  color: #162016;
+  background: #b7dc8b;
+  font-weight: 800;
+}
+
+.scene-actor {
+  position: absolute;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  gap: 4px;
+  min-width: 84px;
+  text-align: center;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.55));
+}
+
+.scene-actor img {
+  max-width: 110px;
+  max-height: 136px;
+  object-fit: contain;
+}
+
+.scene-actor span {
+  border-radius: 999px;
+  padding: 4px 8px;
+  color: #f5f1e7;
+  background: rgba(9, 10, 10, 0.82);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.scene-actor b {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 2px solid rgba(245, 241, 231, 0.72);
+  border-radius: 50%;
+  color: #151719;
+  background: #b7dc8b;
+  font-size: 1.2rem;
+}
+
+.scene-actor-enemy b {
+  background: #eaa083;
+}
+
+.scene-actor-npc b {
+  background: #a9d6c2;
+}
+
+.scene-actor-item b {
+  background: #d6d1c5;
+}
+
 .visual-band img {
   position: absolute;
   inset: 0;
@@ -307,9 +398,18 @@ meter {
 
 .dialogue-lines p {
   margin: 0;
+}
+
+.dialogue-line {
+  display: grid;
+  gap: 6px;
   padding: 12px;
   border-left: 3px solid #a9d6c2;
   background: rgba(245, 241, 231, 0.08);
+}
+
+.dialogue-line strong {
+  color: #a9d6c2;
 }
 
 .complete-banner {
@@ -382,7 +482,8 @@ meter {
   background: #b7dc8b;
 }
 
-.battle-visual {
+.battle-visual,
+.battle-field {
   position: relative;
   min-height: 160px;
   margin: -18px -18px 18px;
@@ -402,9 +503,64 @@ meter {
   opacity: 0.44;
 }
 
+.battle-field {
+  min-height: 340px;
+  align-items: stretch;
+}
+
+.battle-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.88;
+}
+
+.battle-sprite {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  filter: drop-shadow(0 16px 22px rgba(0, 0, 0, 0.65));
+}
+
+.battle-sprite img {
+  max-width: 180px;
+  max-height: 210px;
+  object-fit: contain;
+}
+
+.battle-sprite span {
+  border-radius: 999px;
+  padding: 5px 9px;
+  color: #f5f1e7;
+  background: rgba(9, 10, 10, 0.82);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.battle-party {
+  left: 9%;
+  bottom: 22px;
+}
+
+.battle-enemy {
+  right: 8%;
+  bottom: 34px;
+}
+
 .battle-visual .eyebrow {
   position: relative;
   z-index: 1;
+}
+
+.battle-field .eyebrow {
+  position: absolute;
+  left: 18px;
+  top: 18px;
+  z-index: 3;
 }
 
 .battle-intent {
@@ -439,6 +595,33 @@ meter {
 
 .victory-card {
   border-color: rgba(183, 220, 139, 0.42);
+}
+
+.victory-visual {
+  position: relative;
+  min-height: 220px;
+  margin: -18px -18px 18px;
+  overflow: hidden;
+  background: #1d2526;
+}
+
+.victory-visual img:first-child {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.74;
+}
+
+.victory-visual img:last-child {
+  position: absolute;
+  left: 18px;
+  bottom: 0;
+  width: 170px;
+  max-height: 210px;
+  object-fit: contain;
+  filter: drop-shadow(0 16px 22px rgba(0, 0, 0, 0.65));
 }
 
 .interaction-card {
@@ -502,6 +685,29 @@ meter {
   .action-grid,
   .combatants {
     grid-template-columns: 1fr;
+  }
+
+  .level-map {
+    min-height: 300px;
+  }
+
+  .scene-actor img {
+    max-width: 82px;
+    max-height: 104px;
+  }
+
+  .scene-actor span {
+    max-width: 96px;
+    white-space: normal;
+  }
+
+  .battle-field {
+    min-height: 300px;
+  }
+
+  .battle-sprite img {
+    max-width: 126px;
+    max-height: 150px;
   }
 
   .log-card {

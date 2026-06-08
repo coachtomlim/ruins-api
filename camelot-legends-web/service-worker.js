@@ -1,14 +1,23 @@
-const CACHE_NAME = "camelot-legends-web-v5";
+const CACHE_NAME = "camelot-legends-web-v6";
 
 const APP_SHELL = [
   "./",
   "./index.html",
   "./public/manifest.webmanifest",
   "./public/assets/icons/camelot-legends.svg",
+  "./public/assets/recovered/battle/battle-field-background.png",
+  "./public/assets/recovered/characters/party-characters-v2.png",
+  "./public/assets/recovered/enemies/forgon-idle.gif",
+  "./public/assets/recovered/enemies/forgon.png",
+  "./public/assets/recovered/maps/deadforesttile.png",
+  "./public/assets/recovered/maps/grasslands.png",
+  "./public/assets/recovered/maps/mapcastlebrown.png",
+  "./public/assets/recovered/maps/mapcastlewhite.png",
   "./public/assets/recovered/characters-v2.png",
   "./public/assets/recovered/level-design-example.png",
   "./src/static/content-loader.js",
   "./src/static/game-core.js",
+  "./src/static/level1-visual-layout.js",
   "./src/static/level-data.js",
   "./src/static/main.js",
   "./src/static/pwa.js",
@@ -18,11 +27,13 @@ const APP_SHELL = [
   "./public/content/asset-manifest.json",
   "./public/content/characters.json",
   "./public/content/dialogue.json",
+  "./public/content/dialogue-speaker-map.json",
   "./public/content/equipment.json",
   "./public/content/items.json",
   "./public/content/missions.json",
   "./public/content/scenes.json",
   "./public/content/skills.json",
+  "./public/content/visual-asset-bindings.json",
   "./public/content/worlds.json",
 ];
 

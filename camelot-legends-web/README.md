@@ -35,6 +35,7 @@ The static build is written to `dist/`.
 & 'C:\Users\Thomas\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe' tools\test-demo.mjs
 & 'C:\Users\Thomas\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe' tools\build-static.mjs
 & 'C:\Users\Thomas\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe' tools\verify-demo.mjs
+& 'C:\Users\Thomas\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe' tools\verify-visual-slice.mjs
 ```
 
 ## Phone Testing Over LAN
@@ -62,10 +63,27 @@ Service worker and PWA notes:
 
 ## Current Playable Loop
 
-Start Level 1 -> Area 1 dialogue -> Area 2 road cache -> Area 3 armor recovery/equip -> authored survivor choice -> Area 4 authored scout choice -> Area 5 Forgon Scout battle -> victory summary -> save/load.
+Start Level 1 -> Area 1 speaker-labelled dialogue -> visual map scenes -> Area 2 road cache -> Area 3 armor recovery/equip -> authored survivor choice -> Area 4 authored scout choice -> Area 5 Forgon Scout visual battle -> victory summary -> save/load.
 
-The current build is still a reconstruction prototype, but the first route now has a title screen, objective gating, optional level beats, a mission journal, recovered archive visuals, rebuilt turn combat, a victory screen, and persistent single-player save/load.
+The current build is still a reconstruction prototype, but the first route now has a title screen, objective gating, optional level beats, a mission journal, recovered map/party/enemy/battle visuals, rebuilt turn combat, a victory screen, and persistent single-player save/load.
 
 ## Mobile App Shell
 
 The demo includes a web app manifest and service worker cache so the local browser build can be tested as an installable/offline-capable prototype on supported mobile browsers. The current service worker caches the demo shell, level data, recovered content JSON, and wired PNG assets.
+
+## Manual Visual QA Checklist
+
+1. Start the local server.
+2. Open `http://localhost:4173` in a desktop browser.
+3. Start Level 1.
+4. Confirm a recovered map scene appears.
+5. Confirm the party visual appears on the scene.
+6. Open dialogue and confirm speaker labels appear.
+7. Continue to area 003 and confirm survivor marker appears.
+8. Continue to area 004 and confirm scout/enemy marker appears.
+9. Enter battle and confirm battle background appears.
+10. Confirm Forgon visual appears.
+11. Confirm party visual appears in battle.
+12. Complete battle and confirm victory visual appears.
+13. Test save/load before and after battle.
+14. Repeat over LAN on a phone.
