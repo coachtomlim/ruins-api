@@ -8,6 +8,8 @@ import {
   DEMO_SKILL_IDS,
   canGoBack,
   canGoNext,
+  availableLevelInteractions,
+  completeLevelInteraction,
   createNewGame,
   currentEnemyIntent,
   equipArmor,
@@ -136,7 +138,7 @@ function activeObjective() {
 function canAdvanceCurrentArea() {
   const objective = activeObjective();
   if (!objective) return true;
-  return objective.id === "reach-castle-road" || objective.id === "defeat-raider";
+  return objective.id === "defeat-raider";
 }
 
 function sceneVisualPath() {
@@ -152,8 +154,19 @@ function renderScenePanel() {
   const foundItem = state.inventory.includes(DEMO_PICKUP_ID);
   const hasArmor = state.inventory.includes(DEMO_EQUIPMENT_ID);
   const objective = activeObjective();
+  const interactions = availableLevelInteractions(state);
   const canBattle =
     state.currentAreaId === DEMO_ROUTE[DEMO_ROUTE.length - 1] && !state.flags.battleWon;
+  const interactionButtons = interactions
+    .map(
+      (interaction) => `
+        <button data-action="level-interaction" data-id="${interaction.id}">
+          <strong>${interaction.label}</strong>
+          <span>${interaction.rewardText}</span>
+        </button>
+      `,
+    )
+    .join("");
 
   return `
     <section class="scene-card">
@@ -174,10 +187,11 @@ function renderScenePanel() {
         <button data-action="dialogue">Speak With Mystery</button>
         <button data-action="pickup" ${foundItem || state.currentAreaId !== "area-002" ? "disabled" : ""}>Search Road Cache</button>
         <button data-action="take-armor" ${hasArmor || state.currentAreaId !== "area-003" ? "disabled" : ""}>Recover Armor</button>
+        ${interactionButtons}
         <button data-action="rest">Rest</button>
         <button data-action="back" ${canGoBack(state) ? "" : "disabled"}>Previous Area</button>
         <button data-action="next" ${canGoNext(state) && canAdvanceCurrentArea() ? "" : "disabled"}>Next Area</button>
-        <button class="danger" data-action="battle" ${canBattle ? "" : "disabled"}>Face Raider</button>
+        <button class="danger" data-action="battle" ${canBattle ? "" : "disabled"}>Engage Forgon Scout</button>
       </div>
     </section>
   `;
@@ -300,6 +314,11 @@ function renderJournalPanel() {
       <h2>The Start of Legends</h2>
       <p>Temporary Beta route assembled from recovered episode records 1-5.</p>
       <ul class="item-list">${objectives}</ul>
+      <div class="field-notes">
+        <strong>Level beats</strong>
+        <span>${state.flags.ralliedSurvivors ? "Survivors rallied" : "Survivors still need help"}</span>
+        <span>${state.flags.scoutedApproach ? "Castle approach scouted" : "Castle approach unscouted"}</span>
+      </div>
     </section>
   `;
 }
@@ -407,7 +426,7 @@ function renderActivePanel() {
 
 function renderGame() {
   const complete = state.flags.demoComplete
-    ? `<div class="complete-banner">Level 1 complete: warning -> road cache -> armor -> castle road -> Forgon scout victory.</div>`
+    ? `<div class="complete-banner">Level 1 complete: warning -> road cache -> armor -> survivors -> castle approach -> Forgon scout victory.</div>`
     : "";
   const log = state.log.map((line) => `<li>${line}</li>`).join("");
   return `
@@ -490,6 +509,8 @@ root.addEventListener("click", async (event) => {
     setState(searchRoadCache(state), "Amethyst and Potion recovered from the road.");
   } else if (action === "take-armor") {
     setState(recoverArmor(state), "Lithic Armor recovered.");
+  } else if (action === "level-interaction") {
+    setState(completeLevelInteraction(state, id));
   } else if (action === "remove-item") {
     setState(removeInventoryItem(state, id));
   } else if (action === "equip") {

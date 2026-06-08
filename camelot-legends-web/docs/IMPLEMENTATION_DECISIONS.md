@@ -47,7 +47,7 @@ Reason: the stated target includes local browser and mobile device play. The ser
 
 ## 8. First-Level Data Module
 
-The first playable level now has a dedicated data module at `src/static/level-data.js` for route, objectives, selected dialogue, battle setup, enemy intent sequence, and rewards.
+The first playable level now has a dedicated data module at `src/static/level-data.js` for route, objectives, selected dialogue, pre-combat interactions, battle setup, enemy intent sequence, and rewards.
 
 Reason: this is the smallest stable step toward many levels without introducing a full authoring pipeline before the first demo is solid.
 
@@ -56,3 +56,9 @@ Reason: this is the smallest stable step toward many levels without introducing 
 The first combat loop now includes MP costs, guard, visible enemy intent, potion healing, armor stat changes, Amethyst skill bonus, defeat retry, and a victory screen.
 
 Reason: recovered combat formulas were missing, but the game needs a playable fighting system before broader content expansion.
+
+## 10. Five-Minute Level Pacing
+
+Level 1 includes one optional support beat in area 003 and one required preparation beat in area 004 before the Forgon Scout battle.
+
+Reason: the first demo needs to feel like a playable level rather than a direct path into a single fight, while still keeping scope tight enough to verify on every pass.

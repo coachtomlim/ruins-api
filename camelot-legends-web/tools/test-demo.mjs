@@ -5,6 +5,7 @@ import {
   DEMO_EQUIPMENT_ID,
   DEMO_PICKUP_ID,
   DEMO_POTION_ID,
+  completeLevelInteraction,
   createNewGame,
   equipArmor,
   goNext,
@@ -49,10 +50,19 @@ state = recoverArmor(state);
 state = equipArmor(state, DEMO_EQUIPMENT_ID);
 assert(state.player.defense === 4, "equipment updates defense");
 assert(state.player.maxMp === 20, "equipment updates max MP");
-state = goNext(goNext(state));
+state = completeLevelInteraction(state, "rally-survivors");
+assert(state.flags.ralliedSurvivors, "survivors can be rallied");
+assert(state.player.xp === 10, "survivor rally grants xp");
+state = goNext(state);
+assert(state.currentAreaId === "area-004", "navigation reaches castle approach");
+state = completeLevelInteraction(state, "scout-approach");
+assert(state.flags.scoutedApproach, "castle approach can be scouted");
+assert(state.player.guard === 4, "scouting prepares guard");
+state = goNext(state);
 assert(state.currentAreaId === "area-005", "navigation reaches final demo area");
 state = startBattle(state);
 assert(state.mode === "battle", "battle starts");
+assert(state.player.guard === 4, "battle starts with scouting guard");
 state = performBattleAction(state, "lightning-shot");
 assert(state.enemy.hp === 48, "lightning shot uses amethyst bonus");
 state = performBattleAction(state, "lightning-shot");
@@ -63,7 +73,7 @@ assert(state.flags.battleWon, "battle can be won");
 assert(state.flags.demoComplete, "demo completes after final battle");
 assert(state.mode === "victory", "victory screen is reached");
 assert(state.player.gold === 25, "victory grants gold");
-assert(state.player.xp === 35, "victory grants xp");
+assert(state.player.xp === 45, "victory and survivor rally grant xp");
 assert(state.inventory.includes(DEMO_POTION_ID), "victory grants potion");
 
 console.log("Demo tests passed");

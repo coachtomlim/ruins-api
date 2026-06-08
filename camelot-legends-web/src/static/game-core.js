@@ -9,6 +9,7 @@ export const DEMO_EQUIPMENT_ID = FIRST_LEVEL.armorId;
 export const DEMO_POTION_ID = FIRST_LEVEL.potionId;
 export const DEMO_SKILL_IDS = FIRST_LEVEL.skillIds;
 export const DEMO_OBJECTIVES = FIRST_LEVEL.objectives;
+export const LEVEL_INTERACTIONS = FIRST_LEVEL.interactions;
 
 export const BATTLE_ACTIONS = [
   {
@@ -91,6 +92,8 @@ export function createNewGame(now = new Date().toISOString()) {
       battleWon: false,
       demoComplete: false,
       reachedCastleRoad: false,
+      ralliedSurvivors: false,
+      scoutedApproach: false,
       victoryClaimed: false,
     },
     log: ["A new legend begins."],
@@ -152,6 +155,42 @@ export function goNext(state) {
       reachedCastleRoad: nextAreaId === "area-004" ? true : state.flags.reachedCastleRoad,
     },
     log: addLog(state, `Moved to ${nextAreaId}.`),
+  };
+}
+
+export function availableLevelInteractions(state) {
+  return LEVEL_INTERACTIONS.filter(
+    (interaction) =>
+      interaction.areaId === state.currentAreaId && !state.flags[interaction.flag],
+  );
+}
+
+export function completeLevelInteraction(state, interactionId) {
+  const interaction = LEVEL_INTERACTIONS.find((entry) => entry.id === interactionId);
+  if (!interaction || interaction.areaId !== state.currentAreaId || state.flags[interaction.flag]) {
+    return state;
+  }
+  const rewards = interaction.rewards || {};
+  const nextMaxHp = state.player.maxHp + (rewards.maxHp || 0);
+  const nextMaxMp = state.player.maxMp + (rewards.maxMp || 0);
+  return {
+    ...state,
+    player: {
+      ...state.player,
+      maxHp: nextMaxHp,
+      hp: clamp(state.player.hp + (rewards.hp || 0), 0, nextMaxHp),
+      maxMp: nextMaxMp,
+      mp: clamp(state.player.mp + (rewards.mp || 0), 0, nextMaxMp),
+      guard: Math.max(state.player.guard || 0, rewards.guard || 0),
+      gold: state.player.gold + (rewards.gold || 0),
+      xp: state.player.xp + (rewards.xp || 0),
+    },
+    inventory: rewards.items ? addUniqueItems(state.inventory, rewards.items) : state.inventory,
+    flags: {
+      ...state.flags,
+      [interaction.flag]: true,
+    },
+    log: addLog(state, `${interaction.label}: ${interaction.rewardText}.`),
   };
 }
 
@@ -255,15 +294,21 @@ export function currentEnemyIntent(enemy) {
 
 export function startBattle(state) {
   if (state.flags.battleWon) return state;
+  const startingGuard = state.flags.scoutedApproach ? Math.max(state.player.guard || 0, 4) : 0;
   return {
     ...state,
     mode: "battle",
     enemy: createBattleEnemy(),
     player: {
       ...state.player,
-      guard: 0,
+      guard: startingGuard,
     },
-    log: addLog(state, "A Forgon scout blocks the castle road."),
+    log: addLog(
+      state,
+      startingGuard > 0
+        ? "A Forgon scout blocks the castle road. Mystery is ready for the ambush."
+        : "A Forgon scout blocks the castle road.",
+    ),
   };
 }
 
@@ -466,7 +511,7 @@ export function objectiveStatus(state) {
     if (objective.id === "hear-warning") complete = state.flags.introDialogue;
     if (objective.id === "recover-amethyst") complete = state.flags.foundItem;
     if (objective.id === "recover-armor") complete = state.equipment.armor === DEMO_EQUIPMENT_ID;
-    if (objective.id === "reach-castle-road") complete = state.flags.reachedCastleRoad;
+    if (objective.id === "scout-approach") complete = state.flags.scoutedApproach;
     if (objective.id === "defeat-raider") complete = state.flags.battleWon;
     return {
       ...objective,

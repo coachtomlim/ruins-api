@@ -31,9 +31,11 @@ await page.getByRole("button", { name: "Recover Armor" }).click();
 await page.getByRole("button", { name: "Inventory" }).click();
 await page.getByRole("button", { name: "Equip" }).click();
 await page.getByRole("button", { name: "Scene" }).click();
+await page.getByRole("button", { name: /Rally Survivors/ }).click();
 await page.getByRole("button", { name: "Next Area" }).click();
+await page.getByRole("button", { name: /Scout Castle Approach/ }).click();
 await page.getByRole("button", { name: "Next Area" }).click();
-await page.getByRole("button", { name: "Face Raider" }).click();
+await page.getByRole("button", { name: "Engage Forgon Scout" }).click();
 
 await page.getByRole("button", { name: /Lightning Shot/ }).click();
 await page.getByRole("button", { name: /Lightning Shot/ }).click();
@@ -66,6 +68,8 @@ const result = {
   complete: bodyText.includes("Level 1 complete"),
   hasArea: bodyText.includes("Ep. 05: Storm the Castle"),
   hasReward: bodyText.includes("Reward: 25 gold, 35 XP"),
+  hasLevelBeats:
+    bodyText.includes("survivors") && bodyText.includes("castle approach"),
   hasVictoryPanel: bodyText.includes("Forgon scout is defeated"),
   hasManifest: pwaStatus.manifestHref.includes("manifest.webmanifest"),
   serviceWorkerReady: pwaStatus.serviceWorkerReady,
@@ -81,6 +85,7 @@ if (
   !result.complete ||
   !result.hasArea ||
   !result.hasReward ||
+  !result.hasLevelBeats ||
   !result.hasVictoryPanel ||
   !result.hasManifest ||
   !result.serviceWorkerReady ||

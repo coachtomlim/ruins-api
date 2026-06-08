@@ -4,6 +4,10 @@
 
 No recovered runtime navigation graph was found. The first demo route links `area-001`, `area-002`, `area-003`, `area-004`, and `area-005` as a temporary playable path.
 
+## Level Interaction Authorship
+
+The first level now has rebuilt interactions for rallying survivors and scouting the castle approach. These are provisional pacing beats anchored to recovered episode text, not recovered runtime quest scripts.
+
 ## Combat Stats
 
 No recovered combat formulas, enemy stats, player stat curves, or encounter tables were found. The first battle now uses rebuilt provisional rules documented in `COMBAT_RULES.md`.

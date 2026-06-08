@@ -23,8 +23,30 @@ export const FIRST_LEVEL = {
     { id: "hear-warning", label: "Hear Mystery's warning", areaId: "area-001" },
     { id: "recover-amethyst", label: "Search the road and recover the Amethyst", areaId: "area-002" },
     { id: "recover-armor", label: "Recover and equip Lithic Armor", areaId: "area-003" },
-    { id: "reach-castle-road", label: "Push toward Castle Camelot", areaId: "area-004" },
+    { id: "scout-approach", label: "Scout the castle approach", areaId: "area-004" },
     { id: "defeat-raider", label: "Defeat the raider before the castle", areaId: "area-005" },
+  ],
+  interactions: [
+    {
+      id: "rally-survivors",
+      areaId: "area-003",
+      flag: "ralliedSurvivors",
+      label: "Rally Survivors",
+      description: "Help frightened survivors near the ashes and recover resolve before the final push.",
+      rewardText: "+10 XP, restore 4 MP",
+      rewards: { xp: 10, mp: 4 },
+      optional: true,
+    },
+    {
+      id: "scout-approach",
+      areaId: "area-004",
+      flag: "scoutedApproach",
+      label: "Scout Castle Approach",
+      description: "Study the broken road into Camelot and prepare for an ambush.",
+      rewardText: "Start the next battle with 4 guard",
+      rewards: { guard: 4 },
+      optional: false,
+    },
   ],
   battle: {
     enemy: {

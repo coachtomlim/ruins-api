@@ -17,6 +17,8 @@ Recovered evidence used:
 - Defense: 2
 - Guard: 0
 - Equipping `Lithic Armor` raises defense to 4, max HP by 4, and max MP by 6.
+- Rallying survivors in area 003 grants 10 XP and restores 4 MP.
+- Scouting the castle approach in area 004 starts the final battle with 4 guard.
 
 ## Enemy
 
@@ -51,6 +53,11 @@ Recovered evidence used:
 - Brace behind shield
 
 The intent is shown before the player acts, so the fight has an early tactical loop: spend MP, guard against heavy attacks, or recover.
+
+## Level Beats Before Combat
+
+- `Rally Survivors` is optional and exists to add pacing, reward, and a small support action before the final approach.
+- `Scout Castle Approach` is required before entering area 005 and prepares Mystery for the first enemy strike.
 
 ## Victory Rewards
 

@@ -44,9 +44,9 @@ Phone `localhost` points to the phone itself, not this desktop.
 
 ## Current Playable Loop
 
-Start Level 1 -> Area 1 dialogue -> Area 2 road cache -> Area 3 armor recovery/equip -> Area 4 castle road -> Area 5 Forgon scout battle -> victory rewards -> save/load.
+Start Level 1 -> Area 1 dialogue -> Area 2 road cache -> Area 3 armor recovery/equip -> optional survivor rally -> Area 4 castle approach scouting -> Area 5 Forgon scout battle -> victory rewards -> save/load.
 
-The current build is still a reconstruction prototype, but the first route now has a title screen, objective gating, a mission journal, recovered archive visuals, rebuilt turn combat, a victory screen, and persistent single-player save/load.
+The current build is still a reconstruction prototype, but the first route now has a title screen, objective gating, optional level beats, a mission journal, recovered archive visuals, rebuilt turn combat, a victory screen, and persistent single-player save/load.
 
 ## Mobile App Shell
 
