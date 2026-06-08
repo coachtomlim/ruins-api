@@ -8,7 +8,7 @@ const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
 const errors = [];
 const ids = new Set();
 const names = new Set();
-const allowedTypes = new Set(["map", "room_image", "transition"]);
+const allowedTypes = new Set(["map", "room_image", "transition", "scene", "monster", "item_icon", "ui"]);
 
 if (manifest.schemaVersion !== 1) {
   errors.push("assets-manifest.json must have schemaVersion 1.");

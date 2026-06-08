@@ -35,5 +35,6 @@ test("game bootstrap returns initial state and content payload", () => {
   assert.equal(Array.isArray(payload.content.commands), true);
   assert.equal(Array.isArray(payload.content.monsters), true);
   assert.equal(typeof payload.content.config, "object");
-  assert.match(payload.roomImageAssets.map, /^Map\./);
+  assert.match(payload.roomImageAssets.map, /^assets\/beta\/rooms\/map-main\.webp$/);
+  assert.match(payload.sceneImageAssets.byId["scene.prologue.tavern"], /^assets\/beta\/scenes\/prologue-tavern-sheja\.webp$/);
 });

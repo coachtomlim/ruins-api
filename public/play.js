@@ -3,8 +3,11 @@
   const cmdEl = document.getElementById("cmd");
   const sendEl = document.getElementById("send");
   const autoWalkthroughEl = document.getElementById("autoWalkthrough");
+  const scenePanelEl = document.querySelector(".scene-panel");
   const roomImageEl = document.getElementById("roomImage");
   const roomLabelEl = document.getElementById("roomLabel");
+  const phasePillEl = document.getElementById("phasePill");
+  const sceneKickerEl = document.getElementById("sceneKicker");
   const statsEl = document.getElementById("stats");
   const locationEl = document.getElementById("location");
   const inventoryEl = document.getElementById("inventory");
@@ -15,12 +18,29 @@
   const useFogEl = document.getElementById("useFog");
   const usePulseEl = document.getElementById("usePulse");
   const useHeartEl = document.getElementById("useHeart");
+  const drawerEl = document.getElementById("infoDrawer");
+  const drawerBackdropEl = document.getElementById("drawerBackdrop");
+  const drawerTitleEl = document.getElementById("drawerTitle");
+  const drawerBodyEl = document.getElementById("drawerBody");
+  const drawerActionsEl = document.getElementById("drawerActions");
+  const drawerCloseEl = document.getElementById("drawerClose");
+  const combatPanelEl = document.getElementById("combatPanel");
+  const enemyInitialEl = document.getElementById("enemyInitial");
+  const enemyNameEl = document.getElementById("enemyName");
+  const enemyHpBarEl = document.getElementById("enemyHpBar");
+  const enemyStatsEl = document.getElementById("enemyStats");
+  const playerHpBarEl = document.getElementById("playerHpBar");
+  const playerCombatStatsEl = document.getElementById("playerCombatStats");
+  const fogStateEl = document.getElementById("fogState");
+  const pulseStateEl = document.getElementById("pulseState");
+  const heartStateEl = document.getElementById("heartState");
 
   let data = null;
   let state = null;
   let runtime = null;
   let autoFightActive = false;
   let autoWalkthroughActive = false;
+  let activeDrawer = null;
 
   const roomsById = new Map();
   const transitionById = new Map();
@@ -48,6 +68,20 @@
 
   function deepClone(value) {
     return JSON.parse(JSON.stringify(value));
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function pct(current, max) {
+    if (!max || max <= 0) return 0;
+    return Math.max(0, Math.min(100, Math.round((current / max) * 100)));
   }
 
   function hashSeed(seedText) {
@@ -113,9 +147,25 @@
     else state.inventory.items.push({ itemId, quantity: qty });
   }
 
+  function assetUrl(filePath) {
+    return `/${String(filePath)
+      .split("/")
+      .map((part) => encodeURIComponent(part))
+      .join("/")}`;
+  }
+
+  function mapImagePath() {
+    return assetUrl(data.roomImageAssets.map);
+  }
+
+  function sceneImagePath(sceneId) {
+    const scenePath = data.sceneImageAssets && data.sceneImageAssets.byId[sceneId];
+    return scenePath ? assetUrl(scenePath) : mapImagePath();
+  }
+
   function roomImagePath(roomId) {
     const roomPath = data.roomImageAssets.byRoomId[roomId];
-    return roomPath ? `/${encodeURIComponent(roomPath)}` : `/${encodeURIComponent(data.roomImageAssets.map)}`;
+    return roomPath ? assetUrl(roomPath) : mapImagePath();
   }
 
   function currentRoomId() {
@@ -134,24 +184,143 @@
     const room = currentRoom();
     const inPrologue = state.phase === "prologue";
     const roomTitle = inPrologue ? "Adventurer's Inn" : room && room.name ? room.name : room ? room.id : "Unknown";
+    document.body.dataset.phase = state.phase;
     roomLabelEl.textContent = `${roomTitle} (${state.phase})`;
+    if (phasePillEl) phasePillEl.textContent = state.phase;
+    if (sceneKickerEl) {
+      sceneKickerEl.textContent = state.phase === "combat" ? "Combat" : inPrologue ? "Prologue" : roomsById.has(state.location.currentRoomId) ? "Exploration" : "Passage";
+    }
     if (inPrologue) {
-      roomImageEl.src = `/${encodeURIComponent(data.roomImageAssets.map)}`;
+      roomImageEl.src = sceneImagePath("scene.prologue.tavern");
     } else if (roomsById.has(state.location.currentRoomId)) {
       roomImageEl.src = roomImagePath(state.location.currentRoomId);
     } else {
-      roomImageEl.src = `/${encodeURIComponent(data.roomImageAssets.map)}`;
+      roomImageEl.src = mapImagePath();
     }
+    roomImageEl.alt = roomTitle;
 
     const stats = state.player.currentStats;
-    statsEl.textContent = `Stats\nATF ${stats.ATF}  DEF ${stats.DEF}\nEVA ${stats.EVA}  HP ${stats.HP}\nGold ${state.player.gold}`;
+    statsEl.innerHTML = `<span>ATF ${stats.ATF}</span><span>DEF ${stats.DEF}</span><span>EVA ${stats.EVA}</span><span>HP ${stats.HP}</span><span>Gold ${state.player.gold}</span>`;
 
     const exits = inPrologue ? "None" : (room && room.exits ? room.exits : []).map((e) => e.direction).join(", ") || "None";
-    locationEl.textContent = `Location\n${roomTitle}\nExits: ${exits}`;
+    locationEl.textContent = `${roomTitle}\nExits: ${exits}`;
 
-    inventoryEl.textContent = `Inventory\n${state.inventory.items.map((x) => `${itemName(x.itemId)} x${x.quantity}`).join("\n") || "Empty"}`;
-    journalEl.textContent = `Journal\nUnlocked: ${state.journal.unlockedEntryIds.length}`;
+    inventoryEl.textContent = state.inventory.items.map((x) => `${itemName(x.itemId)} x${x.quantity}`).join("\n") || "Empty";
+    journalEl.textContent = `${state.journal.unlockedEntryIds.length} unlocked`;
+    updateCombatPanel();
     syncActionBars();
+    if (activeDrawer) renderDrawer(activeDrawer);
+  }
+
+  function updateScrollState(element, label, itemId) {
+    if (!element) return;
+    const ready = hasItem(itemId) && state.phase === "combat";
+    element.textContent = `${label}: ${ready ? "ready" : "unavailable"}`;
+    element.dataset.ready = ready ? "true" : "false";
+  }
+
+  function updateCombatPanel() {
+    if (!combatPanelEl) return;
+    const inCombat = state && state.phase === "combat" && state.combat;
+    combatPanelEl.hidden = !inCombat;
+    if (!inCombat) return;
+
+    const combat = state.combat;
+    const player = state.player.currentStats;
+    enemyInitialEl.textContent = combat.monsterName.slice(0, 1).toUpperCase();
+    enemyNameEl.textContent = combat.monsterName;
+    enemyHpBarEl.style.width = `${pct(combat.currentStats.HP, combat.baseStats.HP)}%`;
+    playerHpBarEl.style.width = `${pct(player.HP, state.player.baseStats.HP)}%`;
+    enemyStatsEl.textContent = `ATF ${combat.currentStats.ATF} / DEF ${combat.currentStats.DEF} / EVA ${combat.currentStats.EVA} / HP ${Math.max(0, combat.currentStats.HP)}`;
+    playerCombatStatsEl.textContent = `ATF ${player.ATF} / DEF ${player.DEF} / EVA ${player.EVA} / HP ${Math.max(0, player.HP)}`;
+    updateScrollState(fogStateEl, "Fog", "item.scroll.fog_of_confusion");
+    updateScrollState(pulseStateEl, "Pulse", "item.scroll.pulse_of_calm");
+    updateScrollState(heartStateEl, "Heart", "item.scroll.heart_beacon");
+  }
+
+  function pulseCombatTransition() {
+    if (!scenePanelEl) return;
+    scenePanelEl.classList.remove("combat-transition");
+    window.requestAnimationFrame(() => {
+      scenePanelEl.classList.add("combat-transition");
+      setTimeout(() => scenePanelEl.classList.remove("combat-transition"), 900);
+    });
+  }
+
+  function drawerRows(rows) {
+    if (!rows.length) return '<p class="empty-state">Empty</p>';
+    return rows.map((row) => `<div class="drawer-row">${row}</div>`).join("");
+  }
+
+  function renderInventoryDrawer() {
+    const rows = state.inventory.items.map((entry) => {
+      const item = itemsById.get(entry.itemId);
+      const type = item && item.type ? item.type.replace(/_/g, " ") : "item";
+      return `<strong>${escapeHtml(itemName(entry.itemId))}</strong><span>${escapeHtml(type)} x${entry.quantity}</span>`;
+    });
+    drawerBodyEl.innerHTML = `<div class="drawer-list">${drawerRows(rows)}</div>`;
+    drawerActionsEl.innerHTML = "";
+  }
+
+  function renderJournalDrawer() {
+    const rows = state.journal.unlockedEntryIds
+      .map((id) => journalById.get(id))
+      .filter(Boolean)
+      .map((entry) => `<strong>${escapeHtml(entry.title)}</strong><span>${escapeHtml(entry.textSummary)}</span>`);
+    drawerBodyEl.innerHTML = `<div class="drawer-list">${drawerRows(rows)}</div>`;
+    drawerActionsEl.innerHTML = "";
+  }
+
+  function renderMapDrawer() {
+    const room = currentRoom();
+    const roomTitle = state.phase === "prologue" ? "Adventurer's Inn" : room && room.name ? room.name : "Unknown";
+    const exits = state.phase === "prologue" ? "None" : (room && room.exits ? room.exits : []).map((e) => e.direction).join(", ") || "None";
+    drawerBodyEl.innerHTML = `<img class="drawer-map" src="${mapImagePath()}" alt="Adventure map" /><div class="drawer-row"><strong>${escapeHtml(roomTitle)}</strong><span>Exits: ${escapeHtml(exits)}</span></div>`;
+    drawerActionsEl.innerHTML = "";
+  }
+
+  function renderSaveDrawer(kind) {
+    const saved = localStorage.getItem("ruins-save-v1");
+    const parsed = saved ? JSON.parse(saved) : null;
+    const savedAt = parsed && parsed.savedAt ? new Date(parsed.savedAt).toLocaleString() : "No local save found";
+    const actionLabel = kind === "load" ? "Load Game" : "Save Game";
+    drawerBodyEl.innerHTML = `<div class="drawer-row"><strong>Local Slot</strong><span>${escapeHtml(savedAt)}</span></div>`;
+    drawerActionsEl.innerHTML = `<button id="drawerPrimaryAction" type="button">${actionLabel}</button>`;
+    document.getElementById("drawerPrimaryAction").addEventListener("click", () => {
+      processCommand(kind === "load" ? "Load Game" : "Save");
+      renderSaveDrawer(kind);
+    });
+  }
+
+  function renderDrawer(kind) {
+    if (!drawerEl || !drawerBodyEl || !drawerTitleEl || !drawerActionsEl) return;
+    const titles = {
+      inventory: "Inventory",
+      journal: "Journal",
+      map: "Map",
+      save: "Save",
+      load: "Load"
+    };
+    drawerTitleEl.textContent = titles[kind] || "Panel";
+    if (kind === "inventory") renderInventoryDrawer();
+    else if (kind === "journal") renderJournalDrawer();
+    else if (kind === "map") renderMapDrawer();
+    else if (kind === "save" || kind === "load") renderSaveDrawer(kind);
+  }
+
+  function openDrawer(kind) {
+    if (!state) return;
+    activeDrawer = kind;
+    renderDrawer(kind);
+    drawerEl.hidden = false;
+    drawerBackdropEl.hidden = false;
+    drawerCloseEl.focus();
+  }
+
+  function closeDrawer() {
+    activeDrawer = null;
+    if (drawerEl) drawerEl.hidden = true;
+    if (drawerBackdropEl) drawerBackdropEl.hidden = true;
   }
 
   function syncActionBars() {
@@ -176,13 +345,18 @@
   function unlockJournal(entryId) {
     if (entryId && !state.journal.unlockedEntryIds.includes(entryId)) {
       state.journal.unlockedEntryIds.push(entryId);
+      return journalById.get(entryId) || null;
     }
+    return null;
   }
 
   function unlockJournalFromTrigger(trigger) {
+    const unlocked = [];
     for (const entryId of trigger.journalUnlocks || []) {
-      unlockJournal(entryId);
+      const entry = unlockJournal(entryId);
+      if (entry) unlocked.push(entry);
     }
+    return unlocked;
   }
 
   function ensureRoomAvailability(roomId) {
@@ -418,6 +592,7 @@
           : state.location.previousRoomId || "room.01"
     };
 
+    pulseCombatTransition();
     write(`A ${monsterName} confronts you. It lunges first.`);
     const a = state.combat.currentStats.EVA + runtime.roll(4);
     const d = state.player.currentStats.EVA + runtime.roll(4);
@@ -564,10 +739,13 @@
       state.flags["flag.room05.panel_pushed"] = true;
     }
     revealItems(roomState, trigger);
-    unlockJournalFromTrigger(trigger);
+    const unlockedEntries = unlockJournalFromTrigger(trigger);
     roomState.examinedTargets.push(trigger.target);
     ensureRoomAvailability(node.id);
     write(`You examine ${trigger.target}.`);
+    for (const entry of unlockedEntries) {
+      write(`Journal updated: ${entry.title}\n${entry.textSummary}`);
+    }
     if ((trigger.revealsItems || []).length) write(`Revealed: ${trigger.revealsItems.map(itemName).join(", ")}.`);
     updateStatus();
   }
@@ -874,7 +1052,7 @@
     if (lower.startsWith("get ")) return runPick(input.slice(4));
     if (lower === "assemble" || lower === "assemble prism") return runAssemble();
     if (lower === "map") {
-      roomImageEl.src = `/${encodeURIComponent(data.roomImageAssets.map)}`;
+      roomImageEl.src = mapImagePath();
       write("You unfold the map and trace your route through the ruin.");
       return;
     }
@@ -1067,11 +1245,24 @@
   document.querySelectorAll("[data-cmd]").forEach((button) => {
     button.addEventListener("click", () => processCommand(button.dataset.cmd));
   });
+  document.querySelectorAll("[data-panel]").forEach((button) => {
+    button.addEventListener("click", () => openDrawer(button.dataset.panel));
+  });
+  if (drawerCloseEl) drawerCloseEl.addEventListener("click", closeDrawer);
+  if (drawerBackdropEl) drawerBackdropEl.addEventListener("click", closeDrawer);
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeDrawer();
+  });
   if (autoWalkthroughEl) {
     autoWalkthroughEl.addEventListener("click", () => {
       runAutoWalkthrough();
     });
   }
+  roomImageEl.addEventListener("error", () => {
+    if (data && roomImageEl.src !== new URL(mapImagePath(), window.location.href).href) {
+      roomImageEl.src = mapImagePath();
+    }
+  });
 
   init().catch((error) => {
     write(`Failed to initialize game UI: ${error.message}`);

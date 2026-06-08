@@ -3,6 +3,8 @@ const { createInitialState, loadContent } = require("../src/engine");
 
 function toImageLookup(assets) {
   const imagesByRoomId = {};
+  const scenesById = {};
+  const transitionsById = {};
   let mapImagePath = null;
 
   for (const asset of assets) {
@@ -12,15 +14,21 @@ function toImageLookup(assets) {
     if (asset.roomId && asset.type === "room_image") {
       imagesByRoomId[asset.roomId] = asset.filePath;
     }
+    if (asset.type === "scene") {
+      scenesById[asset.id] = asset.filePath;
+    }
+    if (asset.type === "transition") {
+      transitionsById[asset.id] = asset.filePath;
+    }
   }
 
-  return { imagesByRoomId, mapImagePath };
+  return { imagesByRoomId, mapImagePath, scenesById, transitionsById };
 }
 
 module.exports = (_req, res) => {
   const content = loadContent();
   const initialState = createInitialState({ content, sessionId: "play-ui-session" });
-  const { imagesByRoomId, mapImagePath } = toImageLookup(manifest.assets);
+  const { imagesByRoomId, mapImagePath, scenesById, transitionsById } = toImageLookup(manifest.assets);
 
   const payload = {
     engineVersion: initialState.engineVersion,
@@ -28,6 +36,12 @@ module.exports = (_req, res) => {
     roomImageAssets: {
       map: mapImagePath,
       byRoomId: imagesByRoomId
+    },
+    sceneImageAssets: {
+      byId: scenesById
+    },
+    transitionImageAssets: {
+      byId: transitionsById
     },
     initialState,
     content: {

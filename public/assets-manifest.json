@@ -4,56 +4,213 @@
     {
       "id": "map.main",
       "displayName": "Map",
-      "aliases": [],
-      "filePath": "Map.webp",
+      "aliases": ["Adventure Map"],
+      "filePath": "assets/beta/rooms/map-main.webp",
       "type": "map",
       "roomId": null,
-      "notes": "Current public map asset used by /api/display-room?name=Map."
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "beta_available",
+      "fallbackPath": "Map.webp",
+      "notes": "Main Beta map asset used by /api/display-room?name=Map."
     },
     {
       "id": "room.01.image",
       "displayName": "Room 1",
-      "aliases": ["Room1"],
-      "filePath": "Room 1.png",
+      "aliases": ["Room1", "Cracked Altar Room"],
+      "filePath": "assets/beta/rooms/room-01-cracked-altar.webp",
       "type": "room_image",
       "roomId": "room.01",
-      "notes": "Existing asset was previously not exposed by the display-room endpoint."
+      "dimensions": { "width": 683, "height": 1024 },
+      "usageState": "beta_available",
+      "fallbackPath": "Room 1.png",
+      "notes": "Beta portrait crop from the archive; original flat PNG remains as fallback."
+    },
+    {
+      "id": "room.02.image",
+      "displayName": "Room 2",
+      "aliases": ["Room2", "Shrine of the Silent Coil"],
+      "filePath": "assets/beta/rooms/room-02-shrine-silent-coil.webp",
+      "type": "room_image",
+      "roomId": "room.02",
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "beta_available",
+      "fallbackPath": "assets/beta/rooms/map-main.webp"
     },
     {
       "id": "room.03.image",
       "displayName": "Room 3",
-      "aliases": ["Room3"],
-      "filePath": "Room3.webp",
+      "aliases": ["Room3", "Sarcophagus Hall"],
+      "filePath": "assets/beta/rooms/room-03-sarcophagus-hall.webp",
       "type": "room_image",
       "roomId": "room.03",
-      "notes": "Existing endpoint compatibility name: Room 3."
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "beta_available",
+      "fallbackPath": "Room3.webp"
     },
     {
       "id": "room.04.image",
       "displayName": "Room 4",
-      "aliases": ["Room4"],
-      "filePath": "Room4.webp",
+      "aliases": ["Room4", "Guardroom Delta"],
+      "filePath": "assets/beta/rooms/room-04-guardroom-delta.webp",
       "type": "room_image",
       "roomId": "room.04",
-      "notes": "Existing endpoint compatibility name: Room 4."
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "beta_available",
+      "fallbackPath": "Room4.webp"
+    },
+    {
+      "id": "room.05.image",
+      "displayName": "Room 5",
+      "aliases": ["Room5", "Library of Echoes"],
+      "filePath": "assets/beta/rooms/room-05-library-echoes.webp",
+      "type": "room_image",
+      "roomId": "room.05",
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "beta_available",
+      "fallbackPath": "assets/beta/rooms/map-main.webp"
+    },
+    {
+      "id": "room.05b.image",
+      "displayName": "Room 5B",
+      "aliases": ["Secret Room", "Room 5 Secret"],
+      "filePath": "assets/beta/rooms/room-05b-secret-room.webp",
+      "type": "room_image",
+      "roomId": null,
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "beta_available",
+      "fallbackPath": "assets/beta/rooms/room-05-library-echoes.webp"
+    },
+    {
+      "id": "room.06.image",
+      "displayName": "Room 6",
+      "aliases": ["Room6", "Cracked Mirror Room"],
+      "filePath": "assets/beta/rooms/room-06-cracked-mirror.webp",
+      "type": "room_image",
+      "roomId": "room.06",
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "beta_available",
+      "fallbackPath": "assets/beta/rooms/map-main.webp"
+    },
+    {
+      "id": "room.07.image",
+      "displayName": "Room 7",
+      "aliases": ["Room7", "Chamber of Black Roots"],
+      "filePath": "assets/beta/rooms/room-07-black-roots.webp",
+      "type": "room_image",
+      "roomId": "room.07",
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "beta_available",
+      "fallbackPath": "assets/beta/rooms/map-main.webp"
+    },
+    {
+      "id": "room.08.image",
+      "displayName": "Room 8",
+      "aliases": ["Room8", "Chapel of Glass"],
+      "filePath": "assets/beta/rooms/room-08-chapel-glass.webp",
+      "type": "room_image",
+      "roomId": "room.08",
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "beta_available",
+      "fallbackPath": "assets/beta/rooms/map-main.webp"
+    },
+    {
+      "id": "room.09.image",
+      "displayName": "Room 9",
+      "aliases": ["Room9", "Room of Cares"],
+      "filePath": "assets/beta/rooms/room-09-room-of-cares.webp",
+      "type": "room_image",
+      "roomId": "room.09",
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "beta_available",
+      "fallbackPath": "assets/beta/rooms/map-main.webp"
+    },
+    {
+      "id": "room.10.image",
+      "displayName": "Room 10",
+      "aliases": ["Room10", "Boss Room", "The Banshee's Chamber"],
+      "filePath": "assets/beta/rooms/room-10-boss-room.webp",
+      "type": "room_image",
+      "roomId": "room.10",
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "beta_available",
+      "fallbackPath": "assets/beta/rooms/map-main.webp"
     },
     {
       "id": "transition.room03.room04",
       "displayName": "Room3to4",
       "aliases": ["Room 3 to Room 4"],
-      "filePath": "Room3to4.webp",
+      "filePath": "assets/beta/transitions/room-03-to-04.webp",
       "type": "transition",
       "roomId": null,
-      "notes": "Transition image from Room 3 to Room 4."
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "beta_available",
+      "fallbackPath": "Room3to4.webp"
     },
     {
       "id": "transition.room04.room03",
       "displayName": "Room4to3",
       "aliases": ["Room 4 to Room 3"],
-      "filePath": "Room4to3.webp",
+      "filePath": "assets/beta/transitions/room-04-to-03.webp",
       "type": "transition",
       "roomId": null,
-      "notes": "Transition image from Room 4 to Room 3."
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "beta_available",
+      "fallbackPath": "Room4to3.webp"
+    },
+    {
+      "id": "transition.dead_end_secret_passage",
+      "displayName": "Dead End Secret Passage",
+      "aliases": ["Dead End", "Secret Passage"],
+      "filePath": "assets/beta/transitions/dead-end-secret-passage.webp",
+      "type": "transition",
+      "roomId": null,
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "beta_available",
+      "fallbackPath": "assets/beta/rooms/map-main.webp"
+    },
+    {
+      "id": "scene.prologue.tavern",
+      "displayName": "Tavern Scene",
+      "aliases": ["Adventurer's Inn", "Sheja Prologue"],
+      "filePath": "assets/beta/scenes/prologue-tavern-sheja.webp",
+      "type": "scene",
+      "roomId": null,
+      "dimensions": { "width": 1024, "height": 1024 },
+      "usageState": "beta_available",
+      "fallbackPath": "assets/beta/scenes/black-start-frame.webp"
+    },
+    {
+      "id": "scene.ruins.approach",
+      "displayName": "Towards Ruins",
+      "aliases": ["Approach Ruins"],
+      "filePath": "assets/beta/scenes/towards-ruins.webp",
+      "type": "scene",
+      "roomId": null,
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "beta_available",
+      "fallbackPath": "assets/beta/scenes/black-start-frame.webp"
+    },
+    {
+      "id": "scene.ruins.entrance",
+      "displayName": "Ruins Entrance",
+      "aliases": ["Entrance"],
+      "filePath": "assets/beta/scenes/ruins-entrance.webp",
+      "type": "scene",
+      "roomId": null,
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "beta_available",
+      "fallbackPath": "assets/beta/scenes/black-start-frame.webp"
+    },
+    {
+      "id": "scene.black_start",
+      "displayName": "Black Start Frame",
+      "aliases": ["Fallback Scene"],
+      "filePath": "assets/beta/scenes/black-start-frame.webp",
+      "type": "scene",
+      "roomId": null,
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "fallback",
+      "fallbackPath": "assets/beta/scenes/black-start-frame.webp"
     }
   ]
 }

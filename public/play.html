@@ -2,71 +2,137 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Ruins Adventure (Playtest UI)</title>
-    <style>
-      :root { color-scheme: dark; }
-      * { box-sizing: border-box; }
-      body { margin: 0; font-family: Arial, sans-serif; background: #0f1115; color: #e6e8ee; }
-      .layout { display: grid; grid-template-columns: 1.5fr 1fr; gap: 12px; padding: 12px; min-height: 100vh; }
-      .panel { background: #181c24; border: 1px solid #2d3442; border-radius: 8px; padding: 12px; }
-      .log { height: 58vh; overflow: auto; white-space: pre-wrap; line-height: 1.45; font-size: 14px; }
-      .image { width: 100%; max-height: 32vh; object-fit: contain; border: 1px solid #2d3442; border-radius: 6px; background: #0f1115; }
-      .status { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 13px; }
-      .status div { background: #121621; border: 1px solid #2d3442; border-radius: 6px; padding: 8px; }
-      .controls { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-top: 8px; }
-      input, button { background: #11151f; color: #e6e8ee; border: 1px solid #384257; border-radius: 6px; padding: 10px; font-size: 14px; }
-      button { cursor: pointer; }
-      .quick { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-      .quick button { padding: 8px 10px; font-size: 13px; }
-      @media (max-width: 980px) { .layout { grid-template-columns: 1fr; } .log { height: 45vh; } }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Ruins Adventure Beta</title>
+    <link rel="stylesheet" href="/beta.css" />
   </head>
-  <body>
-    <main class="layout">
-      <section class="panel">
-        <h1 style="margin:0 0 8px 0; font-size:22px;">Forgotten Ruin of Dark Galan</h1>
-        <div id="log" class="log"></div>
-        <div class="controls">
-          <input id="cmd" placeholder="Type command (N, Examine shrine, Pick up item, Inventory)" />
-          <button id="send">Enter</button>
+  <body data-phase="loading">
+    <main class="game-shell" aria-label="Ruins Adventure Beta">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Forgotten Ruin of Dark Galan</p>
+          <h1>Ruins Adventure Beta</h1>
         </div>
-        <div class="quick" style="margin-top:6px;">
-          <button id="autoWalkthrough">Auto Walkthrough</button>
+        <div class="top-actions" aria-label="Game actions">
+          <span id="phasePill" class="phase-pill">loading</span>
+          <button type="button" data-panel="save">Save</button>
+          <button type="button" data-panel="load">Load</button>
         </div>
-        <div id="exploreQuick" class="quick">
-          <button data-cmd="N">N</button><button data-cmd="S">S</button><button data-cmd="E">E</button><button data-cmd="W">W</button>
-          <button data-cmd="Inventory">Inventory</button><button data-cmd="Help">Help</button><button data-cmd="Read Journal">Read Journal</button>
-          <button data-cmd="Map">Map</button><button data-cmd="Assemble">Assemble</button><button data-cmd="End">End</button>
-        </div>
-        <div id="prologueQuick" class="quick" style="display:none;">
-          <button data-cmd="Quest">Quest</button>
-          <button data-cmd="Monsters">Monsters</button>
-          <button data-cmd="Offer">Offer</button>
-          <button data-cmd="Negotiate">Negotiate</button>
-          <button data-cmd="Bargain">Bargain</button>
-          <button data-cmd="Yes">Accept</button>
-        </div>
-        <div id="combatQuick" class="quick" style="display:none;">
-          <button data-cmd="Attack Once">Attack Once</button>
-          <button data-cmd="Fight till the end">Fight till the end</button>
-          <button data-cmd="Run">Run</button>
-          <button id="useFog" data-cmd="Use Item Fog of Confusion">Use Fog</button>
-          <button id="usePulse" data-cmd="Use Item Pulse of Calm">Use Pulse</button>
-          <button id="useHeart" data-cmd="Use Item Heart Beacon">Use Heart</button>
+      </header>
+
+      <section class="scene-panel" aria-label="Current scene">
+        <figure class="scene-frame">
+          <img id="roomImage" alt="Room visual" />
+          <figcaption>
+            <span id="sceneKicker">Scene</span>
+            <strong id="roomLabel">Loading</strong>
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="status-strip" aria-label="Player status">
+        <div id="stats" class="stat-grid"></div>
+        <div class="status-card">
+          <h2>Location</h2>
+          <pre id="location"></pre>
         </div>
       </section>
-      <aside class="panel">
-        <img id="roomImage" class="image" alt="Room visual" />
-        <p id="roomLabel" style="margin:8px 0 0 0;"></p>
-        <div class="status" style="margin-top:8px;">
-          <div id="stats"></div>
-          <div id="location"></div>
-          <div id="inventory"></div>
-          <div id="journal"></div>
+
+      <section class="log-panel" aria-label="Adventure log">
+        <div id="log" class="log" aria-live="polite"></div>
+      </section>
+
+      <section id="combatPanel" class="combat-panel" aria-label="Combat status" hidden>
+        <div class="combat-card enemy-card">
+          <div class="combat-portrait" aria-hidden="true">
+            <span id="enemyInitial">?</span>
+          </div>
+          <div class="combat-details">
+            <p class="eyebrow">Enemy</p>
+            <h2 id="enemyName">No enemy</h2>
+            <div class="hp-track" aria-label="Enemy HP">
+              <span id="enemyHpBar"></span>
+            </div>
+            <p id="enemyStats" class="combat-meta"></p>
+          </div>
         </div>
-      </aside>
+        <div class="combat-card player-card">
+          <div class="combat-details">
+            <p class="eyebrow">You</p>
+            <h2>Adventurer</h2>
+            <div class="hp-track" aria-label="Player HP">
+              <span id="playerHpBar"></span>
+            </div>
+            <p id="playerCombatStats" class="combat-meta"></p>
+          </div>
+        </div>
+        <div class="scroll-state" aria-label="Scroll readiness">
+          <span id="fogState">Fog</span>
+          <span id="pulseState">Pulse</span>
+          <span id="heartState">Heart</span>
+        </div>
+      </section>
+
+      <section class="side-panels" aria-label="Inventory and journal">
+        <article>
+          <h2>Inventory</h2>
+          <pre id="inventory"></pre>
+        </article>
+        <article>
+          <h2>Journal</h2>
+          <pre id="journal"></pre>
+        </article>
+      </section>
+
+      <section class="command-dock" aria-label="Command controls">
+        <div id="prologueQuick" class="quick">
+          <button type="button" data-cmd="Quest">Quest</button>
+          <button type="button" data-cmd="Monsters">Monsters</button>
+          <button type="button" data-cmd="Offer">Offer</button>
+          <button type="button" data-cmd="Negotiate">Negotiate</button>
+          <button type="button" data-cmd="Bargain">Bargain</button>
+          <button type="button" data-cmd="Yes">Accept</button>
+          <button type="button" data-cmd="Say">Say</button>
+        </div>
+
+        <div id="exploreQuick" class="quick">
+          <button type="button" data-cmd="N">N</button>
+          <button type="button" data-cmd="S">S</button>
+          <button type="button" data-cmd="E">E</button>
+          <button type="button" data-cmd="W">W</button>
+          <button type="button" data-panel="inventory">Inventory</button>
+          <button type="button" data-panel="journal">Journal</button>
+          <button type="button" data-panel="map">Map</button>
+          <button type="button" data-cmd="Examine">Examine</button>
+          <button type="button" data-cmd="Assemble">Assemble</button>
+        </div>
+
+        <div id="combatQuick" class="quick">
+          <button type="button" data-cmd="Attack Once">Attack Once</button>
+          <button type="button" data-cmd="Fight till the end">Fight till the end</button>
+          <button type="button" data-cmd="Run">Run</button>
+          <button id="useFog" type="button" data-cmd="Use Item Fog of Confusion">Use Fog</button>
+          <button id="usePulse" type="button" data-cmd="Use Item Pulse of Calm">Use Pulse</button>
+          <button id="useHeart" type="button" data-cmd="Use Item Heart Beacon">Use Heart</button>
+        </div>
+
+        <div class="manual-command">
+          <input id="cmd" autocomplete="off" placeholder="Type command" />
+          <button id="send" type="button">Enter</button>
+          <button id="autoWalkthrough" type="button">Auto Walkthrough</button>
+        </div>
+      </section>
+
+      <div id="drawerBackdrop" class="drawer-backdrop" hidden></div>
+      <section id="infoDrawer" class="info-drawer" aria-modal="true" aria-labelledby="drawerTitle" role="dialog" hidden>
+        <header>
+          <h2 id="drawerTitle">Panel</h2>
+          <button id="drawerClose" type="button">Close</button>
+        </header>
+        <div id="drawerBody" class="drawer-body"></div>
+        <div id="drawerActions" class="drawer-actions"></div>
+      </section>
     </main>
     <script src="/play.js"></script>
   </body>
-  </html>
+</html>
