@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "nodes": [
+    { "id": "prologue", "label": "Inn", "x": 48, "y": 96, "kind": "scene" },
+    { "id": "room.01", "label": "Altar", "x": 48, "y": 86, "kind": "room" },
+    { "id": "room.02", "label": "Shrine", "x": 48, "y": 72, "kind": "room" },
+    { "id": "room.06", "label": "Mirror", "x": 66, "y": 72, "kind": "room" },
+    { "id": "room.05", "label": "Library", "x": 70, "y": 56, "kind": "room" },
+    { "id": "transition.room05.mid_passage", "label": "Passage", "x": 62, "y": 48, "kind": "transition" },
+    { "id": "transition.dead_end.black_wall", "label": "Dead End", "x": 50, "y": 48, "kind": "transition" },
+    { "id": "room.03", "label": "Sarcophagus", "x": 34, "y": 56, "kind": "room" },
+    { "id": "room.04", "label": "Guardroom", "x": 28, "y": 42, "kind": "room" },
+    { "id": "room.08", "label": "Chapel", "x": 16, "y": 28, "kind": "room" },
+    { "id": "room.07", "label": "Roots", "x": 28, "y": 60, "kind": "room" },
+    { "id": "room.09", "label": "Cares", "x": 28, "y": 76, "kind": "room" },
+    { "id": "room.10", "label": "Boss", "x": 14, "y": 66, "kind": "room" }
+  ],
+  "edges": [
+    { "from": "prologue", "to": "room.01", "routeId": "route.prologue.to_room01" },
+    { "from": "room.01", "to": "room.02", "routeId": "route.room01.north.room02" },
+    { "from": "room.02", "to": "room.06", "routeId": "route.room02.east.room06" },
+    { "from": "room.02", "to": "room.03", "routeId": "route.room02.multi_n_w_n.room03" },
+    { "from": "room.03", "to": "room.04", "routeId": "route.room03.northwest.room04" },
+    { "from": "room.03", "to": "room.02", "routeId": "route.room03.multi_s_e_s.room02" },
+    { "from": "room.04", "to": "room.08", "routeId": "route.room04.west_north.room08" },
+    { "from": "room.04", "to": "room.03", "routeId": "route.room04.east_south.room03" },
+    { "from": "room.04", "to": "room.07", "routeId": "route.room04.south.room07" },
+    { "from": "room.05", "to": "transition.room05.mid_passage", "routeId": "route.room05.south.mid_passage" },
+    { "from": "transition.room05.mid_passage", "to": "transition.dead_end.black_wall", "routeId": "route.mid_passage.west.dead_end" },
+    { "from": "transition.room05.mid_passage", "to": "room.06", "routeId": "route.mid_passage.south.room06" },
+    { "from": "transition.dead_end.black_wall", "to": "room.04", "routeId": "route.dead_end.portal.room04" },
+    { "from": "room.06", "to": "room.05", "routeId": "route.room06.northwest.room05" },
+    { "from": "room.06", "to": "room.02", "routeId": "route.room06.south_or_east.room02" },
+    { "from": "room.07", "to": "room.09", "routeId": "route.room07.south.room09" },
+    { "from": "room.07", "to": "room.04", "routeId": "route.room07.north.room04" },
+    { "from": "room.08", "to": "room.04", "routeId": "route.room08.south_east_south.room04" },
+    { "from": "room.08", "to": "room.03", "routeId": "route.room08.south_east_south_east_south.room03" },
+    { "from": "room.09", "to": "room.10", "routeId": "route.room09.west_north.room10" },
+    { "from": "room.09", "to": "room.04", "routeId": "route.room09.north_backtrack.room04" }
+  ]
+}

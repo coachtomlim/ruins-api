@@ -8,6 +8,15 @@
   const roomLabelEl = document.getElementById("roomLabel");
   const phasePillEl = document.getElementById("phasePill");
   const sceneKickerEl = document.getElementById("sceneKicker");
+  const transitionStripEl = document.getElementById("transitionStrip");
+  const transitionLabelEl = document.getElementById("transitionLabel");
+  const transitionMiniEl = document.getElementById("transitionMini");
+  const transitionFramesEl = document.getElementById("transitionFrames");
+  const miniMapPanelEl = document.getElementById("miniMapPanel");
+  const miniMapEl = document.getElementById("miniMap");
+  const miniMapStatusEl = document.getElementById("miniMapStatus");
+  const breadcrumbsEl = document.getElementById("breadcrumbs");
+  const breadcrumbStatusEl = document.getElementById("breadcrumbStatus");
   const statsEl = document.getElementById("stats");
   const locationEl = document.getElementById("location");
   const inventoryEl = document.getElementById("inventory");
@@ -25,6 +34,12 @@
   const drawerActionsEl = document.getElementById("drawerActions");
   const drawerCloseEl = document.getElementById("drawerClose");
   const combatPanelEl = document.getElementById("combatPanel");
+  const eventPanelEl = document.getElementById("eventPanel");
+  const eventIconEl = document.getElementById("eventIcon");
+  const eventKindEl = document.getElementById("eventKind");
+  const eventTitleEl = document.getElementById("eventTitle");
+  const eventBodyEl = document.getElementById("eventBody");
+  const eventActionsEl = document.getElementById("eventActions");
   const enemyInitialEl = document.getElementById("enemyInitial");
   const enemyNameEl = document.getElementById("enemyName");
   const enemyHpBarEl = document.getElementById("enemyHpBar");
@@ -41,12 +56,20 @@
   let autoFightActive = false;
   let autoWalkthroughActive = false;
   let activeDrawer = null;
+  let movementVisualUntil = 0;
+  let uiState = null;
+
+  window.__RUINS_DEBUG_STATE__ = () => state;
 
   const roomsById = new Map();
   const transitionById = new Map();
   const itemsById = new Map();
   const journalById = new Map();
   const monsterById = new Map();
+  const navigationNodesById = new Map();
+  const routeTransitionsById = new Map();
+  const routeTransitionsByKey = new Map();
+  const navigationEdges = [];
   const commands = [];
 
   function nowIso() {
@@ -107,6 +130,44 @@
     return item ? item.displayName : itemId;
   }
 
+  function itemVisual(itemId) {
+    const item = itemsById.get(itemId);
+    const type = item && item.type ? item.type : "item";
+    if (itemId.includes("scroll")) return { symbol: "S", type, label: "scroll" };
+    if (itemId.includes("prism")) return { symbol: "P", type, label: "prism" };
+    if (itemId.includes("glass")) return { symbol: "G", type, label: "key" };
+    if (itemId.includes("girdle")) return { symbol: "D", type, label: "ward" };
+    if (itemId.includes("potion")) return { symbol: "H", type, label: "heal" };
+    if (itemId.includes("shield")) return { symbol: "D", type, label: "shield" };
+    if (itemId.includes("hose")) return { symbol: "E", type, label: "speed" };
+    if (itemId.includes("tetrahedronal")) return { symbol: "A", type, label: "artifact" };
+    if (type === "readable") return { symbol: "J", type, label: "lore" };
+    return { symbol: "I", type, label: type.replace(/_/g, " ") };
+  }
+
+  function monsterVisual(monster, monsterName) {
+    const id = monster && monster.id ? monster.id : "";
+    const name = String(monsterName || "").toLowerCase();
+    if (id.includes("imp") || name.includes("imp")) return { className: "monster-imp", symbol: "I" };
+    if (id.includes("musca") || name.includes("musca")) return { className: "monster-musca", symbol: "M" };
+    if (id.includes("lizard") || name.includes("lizard")) return { className: "monster-lizardman", symbol: "L" };
+    if (id.includes("banshee") || name.includes("banshee")) return { className: "monster-banshee", symbol: "B" };
+    if (name.includes("kobold")) return { className: "monster-kobold", symbol: "K" };
+    if (name.includes("gnome")) return { className: "monster-gnome", symbol: "G" };
+    if (name.includes("goblin")) return { className: "monster-goblin", symbol: "G" };
+    return { className: "monster-random", symbol: String(monsterName || "?").slice(0, 1).toUpperCase() };
+  }
+
+  function inventoryChip(entry) {
+    const visual = itemVisual(entry.itemId);
+    return `
+      <span class="item-chip item-${escapeHtml(visual.type)}" title="${escapeHtml(itemName(entry.itemId))}">
+        <span class="item-mark">${escapeHtml(visual.symbol)}</span>
+        <span class="item-copy"><strong>${escapeHtml(itemName(entry.itemId))}</strong><em>${escapeHtml(visual.label)} x${entry.quantity}</em></span>
+      </span>
+    `;
+  }
+
   function monsterStats(monster) {
     if (!monster) return null;
     if (monster.id === "monster.random_low_tier_scaled") {
@@ -152,6 +213,288 @@
       .split("/")
       .map((part) => encodeURIComponent(part))
       .join("/")}`;
+  }
+
+  function routeKey(from, command, to) {
+    return `${from}|${command}|${to}`;
+  }
+
+  function findRouteTransition(from, command, to) {
+    return routeTransitionsByKey.get(routeKey(from, command, to)) || null;
+  }
+
+  function routeDuration(route) {
+    const steps = route && Array.isArray(route.assetSequence) ? route.assetSequence.length : 1;
+    return Math.max(1500, Math.min(4200, 900 + steps * 700));
+  }
+
+  function routeName(id) {
+    if (id === "prologue") return "Inn";
+    const navNode = navigationNodesById.get(id);
+    if (navNode && navNode.label) return navNode.label;
+    const room = roomsById.get(id) || transitionById.get(id);
+    if (room && room.name) return room.name;
+    return String(id).replace(/^transition\./, "").replace(/^room\./, "Room ");
+  }
+
+  function createUiState() {
+    return {
+      visitedRoomIds: new Set(["prologue"]),
+      visitedRouteIds: new Set(),
+      breadcrumbEvents: [{ type: "start", nodeId: "prologue", label: "Inn" }],
+      currentRouteId: null,
+      walkthroughStepIndex: 0,
+      visualEvent: null
+    };
+  }
+
+  function ensureUiState() {
+    if (!uiState) uiState = createUiState();
+    return uiState;
+  }
+
+  function compactBreadcrumbEvents(events) {
+    if (events.length <= 9) return events;
+    return [events[0], { type: "gap", label: "..." }, ...events.slice(-7)];
+  }
+
+  function addBreadcrumbEvent(event) {
+    const ui = ensureUiState();
+    const last = ui.breadcrumbEvents[ui.breadcrumbEvents.length - 1];
+    if (last && last.type === event.type && last.nodeId === event.nodeId && last.routeId === event.routeId && last.label === event.label) {
+      return;
+    }
+    ui.breadcrumbEvents.push(event);
+  }
+
+  function visitNode(nodeId) {
+    if (!nodeId) return;
+    const ui = ensureUiState();
+    const alreadyVisited = ui.visitedRoomIds.has(nodeId);
+    ui.visitedRoomIds.add(nodeId);
+    if (!alreadyVisited) addBreadcrumbEvent({ type: "location", nodeId, label: routeName(nodeId) });
+  }
+
+  function visitRoute(route) {
+    if (!route) return;
+    const ui = ensureUiState();
+    ui.currentRouteId = route.id;
+    ui.visitedRouteIds.add(route.id);
+    ui.visitedRoomIds.add(route.from);
+    ui.visitedRoomIds.add(route.to);
+    addBreadcrumbEvent({
+      type: "move",
+      nodeId: route.to,
+      routeId: route.id,
+      label: `${routeName(route.from)} -> ${routeName(route.to)}`
+    });
+  }
+
+  function clearCurrentRoute(routeId, durationMs) {
+    setTimeout(() => {
+      if (uiState && uiState.currentRouteId === routeId) {
+        uiState.currentRouteId = null;
+        renderNavigation();
+      }
+    }, durationMs + 150);
+  }
+
+  function edgeMetrics(fromNode, toNode) {
+    const dx = toNode.x - fromNode.x;
+    const dy = toNode.y - fromNode.y;
+    return {
+      length: Math.sqrt(dx * dx + dy * dy),
+      angle: `${Math.atan2(dy, dx)}rad`
+    };
+  }
+
+  function renderMiniMap() {
+    if (!miniMapEl || !data || !data.navigationMap) return;
+    const ui = ensureUiState();
+    const edgeHtml = navigationEdges
+      .map((edge) => {
+        const fromNode = navigationNodesById.get(edge.from);
+        const toNode = navigationNodesById.get(edge.to);
+        if (!fromNode || !toNode) return "";
+        const metrics = edgeMetrics(fromNode, toNode);
+        const classes = ["map-edge"];
+        if (ui.visitedRouteIds.has(edge.routeId)) classes.push("is-visited");
+        if (ui.currentRouteId === edge.routeId) classes.push("is-active");
+        return `<span class="${classes.join(" ")}" style="--x1:${fromNode.x};--y1:${fromNode.y};--edge-length:${metrics.length};--edge-angle:${metrics.angle}"></span>`;
+      })
+      .join("");
+    const nodeHtml = [...navigationNodesById.values()]
+      .map((node) => {
+        const classes = ["map-node"];
+        const current = state && state.phase === "prologue" ? node.id === "prologue" : state && state.location.currentRoomId === node.id;
+        if (ui.visitedRoomIds.has(node.id)) classes.push("is-visited");
+        if (current) classes.push("is-current");
+        if (node.id === "room.10") classes.push("is-objective");
+        return `<span class="${classes.join(" ")}" style="--x:${node.x};--y:${node.y}" title="${escapeHtml(node.label)}">${escapeHtml(node.label.slice(0, 1))}<span>${escapeHtml(node.label)}</span></span>`;
+      })
+      .join("");
+    miniMapEl.innerHTML = `${edgeHtml}${nodeHtml}`;
+    if (miniMapStatusEl) {
+      const currentLabel = state && state.phase === "prologue" ? "Inn" : routeName(state.location.currentRoomId);
+      miniMapStatusEl.textContent = `${currentLabel} | ${ui.visitedRoomIds.size - 1}/${navigationNodesById.size - 1}`;
+    }
+  }
+
+  function renderBreadcrumbs() {
+    if (!breadcrumbsEl) return;
+    const ui = ensureUiState();
+    const events = compactBreadcrumbEvents(ui.breadcrumbEvents);
+    breadcrumbsEl.innerHTML = events
+      .map((event, index) => {
+        const classes = [];
+        if (index === events.length - 1) classes.push("is-current");
+        if (event.type !== "location" && event.type !== "start" && event.type !== "gap") classes.push("is-event");
+        const label = event.type === "gap" ? "..." : event.label;
+        return `<li class="${classes.join(" ")}">${escapeHtml(label)}</li>`;
+      })
+      .join("");
+    if (breadcrumbStatusEl) {
+      breadcrumbStatusEl.textContent = `${ui.breadcrumbEvents.length} steps`;
+    }
+  }
+
+  function renderNavigation() {
+    renderMiniMap();
+    renderBreadcrumbs();
+    if (miniMapPanelEl) miniMapPanelEl.hidden = !data || !data.navigationMap;
+  }
+
+  function storeOffers() {
+    return [
+      { id: "item.store.shield_lionheart", price: 400, label: "Shield 400g" },
+      { id: "item.store.minor_combat_healing_potion", price: 350, label: "Potion 350g" },
+      { id: "item.store.hose_of_speed", price: 450, label: "Hose 450g" }
+    ];
+  }
+
+  function setVisualEvent(event) {
+    const ui = ensureUiState();
+    ui.visualEvent = {
+      ...event,
+      expiresAt: event.persistent ? null : Date.now() + (event.durationMs || 4800)
+    };
+    if (event.breadcrumbLabel) {
+      addBreadcrumbEvent({
+        type: event.kind || "event",
+        label: event.breadcrumbLabel,
+        nodeId: state && state.location ? state.location.currentRoomId : null
+      });
+    }
+  }
+
+  function persistentVisualEvent() {
+    if (!state || state.phase === "prologue") return null;
+    const roomId = state.location.currentRoomId;
+    if (state.flags["flag.ending.completed"]) {
+      return {
+        kind: "Ending",
+        icon: "*",
+        title: "Quest Complete",
+        body: "Sheja receives Merlin's Tetrahedronal and the Ruin releases its hold.",
+        actions: ["Artifact secured", "Journal complete"]
+      };
+    }
+    if (roomId === "room.10" && state.flags["flag.boss.defeated"]) {
+      return {
+        kind: "Artifact",
+        icon: "A",
+        title: "Crystal Stand Awakened",
+        body: "The Banshee has fallen. The final artifact can be claimed from the crystal stand.",
+        actions: ["Examine crystal stand", "Pick up artifact"]
+      };
+    }
+    if (roomId === "room.10") {
+      return {
+        kind: "Boss",
+        icon: "B",
+        title: "Banshee's Chamber",
+        body: "The Sound-Deflecting Girdle is the key protection for this final chamber.",
+        actions: [hasItem("item.sound_deflecting_girdle") ? "Girdle ready" : "Girdle missing"]
+      };
+    }
+    if (roomId === "room.09" && state.flags["flag.room09.store_visited"]) {
+      return {
+        kind: "Store",
+        icon: "$",
+        title: "Galanic Store",
+        body: "The seal offers last provisions before the boss chamber.",
+        actions: storeOffers().map((offer) => {
+          const owned = hasItem(offer.id);
+          return `${offer.label}${owned ? " owned" : ""}`;
+        })
+      };
+    }
+    return null;
+  }
+
+  function renderEventPanel() {
+    if (!eventPanelEl || !eventIconEl || !eventKindEl || !eventTitleEl || !eventBodyEl || !eventActionsEl) return;
+    const ui = ensureUiState();
+    if (ui.visualEvent && ui.visualEvent.expiresAt && ui.visualEvent.expiresAt < Date.now()) {
+      ui.visualEvent = null;
+    }
+    const event = ui.visualEvent || persistentVisualEvent();
+    if (!event) {
+      eventPanelEl.hidden = true;
+      return;
+    }
+    eventPanelEl.hidden = false;
+    eventIconEl.textContent = event.icon || "!";
+    eventKindEl.textContent = event.kind || "Event";
+    eventTitleEl.textContent = event.title || "Event";
+    eventBodyEl.textContent = event.body || "";
+    eventActionsEl.innerHTML = (event.actions || []).map((action) => `<span>${escapeHtml(action)}</span>`).join("");
+  }
+
+  function renderRouteMini(route, durationMs) {
+    if (!transitionMiniEl || !route) return;
+    const steps = Math.max(2, route.assetSequence.length + 1);
+    const dots = Array.from({ length: steps }, (_, index) => {
+      const delay = Math.round((durationMs / Math.max(1, steps - 1)) * index);
+      return `<span class="route-dot" style="--dot-delay:${delay}ms"></span>`;
+    }).join("");
+    transitionMiniEl.innerHTML = `
+      <span class="route-endpoint">${escapeHtml(routeName(route.from))}</span>
+      <span class="route-track" style="--route-duration:${durationMs}ms">
+        ${dots}
+        <span class="route-runner"></span>
+      </span>
+      <span class="route-endpoint">${escapeHtml(routeName(route.to))}</span>
+    `;
+  }
+
+  function showRouteTransition(route) {
+    if (!transitionStripEl || !transitionFramesEl || !transitionLabelEl || !route) return;
+    const durationMs = routeDuration(route);
+    movementVisualUntil = Math.max(movementVisualUntil, Date.now() + durationMs);
+    visitRoute(route);
+    transitionStripEl.hidden = false;
+    transitionStripEl.classList.remove("is-moving");
+    window.requestAnimationFrame(() => transitionStripEl.classList.add("is-moving"));
+    transitionLabelEl.textContent = `${route.from} -> ${route.to}`;
+    renderRouteMini(route, durationMs);
+    transitionFramesEl.innerHTML = route.assetSequence
+      .map(
+        (filePath, index) => `
+          <figure style="--frame-delay:${Math.round((durationMs / Math.max(1, route.assetSequence.length)) * index)}ms">
+            <img src="${assetUrl(filePath)}" alt="Movement frame ${index + 1}" />
+            <figcaption>${escapeHtml(route.status)}</figcaption>
+          </figure>
+        `
+      )
+      .join("");
+    renderNavigation();
+    clearCurrentRoute(route.id, durationMs);
+  }
+
+  function waitForMovementVisual(extraMs = 150) {
+    const remaining = movementVisualUntil - Date.now();
+    return sleep(Math.max(0, remaining + extraMs));
   }
 
   function mapImagePath() {
@@ -205,10 +548,12 @@
     const exits = inPrologue ? "None" : (room && room.exits ? room.exits : []).map((e) => e.direction).join(", ") || "None";
     locationEl.textContent = `${roomTitle}\nExits: ${exits}`;
 
-    inventoryEl.textContent = state.inventory.items.map((x) => `${itemName(x.itemId)} x${x.quantity}`).join("\n") || "Empty";
+    inventoryEl.innerHTML = state.inventory.items.length ? `<div class="inventory-chips">${state.inventory.items.map(inventoryChip).join("")}</div>` : "Empty";
     journalEl.textContent = `${state.journal.unlockedEntryIds.length} unlocked`;
     updateCombatPanel();
     syncActionBars();
+    renderNavigation();
+    renderEventPanel();
     if (activeDrawer) renderDrawer(activeDrawer);
   }
 
@@ -227,7 +572,12 @@
 
     const combat = state.combat;
     const player = state.player.currentStats;
-    enemyInitialEl.textContent = combat.monsterName.slice(0, 1).toUpperCase();
+    const visual = monsterVisual(combat.monster, combat.monsterName);
+    enemyInitialEl.textContent = visual.symbol;
+    const portrait = typeof enemyInitialEl.closest === "function" ? enemyInitialEl.closest(".combat-portrait") : null;
+    if (portrait) {
+      portrait.className = `combat-portrait ${visual.className}`;
+    }
     enemyNameEl.textContent = combat.monsterName;
     enemyHpBarEl.style.width = `${pct(combat.currentStats.HP, combat.baseStats.HP)}%`;
     playerHpBarEl.style.width = `${pct(player.HP, state.player.baseStats.HP)}%`;
@@ -247,6 +597,15 @@
     });
   }
 
+  function pulseCombatAction() {
+    if (!combatPanelEl || combatPanelEl.hidden) return;
+    combatPanelEl.classList.remove("combat-action");
+    window.requestAnimationFrame(() => {
+      combatPanelEl.classList.add("combat-action");
+      setTimeout(() => combatPanelEl.classList.remove("combat-action"), 520);
+    });
+  }
+
   function drawerRows(rows) {
     if (!rows.length) return '<p class="empty-state">Empty</p>';
     return rows.map((row) => `<div class="drawer-row">${row}</div>`).join("");
@@ -256,7 +615,7 @@
     const rows = state.inventory.items.map((entry) => {
       const item = itemsById.get(entry.itemId);
       const type = item && item.type ? item.type.replace(/_/g, " ") : "item";
-      return `<strong>${escapeHtml(itemName(entry.itemId))}</strong><span>${escapeHtml(type)} x${entry.quantity}</span>`;
+      return `${inventoryChip(entry)}<span>${escapeHtml(type)} x${entry.quantity}</span>`;
     });
     drawerBodyEl.innerHTML = `<div class="drawer-list">${drawerRows(rows)}</div>`;
     drawerActionsEl.innerHTML = "";
@@ -427,11 +786,13 @@
 
   function showRoom(room, firstVisit) {
     if (isTransitionNode(room)) {
+      visitNode(room.id);
       write(`${room.description}\n\nChoose your path.`);
       updateStatus();
       return;
     }
     ensureRoomAvailability(room.id);
+    visitNode(room.id);
     let text = `${room.name}\n${room.description}`;
     if (firstVisit) {
       text += "\n\nA chill of unfamiliar stone settles over you.";
@@ -528,6 +889,7 @@
     }
 
     if (state.player.currentStats.HP <= 0) {
+      pulseCombatAction();
       defeatPlayer("You fall beneath the fiend's assault.");
       return;
     }
@@ -544,6 +906,15 @@
       }
       rewardAfterVictory(c);
       ensureRoomAvailability(c.roomId);
+      setVisualEvent({
+        kind: c.monster.id === "monster.banshee_doppelganger" ? "Boss" : "Victory",
+        icon: c.monster.id === "monster.banshee_doppelganger" ? "B" : "V",
+        title: `${c.monsterName} Defeated`,
+        body: c.monster.id === "monster.banshee_doppelganger"
+          ? "The boss is defeated. The crystal stand can now reveal the artifact."
+          : "The room settles and new rewards may be visible.",
+        breadcrumbLabel: `Defeated: ${c.monsterName}`
+      });
       state.phase = "exploration";
       state.combat = null;
       write(`${c.monsterName} is defeated.`);
@@ -554,6 +925,7 @@
     write(`Combat status: You ${state.player.currentStats.HP} HP | ${c.monsterName} ${c.currentStats.HP} HP`);
     write("Combat options: Attack Once, Fight till the end, Run, Use Item <scroll>");
     updateStatus();
+    pulseCombatAction();
   }
 
   function startCombatIfTriggered(room, roomState) {
@@ -592,6 +964,13 @@
           : state.location.previousRoomId || "room.01"
     };
 
+    setVisualEvent({
+      kind: monster.id === "monster.banshee_doppelganger" ? "Boss" : "Combat",
+      icon: monsterName.slice(0, 1).toUpperCase(),
+      title: monsterName,
+      body: `${monsterName} confronts you. Watch HP and scroll readiness.`,
+      breadcrumbLabel: `Combat: ${monsterName}`
+    });
     pulseCombatTransition();
     write(`A ${monsterName} confronts you. It lunges first.`);
     const a = state.combat.currentStats.EVA + runtime.roll(4);
@@ -628,6 +1007,14 @@
       if (trigger.type === "store") {
         if (state.flags["flag.prism.assembled"] && !state.flags["flag.room09.store_visited"]) {
           state.flags["flag.room09.store_visited"] = true;
+          setVisualEvent({
+            kind: "Store",
+            icon: "$",
+            title: "Galanic Store",
+            body: "The seal offers last provisions before the boss chamber.",
+            actions: storeOffers().map((offer) => offer.label),
+            breadcrumbLabel: "Store opened"
+          });
           write("A shimmering Galanic store appears: Buy 1 (Shield 400g), Buy 2 (Minor Potion 350g), Buy 3 (Hose of Speed 450g).");
         }
       }
@@ -668,6 +1055,7 @@
       return;
     }
 
+    showRouteTransition(findRouteTransition(node.id, exit.direction, exit.to));
     state.location.previousRoomId = state.location.currentRoomId;
     state.location.currentRoomId = exit.to;
     state.location.enteredVia = exit.oneWay ? "one_way_portal" : "normal";
@@ -745,8 +1133,25 @@
     write(`You examine ${trigger.target}.`);
     for (const entry of unlockedEntries) {
       write(`Journal updated: ${entry.title}\n${entry.textSummary}`);
+      setVisualEvent({
+        kind: "Journal",
+        icon: "J",
+        title: entry.title,
+        body: entry.textSummary,
+        breadcrumbLabel: `Journal: ${entry.title}`
+      });
     }
-    if ((trigger.revealsItems || []).length) write(`Revealed: ${trigger.revealsItems.map(itemName).join(", ")}.`);
+    if ((trigger.revealsItems || []).length) {
+      const names = trigger.revealsItems.map(itemName);
+      write(`Revealed: ${names.join(", ")}.`);
+      setVisualEvent({
+        kind: "Discovery",
+        icon: "?",
+        title: "Hidden Item Revealed",
+        body: names.join(", "),
+        breadcrumbLabel: `Revealed: ${names[0]}`
+      });
+    }
     updateStatus();
   }
 
@@ -779,8 +1184,24 @@
     if (itemId === "item.merlins_tetrahedronal") {
       unlockJournal("journal.ending.hero_prophecy");
       state.flags["flag.ending.completed"] = true;
+      setVisualEvent({
+        kind: "Ending",
+        icon: "*",
+        title: "Quest Complete",
+        body: "Sheja appears as the prophecy stirs to life. The quest is complete.",
+        breadcrumbLabel: "Ending complete",
+        persistent: true
+      });
       write("As you claim Merlin's Tetrahedronal, Sheja appears and the prophecy stirs to life.");
       write("Sheja rewards you and the quest is complete.");
+    } else {
+      setVisualEvent({
+        kind: "Item",
+        icon: "+",
+        title: itemName(itemId),
+        body: "Added to your pack.",
+        breadcrumbLabel: `Item: ${itemName(itemId)}`
+      });
     }
     write(`You secure ${itemName(itemId)} in your pack.`);
     updateStatus();
@@ -802,6 +1223,13 @@
     unlockJournal("journal.discovery.prism_assembled");
     unlockJournal("journal.discovery.final_chamber_open");
     ensureRoomAvailability(state.location.currentRoomId);
+    setVisualEvent({
+      kind: "Assembly",
+      icon: "P",
+      title: "Prism of Makidos",
+      body: "The fragments align and the final chamber path opens.",
+      breadcrumbLabel: "Prism assembled"
+    });
     write("The fragments align. The Prism of Makidos awakens in your hands.");
     updateStatus();
   }
@@ -831,11 +1259,7 @@
       write("There is no store to buy from here.");
       return;
     }
-    const shop = [
-      { id: "item.store.shield_lionheart", price: 400 },
-      { id: "item.store.minor_combat_healing_potion", price: 350 },
-      { id: "item.store.hose_of_speed", price: 450 }
-    ];
+    const shop = storeOffers();
     const offer = shop[index - 1];
     if (!offer) {
       write("Unknown store option.");
@@ -847,6 +1271,13 @@
     }
     state.player.gold -= offer.price;
     addItem(offer.id, 1);
+    setVisualEvent({
+      kind: "Store",
+      icon: "$",
+      title: itemName(offer.id),
+      body: `Purchased for ${offer.price} gold.`,
+      breadcrumbLabel: `Bought: ${itemName(offer.id)}`
+    });
     write(`Purchased ${itemName(offer.id)}.`);
     updateStatus();
   }
@@ -856,6 +1287,13 @@
     if (target.includes("shield") && hasItem("item.store.shield_lionheart")) {
       state.inventory.equipped.shield = "item.store.shield_lionheart";
       state.player.currentStats.DEF += 2;
+      setVisualEvent({
+        kind: "Gear",
+        icon: "S",
+        title: "Shield Equipped",
+        body: "Shield of the Lionheart grants +2 DEF.",
+        breadcrumbLabel: "Equipped shield"
+      });
       write("You equip Shield of the Lionheart (+2 DEF).");
       updateStatus();
       return;
@@ -863,6 +1301,13 @@
     if (target.includes("hose") && hasItem("item.store.hose_of_speed")) {
       state.inventory.equipped.hose = "item.store.hose_of_speed";
       state.player.currentStats.EVA += 1;
+      setVisualEvent({
+        kind: "Gear",
+        icon: "H",
+        title: "Hose Equipped",
+        body: "Hose of Speed grants +1 EVA.",
+        breadcrumbLabel: "Equipped hose"
+      });
       write("You equip Hose of Speed (+1 EVA).");
       updateStatus();
       return;
@@ -898,6 +1343,7 @@
     state.phase = "exploration";
     state.location.currentRoomId = "room.01";
     state.location.previousRoomId = null;
+    showRouteTransition(findRouteTransition("prologue", "say", "room.01"));
     const roomState = state.rooms["room.01"];
     roomState.visited = true;
     write("You utter the incantation. Stone and shadow crash around you as the Ruin takes shape.");
@@ -994,10 +1440,10 @@
 
       processCombatTurn("attack");
       guard += 1;
-      setTimeout(step, 120);
+      setTimeout(step, autoWalkthroughActive ? 760 : 180);
     }
 
-    step();
+    setTimeout(step, autoWalkthroughActive ? 650 : 0);
   }
 
   function processCommand(inputRaw, options = {}) {
@@ -1096,14 +1542,32 @@
     if (!res.ok) throw new Error(`Bootstrap failed with ${res.status}`);
     data = await res.json();
 
+    roomsById.clear();
+    transitionById.clear();
+    itemsById.clear();
+    journalById.clear();
+    monsterById.clear();
+    navigationNodesById.clear();
+    routeTransitionsById.clear();
+    routeTransitionsByKey.clear();
+    navigationEdges.length = 0;
+    commands.length = 0;
+
     for (const room of data.content.rooms) roomsById.set(room.id, room);
     for (const node of data.content.transitions) transitionById.set(node.id, node);
     for (const item of data.content.items) itemsById.set(item.id, item);
     for (const entry of data.content.journalEntries) journalById.set(entry.id, entry);
     for (const monster of data.content.monsters) monsterById.set(monster.id, monster);
+    for (const route of data.routeTransitions.routes) {
+      routeTransitionsById.set(route.id, route);
+      routeTransitionsByKey.set(routeKey(route.from, route.command, route.to), route);
+    }
+    for (const node of data.navigationMap.nodes) navigationNodesById.set(node.id, node);
+    for (const edge of data.navigationMap.edges) navigationEdges.push(edge);
     for (const command of data.content.commands) commands.push(command);
 
     state = data.initialState;
+    uiState = createUiState();
     state.phase = "prologue";
     state.prologue = {
       interactions: 0,
@@ -1127,7 +1591,22 @@
   }
 
   async function autoCmd(command, waitMs = 260) {
+    const beforeMoveVisual = movementVisualUntil;
+    if (autoWalkthroughActive) {
+      const ui = ensureUiState();
+      ui.walkthroughStepIndex += 1;
+      addBreadcrumbEvent({
+        type: "step",
+        label: `${ui.walkthroughStepIndex}. ${command}`,
+        nodeId: state && state.location ? state.location.currentRoomId : null
+      });
+      renderNavigation();
+    }
     processCommand(command, { fromAuto: true });
+    if (movementVisualUntil > beforeMoveVisual) {
+      await waitForMovementVisual();
+      return;
+    }
     await sleep(waitMs);
   }
 
@@ -1140,13 +1619,15 @@
 
   async function autoFightWithOptionalScroll(scrollName) {
     if (state.phase !== "combat") return;
+    await sleep(900);
     if (scrollName) {
-      await autoCmd(`Use Item ${scrollName}`, 300);
+      await autoCmd(`Use Item ${scrollName}`, 900);
     }
     while (state.phase === "combat") {
       processCommand("Fight till the end", { fromAuto: true });
-      await sleep(450);
+      await sleep(1000);
       await waitForCombatToEnd();
+      await sleep(450);
     }
   }
 

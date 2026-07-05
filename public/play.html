@@ -30,12 +30,38 @@
         </figure>
       </section>
 
+      <section id="transitionStrip" class="transition-strip" aria-label="Movement transition" hidden>
+        <header>
+          <h2>Movement</h2>
+          <p id="transitionLabel"></p>
+        </header>
+        <div id="transitionMini" class="transition-mini" aria-hidden="true"></div>
+        <div id="transitionFrames" class="transition-frames"></div>
+      </section>
+
       <section class="status-strip" aria-label="Player status">
         <div id="stats" class="stat-grid"></div>
         <div class="status-card">
           <h2>Location</h2>
           <pre id="location"></pre>
         </div>
+      </section>
+
+      <section class="route-panels" aria-label="Route awareness">
+        <article id="miniMapPanel" class="mini-map-panel" aria-label="Mini map">
+          <header>
+            <h2>Map</h2>
+            <p id="miniMapStatus"></p>
+          </header>
+          <div id="miniMap" class="mini-map"></div>
+        </article>
+        <article id="breadcrumbPanel" class="breadcrumb-panel" aria-label="Route breadcrumbs">
+          <header>
+            <h2>Trail</h2>
+            <p id="breadcrumbStatus"></p>
+          </header>
+          <ol id="breadcrumbs"></ol>
+        </article>
       </section>
 
       <section class="log-panel" aria-label="Adventure log">
@@ -73,10 +99,20 @@
         </div>
       </section>
 
+      <section id="eventPanel" class="event-panel" aria-label="Walkthrough event" hidden>
+        <div id="eventIcon" class="event-icon" aria-hidden="true">!</div>
+        <div class="event-copy">
+          <p id="eventKind" class="eyebrow">Event</p>
+          <h2 id="eventTitle">Event</h2>
+          <p id="eventBody"></p>
+          <div id="eventActions" class="event-actions"></div>
+        </div>
+      </section>
+
       <section class="side-panels" aria-label="Inventory and journal">
         <article>
           <h2>Inventory</h2>
-          <pre id="inventory"></pre>
+          <div id="inventory" class="inventory-display"></div>
         </article>
         <article>
           <h2>Journal</h2>

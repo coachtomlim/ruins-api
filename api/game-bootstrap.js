@@ -1,4 +1,6 @@
 const manifest = require("../public/assets-manifest.json");
+const navigationMap = require("../public/navigation-map.json");
+const routeTransitions = require("../public/route-transitions.json");
 const { createInitialState, loadContent } = require("../src/engine");
 
 function toImageLookup(assets) {
@@ -43,6 +45,8 @@ module.exports = (_req, res) => {
     transitionImageAssets: {
       byId: transitionsById
     },
+    navigationMap,
+    routeTransitions,
     initialState,
     content: {
       config: content.config,

@@ -37,4 +37,9 @@ test("game bootstrap returns initial state and content payload", () => {
   assert.equal(typeof payload.content.config, "object");
   assert.match(payload.roomImageAssets.map, /^assets\/beta\/rooms\/map-main\.webp$/);
   assert.match(payload.sceneImageAssets.byId["scene.prologue.tavern"], /^assets\/beta\/scenes\/prologue-tavern-sheja\.webp$/);
+  assert.equal(Array.isArray(payload.routeTransitions.routes), true);
+  assert.ok(payload.routeTransitions.routes.some((route) => route.id === "route.room01.north.room02"));
+  assert.equal(Array.isArray(payload.navigationMap.nodes), true);
+  assert.equal(Array.isArray(payload.navigationMap.edges), true);
+  assert.ok(payload.navigationMap.nodes.some((node) => node.id === "room.10"));
 });

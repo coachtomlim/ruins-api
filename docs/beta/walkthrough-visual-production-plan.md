@@ -1,10 +1,12 @@
 # Walkthrough Visual Production Plan
 
-Date: 2026-06-08
+Date: 2026-06-09
 
 Goal: make the locked Alpha walkthrough playable in the Beta graphical interface with visual continuity from prologue through ending.
 
 Local URL: `http://localhost:4273/play.html`
+
+Detailed implementation plan for minimap, breadcrumbs, and the full visual walkthrough layer: `docs/beta/full-walkthrough-minimap-breadcrumb-implementation-plan.md`.
 
 ## Definition Of Done
 
@@ -31,7 +33,6 @@ Already sufficient:
 
 Still insufficient:
 
-- route-specific transition manifest;
 - most route-specific transition art;
 - store screen visual state;
 - boss-specific combat/artifact/end visual states;
@@ -51,8 +52,8 @@ Still insufficient:
 
 Create:
 
-- `route.prologue.to_ruins.sequence`: tavern -> approach -> entrance -> Room 1.
-- Manifest entry for `entrance-towards-room-01.webp`.
+- `route.prologue.to_room01`: tavern/approach -> entrance -> Room 1. Implemented with placeholder status.
+- Manifest entry for `entrance-towards-room-01.webp`. Implemented.
 
 ### Room 1 To Room 2
 
@@ -278,9 +279,9 @@ New final art needed:
 
 - post-boss artifact scene or ending card.
 
-## Route Manifest To Create
+## Route Manifest
 
-Create `public/route-transitions.json` with:
+Implemented in `public/route-transitions.json`. It currently contains 21 routes with `approved` and `placeholder` statuses. Runtime movement looks up routes by `from + command + to` and renders the sequence in the Movement strip below the scene.
 
 ```json
 {
@@ -308,17 +309,30 @@ Required fields:
 - `status`: `approved`, `placeholder`, or `missing`
 - `notes`
 
-## Implementation Order
+## Implementation Status
 
-1. Create route transition manifest with placeholder mappings for the walkthrough path.
-2. Add missing transition files to the runtime asset manifest, not just the filesystem.
-3. Update movement rendering to show transition sequence before destination room image.
-4. Add entry sequence from tavern to ruins to Room 1.
-5. Add store visual drawer/screen for Room 9.
-6. Add boss and ending visual states.
-7. Add minimum monster portraits for named monsters.
-8. Add item icons for inventory polish.
-9. Add route coverage validator to fail if a walkthrough route has no approved or placeholder visual.
+Done:
+
+- Created route transition manifest with placeholder mappings for the walkthrough path.
+- Added generic transition files and Room 1 entry scene to the runtime asset manifest.
+- Updated movement rendering to show transition sequences in the graphical interface.
+- Added animated movement mini with origin, destination, progress dots, and moving marker.
+- Added persistent minimap, route breadcrumbs, and walkthrough event visual panel.
+- Added CSS monster emblems and inventory item chips as placeholder visual assets.
+- Added full-walkthrough screenshot capture for Room 9 store, Room 10 boss, and final ending states.
+- Added navigation-map validation and bootstrap exposure.
+- Updated auto-walkthrough timing so movement transitions and combat HUD states remain visible.
+- Added entry sequence from prologue to Room 1.
+- Added route coverage validator.
+- Added headless screenshot capture for the route transition strip.
+
+Next:
+
+1. Add store visual drawer/screen for Room 9.
+2. Add boss and ending visual states.
+3. Add minimum monster portraits for named monsters.
+4. Add item icons for inventory polish.
+5. Replace placeholder corridor routes with bespoke approved art as final art arrives.
 
 ## Critical Decisions
 

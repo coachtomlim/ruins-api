@@ -155,6 +155,21 @@ async function run() {
     throw new Error("Ending completion text was not reached.");
   }
 
+  const miniMap = elements.get("miniMap");
+  if (!miniMap || !miniMap.textContent.includes("Boss")) {
+    throw new Error("Mini map did not render the boss node.");
+  }
+
+  const breadcrumbs = elements.get("breadcrumbs");
+  if (!breadcrumbs || !breadcrumbs.textContent.includes("Ending complete")) {
+    throw new Error("Breadcrumb trail did not record ending completion.");
+  }
+
+  const eventTitle = elements.get("eventTitle");
+  if (!eventTitle || eventTitle.textContent !== "Quest Complete") {
+    throw new Error("Ending visual state did not render.");
+  }
+
   const outPath = path.join(root, "docs", "beta", "beta-1-walkthrough-dom-log.md");
   fs.writeFileSync(outPath, `# Beta 1 DOM Walkthrough Smoke Log\n\n${log.textContent}\n`, "utf8");
   console.log(`Beta 1 DOM walkthrough smoke passed: ${outPath}`);

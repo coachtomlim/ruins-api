@@ -11,7 +11,11 @@
     "validate:openapi": "node scripts/validate-openapi.js",
     "validate:assets": "node scripts/validate-assets.js",
     "validate:content": "node scripts/validate-content.js",
-    "check": "npm run lint && npm test && npm run validate:openapi && npm run validate:assets && npm run validate:content"
+    "validate:routes": "node scripts/validate-route-transitions.js",
+    "validate:navigation": "node scripts/validate-navigation-map.js",
+    "capture:routes": "node scripts/capture-route-transition-screenshot.js",
+    "capture:walkthrough": "node scripts/capture-full-walkthrough-screenshots.js",
+    "check": "npm run lint && npm test && npm run validate:openapi && npm run validate:assets && npm run validate:content && npm run validate:routes && npm run validate:navigation"
   },
   "engines": {
     "node": ">=20"

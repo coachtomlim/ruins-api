@@ -169,6 +169,83 @@
       "fallbackPath": "assets/beta/rooms/map-main.webp"
     },
     {
+      "id": "transition.north_passageway",
+      "displayName": "North Passageway",
+      "aliases": ["North Passage"],
+      "filePath": "assets/beta/transitions/north-passageway.webp",
+      "type": "transition",
+      "roomId": null,
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "placeholder",
+      "fallbackPath": "assets/beta/rooms/map-main.webp"
+    },
+    {
+      "id": "transition.north_passageway_2",
+      "displayName": "North Passageway 2",
+      "aliases": ["North Passage 2"],
+      "filePath": "assets/beta/transitions/north-passageway-2.webp",
+      "type": "transition",
+      "roomId": null,
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "placeholder",
+      "fallbackPath": "assets/beta/rooms/map-main.webp"
+    },
+    {
+      "id": "transition.north_passageway_2b",
+      "displayName": "North Passageway 2B",
+      "aliases": ["North Passage 2B"],
+      "filePath": "assets/beta/transitions/north-passageway-2b.webp",
+      "type": "transition",
+      "roomId": null,
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "placeholder",
+      "fallbackPath": "assets/beta/rooms/map-main.webp"
+    },
+    {
+      "id": "transition.north_passageway_3",
+      "displayName": "North Passageway 3",
+      "aliases": ["North Passage 3"],
+      "filePath": "assets/beta/transitions/north-passageway-3.webp",
+      "type": "transition",
+      "roomId": null,
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "placeholder",
+      "fallbackPath": "assets/beta/rooms/map-main.webp"
+    },
+    {
+      "id": "transition.straight_north_passageway_1",
+      "displayName": "Straight North Passageway 1",
+      "aliases": ["Straight North Passage"],
+      "filePath": "assets/beta/transitions/straight-north-passageway-1.webp",
+      "type": "transition",
+      "roomId": null,
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "placeholder",
+      "fallbackPath": "assets/beta/rooms/map-main.webp"
+    },
+    {
+      "id": "transition.passageway_turning_east",
+      "displayName": "Passageway Turning East",
+      "aliases": ["East Passage", "Right Turn Passage"],
+      "filePath": "assets/beta/transitions/passageway-turning-east.webp",
+      "type": "transition",
+      "roomId": null,
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "placeholder",
+      "fallbackPath": "assets/beta/rooms/map-main.webp"
+    },
+    {
+      "id": "transition.passageway_turning_west",
+      "displayName": "Passageway Turning West",
+      "aliases": ["West Passage", "Left Turn Passage"],
+      "filePath": "assets/beta/transitions/passageway-turning-west.webp",
+      "type": "transition",
+      "roomId": null,
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "placeholder",
+      "fallbackPath": "assets/beta/rooms/map-main.webp"
+    },
+    {
       "id": "scene.prologue.tavern",
       "displayName": "Tavern Scene",
       "aliases": ["Adventurer's Inn", "Sheja Prologue"],
@@ -199,6 +276,17 @@
       "roomId": null,
       "dimensions": { "width": 1024, "height": 1536 },
       "usageState": "beta_available",
+      "fallbackPath": "assets/beta/scenes/black-start-frame.webp"
+    },
+    {
+      "id": "scene.ruins.room01_approach",
+      "displayName": "Entrance Towards Room 1",
+      "aliases": ["Entrance To Room 1"],
+      "filePath": "assets/beta/scenes/entrance-towards-room-01.webp",
+      "type": "scene",
+      "roomId": null,
+      "dimensions": { "width": 1024, "height": 1536 },
+      "usageState": "placeholder",
       "fallbackPath": "assets/beta/scenes/black-start-frame.webp"
     },
     {
