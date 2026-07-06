@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fiends & Hero RBB Overlay Spike</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, sans-serif;
+        background: #151515;
+        color: #f4f1e8;
+      }
+
+      main {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      h1 {
+        font-size: 24px;
+        margin: 0 0 16px;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(220px, 320px) 1fr;
+        gap: 20px;
+      }
+
+      .room {
+        border: 1px solid #6f6758;
+        padding: 16px;
+        min-height: 220px;
+        background: #202020;
+      }
+
+      .room-title {
+        font-size: 18px;
+        margin: 0 0 8px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 72px);
+        grid-template-rows: repeat(1, 72px);
+        gap: 8px;
+      }
+
+      .cell {
+        border: 1px solid #6f6758;
+        display: grid;
+        place-items: center;
+        background: #252a2a;
+      }
+
+      .cell.active {
+        outline: 3px solid #d6b95f;
+      }
+
+      button {
+        min-height: 40px;
+        padding: 8px 12px;
+        border: 1px solid #d6b95f;
+        background: #302a1f;
+        color: #f4f1e8;
+        cursor: pointer;
+      }
+
+      button:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      pre {
+        white-space: pre-wrap;
+        border: 1px solid #4d4d4d;
+        padding: 12px;
+        background: #111;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 16px 0;
+      }
+
+      @media (max-width: 720px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Fiends & Hero Module 001 Spike</h1>
+      <div class="layout">
+        <section>
+          <div class="grid" aria-label="Two room module map">
+            <div id="cell-entry" class="cell active">Entry</div>
+            <div id="cell-fiend" class="cell">Fiend</div>
+          </div>
+          <div class="actions">
+            <button id="move">Move east</button>
+            <button id="encounter" disabled>Face fiend</button>
+            <button id="artifact" disabled>Collect artifact</button>
+            <button id="journal" disabled>Unlock journal</button>
+            <button id="victory" disabled>Claim victory</button>
+          </div>
+        </section>
+        <section class="room" aria-live="polite">
+          <h2 id="room-title" class="room-title">Entry Chamber</h2>
+          <p id="room-body">Cold air moves through the first threshold.</p>
+          <p id="state-line">Artifact: no | Journal: no | Victory: no</p>
+          <pre id="trace"></pre>
+        </section>
+      </div>
+    </main>
+    <script src="fiends-hero-rbb-spike.js"></script>
+  </body>
+</html>

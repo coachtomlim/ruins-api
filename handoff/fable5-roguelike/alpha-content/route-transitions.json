@@ -1,0 +1,225 @@
+{
+  "schemaVersion": 1,
+  "routes": [
+    {
+      "id": "route.prologue.to_room01",
+      "from": "prologue",
+      "command": "say",
+      "to": "room.01",
+      "assetSequence": [
+        "assets/beta/scenes/towards-ruins.webp",
+        "assets/beta/scenes/ruins-entrance.webp",
+        "assets/beta/scenes/entrance-towards-room-01.webp"
+      ],
+      "status": "placeholder",
+      "notes": "Entry montage from tavern/prologue into the ruin."
+    },
+    {
+      "id": "route.room01.north.room02",
+      "from": "room.01",
+      "command": "north",
+      "to": "room.02",
+      "assetSequence": ["assets/beta/transitions/straight-north-passageway-1.webp"],
+      "status": "placeholder",
+      "notes": "Generic north passage for Room 1 to Room 2."
+    },
+    {
+      "id": "route.room02.east.room06",
+      "from": "room.02",
+      "command": "east",
+      "to": "room.06",
+      "assetSequence": ["assets/beta/transitions/passageway-turning-east.webp"],
+      "status": "placeholder",
+      "notes": "Generic east/right-turn passage for Room 2 to Room 6."
+    },
+    {
+      "id": "route.room02.multi_n_w_n.room03",
+      "from": "room.02",
+      "command": "multi_step_north_west_north",
+      "to": "room.03",
+      "assetSequence": [
+        "assets/beta/transitions/north-passageway.webp",
+        "assets/beta/transitions/passageway-turning-west.webp",
+        "assets/beta/transitions/north-passageway-3.webp"
+      ],
+      "status": "placeholder",
+      "notes": "Multi-step Room 2 to Room 3 route."
+    },
+    {
+      "id": "route.room03.northwest.room04",
+      "from": "room.03",
+      "command": "northwest",
+      "to": "room.04",
+      "assetSequence": ["assets/beta/transitions/room-03-to-04.webp"],
+      "status": "approved",
+      "notes": "Bespoke Room 3 to Room 4 transition."
+    },
+    {
+      "id": "route.room03.multi_s_e_s.room02",
+      "from": "room.03",
+      "command": "multi_step_south_east_south",
+      "to": "room.02",
+      "assetSequence": [
+        "assets/beta/transitions/north-passageway-2b.webp",
+        "assets/beta/transitions/passageway-turning-east.webp",
+        "assets/beta/transitions/north-passageway-2.webp"
+      ],
+      "status": "placeholder",
+      "notes": "Reverse/backtracking placeholder from Room 3 to Room 2."
+    },
+    {
+      "id": "route.room04.west_north.room08",
+      "from": "room.04",
+      "command": "west_then_north",
+      "to": "room.08",
+      "assetSequence": [
+        "assets/beta/transitions/passageway-turning-west.webp",
+        "assets/beta/transitions/north-passageway.webp"
+      ],
+      "status": "placeholder",
+      "notes": "Generic west then north route from Room 4 to Room 8."
+    },
+    {
+      "id": "route.room04.east_south.room03",
+      "from": "room.04",
+      "command": "east_then_south",
+      "to": "room.03",
+      "assetSequence": ["assets/beta/transitions/room-04-to-03.webp"],
+      "status": "approved",
+      "notes": "Bespoke Room 4 to Room 3 transition."
+    },
+    {
+      "id": "route.room04.south.room07",
+      "from": "room.04",
+      "command": "south",
+      "to": "room.07",
+      "assetSequence": ["assets/beta/transitions/north-passageway-2b.webp"],
+      "status": "placeholder",
+      "notes": "Temporary south/backtrack visual."
+    },
+    {
+      "id": "route.room05.south.mid_passage",
+      "from": "room.05",
+      "command": "south_to_mid_passage",
+      "to": "transition.room05.mid_passage",
+      "assetSequence": ["assets/beta/transitions/north-passageway-2b.webp"],
+      "status": "placeholder",
+      "notes": "Temporary Room 5 exit into corrected mid-passage."
+    },
+    {
+      "id": "route.mid_passage.west.dead_end",
+      "from": "transition.room05.mid_passage",
+      "command": "west",
+      "to": "transition.dead_end.black_wall",
+      "assetSequence": ["assets/beta/transitions/dead-end-secret-passage.webp"],
+      "status": "placeholder",
+      "notes": "Dead-end secret passage visual."
+    },
+    {
+      "id": "route.mid_passage.south.room06",
+      "from": "transition.room05.mid_passage",
+      "command": "south",
+      "to": "room.06",
+      "assetSequence": ["assets/beta/transitions/north-passageway-3.webp"],
+      "status": "placeholder",
+      "notes": "Temporary mid-passage back to Room 6 visual."
+    },
+    {
+      "id": "route.dead_end.portal.room04",
+      "from": "transition.dead_end.black_wall",
+      "command": "use_hexagonal_glass_piece",
+      "to": "room.04",
+      "assetSequence": ["assets/beta/transitions/dead-end-secret-passage.webp"],
+      "status": "placeholder",
+      "notes": "Portal effect art is still missing; dead-end is used as a placeholder."
+    },
+    {
+      "id": "route.room06.northwest.room05",
+      "from": "room.06",
+      "command": "northwest",
+      "to": "room.05",
+      "assetSequence": [
+        "assets/beta/transitions/north-passageway-2.webp",
+        "assets/beta/transitions/passageway-turning-west.webp"
+      ],
+      "status": "placeholder",
+      "notes": "Generic route from Room 6 to Room 5."
+    },
+    {
+      "id": "route.room06.south_or_east.room02",
+      "from": "room.06",
+      "command": "south_or_east_to_room02",
+      "to": "room.02",
+      "assetSequence": ["assets/beta/transitions/passageway-turning-east.webp"],
+      "status": "placeholder",
+      "notes": "Route direction is canon-conflicted; placeholder remains non-authoritative."
+    },
+    {
+      "id": "route.room07.south.room09",
+      "from": "room.07",
+      "command": "south",
+      "to": "room.09",
+      "assetSequence": ["assets/beta/transitions/north-passageway-2b.webp"],
+      "status": "placeholder",
+      "notes": "Temporary dark passage to Room 9."
+    },
+    {
+      "id": "route.room07.north.room04",
+      "from": "room.07",
+      "command": "north",
+      "to": "room.04",
+      "assetSequence": ["assets/beta/transitions/north-passageway.webp"],
+      "status": "placeholder",
+      "notes": "Generic north/backtrack route."
+    },
+    {
+      "id": "route.room08.south_east_south.room04",
+      "from": "room.08",
+      "command": "south_east_south",
+      "to": "room.04",
+      "assetSequence": [
+        "assets/beta/transitions/north-passageway-2b.webp",
+        "assets/beta/transitions/passageway-turning-east.webp",
+        "assets/beta/transitions/north-passageway-2.webp"
+      ],
+      "status": "placeholder",
+      "notes": "Runtime route used when walkthrough moves south from Room 8."
+    },
+    {
+      "id": "route.room08.south_east_south_east_south.room03",
+      "from": "room.08",
+      "command": "south_east_south_east_south",
+      "to": "room.03",
+      "assetSequence": [
+        "assets/beta/transitions/north-passageway-2b.webp",
+        "assets/beta/transitions/passageway-turning-east.webp",
+        "assets/beta/transitions/north-passageway-2.webp",
+        "assets/beta/transitions/passageway-turning-east.webp",
+        "assets/beta/transitions/north-passageway-3.webp"
+      ],
+      "status": "placeholder",
+      "notes": "Longer Room 8 backtrack placeholder route."
+    },
+    {
+      "id": "route.room09.west_north.room10",
+      "from": "room.09",
+      "command": "west_then_north",
+      "to": "room.10",
+      "assetSequence": [
+        "assets/beta/transitions/passageway-turning-west.webp",
+        "assets/beta/transitions/north-passageway-3.webp"
+      ],
+      "status": "placeholder",
+      "notes": "Temporary final approach to boss chamber."
+    },
+    {
+      "id": "route.room09.north_backtrack.room04",
+      "from": "room.09",
+      "command": "north_or_backtrack",
+      "to": "room.04",
+      "assetSequence": ["assets/beta/transitions/north-passageway.webp"],
+      "status": "placeholder",
+      "notes": "Route remains ambiguous in content."
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "journalEntries": [
+    {
+      "id": "journal.quest.objective",
+      "title": "Quest Objective",
+      "unlockCondition": "initial_arrival_at_ruin",
+      "textSummary": "Retrieve Merlin's Tetrahedronal hidden within the Ruins of the Dark Galan. Begin with Prism Fragment A.",
+      "roomSource": null,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "journal.scroll.fog_vs_imp",
+      "title": "Fog of Confusion",
+      "unlockCondition": "examine.room01.prism_face_1",
+      "textSummary": "Fog of Confusion is super effective against the Imp.",
+      "roomSource": "room.01",
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "journal.scroll.pulse_vs_musca",
+      "title": "Pulse of Calm",
+      "unlockCondition": "examine.room01.prism_face_2",
+      "textSummary": "Pulse of Calm is super effective against the Musca.",
+      "roomSource": "room.01",
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "journal.scroll.heart_vs_lizardman",
+      "title": "Heart Beacon",
+      "unlockCondition": "examine.room01.prism_face_3",
+      "textSummary": "Heart Beacon is super effective against the Lizardman.",
+      "roomSource": "room.01",
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "journal.lore.armour_of_light_prophecy",
+      "title": "Prophecy of the Armour of Light",
+      "unlockCondition": "examine.room02.shrine",
+      "textSummary": "A champion shall don the Armour of Light, with the Tetrahedronal beside them as a key to dispelling darkness.",
+      "roomSource": "room.02",
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "journal.item.cure_all_stats_potion",
+      "title": "Cure All Stats Potion",
+      "unlockCondition": "examine.room03.sarcophagus",
+      "textSummary": "The Cure All Stats Potion restores full strength and cleanses corruption.",
+      "roomSource": "room.03",
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "journal.lore.camelot_party_roles",
+      "title": "Camelot Party Roles",
+      "unlockCondition": "examine.room04.scribbles",
+      "textSummary": "In old Camelot roles, Galans healed, Knights bore the shield, and Makidons or Mages dealt damage.",
+      "roomSource": "room.04",
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "journal.lore.galania_xerces_asherah",
+      "title": "Galania and Xerces",
+      "unlockCondition": "examine.room08.north_wall_mural_or_room05_lorebook",
+      "textSummary": "Galania was betrayed by Xerces, who aligned with darkness and the Cult of Asherah.",
+      "roomSource": "room.08",
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "journal.penalty.run",
+      "title": "The Ruin Remembers",
+      "unlockCondition": "run_from_combat",
+      "textSummary": "Fleeing a fight exacts a toll upon body and spirit.",
+      "roomSource": null,
+      "canonStatus": "LIKELY"
+    },
+    {
+      "id": "journal.discovery.prism_fragment_c",
+      "title": "Final Prism Fragment",
+      "unlockCondition": "pickup.item.prism_fragment_c",
+      "textSummary": "The third and final Prism Fragment has been recovered. Assembly is now possible.",
+      "roomSource": "room.07",
+      "canonStatus": "LIKELY"
+    },
+    {
+      "id": "journal.discovery.prism_assembled",
+      "title": "Prism of Makidos",
+      "unlockCondition": "assemble_prism",
+      "textSummary": "The Prism of Makidos is whole and can dissolve the Galanic Seal.",
+      "roomSource": "room.09",
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "journal.discovery.final_chamber_open",
+      "title": "Final Chamber",
+      "unlockCondition": "unlock_room10",
+      "textSummary": "The final chamber is open; beyond it lies the soul of the ruin and the final battle.",
+      "roomSource": "room.09",
+      "canonStatus": "LIKELY"
+    },
+    {
+      "id": "journal.ending.hero_prophecy",
+      "title": "Hero of the Prophecy",
+      "unlockCondition": "final_cutscene_after_tetrahedronal_pickup",
+      "textSummary": "Hero who overcame the Voices of Care and awakened the Prophecy of the Stone.",
+      "roomSource": "room.10",
+      "canonStatus": "LOCKED"
+    }
+  ]
+}
