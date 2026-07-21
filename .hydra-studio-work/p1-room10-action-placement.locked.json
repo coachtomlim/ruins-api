@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "status": "owner-approved-locked",
+  "project": "F&H Fable - Adventure Ruins Charlie",
+  "room": "room.10",
+  "actor": "P1 (DD)",
+  "coordinateSystem": "normalized-stage-foot-anchor",
+  "placements": {
+    "ready": { "x": 0.1165, "y": 0.7381, "h": 0.3350 },
+    "attack": { "x": 0.1165, "y": 0.7381, "h": 0.3350 },
+    "defence": { "x": 0.1165, "y": 0.7381, "h": 0.3350 },
+    "faint": { "x": 0.1165, "y": 0.7381, "h": 0.3350 },
+    "recovery": { "x": 0.1165, "y": 0.7381, "h": 0.3350 }
+  },
+  "approvedDate": "2026-07-21"
+}

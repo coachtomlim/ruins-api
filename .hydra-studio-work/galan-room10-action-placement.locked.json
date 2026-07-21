@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "status": "owner-approved-locked",
+  "project": "F&H Fable - Adventure Ruins Charlie",
+  "room": "room.10",
+  "actor": "P3 (Galan)",
+  "coordinateSystem": "normalized-stage-foot-anchor",
+  "placements": {
+    "combatReady": { "x": 0.8658, "y": 0.6406, "h": 0.2027 },
+    "attack": { "x": 0.8799, "y": 0.6557, "h": 0.2697 },
+    "defence": { "x": 0.8799, "y": 0.6557, "h": 0.2697 },
+    "faint": { "x": 0.8799, "y": 0.6557, "h": 0.1930 },
+    "recovery": { "x": 0.8799, "y": 0.6557, "h": 0.1930 }
+  },
+  "approvedDate": "2026-07-21"
+}

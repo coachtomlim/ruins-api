@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Hydra Boss Room Placement Console</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="overrides.css?v=1">
+</head>
+<body>
+  <main>
+    <header class="topbar">
+      <div><small>QUESTRO · BOSS ROOM REVIEW</small><h1>Hydra Placement Console</h1></div>
+      <span class="status">Hydra only · 24 fps alpha WebM</span>
+    </header>
+    <section class="workspace">
+      <div class="preview-column">
+        <div id="stage" class="stage" aria-label="Boss room composition">
+          <img class="room" src="assets/room/room-10.webp" alt="The Banshee's Chamber">
+          <img class="hero p1" src="assets/room/p1.png?v=6" alt="Current P1 character">
+          <img class="hero p2" src="assets/room/p2.webp" alt="Current P2 character">
+          <img class="hero p3" src="assets/room/p3.webp" alt="Current P3 character">
+          <video id="hydra" class="hydra" src="assets/hydra-entrance.webm?v=8" muted playsinline></video>
+          <img id="hydraReference" class="hydra" src="assets/hydra-entrance-anchor.png?v=8" alt="Hydra original source frame at 0 seconds">
+          <div id="anchor" class="anchor" title="Hydra foot anchor"></div>
+        </div>
+      </div>
+      <aside>
+        <h2>Animation</h2>
+        <div class="segmented" id="clips">
+          <button data-clip="entrance" class="active">Entrance</button>
+          <button data-clip="attack">Attack</button>
+          <button data-clip="dead">Dead</button>
+        </div>
+        <div class="transport">
+          <button id="play" class="primary">Play selected animation</button><button id="pause">Pause</button>
+          <input id="scrub" type="range" min="0" max="1" value="1" step="0.001" aria-label="Timeline">
+          <output id="time">9.92 / 9.92 s</output>
+        </div>
+        <p id="clipNote" class="note">Reversed 10s → 0s. Placement is shown at the original 0-second frame.</p>
+        <h2>Hydra position <small>LOCKED</small></h2>
+        <label>Horizontal <output id="xOut"></output><input id="x" aria-label="Hydra horizontal" type="range" min="0" max="1" step="0.0001" disabled></label>
+        <label>Vertical <output id="yOut"></output><input id="y" aria-label="Hydra vertical" type="range" min="0" max="1.6" step="0.0001" disabled></label>
+        <label>Size <output id="hOut"></output><input id="h" aria-label="Hydra size" type="range" min="0.1" max="1.6" step="0.001" disabled></label>
+        <h2>Character positions <small>LOCKED</small></h2>
+        <div class="segmented" id="characterTabs">
+          <button data-character="p1" class="active">P1</button>
+          <button data-character="p2">P2</button>
+          <button data-character="p3">P3</button>
+        </div>
+        <label>Horizontal <input id="charXOut" class="numeric" aria-label="Character horizontal value" type="number" min="0" max="1" step="0.0001" disabled><input id="charX" aria-label="Character horizontal" type="range" min="0" max="1" step="0.0001" disabled></label>
+        <label>Vertical <input id="charYOut" class="numeric" aria-label="Character vertical value" type="number" min="0" max="1.3" step="0.0001" disabled><input id="charY" aria-label="Character vertical" type="range" min="0" max="1.3" step="0.0001" disabled></label>
+        <label>Size <input id="charHOut" class="numeric" aria-label="Character size value" type="number" min="0.05" max="0.8" step="0.001" disabled><input id="charH" aria-label="Character size" type="range" min="0.05" max="0.8" step="0.001" disabled></label>
+        <p class="note">Final owner-approved character and Hydra placements are locked. Browser storage cannot override this record.</p>
+        <div class="buttons"><button id="copy" class="primary">Copy locked placement JSON</button></div>
+        <p id="copied" class="note"></p>
+        <details><summary>Runtime contract</summary><pre id="contract"></pre></details>
+      </aside>
+    </section>
+  </main>
+  <script src="app.js?v=14"></script>
+</body>
+</html>

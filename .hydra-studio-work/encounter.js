@@ -1,0 +1,43 @@
+(() => {
+  const $ = id => document.getElementById(id);
+  const base = {p1:{x:.1165,y:.7381,h:.335},p2:{x:.4954,y:.6722,h:.26},galan:{x:.8799,y:.6557,h:.193},hydra:{entrance:{x:.5092,y:1.3826,h:1.115},attack:{x:.4837,y:1.1913,h:1.307},dead:{x:.5055,y:1.334,h:1.201}}};
+  const clips = {
+    p1:{ready:{src:'assets/p1-combat-ready-loop.webm?v=1',duration:1,loop:true,rate:1/3},attack:{src:'assets/p1-attack-alpha-v2.webm?v=2',duration:8},defence:{src:'assets/p1-defence-alpha-v2.webm?v=2',duration:10},faint:{src:'assets/p1-faint-alpha-v2.webm?v=2',duration:10},recovery:{src:'assets/p1-recovery-alpha-v1.webm?v=1',duration:10}},
+    galan:{ready:{src:'assets/galan-combat-ready-defence-loop-v2.webm?v=2',duration:1,loop:true,rate:1/3},attack:{src:'assets/galan-attack-v005.webm?v=1',duration:3.75},defence:{src:'assets/galan-defence-alpha-v2.webm?v=2',duration:10},faint:{src:'assets/galan-faint-alpha-pass3.webm?v=3',duration:9},recovery:{src:'assets/galan-recovery-alpha-v1.webm?v=1',duration:10}},
+    hydra:{entrance:{src:'assets/hydra-entrance.webm?v=13',duration:9.917},attack:{src:'assets/hydra-attack.webm?v=13',duration:10},dead:{src:'assets/hydra-dead.webm?v=13',duration:10}}
+  };
+  const calibration={p1:{ready:[.233,.7896],attack:[.233,.7896],defence:[.5,.88],faint:[.5,.88],recovery:[.5,.9]},galan:{ready:[.5,.88],attack:[.6236,.8196],defence:[.5,.88],faint:[.5,1],recovery:[.5,.95]}};
+  const defaults={p1:{ready:{...base.p1},attack:{...base.p1},defence:{...base.p1},faint:{...base.p1},recovery:{...base.p1}},galan:{ready:{x:.8658,y:.6406,h:.2027},attack:{x:.8799,y:.6557,h:.2697},defence:{x:.8799,y:.6557,h:.2697},faint:{x:.8799,y:.6557,h:.1930},recovery:{x:.8799,y:.6557,h:.1930}}};
+  const key='fh-encounter-action-placements-v3';
+  let saved={}; try{saved=JSON.parse(localStorage.getItem(key)||'{}')}catch(_){saved={}};
+  const state={p1:{...defaults.p1,...saved.p1},galan:{...defaults.galan,...saved.galan}};
+  const videos={p1:$('p1Video'),galan:$('galanVideo'),hydra:$('hydraVideo')};
+  const p1Ghost=$('p1FlameGhost');
+  const selectors={p1:$('p1Action'),galan:$('galanAction'),hydra:$('hydraAction')};
+  const delays={p1:$('p1Delay'),galan:$('galanDelay'),hydra:$('hydraDelay')};
+  let timers=[];
+
+  function action(name){return selectors[name].value}
+  function clip(name){return clips[name]?.[action(name)]}
+  function placeHero(name){const a=action(name),p=state[name][a],c=calibration[name][a],v=videos[name];v.style.left=`${p.x*100}%`;v.style.top=`${p.y*100}%`;v.style.height=`${p.h*100}%`;v.style.maxWidth=(name==='p1'&&a==='attack')?'150%':'180%';v.style.transform=`translate(${-c[0]*100}%,${-c[1]*100}%)`}
+  function syncGhost(){if(!p1Ghost)return;const v=videos.p1;if(v.src&&p1Ghost.src!==v.src){p1Ghost.src=v.src;p1Ghost.load()}p1Ghost.style.cssText=v.style.cssText;p1Ghost.dataset.action=v.dataset.action||'';p1Ghost.hidden=v.hidden;try{p1Ghost.currentTime=v.currentTime}catch(_){}if(v.paused)p1Ghost.pause();else if(p1Ghost.paused)p1Ghost.play().catch(()=>{})}
+  function configureHero(name){const c=clip(name),v=videos[name];v.pause();v.src=c.src;v.loop=!!c.loop;v.load();v.defaultPlaybackRate=c.rate||1;v.playbackRate=v.defaultPlaybackRate;v.hidden=false;v.dataset.action=action(name);placeHero(name);renderControls(name);if(c.loop)v.play().catch(()=>{});if(name==='p1')syncGhost()}
+  function configureHydra(){const a=action('hydra'),v=videos.hydra;if(a==='none'){v.pause();v.hidden=true;$('hydraAnchor').hidden=true;$('hydraPlacement').textContent='Hydra none';return}const p=base.hydra[a];v.pause();v.src=clips.hydra[a].src;v.load();v.hidden=false;v.style.left=`${p.x*100}%`;v.style.top=`${p.y*100}%`;v.style.height=`${p.h*100}%`;v.style.maxWidth=`${Math.min(2.4,p.h*1.8)*100}%`;$('hydraAnchor').hidden=false;$('hydraAnchor').style.left=v.style.left;$('hydraAnchor').style.top=v.style.top;$('hydraPlacement').textContent=`Hydra ${a} ${p.x.toFixed(4)}, ${p.y.toFixed(4)}, ${p.h.toFixed(4)}`}
+  function renderControls(name){const host=$(name+'Controls'),p=state[name][action(name)];host.innerHTML='';[['x','Horizontal',0,1],['y','Vertical',0,1.5],['h','Height',.05,1.5]].forEach(([field,label,min,max])=>{const row=document.createElement('label');row.className='axis-row';row.innerHTML=`<span>${label}</span><input type="range" min="${min}" max="${max}" step="0.0001" value="${p[field]}"><input type="number" min="${min}" max="${max}" step="0.0001" value="${p[field].toFixed(4)}">`;const range=row.children[1],num=row.children[2];const update=value=>{p[field]=Math.max(min,Math.min(max,Number(value)||0));range.value=p[field];num.value=p[field].toFixed(4);placeHero(name);$('placementStatus').textContent=`Unsaved ${name.toUpperCase()} ${action(name)} ${field}: ${p[field].toFixed(4)}`};range.oninput=e=>update(e.target.value);num.oninput=e=>update(e.target.value);host.appendChild(row)})}
+  function clearTimers(){timers.forEach(clearTimeout);timers=[]}
+  function prepare(name){if(name==='hydra'&&action(name)==='none'){$('comboStatus').textContent='Pick a Hydra action (Entrance, Attack, or Dead) before pressing Play Hydra.';return false}const v=videos[name];v.pause();v.currentTime=0;v.hidden=false;return true}
+  function playOne(name,delay=0){if(!prepare(name))return;timers.push(setTimeout(()=>{const c=clip(name);videos[name].playbackRate=c?.rate||1;videos[name].play().catch(err=>{$('comboStatus').textContent=`${name.toUpperCase()} playback failed: ${err.name} - ${err.message}`});if(name==='p1')syncGhost()},Math.max(0,delay)*1000))}
+  function pauseAll(){clearTimers();Object.values(videos).forEach(v=>v.pause());if(p1Ghost)p1Ghost.pause();$('comboStatus').textContent='All animations paused.'}
+  function playAll(){clearTimers();['p1','galan','hydra'].forEach(n=>playOne(n,Number(delays[n].value)||0));$('comboStatus').textContent=`Playing P1 ${action('p1')} + Galan ${action('galan')} + Hydra ${action('hydra')}.`}
+  function resetAll(){pauseAll();Object.values(videos).forEach(v=>{try{v.currentTime=0}catch(_){}});configureHero('p1');configureHero('galan');configureHydra();$('scrub').value=0}
+
+  ['p1','galan'].forEach(name=>{selectors[name].onchange=()=>configureHero(name);videos[name].onended=()=>{if($('restoreReady').checked){selectors[name].value='ready';configureHero(name)}}});
+  selectors.hydra.onchange=configureHydra;
+  $('lockPlacements').onclick=()=>{localStorage.setItem(key,JSON.stringify(state));$('placementStatus').textContent=`Locked P1 ${action('p1')} and Galan ${action('galan')} placements.`};
+  $('resetPlacements').onclick=()=>{['p1','galan'].forEach(n=>state[n][action(n)]={...defaults[n][action(n)]});localStorage.setItem(key,JSON.stringify(state));configureHero('p1');configureHero('galan');$('placementStatus').textContent='Selected actions reset to locked base coordinates.'};
+  $('playCombo').onclick=playAll;$('pauseAll').onclick=pauseAll;$('resetAll').onclick=resetAll;$('playP1').onclick=()=>playOne('p1');$('playGalan').onclick=()=>playOne('galan');$('playHydra').onclick=()=>playOne('hydra');
+  $('scrub').oninput=e=>{pauseAll();const t=Number(e.target.value);Object.entries(videos).forEach(([n,v])=>{const c=clip(n);if(c)v.currentTime=Math.min(t,c.duration)});if(p1Ghost)try{p1Ghost.currentTime=videos.p1.currentTime}catch(_){}};
+  function tick(){['p1','galan','hydra'].forEach(n=>{const c=clip(n),v=videos[n];$(n+'Time').textContent=`${n==='galan'?'Galan':n.toUpperCase()} ${v.currentTime.toFixed(2)} / ${(Number.isFinite(v.duration)?v.duration:(c?.duration||0)).toFixed(2)} s`});const moving=Object.values(videos).filter(v=>!v.paused);if(moving.length)$('scrub').value=Math.max(...moving.map(v=>v.currentTime));if(p1Ghost&&!videos.p1.hidden){if(videos.p1.paused)p1Ghost.pause();else{if(p1Ghost.paused)p1Ghost.play().catch(()=>{});try{if(Math.abs(p1Ghost.currentTime-videos.p1.currentTime)>0.05)p1Ghost.currentTime=videos.p1.currentTime}catch(_){}}}requestAnimationFrame(tick)}
+  const p2=document.querySelector('.actor-p2');p2.style.left=`${base.p2.x*100}%`;p2.style.top=`${base.p2.y*100}%`;p2.style.height=`${base.p2.h*100}%`;
+  configureHero('p1');configureHero('galan');configureHydra();requestAnimationFrame(tick);
+})();

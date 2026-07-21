@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 2,
+  "status": "owner-approved-locked",
+  "roomId": "room.10",
+  "layerOrder": { "characters": 20, "hydra": 25 },
+  "characters": {
+    "p1": { "x": 0.1165, "y": 0.7381, "h": 0.3350 },
+    "p2": { "x": 0.4954, "y": 0.6722, "h": 0.2600 },
+    "p3": { "x": 0.8799, "y": 0.6557, "h": 0.1930 }
+  },
+  "hydra": {
+    "anchor": "foot-center",
+    "positionsByAnimation": {
+      "entrance": { "x": 0.5092, "y": 1.3826, "h": 1.1150 },
+      "attack": { "x": 0.4837, "y": 1.1913, "h": 1.3070 },
+      "dead": { "x": 0.5055, "y": 1.3340, "h": 1.2010 }
+    }
+  }
+}

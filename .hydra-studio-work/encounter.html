@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>F&amp;H Boss Encounter Placement Console</title>
+  <link rel="stylesheet" href="style.css?v=22">
+  <link rel="stylesheet" href="encounter.css?v=22">
+  <link rel="stylesheet" href="encounter-wide.css?v=22">
+</head>
+<body>
+  <main>
+    <header class="topbar">
+      <div><small>F&amp;H FABLE · ADVENTURE RUINS CHARLIE</small><h1>Boss Encounter Placement Console</h1></div>
+      <span class="status">P1 (DD) · P2 (Tank) · P3 (Galan) · 24 fps · <strong>Build 22</strong></span>
+    </header>
+    <section class="workspace encounter-workspace">
+      <div class="preview-column">
+        <div id="stage" class="stage" aria-label="Boss encounter preview">
+          <img class="room" src="assets/room/room-10.webp" alt="Boss room">
+          <video id="p1Video" class="actor-video actor-p1" muted playsinline preload="auto"></video>
+          <img class="hero actor-p2" src="assets/room/p2.webp" alt="P2 static">
+          <video id="galanVideo" class="actor-video actor-p3" muted playsinline preload="auto"></video>
+          <video id="hydraVideo" class="hydra-combo" muted playsinline preload="auto"></video>
+          <video id="p1FlameGhost" class="actor-video actor-p1 flame-ghost" muted playsinline preload="auto" aria-hidden="true"></video>
+          <div id="hydraAnchor" class="anchor" title="Locked Hydra foot-centre anchor"></div>
+        </div>
+        <p class="stage-help">Choose an action, then adjust that action's own placement. Hydra stays locked in the foreground.</p>
+      </div>
+      <aside>
+        <section class="action-grid">
+          <label>P1 (DD)<select id="p1Action"><option value="ready" selected>Ready · Attack loop · ⅓ speed</option><option value="attack">Attack · 8.00 s</option><option value="defence">Defence · 10.00 s</option><option value="faint">Faint · 10.00 s</option><option value="recovery">Recovery · 10.00 s</option></select></label>
+          <label>P3 (Galan)<select id="galanAction"><option value="ready" selected>Ready · Defence loop · ⅓ speed</option><option value="attack">Attack v005 · 3.75 s</option><option value="defence">Defence · 10.00 s</option><option value="faint">Faint corrected · 9.00 s</option><option value="recovery">Recovery · 10.00 s</option></select></label>
+          <label>Hydra action<select id="hydraAction"><option value="none">None</option><option value="entrance">Entrance · reversed</option><option value="attack" selected>Attack · 10.00 s</option><option value="dead">Dead · 10.00 s</option></select></label>
+        </section>
+
+        <section class="placement-editor">
+          <div class="actor-editor"><h2>P1 (DD) selected action</h2><div id="p1Controls" class="axis-controls"></div></div>
+          <div class="actor-editor"><h2>P3 (Galan) selected action</h2><div id="galanControls" class="axis-controls"></div></div>
+          <div class="buttons placement-buttons"><button id="lockPlacements" class="primary">Lock selected placements</button><button id="resetPlacements">Reset selected</button></div>
+          <p id="placementStatus" class="note">Each animation keeps its own X, Y, and height.</p>
+        </section>
+
+        <section class="playback-panel"><h2>Playback</h2>
+        <div class="delay-grid"><label>P1 delay<input id="p1Delay" type="number" min="0" max="10" step="0.1" value="0"></label><label>Galan delay<input id="galanDelay" type="number" min="0" max="10" step="0.1" value="0"></label><label>Hydra delay<input id="hydraDelay" type="number" min="0" max="10" step="0.1" value="0"></label></div>
+        <div class="buttons combo-buttons"><button id="playCombo" class="primary">Play combination</button><button id="pauseAll">Pause all</button><button id="resetAll">Reset</button></div>
+        <div class="buttons individual-buttons"><button id="playP1">Play P1</button><button id="playGalan">Play Galan</button><button id="playHydra">Play Hydra</button></div>
+        <label class="checkbox"><input id="restoreReady" type="checkbox" checked> Return each hero to its ready loop after playback</label>
+
+        <h2>Shared scrub</h2>
+        <input id="scrub" class="full-range" type="range" min="0" max="10" step="0.001" value="0">
+        <div class="time-list"><output id="p1Time"></output><output id="galanTime"></output><output id="hydraTime"></output></div>
+
+        <h2>Locked reference</h2>
+        <div class="placement-table"><code>P1 (DD) 0.1165, 0.7381, 0.3350</code><code>P2 (Tank) 0.4954, 0.6722, 0.2600</code><code>P3 (Galan) 0.8799, 0.6557, 0.1930</code><code id="hydraPlacement"></code></div>
+        <p id="comboStatus" class="note">Ready loops are playing at one-third speed.</p></section>
+      </aside>
+    </section>
+  </main>
+  <script src="encounter.js?v=22"></script>
+</body>
+</html>

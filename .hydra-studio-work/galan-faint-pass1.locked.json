@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "project": "F&H Fable - Adventure Ruins Charlie",
+  "actor": "P3/Galan",
+  "animation": "faint",
+  "sourceRangeSeconds": [1.0, 10.0],
+  "interpolation": "cubic-smoothstep",
+  "interpretation": "The requested 14.218-second value was applied at 4.218 seconds because the source ends at 10.00 seconds.",
+  "anchor": "foot-center",
+  "baselinePlacement": { "x": 0.8799, "y": 0.6557, "h": 0.1930 },
+  "lockedSizeKeyframes": [
+    { "sourceTime": 1.000, "h": 0.1930 },
+    { "sourceTime": 3.100, "h": 0.1785 },
+    { "sourceTime": 4.218, "h": 0.1745 },
+    { "sourceTime": 5.100, "h": 0.1420 },
+    { "sourceTime": 5.911, "h": 0.1315 },
+    { "sourceTime": 6.600, "h": 0.1395 },
+    { "sourceTime": 10.000, "h": 0.1395 }
+  ],
+  "bakedOutput": "assets/galan-faint-alpha-pass2.webm"
+}
