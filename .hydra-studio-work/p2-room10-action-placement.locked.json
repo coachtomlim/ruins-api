@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "status": "owner-approved-locked",
+  "milestone": "Hydra-Echo",
+  "consoleBuild": 40,
+  "project": "F&H Fable - Adventure Ruins Charlie",
+  "room": "room.10",
+  "actor": "P2 (Tank)",
+  "coordinateSystem": "normalized-stage-foot-anchor",
+  "placements": {
+    "ready": { "x": 0.4954, "y": 0.6722, "h": 0.2205 },
+    "attack": { "x": 0.4954, "y": 0.6722, "h": 0.2205 },
+    "defence": { "x": 0.4954, "y": 0.6722, "h": 0.3025 },
+    "faint": { "x": 0.4954, "y": 0.6722, "h": 0.2600 },
+    "recovery": { "x": 0.4954, "y": 0.6722, "h": 0.2600 }
+  },
+  "recoverySizeRamp": {
+    "note": "Recovery placement.h (0.2600) scales a baked foot-anchored size ramp from 0.26 (prone start, held to clip 0.6s) to 0.21 (kneeling end at clip 4.9167s, cubic-smoothstep) in galan-faint-precedent terms.",
+    "bakedOutput": "assets/p2-recovery-alpha-v5.webm",
+    "calibration": [0.526, 0.89]
+  },
+  "sourceNote": "Ready and Attack are re-ingested from real footage (Tank Attack.mp4, green-dominance keyed) - Ready is a normal-speed ping-pong idle loop, Attack is a two-hit cross-dissolved combo. Defence/Faint/Recovery are built from 12-pose sprite sheets via premultiplied cross-dissolve (optical-flow interpolation was tried first and rejected for ghosting). Faint is trimmed to the first pure (unblended) pose to avoid a double-exposure artifact at the frozen end frame.",
+  "revisionHistory": "P2 had no animation before 2026-07-22 (static pose image only). Built out to a full five-action system across this session: sprite ingestion, cross-dissolve rebuilds to remove interpolation ghosting, a baked Recovery size ramp, and Attack/Ready re-ingested from real video. Height corrected once (Defence/Faint too small relative to the video actions, fixed by deriving each action's height from its own measured sprite-fill fraction rather than a sibling's).",
+  "approvedDate": "2026-07-22"
+}
