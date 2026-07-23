@@ -1,0 +1,110 @@
+[
+  {
+    "id": "battle-field-background",
+    "runtimePath": "./public/assets/recovered/battle/battle-field-background.png",
+    "originalArchivePath": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Assets\\Battle\\Battle\\Battle_Field_Background.png",
+    "assetType": "image",
+    "intendedUse": "Battle background",
+    "sceneOrSystem": "combat",
+    "confidence": "HIGH",
+    "licensingNote": "Recovered local project asset; keep local until release rights are confirmed.",
+    "dimensions": { "width": 1024, "height": 768 },
+    "fileSize": 1015709
+  },
+  {
+    "id": "forgon-spritesheet",
+    "runtimePath": "./public/assets/recovered/enemies/forgon.png",
+    "originalArchivePath": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot Animation Project\\Camelot Animation Project\\SpriteSheetNew (Creatures)\\Forgon.png",
+    "assetType": "spritesheet",
+    "intendedUse": "Forgon enemy source sheet",
+    "sceneOrSystem": "combat",
+    "confidence": "HIGH",
+    "licensingNote": "Recovered local project asset; frame extraction still needed for production use.",
+    "dimensions": { "width": 4473, "height": 3792 },
+    "fileSize": 682838
+  },
+  {
+    "id": "forgon-idle",
+    "runtimePath": "./public/assets/recovered/enemies/forgon-idle.gif",
+    "originalArchivePath": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot Animation Project\\Camelot Animation Project\\Gif Animation\\Forgon Animation\\1.gif",
+    "assetType": "animation",
+    "intendedUse": "Visible Forgon battle animation",
+    "sceneOrSystem": "combat",
+    "confidence": "MEDIUM",
+    "licensingNote": "Recovered local project asset; GIF should be optimized or converted before public release.",
+    "dimensions": { "width": 366, "height": 295 },
+    "fileSize": 727473
+  },
+  {
+    "id": "party-characters-v2",
+    "runtimePath": "./public/assets/recovered/characters/party-characters-v2.png",
+    "originalArchivePath": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\4_CharactersV2.png",
+    "assetType": "image",
+    "intendedUse": "Party/player visual",
+    "sceneOrSystem": "exploration combat victory",
+    "confidence": "HIGH",
+    "licensingNote": "Recovered local project asset; keep local until release rights are confirmed.",
+    "dimensions": { "width": 434, "height": 515 },
+    "fileSize": 605334
+  },
+  {
+    "id": "grasslands-map",
+    "runtimePath": "./public/assets/recovered/maps/grasslands.png",
+    "originalArchivePath": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot Animation Project\\Camelot Animation Project\\Level Designing\\Level Probs SpriteSheets\\mapforestpng\\grasslands.png",
+    "assetType": "map-tile-sheet",
+    "intendedUse": "Early Level 1 road/field map visual",
+    "sceneOrSystem": "exploration",
+    "confidence": "HIGH",
+    "licensingNote": "Recovered local project asset; source appears project-local but release rights still need review.",
+    "dimensions": { "width": 2048, "height": 2048 },
+    "fileSize": 570457
+  },
+  {
+    "id": "dead-forest-map",
+    "runtimePath": "./public/assets/recovered/maps/deadforesttile.png",
+    "originalArchivePath": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot Animation Project\\Camelot Animation Project\\Level Designing\\Level Probs SpriteSheets\\mapforestpng\\deadforesttile.png",
+    "assetType": "map-tile-sheet",
+    "intendedUse": "Ashes/survivor area map visual",
+    "sceneOrSystem": "exploration",
+    "confidence": "HIGH",
+    "licensingNote": "Recovered local project asset; release rights still need review.",
+    "dimensions": { "width": 2048, "height": 2048 },
+    "fileSize": 717541
+  },
+  {
+    "id": "castle-brown-map",
+    "runtimePath": "./public/assets/recovered/maps/mapcastlebrown.png",
+    "originalArchivePath": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot Animation Project\\Camelot Animation Project\\Level Designing\\Level Probs SpriteSheets\\mapcastlewhitepng\\mapcastlebrown.png",
+    "assetType": "map-tile-sheet",
+    "intendedUse": "Castle approach map visual",
+    "sceneOrSystem": "exploration",
+    "confidence": "HIGH",
+    "licensingNote": "Recovered local project asset; release rights still need review.",
+    "dimensions": { "width": 1024, "height": 1024 },
+    "fileSize": 604854
+  },
+  {
+    "id": "castle-white-map",
+    "runtimePath": "./public/assets/recovered/maps/mapcastlewhite.png",
+    "originalArchivePath": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot Animation Project\\Camelot Animation Project\\Level Designing\\Level Probs SpriteSheets\\mapcastlewhitepng\\mapcastlewhite.png",
+    "assetType": "map-tile-sheet",
+    "intendedUse": "Castle victory/approach map visual",
+    "sceneOrSystem": "exploration victory",
+    "confidence": "HIGH",
+    "licensingNote": "Recovered local project asset; release rights still need review.",
+    "dimensions": { "width": 1024, "height": 1024 },
+    "fileSize": 143294
+  },
+  {
+    "id": "bandit-spritesheet",
+    "runtimePath": "./public/assets/recovered/enemies/bandit1-new-spritesheet.png",
+    "originalArchivePath": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Bandit1 NewSpriteSheet.png",
+    "assetType": "spritesheet",
+    "intendedUse": "Deferred humanoid enemy visual reference",
+    "sceneOrSystem": "deferred",
+    "confidence": "MEDIUM",
+    "licensingNote": "Recovered local project asset; not currently rendered.",
+    "dimensions": { "width": 532, "height": 469 },
+    "fileSize": 65951
+  }
+]

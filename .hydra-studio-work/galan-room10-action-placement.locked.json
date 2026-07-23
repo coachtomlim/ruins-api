@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 2,
+  "status": "owner-approved-locked",
+  "milestone": "Hydra-Echo",
+  "consoleBuild": 40,
+  "project": "F&H Fable - Adventure Ruins Charlie",
+  "room": "room.10",
+  "actor": "P3 (Galan)",
+  "coordinateSystem": "normalized-stage-foot-anchor",
+  "placements": {
+    "combatReady": { "x": 0.8658, "y": 0.6406, "h": 0.2257 },
+    "attack": { "x": 0.8799, "y": 0.6557, "h": 0.2854 },
+    "defence": { "x": 0.8658, "y": 0.6406, "h": 0.2257 },
+    "faint": { "x": 0.8799, "y": 0.6857, "h": 0.1930 },
+    "recovery": { "x": 0.8579, "y": 0.6841, "h": 0.1698 }
+  },
+  "recoverySizeRamp": {
+    "note": "Recovery placement.h (0.1698) uniformly scales a size ramp baked into galan-recovery-alpha-v5.webm's pixels. Bake-time reference keyframes (relative shape, in the h-terms used when baked): start 0.135 at clip 0.0-0.8s, end 0.1648 by clip 5.5s (cubic-smoothstep), held after. The current external h scales that whole baked shape uniformly, per owner direction 2026-07-22 (no rebake needed for placement-only tweaks).",
+    "bakedOutput": "assets/galan-recovery-alpha-v5.webm",
+    "paddedCanvas": "1463x823 (was 1280x720) to prevent the growth ramp from clipping Galan's head against the raw footage's limited headroom",
+    "calibration": [0.4997, 0.9563]
+  },
+  "revisionHistory": "2026-07-21 initial lock (flat heights, recovery reused faint's placement). 2026-07-22: owner increased all heights x1.18 for visual scale, then reverted ready/attack/defence/faint to the original lock and gave recovery a proper size-ramp fix (was reusing faint's static placement, which read as either too big at the start or too small standing). Values above are final.",
+  "approvedDate": "2026-07-21",
+  "revisedDate": "2026-07-22"
+}

@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "id": "ruins.alpha.config",
+  "canonVariant": "adventure_game_design_v3_alpha",
+  "startingStats": {
+    "canonStatus": "LOCKED",
+    "sourceNotes": ["Adventure Game Design V3 - Alpha", "Full Alpha Specifications"],
+    "value": {
+      "ATF": 6,
+      "DEF": 6,
+      "EVA": 6,
+      "HP": 20
+    }
+  },
+  "dice": {
+    "canonStatus": "LOCKED",
+    "sourceNotes": ["Adventure Game Design V3 - Alpha combat rules"],
+    "attackRoll": "1d4",
+    "damageRoll": "1d4"
+  },
+  "combat": {
+    "monsterInitiative": {
+      "canonStatus": "LOCKED",
+      "value": "monster_attacks_first",
+      "sourceNotes": ["Adventure Game Design V3 - Alpha", "Post-test fix 7"]
+    },
+    "toHitRule": {
+      "canonStatus": "LOCKED",
+      "value": "attacker_EVA_plus_1d4_greater_or_equal_defender_EVA_plus_1d4"
+    },
+    "damageRule": {
+      "canonStatus": "LOCKED",
+      "value": "attacker_ATF_minus_defender_DEF_plus_1d4_minimum_1"
+    },
+    "victoryRewardPercent": {
+      "canonStatus": "LOCKED",
+      "value": 30,
+      "rounding": "floor"
+    },
+    "victoryFullyHealsPlayer": {
+      "canonStatus": "LOCKED",
+      "value": true
+    },
+    "rewardSourceStats": {
+      "canonStatus": "UNKNOWN",
+      "requiresDecision": true,
+      "sourceNotes": [
+        "Examples imply base/original monster stats for key fiends, but combat docs do not state this explicitly."
+      ],
+      "variants": [
+        {
+          "value": "original_monster_stats",
+          "sourceNote": "Later combat examples for Musca and Lizardman"
+        },
+        {
+          "value": "current_modified_monster_stats",
+          "sourceNote": "Possible interpretation if scroll effects mutate stats directly"
+        }
+      ]
+    },
+    "runPenaltyPercent": {
+      "canonStatus": "LOCKED",
+      "value": 15,
+      "rounding": "floor"
+    },
+    "runPenaltyStatBucket": {
+      "canonStatus": "UNKNOWN",
+      "requiresDecision": true,
+      "variants": [
+        {
+          "value": "current_stats_only",
+          "sourceNote": "Could preserve maximum/base stats for later restoration"
+        },
+        {
+          "value": "current_and_max_stats",
+          "sourceNote": "Literal reading of all stats reduced"
+        },
+        {
+          "value": "base_stats",
+          "sourceNote": "High-risk interpretation; would affect boss mirroring"
+        }
+      ]
+    }
+  },
+  "scrollEffects": {
+    "correctEffectPercent": {
+      "canonStatus": "LOCKED",
+      "value": 50,
+      "affectedStats": ["ATF", "DEF", "EVA", "HP"]
+    },
+    "incorrectEffectPercent": {
+      "canonStatus": "CONFLICTED",
+      "requiresDecision": true,
+      "affectedStats": ["ATF", "DEF", "EVA", "HP"],
+      "variants": [
+        {
+          "value": 5,
+            "sourceNote": "Frozen Alpha reference retained as conflicting evidence against Adventure Game Design V3 - Alpha base"
+        },
+        {
+          "value": 10,
+          "sourceNote": "Later Alpha/Beta rulebook and JSON script"
+        }
+      ]
+    }
+  },
+  "saveRules": {
+    "manualSave": {
+      "canonStatus": "LOCKED",
+      "availableAfterRoomId": "room.02",
+      "slots": 1,
+      "overwritesExistingManualSave": true
+    },
+    "preBossAutoSave": {
+      "canonStatus": "LOCKED",
+      "trigger": "before_room_10_boss",
+      "overwritesManualSave": false
+    }
+  },
+  "bossMirrorBehavior": {
+    "canonStatus": "LOCKED",
+    "bossId": "monster.banshee_doppelganger",
+    "mirrors": "player_base_stats_at_room_10_entry",
+    "excludes": ["equipment_modifiers"],
+    "sourceNotes": ["Adventure Game Design V3 - Alpha boss rules", "Room 9 store logic"]
+  }
+}

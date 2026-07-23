@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/ruins/journal-entries.schema.json",
+  "title": "Ruins Journal Entries",
+  "type": "object",
+  "required": ["schemaVersion", "journalEntries"],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "journalEntries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "unlockCondition", "textSummary", "canonStatus"],
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "unlockCondition": { "type": "string" },
+          "textSummary": { "type": "string" },
+          "canonStatus": { "enum": ["LOCKED", "LIKELY", "CONFLICTED", "UNKNOWN"] }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

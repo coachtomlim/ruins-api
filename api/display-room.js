@@ -1,20 +1,35 @@
-// api/display-room.js
+const manifest = require("../public/assets-manifest.json");
+
+const assetsByName = new Map();
+
+function publicAssetUrl(host, filePath) {
+  const encodedPath = String(filePath)
+    .split("/")
+    .map((part) => encodeURIComponent(part))
+    .join("/");
+  return `${host}/${encodedPath}`;
+}
+
+for (const asset of manifest.assets) {
+  const names = [asset.displayName, ...(asset.aliases || [])];
+  for (const name of names) {
+    assetsByName.set(String(name).trim().toLowerCase(), asset);
+  }
+}
+
 module.exports = (req, res) => {
   const name = String(req.query.name || "").trim();
 
-  // Map the exact images you have in /public
-  const FILES = {
-    "Room 3": "Room3.webp",
-    "Room 4": "Room4.webp",
-    "Room3to4": "Room3to4.webp",
-    "Room4to3": "Room4to3.webp",
-    "Map": "Map.webp",
-  };
+  if (!name) {
+    return res.status(400).send("Missing required query parameter: name");
+  }
 
-  if (!FILES[name]) return res.status(404).send("Not found");
+  const asset = assetsByName.get(name.toLowerCase());
+
+  if (!asset) return res.status(404).send("Not found");
 
   const host = `https://${req.headers.host}`;
-  const markdown = `![${name}](${host}/${encodeURIComponent(FILES[name])})\n\n**${name}**`;
+  const markdown = `![${asset.displayName}](${publicAssetUrl(host, asset.filePath)})\n\n**${asset.displayName}**`;
 
   res.setHeader("Content-Type", "text/markdown; charset=utf-8");
   res.status(200).send(markdown);

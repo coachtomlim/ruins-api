@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Camelot Legends</title>
+  <rect width="512" height="512" rx="96" fill="#151719"/>
+  <path fill="#b7dc8b" d="M122 382h268v48H122z"/>
+  <path fill="#d6d1c5" d="M154 214h68v168h-68zm136-72h68v240h-68z"/>
+  <path fill="#a9d6c2" d="M222 190h68v192h-68z"/>
+  <path fill="#eaa083" d="M154 214l34-66 34 66zm68-24l34-84 34 84zm68-48l34-90 34 90z"/>
+  <path fill="#263239" d="M180 294h32v88h-32zm68-76h16v164h-16zm68 74h16v90h-16z"/>
+</svg>

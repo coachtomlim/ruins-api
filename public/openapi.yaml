@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: Ruins Display API
-  version: 1.0.1
+  version: 1.1.0
 servers:
   - url: https://ruins-api.vercel.app
 paths:
@@ -14,15 +14,27 @@ paths:
         - in: query
           name: name
           required: true
-          description: Name of the image, e.g., "Room 3", "Room3to4", "Map".
+          description: Name of the image, e.g., "Room 1", "Room 3", "Room3to4", "Map".
           schema:
             type: string
-            example: Room 3
+            examples:
+              - Map
+              - Room 1
+              - Room 3
+              - Room 4
+              - Room3to4
+              - Room4to3
       responses:
         "200":
           description: Markdown containing the image
           content:
             text/markdown:
+              schema:
+                type: string
+        "400":
+          description: Missing required image name
+          content:
+            text/plain:
               schema:
                 type: string
         "404":

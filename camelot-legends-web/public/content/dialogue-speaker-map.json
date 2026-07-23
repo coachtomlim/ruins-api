@@ -1,0 +1,50 @@
+[
+  {
+    "dialogueId": "dialogue-text-006",
+    "speakerId": "mystery",
+    "speakerName": "Mystery",
+    "source": "INFERRED",
+    "confidence": "MEDIUM",
+    "notes": "Speaker inferred from Level 1 reconstruction context; recovered record has text only."
+  },
+  {
+    "dialogueId": "dialogue-text-057",
+    "speakerId": "mystery",
+    "speakerName": "Mystery",
+    "source": "INFERRED",
+    "confidence": "MEDIUM",
+    "notes": "Quest report line; exact speaker not encoded in recovered dialogue record."
+  },
+  {
+    "dialogueId": "dialogue-text-063",
+    "speakerId": "mystery",
+    "speakerName": "Mystery",
+    "source": "INFERRED",
+    "confidence": "LOW",
+    "notes": "Urgent quest-continuation line; speaker assignment is provisional."
+  },
+  {
+    "dialogueId": "dialogue-text-064",
+    "speakerId": "adala",
+    "speakerName": "Adala",
+    "source": "INFERRED",
+    "confidence": "MEDIUM",
+    "notes": "The next recovered line names Adala as difficult, suggesting this objection is hers."
+  },
+  {
+    "dialogueId": "dialogue-text-065",
+    "speakerId": "party",
+    "speakerName": "Party Ally",
+    "source": "INFERRED",
+    "confidence": "LOW",
+    "notes": "The line addresses Adala and references Mystery; exact recovered speaker unavailable."
+  },
+  {
+    "dialogueId": "dialogue-text-066",
+    "speakerId": "claramond",
+    "speakerName": "Claramond",
+    "source": "INFERRED",
+    "confidence": "HIGH",
+    "notes": "Line self-identifies as Claramond."
+  }
+]

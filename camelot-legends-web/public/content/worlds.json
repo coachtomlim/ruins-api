@@ -1,0 +1,66 @@
+[
+  {
+    "id": "world-01",
+    "displayName": "World 1",
+    "description": "Recovered planning says 8 worlds x 5 areas; this groups areas 1-5.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "MEDIUM",
+    "notes": "Derived grouping, not an explicit runtime world record. Area ids: area-001, area-002, area-003, area-004, area-005"
+  },
+  {
+    "id": "world-02",
+    "displayName": "World 2",
+    "description": "Recovered planning says 8 worlds x 5 areas; this groups areas 6-10.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "MEDIUM",
+    "notes": "Derived grouping, not an explicit runtime world record. Area ids: area-006, area-007, area-008, area-009, area-010"
+  },
+  {
+    "id": "world-03",
+    "displayName": "World 3",
+    "description": "Recovered planning says 8 worlds x 5 areas; this groups areas 11-15.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "MEDIUM",
+    "notes": "Derived grouping, not an explicit runtime world record. Area ids: area-011, area-012, area-013, area-014, area-015"
+  },
+  {
+    "id": "world-04",
+    "displayName": "World 4",
+    "description": "Recovered planning says 8 worlds x 5 areas; this groups areas 16-20.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "MEDIUM",
+    "notes": "Derived grouping, not an explicit runtime world record. Area ids: area-016, area-017, area-018, area-019, area-020"
+  },
+  {
+    "id": "world-05",
+    "displayName": "World 5",
+    "description": "Recovered planning says 8 worlds x 5 areas; this groups areas 21-25.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "MEDIUM",
+    "notes": "Derived grouping, not an explicit runtime world record. Area ids: area-021, area-022, area-023, area-024, area-025"
+  },
+  {
+    "id": "world-06",
+    "displayName": "World 6",
+    "description": "Recovered planning says 8 worlds x 5 areas; this groups areas 26-30.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "MEDIUM",
+    "notes": "Derived grouping, not an explicit runtime world record. Area ids: area-026, area-027, area-028, area-029, area-030"
+  },
+  {
+    "id": "world-07",
+    "displayName": "World 7",
+    "description": "Recovered planning says 8 worlds x 5 areas; this groups areas 31-35.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "MEDIUM",
+    "notes": "Derived grouping, not an explicit runtime world record. Area ids: area-031, area-032, area-033, area-034, area-035"
+  },
+  {
+    "id": "world-08",
+    "displayName": "World 8",
+    "description": "Recovered planning says 8 worlds x 5 areas; this groups areas 36-40.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "MEDIUM",
+    "notes": "Derived grouping, not an explicit runtime world record. Area ids: area-036, area-037, area-038, area-039, area-040"
+  }
+]

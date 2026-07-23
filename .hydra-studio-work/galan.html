@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Galan Faint Placement and Anti-Zoom Editor</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="galan.css?v=1">
+</head>
+<body>
+  <main>
+    <header class="topbar">
+      <div><small>F&amp;H FABLE · ADVENTURE RUINS CHARLIE</small><h1>Galan Faint Placement + Anti-Zoom</h1></div>
+      <span class="status">PASS 3 · 3.10 s locked at 0.1600 · 24 fps alpha WebM</span>
+    </header>
+    <section class="workspace galan-workspace">
+      <div class="preview-column">
+        <div id="stage" class="stage" aria-label="Boss room Galan faint preview">
+          <img class="room" src="assets/room/room-10.webp" alt="Boss room">
+          <img class="hero p1" src="assets/room/p1.png?v=6" alt="P1">
+          <img class="hero p2" src="assets/room/p2.webp" alt="P2">
+          <video id="galan" class="galan-video" src="assets/galan-faint-alpha-pass3.webm?v=3" muted playsinline preload="auto"></video>
+          <div id="anchor" class="anchor galan-anchor" title="Galan P3 foot-center anchor"></div>
+        </div>
+        <p class="stage-help">P3 starts at the locked coordinate <code>0.8799, 0.6557, 0.1930</code>. The video is foreground relative to P1 and P2.</p>
+      </div>
+      <aside>
+        <h2>Playback</h2>
+        <div class="transport wrap">
+          <button id="play" class="primary">Play from source 1.00 s</button>
+          <button id="pause">Pause</button>
+          <button id="jumpZoom">Go to source 3.10 s</button>
+        </div>
+        <input id="scrub" class="full-range" type="range" min="0" max="9" value="0" step="0.001" aria-label="Galan timeline">
+        <div class="time-grid">
+          <output id="playbackTime">Playback 0.00 / 9.00 s</output>
+          <output id="sourceTime">Source 1.00 / 10.00 s</output>
+        </div>
+
+        <h2>Placement at current time</h2>
+        <label>Horizontal <input id="xOut" class="numeric" type="number" min="0" max="1.3" step="0.0001"><input id="x" type="range" min="0" max="1.3" step="0.0001"></label>
+        <label>Vertical <input id="yOut" class="numeric" type="number" min="0" max="1.3" step="0.0001"><input id="y" type="range" min="0" max="1.3" step="0.0001"></label>
+        <label>Size <input id="hOut" class="numeric" type="number" min="0.04" max="0.6" step="0.0005"><input id="h" type="range" min="0.04" max="0.6" step="0.0005"></label>
+        <p class="note">Controls update the paused frame immediately. Use the number fields or arrow keys for fine adjustment.</p>
+
+        <h2>Timestamped correction keyframes</h2>
+        <div class="buttons keyframe-actions">
+          <button id="saveKeyframe" class="primary">Set keyframe at current time</button>
+          <button id="resetDraft">Reset controls</button>
+        </div>
+        <label class="checkbox"><input id="snapChange" type="checkbox" checked> Keep the previous size until this exact timestamp</label>
+        <div id="keyframes" class="keyframes" aria-label="Correction keyframes"></div>
+        <div class="buttons">
+          <button id="toggleLock">Lock selected</button>
+          <button id="deleteKeyframe">Delete selected</button>
+        </div>
+        <p id="editorStatus" class="note">The controls show effective on-screen size. The 3.10-second value and proportionally adjusted downstream curve are locked.</p>
+        <details><summary>Placement curve JSON</summary><pre id="contract"></pre></details>
+        <div class="buttons"><button id="copy" class="primary">Copy correction JSON</button></div>
+      </aside>
+    </section>
+  </main>
+  <script src="galan.js?v=4"></script>
+</body>
+</html>

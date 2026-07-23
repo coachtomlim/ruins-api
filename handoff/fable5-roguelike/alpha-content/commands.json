@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "commands": [
+    {
+      "id": "command.inventory",
+      "displayName": "Inventory",
+      "aliases": ["inventory", "i"],
+      "context": "exploration",
+      "category": "universal",
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "command.examine",
+      "displayName": "Examine",
+      "aliases": ["examine", "inspect", "look at"],
+      "context": "exploration",
+      "category": "universal",
+      "requiresTarget": true,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "command.pick_get",
+      "displayName": "Pick/Get",
+      "aliases": ["pick", "pick up", "get", "take"],
+      "context": "exploration",
+      "category": "universal",
+      "requiresTarget": true,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "command.help",
+      "displayName": "Help",
+      "aliases": ["help"],
+      "context": "all",
+      "category": "universal",
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "command.fight",
+      "displayName": "Fight",
+      "aliases": ["fight"],
+      "context": "combat",
+      "category": "universal",
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "command.assemble",
+      "displayName": "Assemble",
+      "aliases": ["assemble", "assemble prism"],
+      "context": "exploration",
+      "category": "universal",
+      "requiresItems": ["item.prism_fragment_a", "item.prism_fragment_b", "item.prism_fragment_c"],
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "command.read_journal",
+      "displayName": "Read Journal",
+      "aliases": ["read journal", "journal"],
+      "context": "exploration",
+      "category": "universal",
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "command.save",
+      "displayName": "Save Game",
+      "aliases": ["save", "save game"],
+      "context": "exploration",
+      "category": "universal",
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "command.load",
+      "displayName": "Load Game",
+      "aliases": ["load", "load game"],
+      "context": "exploration",
+      "category": "universal",
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "command.end",
+      "displayName": "End",
+      "aliases": ["end", "end game", "quit"],
+      "context": "all",
+      "category": "universal",
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "command.combat.attack_once",
+      "displayName": "Attack Once",
+      "aliases": ["a", "attack once", "fight once"],
+      "context": "combat",
+      "category": "combat",
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "command.combat.fight_to_end",
+      "displayName": "Fight till the End",
+      "aliases": ["b", "fight till the end", "fight to end"],
+      "context": "combat",
+      "category": "combat",
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "command.combat.run",
+      "displayName": "Run",
+      "aliases": ["c", "run", "flee"],
+      "context": "combat",
+      "category": "combat",
+      "canonStatus": "CONFLICTED",
+      "requiresDecision": true,
+      "sourceNotes": [
+        "Combat JSON says Run is only available during Attack Once mode.",
+        "Other summaries list Run as a normal combat menu option."
+      ]
+    },
+    {
+      "id": "command.combat.use_item",
+      "displayName": "Use Item",
+      "aliases": ["d", "use item"],
+      "context": "combat",
+      "category": "combat",
+      "requiresTarget": true,
+      "canonStatus": "LOCKED"
+    }
+  ]
+}

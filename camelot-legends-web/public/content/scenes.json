@@ -1,0 +1,322 @@
+[
+  {
+    "id": "scene-001",
+    "displayName": "Ep. 01: The Start of Legends",
+    "description": "The Kingdom of Camelot has been shaken, and the people are in disarray. But a mysterious young traveler still holds hope to revive the kingdom and push back the invading darkness. She wanders the war-torn land in search of strong allies to aid in her quest.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-001; navigation graph not recovered."
+  },
+  {
+    "id": "scene-002",
+    "displayName": "Ep. 02: Journey Forth",
+    "description": "Alliances have been forged, and promises have been made. But the journey has just begun and it is already brindled with dangers. With enemies appearing where there should be none, could our mysterious stranger’s warning of Castle Camelot’s threat be true?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-002; navigation graph not recovered."
+  },
+  {
+    "id": "scene-003",
+    "displayName": "Ep. 03: Among the Ashes",
+    "description": "The journey has been smooth for the moment, but is it too easy? Our heroes have avoided any major enemy forces and have continued their united stance towards returning to Castle Camelot. But could stronger enemies be hiding out of plain sight?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-003; navigation graph not recovered."
+  },
+  {
+    "id": "scene-004",
+    "displayName": "Ep. 04: Danger Rising",
+    "description": "Through the guidance of our mysterious stranger, our heroes have gotten very close to Castle Camelot without much trouble. But the ease in battles thus far creates lingering doubts. Could all this just be a trap waiting to happen?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-004; navigation graph not recovered."
+  },
+  {
+    "id": "scene-005",
+    "displayName": "Ep. 05: Storm the Castle",
+    "description": "Our heroes finally arrive at Castle Camelot, and as our stranger has prophesied, the fortress is under siege!  Our heroes rush in to protect the castle, but in the lingering shadows, a powerful entity lies in wait to welcome their expected arrival.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-005; navigation graph not recovered."
+  },
+  {
+    "id": "scene-006",
+    "displayName": "Ep. 06: Bold Alliance",
+    "description": "Castle Camelot has been saved and new comrades have joined our heroes. But the Kingdom is in shambles and Bretunia is still under Morgana’s dark influence. How will our heroes seek to return light to the land?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-006; navigation graph not recovered."
+  },
+  {
+    "id": "scene-007",
+    "displayName": "Ep. 07: Hit and Run",
+    "description": "Our heroes continue to make their way towards Castle Ludium which has been overthrown by Morgana’s army, making double haste to prevent Castle Ludium from totally crumbling under the enemy’s occupation. But getting there is getting progressively difficult.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-007; navigation graph not recovered."
+  },
+  {
+    "id": "scene-008",
+    "displayName": "Ep. 08: Rushing Forward",
+    "description": "Waves of mercenaries and bandits continue to appear to obstruct the paths of our heroes, and their increasing numbers are getting our heroes worried over the state of Castle Ludium. Is the stronghold still standing? What of the survival of its people?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-008; navigation graph not recovered."
+  },
+  {
+    "id": "scene-009",
+    "displayName": "Ep. 09: March into the Fire",
+    "description": "Our heroes have not reached the castle yet, but signs of destruction are already within plain view. The current situation for Castle Ludium does not look good at all. Under such bleak conditions, our heroes grow more concerned. Are they too late?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-009; navigation graph not recovered."
+  },
+  {
+    "id": "scene-010",
+    "displayName": "Ep. 10: Fight for Liberty",
+    "description": "To the relief of our heroes, Castle Ludium is still intact. But they find it strange that their enemies have not pound the castle into gravel yet. What are their intentions? Meanwhile, there is a terrible power, greater than that of our heroes, lurking within the castle walls.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-010; navigation graph not recovered."
+  },
+  {
+    "id": "scene-011",
+    "displayName": "Ep. 11: M for Mystery",
+    "description": "With Castle Ludium secured, our heroes move west in their journey to rid Bretunia of Morgana’s evil. Where will our heroes go, and what new enemies will our heroes meet? At the same time, questions loom over our mysterious stranger’s origins.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-011; navigation graph not recovered."
+  },
+  {
+    "id": "scene-012",
+    "displayName": "Ep. 12: Death’s Playground",
+    "description": "The journey continues as our heroes travel across the county of Gerdenbur, a land once ravaged by Morganic troops. Even now, traces of evil cover the land while the restless souls of the dead continue to roam and seek out blood.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-012; navigation graph not recovered."
+  },
+  {
+    "id": "scene-013",
+    "displayName": "Ep. 13: Higher Peaks",
+    "description": "The ground on which our heroes tread begins to take an elevated turn as they make their way towards their destination situated beyond the hills. The journey is getting tougher but our heroes remain steadfast in their conviction to carry out their goal.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-013; navigation graph not recovered."
+  },
+  {
+    "id": "scene-014",
+    "displayName": "Ep. 14: Stone Graveyard",
+    "description": "The chaos and devastation that have swept the land during the recent war grow more evident as our heroes slowly transverse the uneven terrain. The haunting cries of lost souls echo off the earth and the air stings with the chill of death.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-014; navigation graph not recovered."
+  },
+  {
+    "id": "scene-015",
+    "displayName": "Ep. 15: Rough Encounter",
+    "description": "Our heroes arrive at their destination which was once an abandoned town. But the area has been so badly damaged that little signs of civilization remain. Will our heroes find the mysterious artifact they are looking for? Or will they find something entirely different?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-015; navigation graph not recovered."
+  },
+  {
+    "id": "scene-016",
+    "displayName": "Ep. 16: Uneasy Turn",
+    "description": "Our heroes continue west in search for their strange artifact, but what exactly is it? Mysteries stack on top of mysteries as the journey progresses, leaving the travelling companions in doubt over the relevance and purpose of their quest.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-016; navigation graph not recovered."
+  },
+  {
+    "id": "scene-017",
+    "displayName": "Ep. 17: Shaken Faith",
+    "description": "Near the border of Gerdenbur, more enemies appear to block the passage of our heroes. It will take grit and determination to plough through these monsters, but with our heroes in such disarray, can they muster the unity needed to overcome their adversaries?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-017; navigation graph not recovered."
+  },
+  {
+    "id": "scene-018",
+    "displayName": "Ep. 18: Cut-throats and Thugs",
+    "description": "The journey takes our heroes into the new territory of Baranor, which is mostly covered by forests and mountains. As they travel along the coastal land, they find their path constantly interrupted by mercenaries and thieves.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-018; navigation graph not recovered."
+  },
+  {
+    "id": "scene-019",
+    "displayName": "Ep. 19: Smash and Break In",
+    "description": "As our heroes approach Lizarton Bay, it is becoming apparent that the region is overrun by hoodlums and convicts. What happened to the peaceful town of Lizarton? Against the tide of barbarous felons, our heroes huddle together and force their way through.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-019; navigation graph not recovered."
+  },
+  {
+    "id": "scene-020",
+    "displayName": "Ep. 20: Beware the Dealer",
+    "description": "Having reached the town of Lizarton, our heroes find its people being held hostage and abused by a band of scoundrels. They make quick haste to track down the raiders’ leader who so happens to be holding the artifact they are seeking.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-020; navigation graph not recovered."
+  },
+  {
+    "id": "scene-021",
+    "displayName": "Ep. 21: Bearer of Bad News",
+    "description": "With the town of Lizarton liberated, our heroes make their way to find the next mysterious artifact. But terrible news arrives to inform our heroes of an attack happening at Castle Merlebrae. It is another rush to rescue a castle under siege.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-021; navigation graph not recovered."
+  },
+  {
+    "id": "scene-022",
+    "displayName": "Ep. 22: Keep up the Pace",
+    "description": "Time is of the essence as our heroes set their sights for their new destination of Castle Merlebrae. However, as expected, swarms of enemies continue to appear to obstruct their advancement. This does not bond well for the castle’s fate.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-022; navigation graph not recovered."
+  },
+  {
+    "id": "scene-023",
+    "displayName": "Ep. 23: Unclear Passage",
+    "description": "To cross the mountainous terrain, our heroes enter a cavern that leads to a nearby abandoned town. But even in this enclosure of rock void of life, defenses of enemies lurk menacingly in the shadows, searching for blood. Is nowhere safe from Morgana’s monsters?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-023; navigation graph not recovered."
+  },
+  {
+    "id": "scene-024",
+    "displayName": "Ep. 24: Into the Fray Once More",
+    "description": "After exiting the underground caverns, our heroes are finally close to Castle Merlebrae. Nevertheless, our heroes cannot afford to rest as their mission demands great urgency. All they need now is to breakthrough one more surge of enemies.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-024; navigation graph not recovered."
+  },
+  {
+    "id": "scene-025",
+    "displayName": "Ep. 25: Evacuate the Premise",
+    "description": "Our heroes arrive at Castle Merlebrae only to find the castle on its last breath. Its people are trying to escape but are constantly blocked by swells of enemies. Our heroes must aid in the people’s retreat while fending off the source of the attack.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-025; navigation graph not recovered."
+  },
+  {
+    "id": "scene-026",
+    "displayName": "Ep. 26: Welcome to the Forest",
+    "description": "Castle Merlebrae has been saved, but its security is still being threatened by Imam and his Kadir tribe. To resolve the conflict and ensure the safety of the castle, our heroes venture forth into Blackbird Forest to find the tribe’s resting sanctuary.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-026; navigation graph not recovered."
+  },
+  {
+    "id": "scene-027",
+    "displayName": "Ep. 27: Curtain of Anonymity",
+    "description": "Blackbird forest is like a mischievous beast. Its mystical atmosphere constantly plays tricks on the senses of our heroes. As they travel deeper into the shadows of the forest, they can feel the icy glares of aggressors increasing with every step.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-027; navigation graph not recovered."
+  },
+  {
+    "id": "scene-028",
+    "displayName": "Ep. 28: Hide and Seek",
+    "description": "Unable to clearly detect their enemies in the forest, our heroes decide to move towards a more bare terrain. But being in the open also makes them more vulnerable, and our heroes must remain vigilant to avoid unwanted attention.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-028; navigation graph not recovered."
+  },
+  {
+    "id": "scene-029",
+    "displayName": "Ep. 29: Behind the Veil",
+    "description": "The detour taken by our heroes has led them out of Blackbird Forest and into the Black Marsh. Ironically, the environment mimics the feelings they share: a sense of dread and uneasiness towards the upcoming confrontation with Imam.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-029; navigation graph not recovered."
+  },
+  {
+    "id": "scene-030",
+    "displayName": "Ep. 30: One Way or the Other",
+    "description": "The final meeting between our heroes and Imam has arrived. As they tread cautiously into the domain of the Kadir tribe, they mull over the chief’s reasons for siding with Morgana. The truth can be harsh, and leaders have to endure the responsibilities of their decisions.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-030; navigation graph not recovered."
+  },
+  {
+    "id": "scene-031",
+    "displayName": "Ep. 31: Daylight Robbery",
+    "description": "The region of Baranor is protected once again by the Kadir tribe through the resolve of its new leader. Our heroes can finally return to their quest to recover the mysterious artifacts. But the morale of our heroes is low, making them oblivious to the menace that stalks them.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-031; navigation graph not recovered."
+  },
+  {
+    "id": "scene-032",
+    "displayName": "Ep. 32: Fight and Flight",
+    "description": "Our heroes give chase to the thief that has stolen the important artifact, but rows of enemies continue to hinder their pursuit. With the artifact’s power dormant, our heroes may not be able to locate it if they lose sight of it now.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-032; navigation graph not recovered."
+  },
+  {
+    "id": "scene-033",
+    "displayName": "Ep. 33: Off the Beaten Track",
+    "description": "The enemies that are constantly appearing are preventing our heroes from closing the distance between them and the thief. To make matters worse, our heroes are getting exhausted from chasing all day, and are having difficulty keeping the thief in view.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-033; navigation graph not recovered."
+  },
+  {
+    "id": "scene-034",
+    "displayName": "Ep. 34: Around the Corner",
+    "description": "After traversing multiple terrains, the thief continues to elude our heroes. Just how long do they need to keep hunting after the thief? Fortunately, the gap between the two parties is decreasing, and the frustrating chase looks to be ending soon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-034; navigation graph not recovered."
+  },
+  {
+    "id": "scene-035",
+    "displayName": "Ep. 35: Den of Blackguards",
+    "description": "The thief has taken refuge within a monastery. Called the Hermitage of Mascon, it is supposed to be unoccupied due to the war. But now it is populated by bandits and outlaws. Who is the enigmatic thief? And what traps lie in stall for our heroes?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-035; navigation graph not recovered."
+  },
+  {
+    "id": "scene-036",
+    "displayName": "Ep. 36: Uncertain Apprehension",
+    "description": "The search for the artifacts resumes after the tussle with Davious. Our heroes are content with continuing their quest, but Mystery seems deeply anxious. The experiences she has been through thus far are casting shadows in her mind. Just what is plaguing her thoughts?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-036; navigation graph not recovered."
+  },
+  {
+    "id": "scene-037",
+    "displayName": "Ep. 37: Due Justification",
+    "description": "While Mystery’s hesitation has been subdued for now, her questions do contain specks of truth. Where would the search for the artifacts lead our heroes? What new locations would they visit? And would our heroes be prepared to face the dangers that follow?",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-037; navigation graph not recovered."
+  },
+  {
+    "id": "scene-038",
+    "displayName": "Ep. 38: Making Headway",
+    "description": "Our heroes have reached the border separating the county of Mascon with Windermere. They are making quick progress in their mission while defeating the enemies that stand in their way. Nothing seems to be able to halt the advancement of our heroes.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-038; navigation graph not recovered."
+  },
+  {
+    "id": "scene-039",
+    "displayName": "Ep. 39: Bustling Breeze",
+    "description": "The journey of our heroes is cruising smoothly thus far and there seems to be little indication of trouble. But perils can occur suddenly and without warning. Our heroes must not be complacent over their recent victories.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-039; navigation graph not recovered."
+  },
+  {
+    "id": "scene-040",
+    "displayName": "Ep. 40: Turmoil and Turbulence",
+    "description": "If one overlooks the roaming monsters, the country side of Windermere can be very calm and peaceful. But a torrent of terror is about to tear the land asunder. He carries with him a storm of rage as he preys on our heroes with bloodlust. His revenge has finally arrived.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Scene placeholder derived from area content area-040; navigation graph not recovered."
+  }
+]

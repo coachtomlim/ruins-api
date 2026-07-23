@@ -1,0 +1,17 @@
+{
+  "_note": "Owner placements recovered from browser localStorage key 'fh-encounter-action-placements-v3' on 2026-07-22, after storage-key bumps (v3->v4->v5->v6) orphaned them. P1 per-action values existed ONLY here (the p1 locked JSON held the flat base for all actions).",
+  "galan": {
+    "ready":    { "x": 0.8658, "y": 0.6406, "h": 0.2027 },
+    "attack":   { "x": 0.8799, "y": 0.6557, "h": 0.2697 },
+    "defence":  { "x": 0.8799, "y": 0.6557, "h": 0.2697 },
+    "faint":    { "x": 0.8799, "y": 0.6557, "h": 0.1930 },
+    "recovery": { "x": 0.8799, "y": 0.6557, "h": 0.1930 }
+  },
+  "p1": {
+    "ready":    { "x": 0.1165, "y": 0.7381, "h": 0.3468 },
+    "attack":   { "x": 0.1165, "y": 0.7381, "h": 0.3350 },
+    "defence":  { "x": 0.1244, "y": 0.6982, "h": 0.2369 },
+    "faint":    { "x": 0.1289, "y": 0.6915, "h": 0.2272 },
+    "recovery": { "x": 0.1165, "y": 0.7250, "h": 0.1561 }
+  }
+}

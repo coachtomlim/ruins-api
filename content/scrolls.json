@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "scrolls": [
+    {
+      "id": "scroll.fog_of_confusion",
+      "itemId": "item.scroll.fog_of_confusion",
+      "displayName": "Fog of Confusion",
+      "superEffectiveAgainst": "monster.imp",
+      "correctEffectPercent": 50,
+      "incorrectEffect": {
+        "canonStatus": "CONFLICTED",
+        "requiresDecision": true,
+        "variants": [
+          {
+            "value": 5,
+            "sourceNote": "Adventure Game Design V3 - Alpha"
+          },
+          {
+            "value": 10,
+            "sourceNote": "Later beta summary"
+          }
+        ]
+      },
+      "singleUse": true,
+      "combatOnly": true,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "scroll.pulse_of_calm",
+      "itemId": "item.scroll.pulse_of_calm",
+      "displayName": "Pulse of Calm",
+      "superEffectiveAgainst": "monster.musca",
+      "correctEffectPercent": 50,
+      "incorrectEffect": {
+        "canonStatus": "CONFLICTED",
+        "requiresDecision": true,
+        "variants": [
+          {
+            "value": 5,
+            "sourceNote": "Adventure Game Design V3 - Alpha"
+          },
+          {
+            "value": 10,
+            "sourceNote": "Later beta summary"
+          }
+        ]
+      },
+      "singleUse": true,
+      "combatOnly": true,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "scroll.heart_beacon",
+      "itemId": "item.scroll.heart_beacon",
+      "displayName": "Heart Beacon",
+      "superEffectiveAgainst": "monster.lizardman",
+      "correctEffectPercent": 50,
+      "incorrectEffect": {
+        "canonStatus": "CONFLICTED",
+        "requiresDecision": true,
+        "variants": [
+          {
+            "value": 5,
+            "sourceNote": "Adventure Game Design V3 - Alpha"
+          },
+          {
+            "value": 10,
+            "sourceNote": "Later beta summary"
+          }
+        ]
+      },
+      "singleUse": true,
+      "combatOnly": true,
+      "canonStatus": "LOCKED"
+    }
+  ]
+}

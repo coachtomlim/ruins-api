@@ -1,0 +1,1242 @@
+[
+  {
+    "id": "adv-dragon-helm",
+    "displayName": "ADV_DRAGON_HELM_NAME",
+    "description": "ADV_DRAGON_HELM_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base ADV_DRAGON_HELM; GameBible lines 2-3"
+  },
+  {
+    "id": "armor-t1-1",
+    "displayName": "Plated Harness",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T1_1; GameBible lines 207-208"
+  },
+  {
+    "id": "armor-t1-2",
+    "displayName": "Loose Vest",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T1_2; GameBible lines 209-210"
+  },
+  {
+    "id": "armor-t1-3",
+    "displayName": "Saggy Cloak",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T1_3; GameBible lines 211-212"
+  },
+  {
+    "id": "armor-t1-4",
+    "displayName": "Musty Jacket",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T1_4; GameBible lines 213-214"
+  },
+  {
+    "id": "armor-t1-5",
+    "displayName": "Lithic Armor",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T1_5; GameBible lines 215-216"
+  },
+  {
+    "id": "armor-t1-5-name",
+    "displayName": "ARMOR_T1_5_NAME",
+    "description": "HP/Low/MP/High/Def/Nice",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T1_5_NAME; GameBible lines 217-217"
+  },
+  {
+    "id": "armor-t2-1",
+    "displayName": "Noble Harness",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T2_1; GameBible lines 218-219"
+  },
+  {
+    "id": "armor-t2-2",
+    "displayName": "Chainmail Vest",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T2_2; GameBible lines 220-221"
+  },
+  {
+    "id": "armor-t2-3",
+    "displayName": "Benign Cloak",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T2_3; GameBible lines 222-223"
+  },
+  {
+    "id": "armor-t2-4",
+    "displayName": "Leather Jacket",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T2_4; GameBible lines 224-225"
+  },
+  {
+    "id": "armor-t2-5",
+    "displayName": "Beryl Armor",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T2_5; GameBible lines 226-227"
+  },
+  {
+    "id": "armor-t2-5-name",
+    "displayName": "ARMOR_T2_5_NAME",
+    "description": "HP/Low/MP/High/Def/Nice",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T2_5_NAME; GameBible lines 228-228"
+  },
+  {
+    "id": "armor-t3-1",
+    "displayName": "Exalted Harness",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T3_1; GameBible lines 229-230"
+  },
+  {
+    "id": "armor-t3-2",
+    "displayName": "Stalwart Vest",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T3_2; GameBible lines 231-232"
+  },
+  {
+    "id": "armor-t3-3",
+    "displayName": "Arcane Cloak",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T3_3; GameBible lines 233-234"
+  },
+  {
+    "id": "armor-t3-4",
+    "displayName": "Beastly Jacket",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T3_4; GameBible lines 235-236"
+  },
+  {
+    "id": "armor-t3-5",
+    "displayName": "Frost Armor",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T3_5; GameBible lines 237-238"
+  },
+  {
+    "id": "armor-t4-1",
+    "displayName": "Imperial Harness",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T4_1; GameBible lines 239-240"
+  },
+  {
+    "id": "armor-t4-2",
+    "displayName": "Adorned Vest",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T4_2; GameBible lines 241-242"
+  },
+  {
+    "id": "armor-t4-3",
+    "displayName": "Spiritual Cloak",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T4_3; GameBible lines 243-244"
+  },
+  {
+    "id": "armor-t4-4",
+    "displayName": "Chieftain Jacket",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T4_4; GameBible lines 245-246"
+  },
+  {
+    "id": "armor-t4-5",
+    "displayName": "Raging Armor",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T4_5; GameBible lines 247-248"
+  },
+  {
+    "id": "armor-t5-1",
+    "displayName": "Ultimate Harness",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T5_1; GameBible lines 249-250"
+  },
+  {
+    "id": "armor-t5-2",
+    "displayName": "Marvelous Vest",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T5_2; GameBible lines 251-252"
+  },
+  {
+    "id": "armor-t5-3",
+    "displayName": "Celestial Cloak",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T5_3; GameBible lines 253-254"
+  },
+  {
+    "id": "armor-t5-4",
+    "displayName": "Superior Jacket",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T5_4; GameBible lines 255-256"
+  },
+  {
+    "id": "armor-t5-5",
+    "displayName": "Extreme Armor",
+    "description": "This is a body armor.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ARMOR_T5_5; GameBible lines 257-258"
+  },
+  {
+    "id": "boot-t1-1",
+    "displayName": "Iron Sabatons",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T1_1; GameBible lines 290-291"
+  },
+  {
+    "id": "boot-t1-2",
+    "displayName": "Chain Walkers",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T1_2; GameBible lines 292-293"
+  },
+  {
+    "id": "boot-t1-3",
+    "displayName": "Twill Shoes",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T1_3; GameBible lines 294-295"
+  },
+  {
+    "id": "boot-t1-4",
+    "displayName": "Stale Anglers",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T1_4; GameBible lines 296-297"
+  },
+  {
+    "id": "boot-t1-5",
+    "displayName": "Wild Boots",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T1_5; GameBible lines 298-299"
+  },
+  {
+    "id": "boot-t1-5-name",
+    "displayName": "BOOT_T1_5_NAME",
+    "description": "HP/Low/Def/Nice/Evade/Bad",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T1_5_NAME; GameBible lines 300-300"
+  },
+  {
+    "id": "boot-t2-1",
+    "displayName": "Gilt Sabatons",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T2_1; GameBible lines 301-302"
+  },
+  {
+    "id": "boot-t2-2",
+    "displayName": "Brace Walkers",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T2_2; GameBible lines 303-304"
+  },
+  {
+    "id": "boot-t2-3",
+    "displayName": "Ritzy Shoes",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T2_3; GameBible lines 305-306"
+  },
+  {
+    "id": "boot-t2-4",
+    "displayName": "Dandy Anglers",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T2_4; GameBible lines 307-308"
+  },
+  {
+    "id": "boot-t2-5",
+    "displayName": "Stone Boots",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T2_5; GameBible lines 309-310"
+  },
+  {
+    "id": "boot-t2-5-name",
+    "displayName": "BOOT_T2_5_NAME",
+    "description": "HP/Low/Def/Nice/Evade/Bad",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T2_5_NAME; GameBible lines 311-311"
+  },
+  {
+    "id": "boot-t3-1",
+    "displayName": "Firm Sabatons",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T3_1; GameBible lines 312-313"
+  },
+  {
+    "id": "boot-t3-2",
+    "displayName": "Stride Walkers",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T3_2; GameBible lines 314-315"
+  },
+  {
+    "id": "boot-t3-3",
+    "displayName": "Laced Shoes",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T3_3; GameBible lines 316-317"
+  },
+  {
+    "id": "boot-t3-4",
+    "displayName": "Grand Anglers",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T3_4; GameBible lines 318-319"
+  },
+  {
+    "id": "boot-t3-5",
+    "displayName": "Exotic Boots",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T3_5; GameBible lines 320-321"
+  },
+  {
+    "id": "boot-t4-1",
+    "displayName": "Tough Sabatons",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T4_1; GameBible lines 322-323"
+  },
+  {
+    "id": "boot-t4-2",
+    "displayName": "Ornate Walkers",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T4_2; GameBible lines 324-325"
+  },
+  {
+    "id": "boot-t4-3",
+    "displayName": "Fancy Shoes",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T4_3; GameBible lines 326-327"
+  },
+  {
+    "id": "boot-t4-4",
+    "displayName": "Lavish Anglers",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T4_4; GameBible lines 328-329"
+  },
+  {
+    "id": "boot-t4-5",
+    "displayName": "Glacial Boots",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T4_5; GameBible lines 330-331"
+  },
+  {
+    "id": "boot-t5-1",
+    "displayName": "Heroic Sabatons",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T5_1; GameBible lines 332-333"
+  },
+  {
+    "id": "boot-t5-2",
+    "displayName": "Nimble Walkers",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T5_2; GameBible lines 334-335"
+  },
+  {
+    "id": "boot-t5-3",
+    "displayName": "Gallent Shoes",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T5_3; GameBible lines 336-337"
+  },
+  {
+    "id": "boot-t5-4",
+    "displayName": "Opulent Anglers",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T5_4; GameBible lines 338-339"
+  },
+  {
+    "id": "boot-t5-5",
+    "displayName": "Blazing Boots",
+    "description": "This is a boot.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOT_T5_5; GameBible lines 340-341"
+  },
+  {
+    "id": "helmet-t1-5",
+    "displayName": "Silk Crown",
+    "description": "",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELMET_T1_5; GameBible lines 1071-1071"
+  },
+  {
+    "id": "helmet-t1-5-name",
+    "displayName": "HELMET_T1_5_NAME",
+    "description": "HP/Low/MP/High/Block/Great",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELMET_T1_5_NAME; GameBible lines 1072-1072"
+  },
+  {
+    "id": "helmet-t2-5",
+    "displayName": "Aura Crown",
+    "description": "",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELMET_T2_5; GameBible lines 1073-1073"
+  },
+  {
+    "id": "helmet-t2-5-name",
+    "displayName": "HELMET_T2_5_NAME",
+    "description": "HP/Low/MP/High/Block/Great",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELMET_T2_5_NAME; GameBible lines 1074-1074"
+  },
+  {
+    "id": "helm-t1-1",
+    "displayName": "Old Galea",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T1_1; GameBible lines 1075-1076"
+  },
+  {
+    "id": "helm-t1-2",
+    "displayName": "Iron Armet",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T1_2; GameBible lines 1077-1078"
+  },
+  {
+    "id": "helm-t1-3",
+    "displayName": "Rune Hood",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T1_3; GameBible lines 1079-1080"
+  },
+  {
+    "id": "helm-t1-4",
+    "displayName": "Light Helm",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T1_4; GameBible lines 1081-1082"
+  },
+  {
+    "id": "helm-t1-5",
+    "displayName": "Silk Crown",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T1_5; GameBible lines 1083-1084"
+  },
+  {
+    "id": "helm-t2-1",
+    "displayName": "Holy Galea",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T2_1; GameBible lines 1085-1086"
+  },
+  {
+    "id": "helm-t2-2",
+    "displayName": "Steel Armet",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T2_2; GameBible lines 1087-1088"
+  },
+  {
+    "id": "helm-t2-3",
+    "displayName": "Miltril Hood",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T2_3; GameBible lines 1089-1090"
+  },
+  {
+    "id": "helm-t2-4",
+    "displayName": "Field Helm",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T2_4; GameBible lines 1091-1092"
+  },
+  {
+    "id": "helm-t2-5",
+    "displayName": "Aura Crown",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T2_5; GameBible lines 1093-1094"
+  },
+  {
+    "id": "helm-t3-1",
+    "displayName": "Divine Galea",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T3_1; GameBible lines 1095-1096"
+  },
+  {
+    "id": "helm-t3-2",
+    "displayName": "Sturdy Armet",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T3_2; GameBible lines 1097-1098"
+  },
+  {
+    "id": "helm-t3-3",
+    "displayName": "Arcane Hood",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T3_3; GameBible lines 1099-1100"
+  },
+  {
+    "id": "helm-t3-4",
+    "displayName": "Spiked Helm",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T3_4; GameBible lines 1101-1102"
+  },
+  {
+    "id": "helm-t3-5",
+    "displayName": "Jewel Crown",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T3_5; GameBible lines 1103-1104"
+  },
+  {
+    "id": "helm-t4-1",
+    "displayName": "Eternal Galea",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T4_1; GameBible lines 1105-1106"
+  },
+  {
+    "id": "helm-t4-2",
+    "displayName": "Peerless Helm",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T4_2; GameBible lines 1107-1108"
+  },
+  {
+    "id": "helm-t4-3",
+    "displayName": "Spiritual Hood",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T4_3; GameBible lines 1109-1110"
+  },
+  {
+    "id": "helm-t4-4",
+    "displayName": "Carnage Helm",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T4_4; GameBible lines 1111-1112"
+  },
+  {
+    "id": "helm-t4-5",
+    "displayName": "Sacred Crown",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T4_5; GameBible lines 1113-1114"
+  },
+  {
+    "id": "helm-t5-1",
+    "displayName": "Supreme Galea",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T5_1; GameBible lines 1115-1116"
+  },
+  {
+    "id": "helm-t5-2",
+    "displayName": "Almighty Armet",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T5_2; GameBible lines 1117-1118"
+  },
+  {
+    "id": "helm-t5-3",
+    "displayName": "Mystique Hood",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T5_3; GameBible lines 1119-1120"
+  },
+  {
+    "id": "helm-t5-4",
+    "displayName": "Ultimate Helm",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T5_4; GameBible lines 1121-1122"
+  },
+  {
+    "id": "helm-t5-5",
+    "displayName": "Ancient Crown",
+    "description": "This is a helmet.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HELM_T5_5; GameBible lines 1123-1124"
+  },
+  {
+    "id": "necklace-t1-1",
+    "displayName": "Razor Necklace",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T1_1; GameBible lines 1183-1184"
+  },
+  {
+    "id": "necklace-t1-2",
+    "displayName": "Aura Necklace",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T1_2; GameBible lines 1185-1186"
+  },
+  {
+    "id": "necklace-t1-3",
+    "displayName": "Shaman Necklace",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T1_3; GameBible lines 1187-1188"
+  },
+  {
+    "id": "necklace-t1-4",
+    "displayName": "Necklace of Tokens",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T1_4; GameBible lines 1189-1190"
+  },
+  {
+    "id": "necklace-t1-5",
+    "displayName": "Magic Necklace",
+    "description": "Cri %/Nice/Atk/Nice/ /",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T1_5; GameBible lines 1191-1192"
+  },
+  {
+    "id": "necklace-t2-1",
+    "displayName": "Luna Necklace",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T2_1; GameBible lines 1193-1194"
+  },
+  {
+    "id": "necklace-t2-2",
+    "displayName": "Ravenia Necklace",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T2_2; GameBible lines 1195-1196"
+  },
+  {
+    "id": "necklace-t2-3",
+    "displayName": "Necklace of Axis",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T2_3; GameBible lines 1197-1198"
+  },
+  {
+    "id": "necklace-t2-4",
+    "displayName": "Ritual Necklace",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T2_4; GameBible lines 1199-1200"
+  },
+  {
+    "id": "necklace-t2-5",
+    "displayName": "Holy Necklace",
+    "description": "Cri %/Nice/Atk/Nice/ /",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T2_5; GameBible lines 1201-1202"
+  },
+  {
+    "id": "necklace-t3-1",
+    "displayName": "Enchanted Necklace",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T3_1; GameBible lines 1203-1204"
+  },
+  {
+    "id": "necklace-t3-2",
+    "displayName": "Divine Necklace",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T3_2; GameBible lines 1205-1206"
+  },
+  {
+    "id": "necklace-t3-3",
+    "displayName": "Mystic Necklace",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T3_3; GameBible lines 1207-1208"
+  },
+  {
+    "id": "necklace-t3-4",
+    "displayName": "Mineva Necklace",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T3_4; GameBible lines 1209-1210"
+  },
+  {
+    "id": "necklace-t3-5",
+    "displayName": "Necklace of Legends",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T3_5; GameBible lines 1211-1212"
+  },
+  {
+    "id": "necklace-t3-5-name",
+    "displayName": "NECKLACE_T3_5_NAME",
+    "description": "Cri %/Nice/Atk/Nice/ /",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T3_5_NAME; GameBible lines 1213-1213"
+  },
+  {
+    "id": "necklace-t4-1",
+    "displayName": "Necklace of Harmony",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T4_1; GameBible lines 1214-1215"
+  },
+  {
+    "id": "necklace-t4-2",
+    "displayName": "Sacred Necklace",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T4_2; GameBible lines 1216-1217"
+  },
+  {
+    "id": "necklace-t4-3",
+    "displayName": "Necklace of Blessing",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T4_3; GameBible lines 1218-1219"
+  },
+  {
+    "id": "necklace-t4-4",
+    "displayName": "Regalia Necklace",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T4_4; GameBible lines 1220-1221"
+  },
+  {
+    "id": "necklace-t4-5",
+    "displayName": "Necklace of Starlight",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T4_5; GameBible lines 1222-1223"
+  },
+  {
+    "id": "necklace-t5-1",
+    "displayName": "Necklace of Secrets",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T5_1; GameBible lines 1224-1225"
+  },
+  {
+    "id": "necklace-t5-2",
+    "displayName": "Phoenix Necklace",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T5_2; GameBible lines 1226-1227"
+  },
+  {
+    "id": "necklace-t5-3",
+    "displayName": "Celestial Necklace",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T5_3; GameBible lines 1228-1229"
+  },
+  {
+    "id": "necklace-t5-4",
+    "displayName": "Trinity Necklace",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T5_4; GameBible lines 1230-1231"
+  },
+  {
+    "id": "necklace-t5-5",
+    "displayName": "Necklace of Infinity",
+    "description": "This is necklace.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base NECKLACE_T5_5; GameBible lines 1232-1233"
+  },
+  {
+    "id": "ring-t1-1",
+    "displayName": "Aeon Ring",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T1_1; GameBible lines 1272-1273"
+  },
+  {
+    "id": "ring-t1-2",
+    "displayName": "Glyph Ring",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T1_2; GameBible lines 1274-1275"
+  },
+  {
+    "id": "ring-t1-3",
+    "displayName": "Circlet Ring",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T1_3; GameBible lines 1276-1277"
+  },
+  {
+    "id": "ring-t1-4",
+    "displayName": "Magic Ring",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T1_4; GameBible lines 1278-1279"
+  },
+  {
+    "id": "ring-t1-5",
+    "displayName": "Knight Ring",
+    "description": "Def/Nice /Atk Spd /Nice / /",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T1_5; GameBible lines 1280-1281"
+  },
+  {
+    "id": "ring-t2-1",
+    "displayName": "Divine Ring",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T2_1; GameBible lines 1282-1283"
+  },
+  {
+    "id": "ring-t2-2",
+    "displayName": "Silveron Ring",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T2_2; GameBible lines 1284-1285"
+  },
+  {
+    "id": "ring-t2-3",
+    "displayName": "Ring of Banners",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T2_3; GameBible lines 1286-1287"
+  },
+  {
+    "id": "ring-t2-4",
+    "displayName": "Ring of Aura",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T2_4; GameBible lines 1288-1289"
+  },
+  {
+    "id": "ring-t2-5",
+    "displayName": "Minister Ring",
+    "description": "Def/Nice /Atk Spd /Nice / /",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T2_5; GameBible lines 1290-1291"
+  },
+  {
+    "id": "ring-t3-1",
+    "displayName": "Rembrance Ring",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T3_1; GameBible lines 1292-1293"
+  },
+  {
+    "id": "ring-t3-2",
+    "displayName": "Universal Ring",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T3_2; GameBible lines 1294-1295"
+  },
+  {
+    "id": "ring-t3-3",
+    "displayName": "Ring of Hope",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T3_3; GameBible lines 1296-1297"
+  },
+  {
+    "id": "ring-t3-4",
+    "displayName": "Miracle Ring",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T3_4; GameBible lines 1298-1299"
+  },
+  {
+    "id": "ring-t3-5",
+    "displayName": "Regalia Ring",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T3_5; GameBible lines 1300-1301"
+  },
+  {
+    "id": "ring-t3-5-name",
+    "displayName": "RING_T3_5_NAME",
+    "description": "Def/Nice /Atk Spd /Nice / /",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T3_5_NAME; GameBible lines 1302-1302"
+  },
+  {
+    "id": "ring-t4-1",
+    "displayName": "Rings of Ancients",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T4_1; GameBible lines 1303-1304"
+  },
+  {
+    "id": "ring-t4-2",
+    "displayName": "Ring of the Stars",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T4_2; GameBible lines 1305-1306"
+  },
+  {
+    "id": "ring-t4-3",
+    "displayName": "Legendary Ring",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T4_3; GameBible lines 1307-1308"
+  },
+  {
+    "id": "ring-t4-4",
+    "displayName": "Ring of Orients",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T4_4; GameBible lines 1309-1310"
+  },
+  {
+    "id": "ring-t4-5",
+    "displayName": "Ring of Kingship",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T4_5; GameBible lines 1311-1312"
+  },
+  {
+    "id": "ring-t5-1",
+    "displayName": "Ring of the Void",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T5_1; GameBible lines 1313-1314"
+  },
+  {
+    "id": "ring-t5-2",
+    "displayName": "Ring of Cosmos",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T5_2; GameBible lines 1315-1316"
+  },
+  {
+    "id": "ring-t5-3",
+    "displayName": "Ring of Infinity",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T5_3; GameBible lines 1317-1318"
+  },
+  {
+    "id": "ring-t5-4",
+    "displayName": "Ring of Dreams",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T5_4; GameBible lines 1319-1320"
+  },
+  {
+    "id": "ring-t5-5",
+    "displayName": "Ring Of Phantasm",
+    "description": "This is a ring.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base RING_T5_5; GameBible lines 1321-1322"
+  },
+  {
+    "id": "sword-t1-1",
+    "displayName": "Long Sword",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SWORD_T1_1; GameBible lines 3195-3196"
+  },
+  {
+    "id": "sword-t1-2",
+    "displayName": "Precious Sword",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SWORD_T1_2; GameBible lines 3197-3198"
+  },
+  {
+    "id": "sword-t1-3",
+    "displayName": "Templar Sword",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SWORD_T1_3; GameBible lines 3199-3200"
+  },
+  {
+    "id": "sword-t1-4",
+    "displayName": "Common Sword",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SWORD_T1_4; GameBible lines 3201-3202"
+  },
+  {
+    "id": "sword-t1-4-name",
+    "displayName": "SWORD_T1_4_NAME",
+    "description": "Atk/Strong/Atk Spd/Low/Cri %/Bad",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SWORD_T1_4_NAME; GameBible lines 3203-3203"
+  },
+  {
+    "id": "sword-t2-1",
+    "displayName": "Almighty Sword",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SWORD_T2_1; GameBible lines 3204-3205"
+  },
+  {
+    "id": "sword-t2-2",
+    "displayName": "Rune Sword",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SWORD_T2_2; GameBible lines 3206-3207"
+  },
+  {
+    "id": "sword-t2-3",
+    "displayName": "Magic Sword",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SWORD_T2_3; GameBible lines 3208-3209"
+  },
+  {
+    "id": "sword-t2-4",
+    "displayName": "Elite Sword",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SWORD_T2_4; GameBible lines 3210-3211"
+  },
+  {
+    "id": "sword-t2-4-name",
+    "displayName": "SWORD_T2_4_NAME",
+    "description": "Atk/Strong/Atk Spd/Low/Cri %/Bad",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SWORD_T2_4_NAME; GameBible lines 3212-3212"
+  },
+  {
+    "id": "sword-t3-1",
+    "displayName": "Slayer Sword",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SWORD_T3_1; GameBible lines 3213-3214"
+  },
+  {
+    "id": "sword-t3-2",
+    "displayName": "Sage Sword",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SWORD_T3_2; GameBible lines 3215-3216"
+  },
+  {
+    "id": "sword-t3-3",
+    "displayName": "Hex Sword",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SWORD_T3_3; GameBible lines 3217-3218"
+  },
+  {
+    "id": "sword-t4-1",
+    "displayName": "Guardian Sword",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SWORD_T4_1; GameBible lines 3219-3220"
+  },
+  {
+    "id": "sword-t4-2",
+    "displayName": "Windy Sword",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SWORD_T4_2; GameBible lines 3221-3222"
+  },
+  {
+    "id": "sword-t4-3",
+    "displayName": "Holy Sword",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SWORD_T4_3; GameBible lines 3223-3224"
+  },
+  {
+    "id": "sword-t5-1",
+    "displayName": "Elder Sword",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SWORD_T5_1; GameBible lines 3225-3226"
+  },
+  {
+    "id": "sword-t5-2",
+    "displayName": "Ancient Sword",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SWORD_T5_2; GameBible lines 3227-3228"
+  },
+  {
+    "id": "sword-t5-3",
+    "displayName": "Dark Sword",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SWORD_T5_3; GameBible lines 3229-3230"
+  }
+]

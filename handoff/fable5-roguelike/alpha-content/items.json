@@ -1,0 +1,219 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "item.adventurers_journal",
+      "displayName": "Adventurer's Journal",
+      "type": "readable",
+      "singleUse": false,
+      "multiUse": true,
+      "contextualUseOnly": false,
+      "useRules": ["Read outside combat to view unlocked journal entries."],
+      "acquiredFrom": "initial_inventory",
+      "removedOnUse": false,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "item.scroll.fog_of_confusion",
+      "displayName": "Magic Scroll: Fog of Confusion",
+      "type": "scroll",
+      "singleUse": true,
+      "multiUse": false,
+      "contextualUseOnly": true,
+      "useRules": ["Combat only", "Super effective against monster.imp"],
+      "acquiredFrom": "room.02",
+      "removedOnUse": true,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "item.scroll.pulse_of_calm",
+      "displayName": "Magic Scroll: Pulse of Calm",
+      "type": "scroll",
+      "singleUse": true,
+      "multiUse": false,
+      "contextualUseOnly": true,
+      "useRules": ["Combat only", "Super effective against monster.musca"],
+      "acquiredFrom": "room.04_or_room.06",
+      "removedOnUse": true,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "item.scroll.heart_beacon",
+      "displayName": "Magic Scroll: Heart Beacon",
+      "type": "scroll",
+      "singleUse": true,
+      "multiUse": false,
+      "contextualUseOnly": true,
+      "useRules": ["Combat only", "Super effective against monster.lizardman"],
+      "acquiredFrom": "room.05_after_imp_defeat",
+      "removedOnUse": true,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "item.prism_fragment_a",
+      "displayName": "Prism Fragment A",
+      "type": "quest",
+      "singleUse": false,
+      "multiUse": false,
+      "contextualUseOnly": true,
+      "useRules": ["Required with fragments B and C to assemble Prism of Makidos."],
+      "acquiredFrom": "initial_inventory_from_sheja",
+      "removedOnUse": true,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "item.prism_fragment_b",
+      "displayName": "Prism Fragment B",
+      "type": "quest",
+      "singleUse": false,
+      "multiUse": false,
+      "contextualUseOnly": true,
+      "useRules": ["Required with fragments A and C to assemble Prism of Makidos."],
+      "acquiredFrom": "room.08_after_musca_defeat",
+      "removedOnUse": true,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "item.prism_fragment_c",
+      "displayName": "Prism Fragment C",
+      "type": "quest",
+      "singleUse": false,
+      "multiUse": false,
+      "contextualUseOnly": true,
+      "useRules": ["Required with fragments A and B to assemble Prism of Makidos."],
+      "acquiredFrom": "room.07_after_lizardman_defeat",
+      "removedOnUse": true,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "item.prism_of_makidos",
+      "displayName": "Prism of Makidos",
+      "type": "quest",
+      "singleUse": false,
+      "multiUse": true,
+      "contextualUseOnly": true,
+      "useRules": ["Created by Assemble command", "Unlocks final progression through Room 9."],
+      "acquiredFrom": "assemble_prism_fragments",
+      "removedOnUse": false,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "item.hexagonal_glass_piece",
+      "displayName": "Hexagonal Glass Piece",
+      "type": "quest",
+      "singleUse": true,
+      "multiUse": false,
+      "contextualUseOnly": true,
+      "useRules": ["Used at black wall / hexagonal slot to activate one-way portal."],
+      "acquiredFrom": "room.06_examine_shards_then_pickup",
+      "removedOnUse": true,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "item.sound_deflecting_girdle",
+      "displayName": "Sound-Deflecting Girdle",
+      "type": "equipment",
+      "singleUse": false,
+      "multiUse": true,
+      "contextualUseOnly": true,
+      "useRules": ["Auto-triggers in Room 10 to neutralize Banshee shriek."],
+      "acquiredFrom": "room.05_examine_east_wall_push_panel_then_pickup",
+      "removedOnUse": false,
+      "canonStatus": "CONFLICTED",
+      "requiresDecision": true,
+      "sourceNotes": [
+        "Post-test fix requires hidden panel pickup.",
+        "Some later docs list Girdle as direct Imp reward."
+      ]
+    },
+    {
+      "id": "item.cure_all_stats_potion",
+      "displayName": "Cure All Stats Potion",
+      "type": "consumable",
+      "singleUse": true,
+      "multiUse": false,
+      "contextualUseOnly": false,
+      "useRules": ["Restores all stats", "Cures poison and debuffs."],
+      "acquiredFrom": "room.03_examine_sarcophagus_then_pickup",
+      "removedOnUse": true,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "item.merlins_tetrahedronal",
+      "displayName": "Merlin's Tetrahedronal",
+      "type": "quest",
+      "singleUse": false,
+      "multiUse": false,
+      "contextualUseOnly": true,
+      "useRules": ["Final artifact; pickup triggers Sheja ending cutscene."],
+      "acquiredFrom": "room.10_after_banshee_defeat",
+      "removedOnUse": true,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "item.gold_reward_700",
+      "displayName": "700 Gold Pieces",
+      "type": "currency_reward",
+      "singleUse": false,
+      "multiUse": false,
+      "contextualUseOnly": true,
+      "useRules": ["Awarded by Sheja in final cutscene in several sources."],
+      "acquiredFrom": "final_cutscene",
+      "removedOnUse": false,
+      "canonStatus": "CONFLICTED",
+      "requiresDecision": true,
+      "sourceNotes": [
+        "Adventure Game Design V3 - Alpha says negotiation can raise maximum reward to 900g.",
+        "Post-test final cutscene says Sheja rewards 700 gold."
+      ]
+    },
+    {
+      "id": "item.store.shield_lionheart",
+      "displayName": "Shield of the Lionheart",
+      "type": "equipment",
+      "singleUse": false,
+      "multiUse": true,
+      "contextualUseOnly": false,
+      "useRules": ["Equip for +2 DEF."],
+      "acquiredFrom": "room.09_store_400_gold",
+      "removedOnUse": false,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "item.store.minor_combat_healing_potion",
+      "displayName": "Minor Combat Healing Potion",
+      "type": "equipment",
+      "singleUse": true,
+      "multiUse": false,
+      "contextualUseOnly": false,
+      "useRules": ["Auto-heals 10 HP once when HP falls below 10."],
+      "acquiredFrom": "room.09_store_350_gold",
+      "removedOnUse": true,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "item.store.hose_of_speed",
+      "displayName": "Hose of Speed",
+      "type": "equipment",
+      "singleUse": false,
+      "multiUse": true,
+      "contextualUseOnly": false,
+      "useRules": ["Equip for +1 EVA."],
+      "acquiredFrom": "room.09_store_450_gold",
+      "removedOnUse": false,
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "item.lorebook_first_light",
+      "displayName": "Lorebook of the First Light",
+      "type": "readable",
+      "singleUse": false,
+      "multiUse": true,
+      "contextualUseOnly": false,
+      "useRules": ["Readable lore item associated with Room 5 hidden panel."],
+      "acquiredFrom": "room.05_push_panel",
+      "removedOnUse": false,
+      "canonStatus": "LIKELY"
+    }
+  ]
+}

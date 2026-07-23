@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "project": "F&H Fable - Adventure Ruins Charlie",
+  "actor": "P2/Tank",
+  "animation": "recovery",
+  "sourceFrames": 12,
+  "clipSeconds": 4.9167,
+  "motion": "premultiplied-alpha cross-dissolve between 12 keyed poses (no optical-flow)",
+  "stabilisation": {
+    "reason": "Sprite sheet drifts left within each 4-pose row then snaps ~24px right at each row boundary (poses 5 and 9) -> visible left-right wobble; ground contact also floated up 44px (bot 372->328).",
+    "method": "Per-pose translation before dissolve: alpha-weighted centroid x locked to the sequence mean; bbox bottom locked to a fixed ground line.",
+    "centroidX": 145.63,
+    "groundLineY": 372,
+    "residualDriftPx": {
+      "centroidX": 1.5,
+      "groundY": 1
+    }
+  },
+  "interpolation": "cubic-smoothstep",
+  "anchor": "foot-center (calibration 0.526, 0.890)",
+  "rampPivotPx": [
+    145.6,
+    372.0
+  ],
+  "baselinePlacement": {
+    "x": 0.4954,
+    "y": 0.6722,
+    "h": 0.26
+  },
+  "lockedSizeKeyframes": [
+    {
+      "clipTime": 0.0,
+      "h": 0.26
+    },
+    {
+      "clipTime": 0.6,
+      "h": 0.26
+    },
+    {
+      "clipTime": 4.9167,
+      "h": 0.21
+    }
+  ],
+  "bakedOutput": "assets/p2-recovery-alpha-v5.webm"
+}

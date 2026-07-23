@@ -1,0 +1,1258 @@
+[
+  {
+    "id": "amethystr",
+    "displayName": "Amethyst",
+    "description": "AMETHYSTR_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base AMETHYSTR; GameBible lines 4-5"
+  },
+  {
+    "id": "base",
+    "displayName": "BASE",
+    "description": "",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BASE; GameBible lines 260-260"
+  },
+  {
+    "id": "boost-xp-item-1",
+    "displayName": "Spirit Salts",
+    "description": "Boosts little XP",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOST_XP_ITEM_1; GameBible lines 284-285"
+  },
+  {
+    "id": "boost-xp-item-2",
+    "displayName": "Mystic Salts",
+    "description": "Boosts small XP",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOST_XP_ITEM_2; GameBible lines 286-287"
+  },
+  {
+    "id": "boost-xp-item-3",
+    "displayName": "Divine Salts",
+    "description": "Boosts huge XP",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOOST_XP_ITEM_3; GameBible lines 288-289"
+  },
+  {
+    "id": "bow-t1-1",
+    "displayName": "Long Bow",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOW_T1_1; GameBible lines 342-343"
+  },
+  {
+    "id": "bow-t1-2",
+    "displayName": "Precious Bow",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOW_T1_2; GameBible lines 344-345"
+  },
+  {
+    "id": "bow-t1-3",
+    "displayName": "Templar Bow",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOW_T1_3; GameBible lines 346-347"
+  },
+  {
+    "id": "bow-t1-4",
+    "displayName": "Common Bow",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOW_T1_4; GameBible lines 348-349"
+  },
+  {
+    "id": "bow-t1-4-name",
+    "displayName": "BOW_T1_4_NAME",
+    "description": "Atk/High/Atk Spd/Strong/Cri %/Low",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOW_T1_4_NAME; GameBible lines 350-350"
+  },
+  {
+    "id": "bow-t2-1",
+    "displayName": "Almighty Bow",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOW_T2_1; GameBible lines 351-352"
+  },
+  {
+    "id": "bow-t2-2",
+    "displayName": "Rune Bow",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOW_T2_2; GameBible lines 353-354"
+  },
+  {
+    "id": "bow-t2-3",
+    "displayName": "Magic Bow",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOW_T2_3; GameBible lines 355-356"
+  },
+  {
+    "id": "bow-t2-4",
+    "displayName": "Elite Bow",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOW_T2_4; GameBible lines 357-358"
+  },
+  {
+    "id": "bow-t2-4-name",
+    "displayName": "BOW_T2_4_NAME",
+    "description": "Atk/High/Atk Spd/Strong/Cri %/Low",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOW_T2_4_NAME; GameBible lines 359-359"
+  },
+  {
+    "id": "bow-t3-1",
+    "displayName": "Slayer Bow",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOW_T3_1; GameBible lines 360-361"
+  },
+  {
+    "id": "bow-t3-2",
+    "displayName": "Sage Bow",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOW_T3_2; GameBible lines 362-363"
+  },
+  {
+    "id": "bow-t3-3",
+    "displayName": "Hex Bow",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOW_T3_3; GameBible lines 364-365"
+  },
+  {
+    "id": "bow-t4-1",
+    "displayName": "Guardian Bow",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOW_T4_1; GameBible lines 366-367"
+  },
+  {
+    "id": "bow-t4-2",
+    "displayName": "Windy Bow",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOW_T4_2; GameBible lines 368-369"
+  },
+  {
+    "id": "bow-t4-3",
+    "displayName": "Holy Bow",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOW_T4_3; GameBible lines 370-371"
+  },
+  {
+    "id": "bow-t5-1",
+    "displayName": "Elder Bow",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOW_T5_1; GameBible lines 372-373"
+  },
+  {
+    "id": "bow-t5-2",
+    "displayName": "Ancient Bow",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOW_T5_2; GameBible lines 374-375"
+  },
+  {
+    "id": "bow-t5-3",
+    "displayName": "Dark Bow",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base BOW_T5_3; GameBible lines 376-377"
+  },
+  {
+    "id": "cra",
+    "displayName": "CRA",
+    "description": "She is an elite archer who holds the concept of honor and discipline close to her heart. She is stern and hostile towards strangers, but loyal to those she trusts.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base CRA; GameBible lines 379-379"
+  },
+  {
+    "id": "dagger-t1-1",
+    "displayName": "Long Dagger",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base DAGGER_T1_1; GameBible lines 380-381"
+  },
+  {
+    "id": "dagger-t1-2",
+    "displayName": "Precious Dagger",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base DAGGER_T1_2; GameBible lines 382-383"
+  },
+  {
+    "id": "dagger-t1-3",
+    "displayName": "Templar Dagger",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base DAGGER_T1_3; GameBible lines 384-385"
+  },
+  {
+    "id": "dagger-t1-4",
+    "displayName": "Common Dagger",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base DAGGER_T1_4; GameBible lines 386-387"
+  },
+  {
+    "id": "dagger-t1-4-name",
+    "displayName": "DAGGER_T1_4_NAME",
+    "description": "Atk/Bad/Atk Spd/High/Cri %/Strong",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base DAGGER_T1_4_NAME; GameBible lines 388-388"
+  },
+  {
+    "id": "dagger-t2-1",
+    "displayName": "Almighty Dagger",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base DAGGER_T2_1; GameBible lines 389-390"
+  },
+  {
+    "id": "dagger-t2-2",
+    "displayName": "Rune Dagger",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base DAGGER_T2_2; GameBible lines 391-392"
+  },
+  {
+    "id": "dagger-t2-3",
+    "displayName": "Magic Dagger",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base DAGGER_T2_3; GameBible lines 393-394"
+  },
+  {
+    "id": "dagger-t2-4",
+    "displayName": "Elite Dagger",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base DAGGER_T2_4; GameBible lines 395-396"
+  },
+  {
+    "id": "dagger-t2-4-name",
+    "displayName": "DAGGER_T2_4_NAME",
+    "description": "Atk/Bad/Atk Spd/High/Cri %/Strong",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base DAGGER_T2_4_NAME; GameBible lines 397-397"
+  },
+  {
+    "id": "dagger-t3-1",
+    "displayName": "Slayer Dagger",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base DAGGER_T3_1; GameBible lines 398-399"
+  },
+  {
+    "id": "dagger-t3-2",
+    "displayName": "Sage Dagger",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base DAGGER_T3_2; GameBible lines 400-401"
+  },
+  {
+    "id": "dagger-t3-3",
+    "displayName": "Hex Dagger",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base DAGGER_T3_3; GameBible lines 402-403"
+  },
+  {
+    "id": "dagger-t4-1",
+    "displayName": "Guardian Dagger",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base DAGGER_T4_1; GameBible lines 404-405"
+  },
+  {
+    "id": "dagger-t4-2",
+    "displayName": "Windy Dagger",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base DAGGER_T4_2; GameBible lines 406-407"
+  },
+  {
+    "id": "dagger-t4-3",
+    "displayName": "Holy Dagger",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base DAGGER_T4_3; GameBible lines 408-409"
+  },
+  {
+    "id": "dagger-t5-1",
+    "displayName": "Elder Dagger",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base DAGGER_T5_1; GameBible lines 410-411"
+  },
+  {
+    "id": "dagger-t5-2",
+    "displayName": "Ancient Dagger",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base DAGGER_T5_2; GameBible lines 412-413"
+  },
+  {
+    "id": "dagger-t5-3",
+    "displayName": "Dark Dagger",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base DAGGER_T5_3; GameBible lines 414-415"
+  },
+  {
+    "id": "diamondr",
+    "displayName": "Diamond",
+    "description": "DIAMONDR_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base DIAMONDR; GameBible lines 914-915"
+  },
+  {
+    "id": "dragonscaler",
+    "displayName": "Dragonscale",
+    "description": "DRAGONSCALER_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base DRAGONSCALER; GameBible lines 916-917"
+  },
+  {
+    "id": "eca",
+    "displayName": "ECA",
+    "description": "He is a wise and benevolent shaman of nature, but do not mistake his compassion for ignorance. He will fiercely fight to the death for his comrades and beliefs.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ECA; GameBible lines 951-951"
+  },
+  {
+    "id": "elvish-silver-barr",
+    "displayName": "Elvish silver bar",
+    "description": "ELVISH_SILVER_BARR_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base ELVISH_SILVER_BARR; GameBible lines 976-977"
+  },
+  {
+    "id": "emeraldr",
+    "displayName": "Emerald",
+    "description": "EMERALDR_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base EMERALDR; GameBible lines 978-979"
+  },
+  {
+    "id": "energy-item-1",
+    "displayName": "Spirit Tonic",
+    "description": "Gives little EN",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ENERGY_ITEM_1; GameBible lines 980-981"
+  },
+  {
+    "id": "energy-item-2",
+    "displayName": "Mystic Tonic",
+    "description": "Gives small EN",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ENERGY_ITEM_2; GameBible lines 982-983"
+  },
+  {
+    "id": "energy-item-3",
+    "displayName": "Divine Tonic",
+    "description": "Gives huge EN",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ENERGY_ITEM_3; GameBible lines 984-985"
+  },
+  {
+    "id": "eni",
+    "displayName": "ENI",
+    "description": "As a Galan or a healer, her kindness frowns at the thought of bloodshed. But she understands the implications of this war and strives to end it for the sake of the land.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ENI; GameBible lines 987-987"
+  },
+  {
+    "id": "enu",
+    "displayName": "ENU",
+    "description": "This is Mage Knight.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ENU; GameBible lines 989-989"
+  },
+  {
+    "id": "feca",
+    "displayName": "FECA",
+    "description": "This is Mystic Warrior.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base FECA; GameBible lines 991-991"
+  },
+  {
+    "id": "fogger",
+    "displayName": "FOGGER",
+    "description": "This is Defender.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base FOGGER; GameBible lines 993-993"
+  },
+  {
+    "id": "gold-orer",
+    "displayName": "Gold ore",
+    "description": "GOLD_ORER_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base GOLD_ORER; GameBible lines 1030-1031"
+  },
+  {
+    "id": "hammer-t1-1",
+    "displayName": "Long Hammer",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HAMMER_T1_1; GameBible lines 1033-1034"
+  },
+  {
+    "id": "hammer-t1-2",
+    "displayName": "Precious Hammer",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HAMMER_T1_2; GameBible lines 1035-1036"
+  },
+  {
+    "id": "hammer-t1-3",
+    "displayName": "Templar Hammer",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HAMMER_T1_3; GameBible lines 1037-1038"
+  },
+  {
+    "id": "hammer-t1-4",
+    "displayName": "Common Hammer",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HAMMER_T1_4; GameBible lines 1039-1040"
+  },
+  {
+    "id": "hammer-t1-4-name",
+    "displayName": "HAMMER_T1_4_NAME",
+    "description": "Atk/Great/Atk Spd/Bad/Cri %/Great",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HAMMER_T1_4_NAME; GameBible lines 1041-1041"
+  },
+  {
+    "id": "hammer-t2-1",
+    "displayName": "Almighty Hammer",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HAMMER_T2_1; GameBible lines 1042-1043"
+  },
+  {
+    "id": "hammer-t2-2",
+    "displayName": "Rune Hammer",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HAMMER_T2_2; GameBible lines 1044-1045"
+  },
+  {
+    "id": "hammer-t2-3",
+    "displayName": "Magic Hammer",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HAMMER_T2_3; GameBible lines 1046-1047"
+  },
+  {
+    "id": "hammer-t2-4",
+    "displayName": "Elite Hammer",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HAMMER_T2_4; GameBible lines 1048-1049"
+  },
+  {
+    "id": "hammer-t2-4-name",
+    "displayName": "HAMMER_T2_4_NAME",
+    "description": "Atk/Great/Atk Spd/Bad/Cri %/Great",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HAMMER_T2_4_NAME; GameBible lines 1050-1050"
+  },
+  {
+    "id": "hammer-t3-1",
+    "displayName": "Slayer Hammer",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HAMMER_T3_1; GameBible lines 1051-1052"
+  },
+  {
+    "id": "hammer-t3-2",
+    "displayName": "Sage Hammer",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HAMMER_T3_2; GameBible lines 1053-1054"
+  },
+  {
+    "id": "hammer-t3-3",
+    "displayName": "Hex Hammer",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HAMMER_T3_3; GameBible lines 1055-1056"
+  },
+  {
+    "id": "hammer-t4-1",
+    "displayName": "Guardian Hammer",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HAMMER_T4_1; GameBible lines 1057-1058"
+  },
+  {
+    "id": "hammer-t4-2",
+    "displayName": "Windy Hammer",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HAMMER_T4_2; GameBible lines 1059-1060"
+  },
+  {
+    "id": "hammer-t4-3",
+    "displayName": "Holy Hammer",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HAMMER_T4_3; GameBible lines 1061-1062"
+  },
+  {
+    "id": "hammer-t5-1",
+    "displayName": "Elder Hammer",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HAMMER_T5_1; GameBible lines 1063-1064"
+  },
+  {
+    "id": "hammer-t5-2",
+    "displayName": "Ancient Hammer",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HAMMER_T5_2; GameBible lines 1065-1066"
+  },
+  {
+    "id": "hammer-t5-3",
+    "displayName": "Dark Hammer",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HAMMER_T5_3; GameBible lines 1067-1068"
+  },
+  {
+    "id": "heart-of-the-dragonr",
+    "displayName": "Heart of the dragon",
+    "description": "HEART_OF_THE_DRAGONR_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base HEART_OF_THE_DRAGONR; GameBible lines 1069-1070"
+  },
+  {
+    "id": "hp-all-item-1",
+    "displayName": "Mass Potion",
+    "description": "Heals 55 HP to all",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HP_ALL_ITEM_1; GameBible lines 1125-1126"
+  },
+  {
+    "id": "hp-item-1",
+    "displayName": "Potion",
+    "description": "Heals 40 HP",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HP_ITEM_1; GameBible lines 1127-1128"
+  },
+  {
+    "id": "hp-item-2",
+    "displayName": "High Potion",
+    "description": "Heals 70 HP",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HP_ITEM_2; GameBible lines 1129-1130"
+  },
+  {
+    "id": "hp-item-3",
+    "displayName": "Great Potion",
+    "description": "Heals 100 HP",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HP_ITEM_3; GameBible lines 1131-1132"
+  },
+  {
+    "id": "hp-item-4",
+    "displayName": "Strong Potion",
+    "description": "Heals 150 HP",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base HP_ITEM_4; GameBible lines 1133-1134"
+  },
+  {
+    "id": "iop",
+    "displayName": "IOP",
+    "description": "This is Guardian.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base IOP; GameBible lines 1161-1161"
+  },
+  {
+    "id": "iron-ore",
+    "displayName": "Iron ore",
+    "description": "IRON_ORE_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base IRON_ORE; GameBible lines 1162-1163"
+  },
+  {
+    "id": "masquer",
+    "displayName": "MASQUER",
+    "description": "This is Hunter.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base MASQUER; GameBible lines 1166-1166"
+  },
+  {
+    "id": "mithril-orer",
+    "displayName": "Mithril ore",
+    "description": "MITHRIL_ORER_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base MITHRIL_ORER; GameBible lines 1167-1168"
+  },
+  {
+    "id": "moonstoner",
+    "displayName": "Moonstone",
+    "description": "MOONSTONER_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base MOONSTONER; GameBible lines 1169-1170"
+  },
+  {
+    "id": "mp-all-item-1",
+    "displayName": "Mass Ether",
+    "description": "Gives 20 MP to all",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base MP_ALL_ITEM_1; GameBible lines 1173-1174"
+  },
+  {
+    "id": "mp-item-1",
+    "displayName": "Ether",
+    "description": "Gives 10 MP",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base MP_ITEM_1; GameBible lines 1175-1176"
+  },
+  {
+    "id": "mp-item-2",
+    "displayName": "High Ether",
+    "description": "Gives 30 MP",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base MP_ITEM_2; GameBible lines 1177-1178"
+  },
+  {
+    "id": "mp-item-3",
+    "displayName": "Great Ether",
+    "description": "Gives 40 MP",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base MP_ITEM_3; GameBible lines 1179-1180"
+  },
+  {
+    "id": "mp-item-4",
+    "displayName": "Strong Ether",
+    "description": "Gives 50 MP",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base MP_ITEM_4; GameBible lines 1181-1182"
+  },
+  {
+    "id": "osa",
+    "displayName": "OSA",
+    "description": "Despite her looks, she is still considered young for an elf. As a mage, her incredible talents in the field of magic make up for her lack of physical battle experience.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base OSA; GameBible lines 1262-1262"
+  },
+  {
+    "id": "panda",
+    "displayName": "PANDA",
+    "description": "Intelligence aside, he is a dignified warrior who has great confidence in his fighting skills. Although his brutish behavior may annoy others, he has a heart of gold.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base PANDA; GameBible lines 1264-1264"
+  },
+  {
+    "id": "platinum-orer",
+    "displayName": "Platinum ore",
+    "description": "PLATINUM_ORER_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base PLATINUM_ORER; GameBible lines 1265-1266"
+  },
+  {
+    "id": "revive-all-item-1",
+    "displayName": "Mass Elixer",
+    "description": "Revives all",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base REVIVE_ALL_ITEM_1; GameBible lines 1268-1269"
+  },
+  {
+    "id": "revive-item-1",
+    "displayName": "Elixer",
+    "description": "Revives one",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base REVIVE_ITEM_1; GameBible lines 1270-1271"
+  },
+  {
+    "id": "rogue",
+    "displayName": "ROGUE",
+    "description": "This is Rogue.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base ROGUE; GameBible lines 1324-1324"
+  },
+  {
+    "id": "rubyr",
+    "displayName": "Ruby",
+    "description": "RUBYR_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base RUBYR; GameBible lines 1325-1326"
+  },
+  {
+    "id": "sac",
+    "displayName": "SAC",
+    "description": "This berserker may act docile and calm most of the time, but when his claws are shown his enemies are ripped to shreds. Blood will bleed even if it means his own.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SAC; GameBible lines 1328-1328"
+  },
+  {
+    "id": "sadida",
+    "displayName": "SADIDA",
+    "description": "A paladin of the highest order, he is strongly devoted to his sovereign and the values that his regent stands for. He adheres to a strict code of conduct set by his mentors.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SADIDA; GameBible lines 1330-1330"
+  },
+  {
+    "id": "sapphirer",
+    "displayName": "Sapphire",
+    "description": "SAPPHIRER_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base SAPPHIRER; GameBible lines 1331-1332"
+  },
+  {
+    "id": "scram",
+    "displayName": "SCRAM",
+    "description": "Not much is known about the past of this rogue. But her prowess and adaptability in a fight is a testament to her quick-wit and intelligence, making her an effective ally.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base SCRAM; GameBible lines 1334-1334"
+  },
+  {
+    "id": "shop-1001",
+    "displayName": "SHOP_1001_NAME",
+    "description": "SHOP_1001_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base SHOP_1001; GameBible lines 1335-1336"
+  },
+  {
+    "id": "shop-1002",
+    "displayName": "SHOP_1002_NAME",
+    "description": "SHOP_1002_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base SHOP_1002; GameBible lines 1337-1338"
+  },
+  {
+    "id": "shop-1003",
+    "displayName": "SHOP_1003_NAME",
+    "description": "SHOP_1003_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base SHOP_1003; GameBible lines 1339-1340"
+  },
+  {
+    "id": "shop-1004",
+    "displayName": "SHOP_1004_NAME",
+    "description": "SHOP_1004_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base SHOP_1004; GameBible lines 1341-1342"
+  },
+  {
+    "id": "shop-1005",
+    "displayName": "SHOP_1005_NAME",
+    "description": "SHOP_1005_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base SHOP_1005; GameBible lines 1343-1344"
+  },
+  {
+    "id": "shop-2001",
+    "displayName": "SHOP_2001_NAME",
+    "description": "SHOP_2001_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base SHOP_2001; GameBible lines 1345-1346"
+  },
+  {
+    "id": "shop-2002",
+    "displayName": "SHOP_2002_NAME",
+    "description": "SHOP_2002_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base SHOP_2002; GameBible lines 1347-1348"
+  },
+  {
+    "id": "shop-2003",
+    "displayName": "SHOP_2003_NAME",
+    "description": "SHOP_2003_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base SHOP_2003; GameBible lines 1349-1350"
+  },
+  {
+    "id": "shop-2004",
+    "displayName": "SHOP_2004_NAME",
+    "description": "SHOP_2004_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base SHOP_2004; GameBible lines 1351-1352"
+  },
+  {
+    "id": "shop-2005",
+    "displayName": "SHOP_2005_NAME",
+    "description": "SHOP_2005_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base SHOP_2005; GameBible lines 1353-1354"
+  },
+  {
+    "id": "shop-2006",
+    "displayName": "SHOP_2006_NAME",
+    "description": "SHOP_2006_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base SHOP_2006; GameBible lines 1355-1356"
+  },
+  {
+    "id": "silver-orer",
+    "displayName": "Silver ore",
+    "description": "SILVER_ORER_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base SILVER_ORER; GameBible lines 1357-1358"
+  },
+  {
+    "id": "staff-t1-1",
+    "displayName": "Long Staff",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base STAFF_T1_1; GameBible lines 3157-3158"
+  },
+  {
+    "id": "staff-t1-2",
+    "displayName": "Precious Staff",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base STAFF_T1_2; GameBible lines 3159-3160"
+  },
+  {
+    "id": "staff-t1-3",
+    "displayName": "Templar Staff",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base STAFF_T1_3; GameBible lines 3161-3162"
+  },
+  {
+    "id": "staff-t1-4",
+    "displayName": "Common Staff",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base STAFF_T1_4; GameBible lines 3163-3164"
+  },
+  {
+    "id": "staff-t1-4-name",
+    "displayName": "STAFF_T1_4_NAME",
+    "description": "Atk/Nice/Atk Spd/Nice/Cri %/High",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base STAFF_T1_4_NAME; GameBible lines 3165-3165"
+  },
+  {
+    "id": "staff-t2-1",
+    "displayName": "Almighty Staff",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base STAFF_T2_1; GameBible lines 3166-3167"
+  },
+  {
+    "id": "staff-t2-2",
+    "displayName": "Rune Staff",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base STAFF_T2_2; GameBible lines 3168-3169"
+  },
+  {
+    "id": "staff-t2-3",
+    "displayName": "Magic Staff",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base STAFF_T2_3; GameBible lines 3170-3171"
+  },
+  {
+    "id": "staff-t2-4",
+    "displayName": "Elite Staff",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base STAFF_T2_4; GameBible lines 3172-3173"
+  },
+  {
+    "id": "staff-t2-4-name",
+    "displayName": "STAFF_T2_4_NAME",
+    "description": "Atk/Nice/Atk Spd/Nice/Cri %/High",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base STAFF_T2_4_NAME; GameBible lines 3174-3174"
+  },
+  {
+    "id": "staff-t3-1",
+    "displayName": "Slayer Staff",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base STAFF_T3_1; GameBible lines 3175-3176"
+  },
+  {
+    "id": "staff-t3-2",
+    "displayName": "Sage Staff",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base STAFF_T3_2; GameBible lines 3177-3178"
+  },
+  {
+    "id": "staff-t3-3",
+    "displayName": "Hex Staff",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base STAFF_T3_3; GameBible lines 3179-3180"
+  },
+  {
+    "id": "staff-t4-1",
+    "displayName": "Guardian Staff",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base STAFF_T4_1; GameBible lines 3181-3182"
+  },
+  {
+    "id": "staff-t4-2",
+    "displayName": "Windy Staff",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base STAFF_T4_2; GameBible lines 3183-3184"
+  },
+  {
+    "id": "staff-t4-3",
+    "displayName": "Holy Staff",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base STAFF_T4_3; GameBible lines 3185-3186"
+  },
+  {
+    "id": "staff-t5-1",
+    "displayName": "Elder Staff",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base STAFF_T5_1; GameBible lines 3187-3188"
+  },
+  {
+    "id": "staff-t5-2",
+    "displayName": "Ancient Staff",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base STAFF_T5_2; GameBible lines 3189-3190"
+  },
+  {
+    "id": "staff-t5-3",
+    "displayName": "Dark Staff",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base STAFF_T5_3; GameBible lines 3191-3192"
+  },
+  {
+    "id": "steel-bar",
+    "displayName": "Steel bar",
+    "description": "STEEL_BAR_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base STEEL_BAR; GameBible lines 3193-3194"
+  },
+  {
+    "id": "titanium-orer",
+    "displayName": "Titanium ore",
+    "description": "TITANIUM_ORER_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base TITANIUM_ORER; GameBible lines 3231-3232"
+  },
+  {
+    "id": "trillium-barr",
+    "displayName": "Trillium bar",
+    "description": "TRILLIUM_BARR_DESCRIPTION",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "LOW",
+    "notes": "Source key base TRILLIUM_BARR; GameBible lines 3233-3234"
+  },
+  {
+    "id": "wand-t1-1",
+    "displayName": "Long Wand",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base WAND_T1_1; GameBible lines 3259-3260"
+  },
+  {
+    "id": "wand-t1-2",
+    "displayName": "Precious Wand",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base WAND_T1_2; GameBible lines 3261-3262"
+  },
+  {
+    "id": "wand-t1-3",
+    "displayName": "Templar Wand",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base WAND_T1_3; GameBible lines 3263-3264"
+  },
+  {
+    "id": "wand-t1-4",
+    "displayName": "Common Wand",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base WAND_T1_4; GameBible lines 3265-3266"
+  },
+  {
+    "id": "wand-t1-4-name",
+    "displayName": "WAND_T1_4_NAME",
+    "description": "Atk/Low/Atk Spd/Great/Cri %/Nice",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base WAND_T1_4_NAME; GameBible lines 3267-3267"
+  },
+  {
+    "id": "wand-t2-1",
+    "displayName": "Almighty Wand",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base WAND_T2_1; GameBible lines 3268-3269"
+  },
+  {
+    "id": "wand-t2-2",
+    "displayName": "Rune Wand",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base WAND_T2_2; GameBible lines 3270-3271"
+  },
+  {
+    "id": "wand-t2-3",
+    "displayName": "Magic Wand",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base WAND_T2_3; GameBible lines 3272-3273"
+  },
+  {
+    "id": "wand-t2-4",
+    "displayName": "Elite Wand",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base WAND_T2_4; GameBible lines 3274-3275"
+  },
+  {
+    "id": "wand-t2-4-name",
+    "displayName": "WAND_T2_4_NAME",
+    "description": "Atk/Low/Atk Spd/Great/Cri %/Nice",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base WAND_T2_4_NAME; GameBible lines 3276-3276"
+  },
+  {
+    "id": "wand-t3-1",
+    "displayName": "Slayer Wand",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base WAND_T3_1; GameBible lines 3277-3278"
+  },
+  {
+    "id": "wand-t3-2",
+    "displayName": "Sage Wand",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base WAND_T3_2; GameBible lines 3279-3280"
+  },
+  {
+    "id": "wand-t3-3",
+    "displayName": "Hex Wand",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base WAND_T3_3; GameBible lines 3281-3282"
+  },
+  {
+    "id": "wand-t4-1",
+    "displayName": "Guardian Wand",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base WAND_T4_1; GameBible lines 3283-3284"
+  },
+  {
+    "id": "wand-t4-2",
+    "displayName": "Windy Wand",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base WAND_T4_2; GameBible lines 3285-3286"
+  },
+  {
+    "id": "wand-t4-3",
+    "displayName": "Holy Wand",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base WAND_T4_3; GameBible lines 3287-3288"
+  },
+  {
+    "id": "wand-t5-1",
+    "displayName": "Elder Wand",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base WAND_T5_1; GameBible lines 3289-3290"
+  },
+  {
+    "id": "wand-t5-2",
+    "displayName": "Ancient Wand",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base WAND_T5_2; GameBible lines 3291-3292"
+  },
+  {
+    "id": "wand-t5-3",
+    "displayName": "Dark Wand",
+    "description": "This is a weapon.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base WAND_T5_3; GameBible lines 3293-3294"
+  },
+  {
+    "id": "xelor",
+    "displayName": "XELOR",
+    "description": "This is Diviner.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "MEDIUM",
+    "notes": "Source key base XELOR; GameBible lines 3298-3298"
+  }
+]

@@ -1,0 +1,540 @@
+{
+  "schemaVersion": 1,
+  "rooms": [
+    {
+      "id": "room.01",
+      "number": 1,
+      "name": "Cracked Altar Room",
+      "shortName": "Altar",
+      "shapeOrSize": "large square",
+      "description": "A large square chamber where broken symbols of old faith linger in the dust. A triangular prism altar stands at the center.",
+      "exits": [
+        {
+          "direction": "north",
+          "to": "room.02",
+          "canonStatus": "LOCKED"
+        }
+      ],
+      "entryTriggers": [],
+      "examineTriggers": [
+        {
+          "id": "examine.room01.prism_face_1",
+          "target": "prism face 1",
+          "journalUnlocks": ["journal.scroll.fog_vs_imp"],
+          "canonStatus": "LOCKED"
+        },
+        {
+          "id": "examine.room01.prism_face_2",
+          "target": "prism face 2",
+          "journalUnlocks": ["journal.scroll.pulse_vs_musca"],
+          "canonStatus": "LOCKED"
+        },
+        {
+          "id": "examine.room01.prism_face_3",
+          "target": "prism face 3",
+          "journalUnlocks": ["journal.scroll.heart_vs_lizardman"],
+          "canonStatus": "LOCKED"
+        }
+      ],
+      "itemsAvailable": [],
+      "monsters": [],
+      "journalUnlocks": [],
+      "canonStatus": "LOCKED",
+      "sourceNotes": ["Adventure Game Design V3 - Alpha", "forgotten_ruin_map_data.json"],
+      "unresolvedQuestions": []
+    },
+    {
+      "id": "room.02",
+      "number": 2,
+      "name": "Shrine of the Silent Coil",
+      "shortName": "Shrine",
+      "shapeOrSize": "rectangular",
+      "description": "A quiet rectangular shrine dominated by a coiled obsidian sculpture.",
+      "exits": [
+        {
+          "direction": "east",
+          "to": "room.06",
+          "canonStatus": "LIKELY"
+        },
+        {
+          "direction": "multi_step_north_west_north",
+          "to": "room.03",
+          "canonStatus": "LIKELY"
+        }
+      ],
+      "entryTriggers": [
+        {
+          "id": "encounter.room02.low_tier",
+          "type": "combat",
+          "monsterId": "monster.random_low_tier",
+          "canonStatus": "LOCKED"
+        }
+      ],
+      "examineTriggers": [
+        {
+          "id": "examine.room02.shrine",
+          "target": "shrine",
+          "journalUnlocks": ["journal.lore.armour_of_light_prophecy"],
+          "canonStatus": "LOCKED"
+        }
+      ],
+      "itemsAvailable": [
+        {
+          "itemId": "item.scroll.fog_of_confusion",
+          "availability": "visible_after_monster_defeat",
+          "canonStatus": "LOCKED"
+        }
+      ],
+      "monsters": ["monster.random_low_tier"],
+      "journalUnlocks": ["journal.lore.armour_of_light_prophecy"],
+      "canonStatus": "LOCKED",
+      "sourceNotes": ["Adventure Game Design V3 - Alpha", "Full Alpha Specifications"],
+      "unresolvedQuestions": []
+    },
+    {
+      "id": "room.03",
+      "number": 3,
+      "name": "Sarcophagus Hall",
+      "shortName": "Sarcophagus",
+      "shapeOrSize": "square or tight squarish chamber",
+      "description": "Ancient sarcophagi line the walls beneath a shaft of pale moonlight.",
+      "exits": [
+        {
+          "direction": "northwest",
+          "to": "room.04",
+          "canonStatus": "LIKELY"
+        },
+        {
+          "direction": "multi_step_south_east_south",
+          "to": "room.02",
+          "canonStatus": "LIKELY"
+        }
+      ],
+      "entryTriggers": [],
+      "examineTriggers": [
+        {
+          "id": "examine.room03.sarcophagus",
+          "target": "sarcophagus",
+          "revealsItems": ["item.cure_all_stats_potion"],
+          "journalUnlocks": ["journal.item.cure_all_stats_potion"],
+          "canonStatus": "LOCKED"
+        }
+      ],
+      "itemsAvailable": [
+        {
+          "itemId": "item.cure_all_stats_potion",
+          "availability": "visible_after_examine_sarcophagus",
+          "canonStatus": "LOCKED"
+        }
+      ],
+      "monsters": [],
+      "journalUnlocks": ["journal.item.cure_all_stats_potion"],
+      "canonStatus": "LOCKED",
+      "sourceNotes": ["Full Alpha Specifications", "Adventure Game Design V3 - Alpha"],
+      "unresolvedQuestions": [
+        "Whether potion pickup and journal unlock happen on examine or only after manual pickup."
+      ]
+    },
+    {
+      "id": "room.04",
+      "number": 4,
+      "name": "Guardroom Delta",
+      "shortName": "Guardroom",
+      "shapeOrSize": "square",
+      "description": "A former garrison room with rusted weapons on cracked stone racks.",
+      "exits": [
+        {
+          "direction": "west_then_north",
+          "to": "room.08",
+          "canonStatus": "LIKELY"
+        },
+        {
+          "direction": "east_then_south",
+          "to": "room.03",
+          "canonStatus": "LIKELY"
+        },
+        {
+          "direction": "south",
+          "to": "room.07",
+          "canonStatus": "LIKELY"
+        }
+      ],
+      "entryTriggers": [
+        {
+          "id": "encounter.room04.low_tier",
+          "type": "combat",
+          "monsterId": "monster.random_low_tier_scaled",
+          "canonStatus": "LOCKED"
+        }
+      ],
+      "examineTriggers": [
+        {
+          "id": "examine.room04.scribbles",
+          "target": "wall scribbles",
+          "journalUnlocks": ["journal.lore.camelot_party_roles"],
+          "canonStatus": "LOCKED"
+        }
+      ],
+      "itemsAvailable": [
+        {
+          "itemId": "item.scroll.pulse_of_calm",
+          "availability": "visible_after_monster_defeat",
+          "canonStatus": "LOCKED"
+        }
+      ],
+      "monsters": ["monster.random_low_tier_scaled"],
+      "journalUnlocks": ["journal.lore.camelot_party_roles"],
+      "canonStatus": "LOCKED",
+      "sourceNotes": ["Full Alpha Specifications", "forgotten_ruin_map_data.json"],
+      "unresolvedQuestions": [
+        "Whether Room 4 low-tier monster always scales to 70 percent or can use fixed low-tier stats."
+      ]
+    },
+    {
+      "id": "room.05",
+      "number": 5,
+      "name": "Library of Echoes",
+      "shortName": "Library",
+      "shapeOrSize": "square or circular chamber depending source",
+      "description": "Scrolls decay on whispering shelves. An eastern wall panel sits loose.",
+      "exits": [
+        {
+          "direction": "south_to_mid_passage",
+          "to": "transition.room05.mid_passage",
+          "targetType": "transition",
+          "canonStatus": "LOCKED"
+        }
+      ],
+      "entryTriggers": [
+        {
+          "id": "encounter.room05.imp",
+          "type": "combat",
+          "monsterId": "monster.imp",
+          "canonStatus": "LOCKED"
+        }
+      ],
+      "examineTriggers": [
+        {
+          "id": "examine.room05.east_wall",
+          "target": "east wall",
+          "setsFlags": ["flag.room05.east_wall_examined"],
+          "canonStatus": "LOCKED"
+        },
+        {
+          "id": "action.room05.push_panel",
+          "target": "panel",
+          "requiresFlags": ["flag.room05.east_wall_examined"],
+          "revealsItems": ["item.sound_deflecting_girdle", "item.lorebook_first_light"],
+          "journalUnlocks": ["journal.lore.galania_xerces_asherah"],
+          "canonStatus": "LOCKED"
+        }
+      ],
+      "itemsAvailable": [
+        {
+          "itemId": "item.scroll.heart_beacon",
+          "availability": "visible_after_imp_defeat",
+          "canonStatus": "LOCKED"
+        },
+        {
+          "itemId": "item.sound_deflecting_girdle",
+          "availability": "visible_after_push_panel",
+          "canonStatus": "LOCKED"
+        },
+        {
+          "itemId": "item.lorebook_first_light",
+          "availability": "visible_after_push_panel",
+          "canonStatus": "LIKELY"
+        }
+      ],
+      "monsters": ["monster.imp"],
+      "journalUnlocks": ["journal.lore.galania_xerces_asherah"],
+      "canonStatus": "CONFLICTED",
+      "sourceNotes": ["Post-test fix 4", "Full Alpha Specifications"],
+      "unresolvedQuestions": [
+        "Some sources describe the Girdle as a direct Imp reward; post-test fix requires examine east wall, push panel, then manual pickup."
+      ]
+    },
+    {
+      "id": "room.06",
+      "number": 6,
+      "name": "Cracked Mirror Room",
+      "shortName": "Mirror",
+      "shapeOrSize": "large square",
+      "description": "Broken black mirror shards litter the floor of a large square chamber.",
+      "exits": [
+        {
+          "direction": "northwest",
+          "to": "room.05",
+          "canonStatus": "LIKELY"
+        },
+        {
+          "direction": "south_or_east_to_room02",
+          "to": "room.02",
+          "canonStatus": "CONFLICTED"
+        }
+      ],
+      "entryTriggers": [
+        {
+          "id": "encounter.room06.low_tier",
+          "type": "combat",
+          "monsterId": "monster.random_low_tier_scaled",
+          "canonStatus": "LIKELY"
+        }
+      ],
+      "examineTriggers": [
+        {
+          "id": "examine.room06.shards",
+          "target": "mirror shards",
+          "revealsItems": ["item.hexagonal_glass_piece"],
+          "canonStatus": "LOCKED"
+        },
+        {
+          "id": "examine.room06.secret_wall",
+          "target": "black wall or secret wall",
+          "requiresItems": ["item.hexagonal_glass_piece"],
+          "setsFlags": ["flag.secret.hex_portal_available"],
+          "canonStatus": "LOCKED"
+        }
+      ],
+      "itemsAvailable": [
+        {
+          "itemId": "item.hexagonal_glass_piece",
+          "availability": "visible_after_examine_shards",
+          "canonStatus": "LOCKED"
+        },
+        {
+          "itemId": "item.scroll.pulse_of_calm",
+          "availability": "visible_after_monster_defeat",
+          "canonStatus": "LIKELY"
+        }
+      ],
+      "monsters": ["monster.random_low_tier_scaled"],
+      "journalUnlocks": [],
+      "canonStatus": "CONFLICTED",
+      "sourceNotes": ["Post-test fix 3", "Full Alpha Specifications", "forgotten_ruin_map_data.json"],
+      "unresolvedQuestions": [
+        "No automatic hint should reveal where the Hexagonal Glass Piece is used, but later docs include a journal-style hint.",
+        "Room 6 exits differ across source formats."
+      ]
+    },
+    {
+      "id": "room.07",
+      "number": 7,
+      "name": "Chamber of Black Roots",
+      "shortName": "Roots",
+      "shapeOrSize": "square or hall",
+      "description": "Vile roots creep from the walls like veins and the air smells of rot.",
+      "exits": [
+        {
+          "direction": "south",
+          "to": "room.09",
+          "canonStatus": "LOCKED"
+        },
+        {
+          "direction": "north",
+          "to": "room.04",
+          "canonStatus": "LIKELY"
+        }
+      ],
+      "entryTriggers": [
+        {
+          "id": "hazard.room07.poison_roots",
+          "type": "status_effect",
+          "effect": "reduce_all_stats_30_percent",
+          "canonStatus": "LOCKED"
+        },
+        {
+          "id": "encounter.room07.lizardman",
+          "type": "combat",
+          "monsterId": "monster.lizardman",
+          "canonStatus": "LOCKED"
+        }
+      ],
+      "examineTriggers": [],
+      "itemsAvailable": [
+        {
+          "itemId": "item.prism_fragment_c",
+          "availability": "visible_after_lizardman_defeat",
+          "canonStatus": "LOCKED"
+        }
+      ],
+      "monsters": ["monster.lizardman"],
+      "journalUnlocks": ["journal.discovery.prism_fragment_c"],
+      "canonStatus": "LOCKED",
+      "sourceNotes": ["Adventure Game Design V3 - Alpha", "Full Alpha Specifications"],
+      "unresolvedQuestions": [
+        "Whether poison reapplies on every re-entry after cure."
+      ]
+    },
+    {
+      "id": "room.08",
+      "number": 8,
+      "name": "Chapel of Glass",
+      "shortName": "Chapel",
+      "shapeOrSize": "rectangular",
+      "description": "Light pours through fractured glass and a mural marks the north wall.",
+      "exits": [
+        {
+          "direction": "south_east_south",
+          "to": "room.04",
+          "canonStatus": "LIKELY"
+        },
+        {
+          "direction": "south_east_south_east_south",
+          "to": "room.03",
+          "canonStatus": "LIKELY"
+        }
+      ],
+      "entryTriggers": [
+        {
+          "id": "encounter.room08.musca",
+          "type": "combat",
+          "monsterId": "monster.musca",
+          "canonStatus": "LOCKED"
+        }
+      ],
+      "examineTriggers": [
+        {
+          "id": "examine.room08.north_wall_mural",
+          "target": "north wall mural",
+          "journalUnlocks": ["journal.lore.galania_xerces_asherah"],
+          "canonStatus": "LOCKED"
+        }
+      ],
+      "itemsAvailable": [
+        {
+          "itemId": "item.prism_fragment_b",
+          "availability": "visible_after_musca_defeat",
+          "canonStatus": "LOCKED"
+        }
+      ],
+      "monsters": ["monster.musca"],
+      "journalUnlocks": ["journal.lore.galania_xerces_asherah"],
+      "canonStatus": "LOCKED",
+      "sourceNotes": ["Adventure Game Design V3 - Alpha", "Full Alpha Specifications"],
+      "unresolvedQuestions": []
+    },
+    {
+      "id": "room.09",
+      "number": 9,
+      "name": "Room of Cares",
+      "shortName": "Cares",
+      "shapeOrSize": "square",
+      "description": "A quiet room with an old seal or Galanic mirror that reacts to the assembled Prism.",
+      "exits": [
+        {
+          "direction": "west_then_north",
+          "to": "room.10",
+          "conditions": ["flag.prism.assembled"],
+          "canonStatus": "LOCKED"
+        },
+        {
+          "direction": "north_or_backtrack",
+          "to": "room.04",
+          "canonStatus": "LIKELY"
+        }
+      ],
+      "entryTriggers": [
+        {
+          "id": "event.room09.prism_assembly_prompt",
+          "type": "assembly_prompt",
+          "requiresItems": ["item.prism_fragment_a", "item.prism_fragment_b", "item.prism_fragment_c"],
+          "canonStatus": "LOCKED"
+        },
+        {
+          "id": "event.room09.store",
+          "type": "store",
+          "requiresFlags": ["flag.prism.assembled"],
+          "canonStatus": "CONFLICTED"
+        }
+      ],
+      "examineTriggers": [],
+      "itemsAvailable": [],
+      "monsters": [],
+      "journalUnlocks": ["journal.discovery.prism_assembled"],
+      "canonStatus": "CONFLICTED",
+      "sourceNotes": ["Adventure Game Design V3 - Alpha store logic", "Later Beta seal chamber design"],
+      "unresolvedQuestions": [
+        "Whether Room 9 should run store, seal assembly, or both in sequence.",
+        "Whether missing Girdle teleport guidance is approved canon."
+      ]
+    },
+    {
+      "id": "room.10",
+      "number": 10,
+      "name": "The Banshee's Chamber",
+      "shortName": "Boss",
+      "shapeOrSize": "large square or domed chamber",
+      "description": "A large enclosure where the air is thick with anticipation and illusion.",
+      "exits": [],
+      "entryTriggers": [
+        {
+          "id": "event.room10.girdle_check",
+          "type": "boss_precondition",
+          "requiresItems": ["item.sound_deflecting_girdle"],
+          "canonStatus": "LOCKED"
+        },
+        {
+          "id": "encounter.room10.banshee",
+          "type": "combat",
+          "monsterId": "monster.banshee_doppelganger",
+          "canonStatus": "LOCKED"
+        }
+      ],
+      "examineTriggers": [
+        {
+          "id": "examine.room10.crystal_stand",
+          "target": "crystal stand",
+          "revealsItems": ["item.merlins_tetrahedronal"],
+          "canonStatus": "LIKELY"
+        }
+      ],
+      "itemsAvailable": [
+        {
+          "itemId": "item.merlins_tetrahedronal",
+          "availability": "visible_after_boss_defeat",
+          "canonStatus": "LOCKED"
+        }
+      ],
+      "monsters": ["monster.banshee_doppelganger"],
+      "journalUnlocks": ["journal.ending.hero_prophecy"],
+      "canonStatus": "LOCKED",
+      "sourceNotes": ["Adventure Game Design V3 - Alpha", "Post-test fix 9"],
+      "unresolvedQuestions": [
+        "Whether artifact pickup requires examine stand first or can be picked up immediately after victory."
+      ]
+    }
+  ],
+  "transitionNodes": [
+    {
+      "id": "transition.room05.mid_passage",
+      "description": "Corrected Room 5 midpoint with options west to dead-end dark passage or south back to Room 6.",
+      "exits": [
+        {
+          "direction": "west",
+          "to": "transition.dead_end.black_wall",
+          "targetType": "transition"
+        },
+        {
+          "direction": "south",
+          "to": "room.06",
+          "targetType": "room"
+        }
+      ],
+      "canonStatus": "LOCKED"
+    },
+    {
+      "id": "transition.dead_end.black_wall",
+      "description": "Dead-end dark passage with black wall / hexagonal portal trigger.",
+      "exits": [
+        {
+          "direction": "use_hexagonal_glass_piece",
+          "to": "room.04",
+          "targetType": "room",
+          "oneWay": true
+        }
+      ],
+      "canonStatus": "LOCKED"
+    }
+  ]
+}

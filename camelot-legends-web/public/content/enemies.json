@@ -1,0 +1,58 @@
+[
+  {
+    "id": "anakim",
+    "displayName": "Anakim",
+    "description": "Anakim",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Enemy-like key ANAKIM_1_BB_LVL_90 at line 6; runtime stats not recovered."
+  },
+  {
+    "id": "forgon",
+    "displayName": "Forgon",
+    "description": "Forgon",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Enemy-like key FORGON_1_BB_LVL_40 at line 1004; runtime stats not recovered."
+  },
+  {
+    "id": "mordred",
+    "displayName": "Mordred",
+    "description": "Mordred",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Enemy-like key MORDRED_1_BB_LVL_100 at line 1171; runtime stats not recovered."
+  },
+  {
+    "id": "winford",
+    "displayName": "Winford",
+    "description": "Winford",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\Camelot_Legends-GameBible.csv",
+    "confidence": "HIGH",
+    "notes": "Enemy-like key WINFORD_1_BB_LVL_45 at line 3295; runtime stats not recovered."
+  },
+  {
+    "id": "davious",
+    "displayName": "Davious",
+    "description": "Boss/opponent role recovered from GDD/script material.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "MEDIUM",
+    "notes": "Design evidence only; no enemy runtime record or stats found."
+  },
+  {
+    "id": "imam",
+    "displayName": "Imam",
+    "description": "Boss/opponent role recovered from GDD/script material.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "MEDIUM",
+    "notes": "Design evidence only; no enemy runtime record or stats found."
+  },
+  {
+    "id": "rephaim",
+    "displayName": "Rephaim",
+    "description": "Boss/opponent role recovered from GDD/script material.",
+    "sourceFile": "C:\\Users\\Thomas\\My Drive\\CamleotLegends-GameFiles\\CAMELOT LEGENDS NEW_GDD.docx",
+    "confidence": "MEDIUM",
+    "notes": "Design evidence only; no enemy runtime record or stats found."
+  }
+]
