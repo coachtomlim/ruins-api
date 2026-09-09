@@ -1,0 +1,9 @@
+{
+ "version":1,"rules":"web-flare-0.2.0",
+ "heroes":{"warrior":{"name":"Warrior","sprite":"warrior","maxHp":100,"damage":12,"armor":0,"interval":0.6,"windup":0.18,"animationTime":0.4,"range":1.05,"speed":4.8,"radius":0.22}},
+ "enemies":{
+  "goblin":{"name":"Goblin","sprite":"goblin","maxHp":30,"damage":5,"armor":0,"interval":0.8,"windup":0.28,"animationTime":0.4,"range":1.08,"radius":0.22,"gold":6,"cost":20,"behavior":"guard"},
+  "skeleton":{"name":"Skeleton","sprite":"skeleton","maxHp":45,"damage":7,"armor":0,"interval":0.9,"windup":0.3,"animationTime":0.4,"range":1.08,"radius":0.22,"gold":9,"cost":30,"behavior":"guard"}
+ },
+ "items":{"small-potion":{"name":"Small potion","kind":"heal","heal":10,"cost":15}}
+}

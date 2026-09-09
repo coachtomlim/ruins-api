@@ -1,69 +1,23 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>WEB-FLARE-P0</title>
-<style>
-*{box-sizing:border-box}body{margin:0;background:#080a0d;color:#f5f0e4;font-family:system-ui,-apple-system,sans-serif;min-height:100svh;display:grid;place-items:center}.wrap{width:min(100%,1000px);padding:10px}.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px}.name{font-weight:800;letter-spacing:.08em;font-size:13px}.hud{display:flex;gap:6px}.pill{padding:6px 9px;border:1px solid #303640;background:#14181e;border-radius:999px;font-size:12px}.stage{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;border-radius:14px;border:1px solid #292f38;background:#030405}canvas{position:absolute;inset:0;width:100%;height:100%}.cover{position:absolute;inset:0;display:grid;place-items:center;background:rgba(3,4,5,.48)}.card{max-width:88%;padding:17px 20px;border:1px solid #39414b;border-radius:16px;background:rgba(12,15,19,.92);text-align:center;backdrop-filter:blur(8px)}h1{font-size:clamp(20px,4vw,34px);margin:0 0 6px}p{font-size:13px;line-height:1.4;opacity:.72;margin:0 0 13px}button{border:0;border-radius:999px;padding:10px 20px;min-width:130px;background:#eee6d3;color:#111;font-weight:800;font-size:15px}button:disabled{opacity:.45}.status{text-align:center;font-size:11px;opacity:.58;margin-top:7px;min-height:16px}.hit{position:absolute;border:2px solid #f2d884;border-radius:50%;width:8px;height:8px;transform:translate(-50%,-50%);animation:hit .3s ease-out forwards;pointer-events:none}@keyframes hit{to{width:65px;height:65px;opacity:0}}@media(max-width:600px){.wrap{padding:6px}.stage{border-radius:10px}.name span{display:none}}
-</style>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+ <meta name="theme-color" content="#0b1115"><meta name="robots" content="noindex">
+ <title>The First Crossing | Dungeon Challenge</title><link rel="stylesheet" href="./style.css">
 </head>
-<body><div class="wrap">
-<div class="bar"><div class="name">WEB-FLARE-P0 <span>· stock Flare room</span></div><div class="hud"><div class="pill">HP <b id="hp">100</b></div><div class="pill">🪙 <b id="gold">0</b></div><div class="pill"><b id="time">0.0</b>s</div></div></div>
-<div class="stage" id="stage"><canvas id="map"></canvas><canvas id="actors"></canvas><div class="cover" id="cover"><div class="card"><h1 id="head">Loading Flare v1.15…</h1><p id="copy">Iron Labyrinth Room 1. One warrior, two monsters, coin drops, one exit.</p><button id="go" disabled>START</button></div></div></div>
-<div class="status" id="status">Loading the pinned stock Flare room and sprites…</div></div>
-<script>
-const RAW='https://raw.githubusercontent.com/flareteam/flare-game/v1.15/';
-const mapURL=RAW+'mods/empyrean_campaign/maps/iron_labyrinth/room1.txt';
-const tileBase=RAW+'tiled/tilesheets/';
-const spriteBase=RAW+'mods/fantasycore/images/';
-const C=document.querySelector('#map'),A=document.querySelector('#actors'),cg=C.getContext('2d'),ag=A.getContext('2d'),stage=document.querySelector('#stage');
-const cover=document.querySelector('#cover'),go=document.querySelector('#go'),head=document.querySelector('#head'),copy=document.querySelector('#copy'),status=document.querySelector('#status'),hpE=document.querySelector('#hp'),goldE=document.querySelector('#gold'),timeE=document.querySelector('#time');
-let W=900,H=560,dpr=1,M,sets=[],ready=false,run=false,t0=0,hp=100,gold=0,done=false,picked1=false,picked2=false,lastHit=-1;
-let V={s:.2,x:450,y:30},OV={s:.2,x:450,y:30};
-const GAME_ZOOM=2.55, ZOOM_MS=650;
-const actors={};
-const route={start:{x:7,y:19},a:{x:11,y:16},b:{x:16,y:12},exit:{x:21,y:8}};const T={a0:2600,a1:4100,b0:6300,b1:7900,end:10800};
-function fit(){
-  const r=stage.getBoundingClientRect();W=r.width;H=r.height;dpr=Math.min(devicePixelRatio||1,2);
-  for(const c of [C,A]){c.width=W*dpr;c.height=H*dpr;c.getContext('2d').setTransform(dpr,0,0,dpr,0,0)}
-  if(M){
-    const spanX=(M.w-1)*M.tw+600,spanY=(M.w+M.h-2)*M.th/2+500;
-    const s=Math.min((W-20)/spanX,(H-20)/spanY)*1.18;
-    OV={s,x:W/2,y:30};
-    if(run){const h=heroAt(performance.now()-t0);setGameCamera(h,1)}else V={...OV};
-    drawMap();
-  }
-}
-addEventListener('resize',fit);fit();
-function img(src){return new Promise((ok,no)=>{const i=new Image;i.crossOrigin='anonymous';i.onload=()=>ok(i);i.onerror=()=>no(new Error('Could not load '+src));i.src=src})}
-function parse(txt){let sec='',h={},ts=[],layers=[],layer=null;for(const raw of txt.replace(/\r/g,'').split('\n')){const l=raw.trim();if(!l||l[0]==='#')continue;if(l[0]==='['){sec=l.slice(1,-1);if(sec==='layer'){layer={type:'',data:[]};layers.push(layer)}continue}if(sec==='header'&&l.includes('=')){const i=l.indexOf('=');h[l.slice(0,i)]=l.slice(i+1)}else if(sec==='tilesets'&&l.startsWith('tileset=')){const p=l.slice(8).split(',');ts.push({file:p[0].split('/').pop(),tw:+p[1],th:+p[2],ox:+p[3],oy:+p[4]})}else if(sec==='layer'&&layer){if(l.startsWith('type='))layer.type=l.slice(5);else if(l!=='data='&&/^[0-9,]+$/.test(l))layer.data.push(...l.split(',').filter(Boolean).map(Number))}}return{w:+h.width,h:+h.height,tw:+h.tilewidth,th:+h.tileheight,ts,layers}}
-async function loadTiles(){let gid=1;sets=[];for(const s of M.ts){const im=await img(tileBase+s.file),cols=Math.floor(im.width/s.tw),rows=Math.floor(im.height/s.th),n=cols*rows;sets.push({...s,im,cols,first:gid,last:gid+n-1});gid+=n}}
-function tile(id){for(const s of sets)if(id>=s.first&&id<=s.last)return{s,n:id-s.first};return null}
-function iso(x,y){return{x:(x-y)*M.tw/2,y:(x+y)*M.th/2}}
-function pos(x,y){const p=iso(x,y);return{x:V.x+p.x*V.s,y:V.y+p.y*V.s}}
-function setGameCamera(h,t){
-  t=Math.max(0,Math.min(1,t));const e=t*t*(3-2*t),s=OV.s*(1+(GAME_ZOOM-1)*e),p=iso(h.x,h.y);
-  const tx=W*.50-p.x*s,ty=H*.56-p.y*s;
-  V.s=s;V.x=OV.x+(tx-OV.x)*e;V.y=OV.y+(ty-OV.y)*e;
-}
-function drawMap(){if(!M||!sets.length)return;cg.clearRect(0,0,W,H);cg.fillStyle='#030405';cg.fillRect(0,0,W,H);const visible=new Set(['background','background_fringe','object','object_fringe']);for(const L of M.layers){if(!visible.has(L.type))continue;for(let i=0;i<L.data.length;i++){const id=L.data[i];if(!id)continue;const q=tile(id);if(!q)continue;const x=i%M.w,y=(i/M.w)|0,p=iso(x,y),s=q.s,n=q.n,col=n%s.cols,row=(n/s.cols)|0;cg.drawImage(s.im,col*s.tw,row*s.th,s.tw,s.th,V.x+(p.x-(s.tw-M.tw)/2+s.ox)*V.s,V.y+(p.y-(s.th-M.th)+s.oy)*V.s,s.tw*V.s,s.th*V.s)}}const g=cg.createLinearGradient(0,0,0,H);g.addColorStop(0,'rgba(0,0,0,.03)');g.addColorStop(1,'rgba(0,0,0,.3)');cg.fillStyle=g;cg.fillRect(0,0,W,H)}
-function sprite(sp,x,y,k=.82,a=1){const p=pos(x,y),z=V.s*k;ag.save();ag.globalAlpha=a;ag.drawImage(sp.im,sp.sx,sp.sy,sp.sw,sp.sh,p.x-sp.ax*z,p.y-sp.ay*z,sp.sw*z,sp.sh*z);ag.restore()}
-function bar(x,y,r){const p=pos(x,y),z=Math.max(1,V.s/OV.s);ag.fillStyle='#08090b';ag.fillRect(p.x-18*z,p.y-39*z,36*z,5*z);ag.fillStyle='#b84c4c';ag.fillRect(p.x-17*z,p.y-38*z,34*z*Math.max(0,r),3*z)}
-function coin(x,y,a=1){const p=pos(x,y),z=Math.max(1,V.s/OV.s);ag.save();ag.globalAlpha=a;ag.fillStyle='#e5bd49';ag.beginPath();ag.arc(p.x,p.y-4*z,5*z,0,7);ag.fill();ag.strokeStyle='#fff0a0';ag.stroke();ag.restore()}
-function mix(a,b,t){t=Math.max(0,Math.min(1,t));return{x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t}}
-function heroAt(ms){if(ms<T.a0)return mix(route.start,route.a,ms/T.a0);if(ms<T.a1)return route.a;if(ms<T.b0)return mix(route.a,route.b,(ms-T.a1)/(T.b0-T.a1));if(ms<T.b1)return route.b;return mix(route.b,route.exit,(ms-T.b1)/(T.end-T.b1))}
-function flash(x,y){const p=pos(x,y),e=document.createElement('i');e.className='hit';e.style.left=p.x+'px';e.style.top=p.y+'px';stage.appendChild(e);setTimeout(()=>e.remove(),330)}
-function reset(){hp=100;gold=0;done=picked1=picked2=false;lastHit=-1;hpE.textContent=hp;goldE.textContent=gold;timeE.textContent='0.0'}
-function frame(now){
-  ag.clearRect(0,0,W,H);if(!ready){requestAnimationFrame(frame);return}
-  let ms=run?now-t0:(done?T.end:0);const h=heroAt(ms);
-  if(run){setGameCamera(h,Math.min(1,ms/ZOOM_MS));drawMap()}
-  const r1=ms<T.a0?1:ms>T.a1?0:1-(ms-T.a0)/(T.a1-T.a0),r2=ms<T.b0?1:ms>T.b1?0:1-(ms-T.b0)/(T.b1-T.b0);
-  if(r1>0){sprite(actors.goblin,route.a.x,route.a.y,.78);bar(route.a.x,route.a.y,r1)}if(r2>0){sprite(actors.skeleton,route.b.x,route.b.y,.7);bar(route.b.x,route.b.y,r2)}if(ms>=T.a1&&ms<T.a1+650)coin(route.a.x+.2,route.a.y,1-(ms-T.a1)/650);if(ms>=T.b1&&ms<T.b1+650)coin(route.b.x+.2,route.b.y,1-(ms-T.b1)/650);sprite(actors.knight,h.x,h.y,.72);
-  if(run){const zone=ms>=T.a0&&ms<T.a1?1:ms>=T.b0&&ms<T.b1?2:0,hit=Math.floor(ms/330);if(zone&&hit!==lastHit){lastHit=hit;flash(zone===1?route.a.x:route.b.x,zone===1?route.a.y:route.b.y)}if(ms>T.a1&&!picked1){picked1=true;hp=93;gold=6;hpE.textContent=hp;goldE.textContent=gold}if(ms>T.b1&&!picked2){picked2=true;hp=82;gold=15;hpE.textContent=hp;goldE.textContent=gold}timeE.textContent=(Math.min(ms,T.end)/1000).toFixed(1);if(ms>=T.end&&!done){done=true;run=false;head.textContent='ROOM CLEARED';copy.textContent='Warrior exited with '+hp+'% HP and '+gold+' coins.';go.textContent='RUN AGAIN';cover.style.display='grid';status.textContent='P0 complete: stock Flare room, stock actors, browser-only resolution.'}}
-  requestAnimationFrame(frame)
-}
-requestAnimationFrame(frame);
-go.onclick=()=>{if(!ready||run)return;reset();V={...OV};drawMap();run=true;t0=performance.now();cover.style.display='none';status.textContent='Challenge running…'};
-(async()=>{try{const txt=await fetch(mapURL).then(r=>{if(!r.ok)throw Error('Map '+r.status);return r.text()});M=parse(txt);await Promise.all([loadTiles(),(async()=>actors.knight={im:await img(spriteBase+'npcs/knight.png'),sx:826,sy:0,sw:91,sh:161,ax:28,ay:149})(),(async()=>actors.goblin={im:await img(spriteBase+'enemies/goblin.png'),sx:142,sy:977,sw:111,sh:96,ax:68,ay:84})(),(async()=>actors.skeleton={im:await img(spriteBase+'enemies/skeleton.png'),sx:805,sy:367,sw:162,sh:170,ax:90,ay:151})()]);ready=true;fit();head.textContent='IRON LABYRINTH · ROOM 1';copy.textContent='Stock Flare v1.15 room. Warrior vs Goblin + Skeleton. About 11 seconds.';go.disabled=false;status.textContent='Ready. Tap START.'}catch(e){console.error(e);head.textContent='LOAD FAILED';copy.textContent=e.message;status.textContent='Could not load pinned Flare assets.'}})();
-</script></body></html>
+<body>
+ <main class="shell">
+  <header class="header"><div><div class="eyebrow">DUNGEON CHALLENGE <span>0.2</span></div><h1>The First Crossing</h1></div><span class="badge">LEVEL 1</span></header>
+  <div class="hud" aria-label="Challenge status"><div class="health"><span>WARRIOR</span><strong id="hp">100 / 100</strong><div class="track"><i id="healthfill"></i></div></div><div class="metric"><span>GOLD</span><strong id="gold">0</strong></div><div class="metric"><span>CLEARED</span><strong id="kills">0 / 2</strong></div><div class="metric"><span>TIME</span><strong id="time">0.0s</strong></div></div>
+  <section class="stage" id="stage" aria-label="Isometric dungeon room">
+   <canvas id="scene" aria-label="Automatic warrior run through a stock Flare room">Your browser needs Canvas 2D to show this room.</canvas>
+   <div class="stage-label">STOCK FLARE ROOM <span id="phase">OVERVIEW</span></div>
+   <div class="camera-controls" aria-label="Camera"><button id="zoomout" title="Zoom out" aria-label="Zoom out">−</button><button id="zoomin" title="Zoom in" aria-label="Zoom in">+</button></div>
+   <div class="cover" id="cover"><div class="card"><div class="eyebrow" id="overline">ONE ROOM. ONE RUN.</div><h2 id="headline">Preparing the room</h2><p id="description">Loading stock art and the room's collision data.</p><button class="primary" id="start" disabled>LOADING</button><span class="hint" id="hint">No steering. Just tap Start and watch.</span></div></div>
+  </section>
+  <div class="toolbar"><p id="status" role="status" aria-live="polite">Preparing your challenge…</p><button id="pause" disabled>Pause</button><button id="mapview" aria-pressed="false">Map</button></div>
+  <details class="details"><summary>Inspect this challenge <span>65 / 100 gold</span></summary><div class="detail-body"><p>Warrior: 100 HP · 12 damage · 0.6s attack interval.<br>Goblin: 30 HP · 5 damage. Skeleton: 45 HP · 7 damage.<br>One 10-HP potion. Monsters guard their positions and strike within melee range.</p><div class="debug-controls"><button id="path" aria-pressed="false">Show route</button><button id="collision" aria-pressed="false">Show collision</button></div><p class="note">Rules-based auto-run. No AI calls and no manual hero controls. This preview is not a ranked challenge.</p></div></details>
+  <footer><span>WEB-FLARE · SPRINT 1</span><a href="./credits.html">Flare art &amp; source credits</a></footer>
+ </main>
+ <script type="module" src="./src/app.mjs"></script>
+</body></html>

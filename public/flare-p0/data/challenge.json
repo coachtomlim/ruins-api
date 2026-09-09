@@ -1,0 +1,6 @@
+{
+ "version":1,"rules":"web-flare-0.2.0","id":"first-crossing","title":"The First Crossing","room":"iron-labyrinth-01","hero":"warrior",
+ "spawn":[7,20],"exit":[21,6],"budget":100,"targetHp":75,
+ "enemies":[{"id":"sentry-one","type":"goblin","at":[13,18]},{"id":"sentry-two","type":"skeleton","at":[20,10]}],
+ "items":[{"id":"potion-one","type":"small-potion","at":[14,14]}]
+}
