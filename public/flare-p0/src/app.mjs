@@ -2,7 +2,7 @@ import {Simulation} from './core/simulation.mjs';
 import {Renderer} from './view/renderer.mjs';
 import {RULES_VERSION} from './core/challenge.mjs';
 const el=id=>document.getElementById(id);
-let sim,renderer,loaded=false,playing=false,paused=false,accumulator=0,elapsed=0,previous=0,finishedAt=0;
+let sim,renderer,loaded=false,playing=false,paused=false,accumulator=0,elapsed=0,previous=0,finishedAt=0,suspended=document.hidden;
 const motion=matchMedia('(prefers-reduced-motion: reduce)');
 async function json(path){const r=await fetch(new URL(path,import.meta.url),{cache:'no-cache'});if(!r.ok)throw Error(`Could not load ${path} (${r.status})`);return r.json();}
 async function image(path){const im=new Image();im.decoding='async';im.src=new URL('../'+path,import.meta.url).href;await Promise.race([im.decode(),new Promise((_,reject)=>setTimeout(()=>reject(Error(`Image timed out: ${path}`)),15000))]);return im;}
@@ -10,7 +10,7 @@ function text(id,s){el(id).textContent=s;}
 function hud(){
  text('hp',`${sim.hero.hp} / ${sim.hero.maxHp}`);el('healthfill').style.width=`${sim.hero.hp/sim.hero.maxHp*100}%`;
  text('gold',sim.gold);text('kills',`${sim.enemies.filter(e=>e.hp<=0).length} / ${sim.enemies.length}`);text('time',`${(sim.tick/60).toFixed(1)}s`);
- text('phase',paused?'PAUSED':sim.status==='ready'?'OVERVIEW':sim.status==='running'?sim.phase.toUpperCase():sim.status.toUpperCase());
+ text('phase',paused||suspended?'PAUSED':sim.status==='ready'?'OVERVIEW':sim.status==='running'?sim.phase.toUpperCase():sim.status.toUpperCase());
 }
 function result(){
  const r=sim.result();text('overline',r.status==='cleared'?'CHALLENGE COMPLETE':'RUN ENDED');
@@ -22,7 +22,7 @@ function result(){
 function frame(now){
  const dt=previous?Math.min(.1,(now-previous)/1000):0;previous=now;
  if(loaded){
-  if(playing&&!paused){elapsed+=dt;
+  if(playing&&!paused&&!suspended){elapsed+=dt;
    if(elapsed>=.65&&sim.status==='running'){accumulator+=dt;while(accumulator>=1/60&&sim.status==='running'){sim.step();accumulator-=1/60;}hud();}
    if(sim.status!=='running'){finishedAt+=dt;if(finishedAt>.75){playing=false;result();}}
   }
@@ -42,7 +42,8 @@ el('zoomin').addEventListener('click',()=>{if(renderer)renderer.zoom=Math.min(1.
 el('zoomout').addEventListener('click',()=>{if(renderer)renderer.zoom=Math.max(.7,renderer.zoom/1.15);});
 for(const [id,key] of [['path','showPath'],['collision','showCollision']])el(id).addEventListener('click',()=>{if(!renderer)return;renderer[key]=!renderer[key];el(id).setAttribute('aria-pressed',String(renderer[key]));});
 new ResizeObserver(()=>renderer?.resize()).observe(el('stage'));
-document.addEventListener('visibilitychange',()=>{previous=0;if(document.hidden&&playing){paused=true;text('pause','Resume');hud();}});
+// Visibility suspension is separate from the user's Pause button. Returning or rotating resumes only system-suspended runs.
+document.addEventListener('visibilitychange',()=>{previous=0;suspended=document.hidden;if(loaded)hud();});
 (async()=>{try{
  const [map,challenge,catalog]=await Promise.all([json('../data/room.json'),json('../data/challenge.json'),json('../data/catalog.json')]);
  sim=new Simulation(map,challenge,catalog);
