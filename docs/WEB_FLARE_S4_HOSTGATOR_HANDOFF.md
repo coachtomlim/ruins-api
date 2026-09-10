@@ -11,7 +11,11 @@ Do not write into `public_html/quick-dungeon/flare-s2/`, `public_html/quick-dung
 
 ## S4 web source candidate
 
-`e7e68972a01f2610667a675d5a9deccfcf80a97d`
+`a038c163530ae55ab8d6a158591443c84ebe8dde`
+
+This supersedes the blocked S4 candidate `e7e68972a01f2610667a675d5a9deccfcf80a97d`.
+
+The fix makes the short-route player shell use root-relative CSS/module URLs and makes runtime data loads resolve from `import.meta.url`, so `/q/XXXX` no longer asks the browser for `/q/style.css`, `/q/play.mjs`, or `/q/data/game.json`.
 
 Branch:
 
@@ -64,15 +68,15 @@ Known legacy S3 regression link:
 
 Before returning PASS:
 
-1. Run repository tests. Expected current total: 44 passing.
-2. Deploy S4 only with the bounded deployer.
+1. Run repository tests. Expected current total: 45 passing.
+2. Deploy S4 only with the bounded deployer pinned to `a038c163530ae55ab8d6a158591443c84ebe8dde`.
 3. Verify Builder opens over HTTPS and `Buddy / Test` works.
 4. Build the untouched Balanced default and confirm a four-character `/q/XXXX` link.
-5. Open it and confirm player enables Run the Gauntlet.
+5. Open it and confirm the player loads styled, no `/q/` CSS/JS/JSON 404s occur, and Run the Gauntlet enables.
 6. Confirm runner visibly runs and visibly swings/attacks.
 7. Build one challenge with Spike Trap enabled and confirm the short link still has exactly four code characters.
 8. Confirm trap visibly appears and fires once, reducing HP by the governed physical-damage rule.
-9. Confirm `https://think-2-thrive.com/q/Rind` still loads as a legacy S3 challenge.
+9. Confirm `https://think-2-thrive.com/q/Rind` still loads as a legacy S3 challenge under the S4 handler.
 10. Confirm HTML/CSS/MJS/JSON MIME checks pass.
 11. Confirm S2 and S3 deployed files remain byte-for-byte unchanged.
 
