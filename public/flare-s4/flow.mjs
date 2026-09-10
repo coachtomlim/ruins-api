@@ -9,7 +9,7 @@ export function safeSender(value){const cleaned=String(value||'Buddy').replace(/
 export function inviteSender(search){return safeSender(new URLSearchParams(search||'').get('from')||'Buddy')}
 function encode24(value){let out='';for(let shift=18;shift>=0;shift-=6)out+=ALPHABET[(value>>>shift)&63];return out}
 function decode24(code){if(!/^[A-Za-z0-9_-]{4}$/.test(code))throw Error('Invalid gauntlet code');let value=0;for(const ch of code)value=(value<<6)|ALPHABET.indexOf(ch);return value>>>0}
-function checksum7(payload){return (((payload>>>9)^(payload>>>3)^(payload&127)^0x53)+((payload*11)&127))&127)}
+function checksum7(payload){const mixed=(payload>>>9)^(payload>>>3)^(payload&127)^0x53;return (mixed+((payload*11)&127))&127}
 
 export function encodeGauntletCode({roomId,enemyTypes=DEFAULTS.enemyTypes,potion=DEFAULTS.potion,trap=DEFAULTS.trap,targetHp=DEFAULTS.targetHp}){
   const room=ROOM_IDS.indexOf(roomId);if(room<0)throw Error('Unknown room for short link');
