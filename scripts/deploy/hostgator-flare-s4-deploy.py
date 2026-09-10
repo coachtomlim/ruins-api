@@ -22,7 +22,7 @@ CPANEL_HOST=os.environ.get('CPANEL_HOST','gator4116.hostgator.com')
 TOKEN=os.environ.get('CPANEL_API_TOKEN','')
 PUBLIC_BASE=os.environ.get('FLARE_PUBLIC_BASE','https://think-2-thrive.com').rstrip('/')
 REPO_ROOT=Path(__file__).resolve().parents[2]
-SOURCE_SHA='e7e68972a01f2610667a675d5a9deccfcf80a97d'
+SOURCE_SHA='a038c163530ae55ab8d6a158591443c84ebe8dde'
 S3_SOURCE_SHA='3c1e62c82ab4277956c451ad8a396cea11b1f4a9'
 S2_SOURCE_SHA='8cc57ddacfc2e12ac65b120496f1ee8915e4525b'
 S4_ROOT='public_html/quick-dungeon/flare-s4'
@@ -39,7 +39,7 @@ def guard(path):
  if not any(norm==root or norm.startswith(root+'/') for root in ALLOWED):fail(f'refusing path outside S4 roots: {path}')
 def headers():
  if not TOKEN:fail('CPANEL_API_TOKEN is not set')
- return {'Authorization':f'cpanel {CPANEL_USER}:{TOKEN}','User-Agent':'QuickDungeonS4Deploy/1.0','Accept':'application/json'}
+ return {'Authorization':f'cpanel {CPANEL_USER}:{TOKEN}','User-Agent':'QuickDungeonS4Deploy/1.1','Accept':'application/json'}
 def request_json(url,*,data=None,extra=None):
  req=Request(url,data=data,headers={**headers(),**(extra or {})},method='POST' if data is not None else 'GET')
  try:
@@ -86,7 +86,7 @@ def verify_source():
  except (FileNotFoundError,subprocess.CalledProcessError):fail(f'git/source commit {SOURCE_SHA} unavailable')
  if changed!=0:fail(f'S4 deploy files differ from authorised source {SOURCE_SHA}')
 def public_get(url):
- req=Request(url,headers={'User-Agent':'Mozilla/5.0 QuickDungeonS4Probe/1.0','Cache-Control':'no-cache'})
+ req=Request(url,headers={'User-Agent':'Mozilla/5.0 QuickDungeonS4Probe/1.1','Cache-Control':'no-cache'})
  try:
   with urlopen(req,timeout=35,context=ssl.create_default_context()) as response:return response.status,response.headers.get_content_type(),response.read(),response.geturl()
  except HTTPError as exc:return exc.code,exc.headers.get_content_type(),exc.read(),exc.geturl()
@@ -105,10 +105,12 @@ def main():
   if not local.is_file():fail(f'missing source file: {rel}')
   save(f'{S4_ROOT}/{rel.removeprefix("public/flare-s4/")}',local.read_text(encoding='utf-8'))
  base=PUBLIC_BASE+'/quick-dungeon/flare-s4/'
- expect(base,{'text/html'},b'Know your runner');expect(base+'style.css',{'text/css'});expect(base+'builder.mjs',{'text/javascript','application/javascript'});expect(base+'flow.mjs',{'text/javascript','application/javascript'});expect(base+'game.mjs',{'text/javascript','application/javascript'});expect(base+'simulation.mjs',{'text/javascript','application/javascript'});expect(base+'renderer.mjs',{'text/javascript','application/javascript'});expect(base+'play.html?demo=1&from=Buddy',{'text/html'},b'RUN THE GAUNTLET');expect(base+'play.mjs',{'text/javascript','application/javascript'});expect(base+'data/game.json',{'application/json'},b'wooden-club')
+ expect(base,{'text/html'},b'Know your runner');expect(base+'style.css',{'text/css'});expect(base+'builder.mjs',{'text/javascript','application/javascript'});expect(base+'flow.mjs',{'text/javascript','application/javascript'});expect(base+'game.mjs',{'text/javascript','application/javascript'});expect(base+'simulation.mjs',{'text/javascript','application/javascript'});expect(base+'renderer.mjs',{'text/javascript','application/javascript'});expect(base+'play.html?demo=1&from=Buddy',{'text/html'},b'/quick-dungeon/flare-s4/play.mjs');expect(base+'play.mjs',{'text/javascript','application/javascript'});expect(base+'data/game.json',{'application/json'},b'wooden-club')
  # hiS4 is the S4 balanced default code; Rind is the known accepted S3 default code.
- expect(PUBLIC_BASE+'/q/hiS4',{'text/html'},b'RUN THE GAUNTLET');expect(PUBLIC_BASE+'/q/Rind',{'text/html'},b'RUN THE GAUNTLET')
+ expect(PUBLIC_BASE+'/q/hiS4',{'text/html'},b'/quick-dungeon/flare-s4/play.mjs');expect(PUBLIC_BASE+'/q/Rind',{'text/html'},b'/quick-dungeon/flare-s4/play.mjs')
+ # Root-relative assets/data used by the short route must resolve on their canonical paths.
+ expect(PUBLIC_BASE+'/quick-dungeon/flare-s3/style.css',{'text/css'});expect(PUBLIC_BASE+'/quick-dungeon/flare-s4/style.css',{'text/css'});expect(PUBLIC_BASE+'/quick-dungeon/flare-s4/play.mjs',{'text/javascript','application/javascript'});expect(PUBLIC_BASE+'/quick-dungeon/flare-s4/data/game.json',{'application/json'},b'wooden-club')
  # Existing immutable dependencies remain public and are not rewritten.
- expect(PUBLIC_BASE+'/quick-dungeon/flare-s3/actors.mjs',{'text/javascript','application/javascript'});expect(PUBLIC_BASE+'/quick-dungeon/flare-s3/style.css',{'text/css'});expect(PUBLIC_BASE+'/quick-dungeon/flare-s2/stock.mjs',{'text/javascript','application/javascript'});expect(PUBLIC_BASE+'/quick-dungeon/flare-p0/data/catalog.json',{'application/json'})
+ expect(PUBLIC_BASE+'/quick-dungeon/flare-s3/actors.mjs',{'text/javascript','application/javascript'});expect(PUBLIC_BASE+'/quick-dungeon/flare-s2/stock.mjs',{'text/javascript','application/javascript'});expect(PUBLIC_BASE+'/quick-dungeon/flare-p0/data/catalog.json',{'application/json'})
  print('TEST PASS');print(f'S4 SOURCE: {SOURCE_SHA}');print(f'S3 PRESERVED SOURCE: {S3_SOURCE_SHA}');print(f'S2 PRESERVED SOURCE: {S2_SOURCE_SHA}');print(f'BUILDER URL: {base}');print(f'PLAYER DEFAULT: {PUBLIC_BASE}/q/hiS4');print(f'LEGACY S3 CHECK: {PUBLIC_BASE}/q/Rind')
 if __name__=='__main__':main()
