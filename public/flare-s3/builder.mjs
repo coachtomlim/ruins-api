@@ -1,4 +1,5 @@
-import {ROOMS,loadStockRoom,loadActorPack,drawPreview} from '../flare-s2/stock.mjs';
+import {ROOMS,loadStockRoom,drawPreview} from '../flare-s2/stock.mjs';
+import {loadS3ActorPack} from './actors.mjs';
 import {DEFAULTS,validateDemoLogin,runnerSummary,buildDefaultChallenge,makePlayerUrl} from './flow.mjs';
 
 const $=id=>document.getElementById(id);
@@ -8,98 +9,29 @@ const rooms=new Map();
 
 function selectedSpec(){return roomSpecs[roomIndex]}
 function selectedRoom(){return rooms.get(selectedSpec().id)}
-function spend(){
-  if(!catalog)return 0;
-  let total=0;
-  for(const id of ['enemy1','enemy2','enemy3']){const type=$(id).value;if(type!=='none')total+=catalog.enemies[type].cost}
-  if($('potion').checked)total+=catalog.items['small-potion'].cost;
-  return total;
-}
-function defenceLabels(){
-  if(!catalog)return '';
-  const labels=['enemy1','enemy2','enemy3'].map(id=>$(id).value).filter(v=>v!=='none').map(v=>catalog.enemies[v].name);
-  if($('potion').checked)labels.push('Potion');
-  return labels.length?labels.join(' + '):'Empty room';
-}
-function invalidateShare(){
-  $('sharePanel').hidden=true;$('playerUrl').value='';$('openPlayer').href='#';$('create').textContent='CREATE PLAYER LINK ›';
-}
-function goto(n){
-  step=Math.max(0,Math.min(2,n));$('track').style.transform=`translateX(-${step*100}%)`;
-  document.querySelectorAll('.progress span').forEach((dot,i)=>dot.classList.toggle('active',i===step));
-  if(step===1)requestAnimationFrame(renderRoom);
-  if(step===2)refreshSummary();
-}
-function preset(name){
-  const map={light:['goblin','none','none'],balanced:['goblin','skeleton','none'],heavy:['skeleton','skeleton','goblin']};
-  const values=map[name];if(!values)return;
-  ['enemy1','enemy2','enemy3'].forEach((id,i)=>$(id).value=values[i]);$('potion').checked=true;
-  document.querySelectorAll('[data-preset]').forEach(button=>button.classList.toggle('active',button.dataset.preset===name));refreshAdvanced();
-}
-function refreshAdvanced(){
-  const used=spend(),remaining=DEFAULTS.budget-used;
-  $('budgetMessage').textContent=remaining>=0?`${remaining} gold remaining`:`Over budget by ${-remaining}`;
-  $('budgetMessage').classList.toggle('bad',remaining<0);$('budgetFill').style.width=`${Math.min(100,used)}%`;
-  $('targetOut').textContent=`${$('target').value}%`;$('summaryTarget').textContent=$('target').value;$('summaryDefences').textContent=defenceLabels();
-  $('create').disabled=remaining<0||!selectedRoom()||!runner;invalidateShare();
-}
-function refreshSummary(){
-  if(!runner)return;
-  $('summaryRunner').textContent=`Level ${runner.level} ${runner.className}`;$('summaryRoom').textContent=selectedSpec().name;refreshAdvanced();
-  $('buildStatus').textContent='Defaults are ready. Create the player link now, or customize first.';
-}
-function renderRoom(){
-  const spec=selectedSpec(),loaded=selectedRoom();$('roomName').textContent=spec.name;$('roomTier').textContent=`Stock Flare room · Tier ${spec.tier}`;$('roomIndex').textContent=`${roomIndex+1} / ${roomSpecs.length}`;
-  if(loaded)drawPreview($('roomPreview'),loaded.map,loaded.tiles);$('useRoom').disabled=!loaded;invalidateShare();
-}
+function options(){return{roomId:selectedSpec().id,enemyTypes:['enemy1','enemy2','enemy3'].map(id=>$(id).value),potion:$('potion').checked,targetHp:Number($('target').value)}}
+function spend(){if(!catalog)return 0;let total=0;for(const id of ['enemy1','enemy2','enemy3']){const type=$(id).value;if(type!=='none')total+=catalog.enemies[type].cost}if($('potion').checked)total+=catalog.items['small-potion'].cost;return total}
+function defenceLabels(){if(!catalog)return'';const labels=['enemy1','enemy2','enemy3'].map(id=>$(id).value).filter(v=>v!=='none').map(v=>catalog.enemies[v].name);if($('potion').checked)labels.push('Potion');return labels.length?labels.join(' + '):'Empty room'}
+function invalidateShare(){$('sharePanel').hidden=true;$('playerUrl').value='';$('openPlayer').href='#';$('create').textContent='CREATE PLAYER LINK ›'}
+function goto(n){step=Math.max(0,Math.min(2,n));$('track').style.transform=`translateX(-${step*100}%)`;document.querySelectorAll('.progress span').forEach((dot,i)=>dot.classList.toggle('active',i===step));if(step===1)requestAnimationFrame(renderRoom);if(step===2)refreshSummary()}
+function preset(name){const map={light:['goblin','none','none'],balanced:['goblin','skeleton','none'],heavy:['skeleton','skeleton','goblin']};const values=map[name];if(!values)return;['enemy1','enemy2','enemy3'].forEach((id,i)=>$(id).value=values[i]);$('potion').checked=true;document.querySelectorAll('[data-preset]').forEach(button=>button.classList.toggle('active',button.dataset.preset===name));refreshAdvanced()}
+function refreshAdvanced(){const used=spend(),remaining=DEFAULTS.budget-used;$('budgetMessage').textContent=remaining>=0?`${remaining} gold remaining`:`Over budget by ${-remaining}`;$('budgetMessage').classList.toggle('bad',remaining<0);$('budgetFill').style.width=`${Math.min(100,used)}%`;$('targetOut').textContent=`${$('target').value}%`;$('summaryTarget').textContent=$('target').value;$('summaryDefences').textContent=defenceLabels();$('create').disabled=remaining<0||!selectedRoom()||!runner;invalidateShare()}
+function refreshSummary(){if(!runner)return;$('summaryRunner').textContent=`Level ${runner.level} ${runner.className}`;$('summaryRoom').textContent=selectedSpec().name;refreshAdvanced();$('buildStatus').textContent='Defaults are ready. Create the player link now, or customize first.'}
+function renderRoom(){const spec=selectedSpec(),loaded=selectedRoom();$('roomName').textContent=spec.name;$('roomTier').textContent=`Stock Flare room · Tier ${spec.tier}`;$('roomIndex').textContent=`${roomIndex+1} / ${roomSpecs.length}`;if(loaded)drawPreview($('roomPreview'),loaded.map,loaded.tiles);$('useRoom').disabled=!loaded;invalidateShare()}
 function changeRoom(delta){roomIndex=(roomIndex+delta+roomSpecs.length)%roomSpecs.length;renderRoom()}
-function drawRunner(pack){
-  const canvas=$('runnerCanvas'),sprite=pack.sprites.warrior,atlas=pack.atlases.warrior,a=sprite.animations.stance,f=a.entries['0:7']||a.entries['0:0'];
-  const rect=canvas.getBoundingClientRect(),w=Math.max(150,rect.width||220),h=Math.max(190,rect.height||280),dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
-  const g=canvas.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,w,h);if(!f)return;
-  const dw=f.dw??f.w,dh=f.dh??f.h,scale=Math.min(w/(dw*1.35),h/(dh*1.12));g.drawImage(atlas,f.x,f.y,f.w,f.h,w/2-(f.ox??dw/2)*scale,h*.94-(f.oy??dh)*scale,dw*scale,dh*scale);
-}
-function createPlayerLink(){
-  try{
-    const built=buildDefaultChallenge({roomId:selectedSpec().id,roomTitle:selectedSpec().name,map:selectedRoom().map,catalog,targetHp:Number($('target').value),enemyTypes:['enemy1','enemy2','enemy3'].map(id=>$(id).value),potion:$('potion').checked});
-    const url=makePlayerUrl(location.href,built.challenge,{sender});$('playerUrl').value=url.href;$('openPlayer').href=url.href;$('sharePanel').hidden=false;$('create').textContent='UPDATE PLAYER LINK ›';$('buildStatus').textContent=`Player link ready · ${built.spent}/100 gold · target ${built.challenge.targetHp}% HP.`;
-  }catch(error){$('buildStatus').textContent=error.message}
-}
-async function copyPlayerLink(){
-  const value=$('playerUrl').value;if(!value)return;
-  try{await navigator.clipboard.writeText(value);$('buildStatus').textContent='Player link copied.'}
-  catch{$('playerUrl').select();try{document.execCommand('copy');$('buildStatus').textContent='Player link copied.'}catch{$('buildStatus').textContent='Select and copy the player link.'}}
-}
-async function sharePlayerLink(){
-  const url=$('playerUrl').value;if(!url)return;
-  const data={title:'Run the Gauntlet',text:`${sender} built a gauntlet for you.`,url};
-  if(navigator.share){try{await navigator.share(data);$('buildStatus').textContent='Player link shared.';return}catch(error){if(error?.name==='AbortError')return}}
-  await copyPlayerLink();
-}
+function drawRunner(pack){const canvas=$('runnerCanvas'),sprite=pack.sprites.warrior,atlas=pack.atlases.warrior,a=sprite.animations.stance,f=a.entries['0:7']||a.entries['0:0'];const rect=canvas.getBoundingClientRect(),w=Math.max(150,rect.width||220),h=Math.max(190,rect.height||280),dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);const g=canvas.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,w,h);if(!f)return;const dw=f.dw??f.w,dh=f.dh??f.h,scale=Math.min(w/(dw*1.35),h/(dh*1.12));g.drawImage(atlas,f.x,f.y,f.w,f.h,w/2-(f.ox??dw/2)*scale,h*.94-(f.oy??dh)*scale,dw*scale,dh*scale)}
+function createPlayerLink(){try{const selected=options(),built=buildDefaultChallenge({roomId:selected.roomId,roomTitle:selectedSpec().name,map:selectedRoom().map,catalog,targetHp:selected.targetHp,enemyTypes:selected.enemyTypes,potion:selected.potion});const url=makePlayerUrl(location.href,selected,{sender});$('playerUrl').value=url.href;$('openPlayer').href=url.href;$('sharePanel').hidden=false;$('create').textContent='UPDATE PLAYER LINK ›';$('buildStatus').textContent=`Short player link ready · ${built.spent}/100 gold · target ${built.challenge.targetHp}% HP.`}catch(error){$('buildStatus').textContent=error.message}}
+async function copyPlayerLink(){const value=$('playerUrl').value;if(!value)return;try{await navigator.clipboard.writeText(value);$('buildStatus').textContent='Player link copied.'}catch{$('playerUrl').select();try{document.execCommand('copy');$('buildStatus').textContent='Player link copied.'}catch{$('buildStatus').textContent='Select and copy the player link.'}}}
+async function sharePlayerLink(){const url=$('playerUrl').value;if(!url)return;const data={title:'Run the Gauntlet',text:`${sender} built a gauntlet for you.`,url};if(navigator.share){try{await navigator.share(data);$('buildStatus').textContent='Player link shared.';return}catch(error){if(error?.name==='AbortError')return}}await copyPlayerLink()}
 
-$('loginForm').addEventListener('submit',event=>{
-  event.preventDefault();
-  if(!validateDemoLogin($('username').value,$('password').value)){$('loginStatus').textContent='Use Buddy / Test for this prototype.';return}
-  if(!runner||rooms.size!==roomSpecs.length){$('loginStatus').textContent='Still preparing the builder. Try again in a moment.';return}
-  sender=$('username').value.trim()||'Buddy';$('loginView').hidden=true;$('builderView').hidden=false;requestAnimationFrame(()=>{drawRunner(actorPack);goto(0)});
-});
+$('loginForm').addEventListener('submit',event=>{event.preventDefault();if(!validateDemoLogin($('username').value,$('password').value)){$('loginStatus').textContent='Use Buddy / Test for this prototype.';return}if(!runner||rooms.size!==roomSpecs.length){$('loginStatus').textContent='Still preparing the builder. Try again in a moment.';return}sender=$('username').value.trim()||'Buddy';$('loginView').hidden=true;$('builderView').hidden=false;requestAnimationFrame(()=>{drawRunner(actorPack);goto(0)})});
 $('useRunner').addEventListener('click',()=>goto(1));$('statsToggle').addEventListener('click',()=>{const showing=$('stats').hidden;$('stats').hidden=!showing;$('statsToggle').textContent=showing?'HIDE STATS':'VIEW STATS'});
 $('prevRoom').addEventListener('click',()=>changeRoom(-1));$('nextRoom').addEventListener('click',()=>changeRoom(1));$('useRoom').addEventListener('click',()=>goto(2));
 $('customize').addEventListener('click',()=>{const opening=$('advanced').hidden;$('advanced').hidden=!opening;$('customize').textContent=opening?'HIDE OPTIONS':'CUSTOMIZE'});
-for(const button of document.querySelectorAll('[data-preset]'))button.addEventListener('click',()=>preset(button.dataset.preset));
-for(const id of ['enemy1','enemy2','enemy3','potion'])$(id).addEventListener('change',refreshAdvanced);$('target').addEventListener('input',refreshAdvanced);
+for(const button of document.querySelectorAll('[data-preset]'))button.addEventListener('click',()=>preset(button.dataset.preset));for(const id of ['enemy1','enemy2','enemy3','potion'])$(id).addEventListener('change',refreshAdvanced);$('target').addEventListener('input',refreshAdvanced);
 $('create').addEventListener('click',createPlayerLink);$('copy').addEventListener('click',copyPlayerLink);$('share').addEventListener('click',sharePlayerLink);
 let swipeStart=null;$('roomStage').addEventListener('pointerdown',event=>swipeStart={x:event.clientX,y:event.clientY,id:event.pointerId});$('roomStage').addEventListener('pointerup',event=>{if(!swipeStart||swipeStart.id!==event.pointerId)return;const dx=event.clientX-swipeStart.x,dy=event.clientY-swipeStart.y;swipeStart=null;if(Math.abs(dx)>42&&Math.abs(dx)>Math.abs(dy)*1.15)changeRoom(dx<0?1:-1)});
 document.addEventListener('keydown',event=>{if($('builderView').hidden||['INPUT','SELECT','TEXTAREA'].includes(event.target?.tagName))return;if(step===1&&event.key==='ArrowLeft'){event.preventDefault();changeRoom(-1)}if(step===1&&event.key==='ArrowRight'){event.preventDefault();changeRoom(1)}});
 new ResizeObserver(()=>{if(!$('builderView').hidden&&step===0&&actorPack)drawRunner(actorPack);if(!$('builderView').hidden&&step===1&&selectedRoom())renderRoom()}).observe($('app'));
 
-(async()=>{try{
-  const [cat,prof,actors]=await Promise.all([
-    fetch(new URL('../flare-p0/data/catalog.json',location.href),{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('Catalogue unavailable');return r.json()}),
-    fetch(new URL('./data/runner.json',location.href),{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('Runner unavailable');return r.json()}),
-    loadActorPack()
-  ]);
-  catalog=cat;profile=prof;actorPack=actors;runner=runnerSummary(profile,catalog);
-  $('runnerName').textContent=runner.name;$('runnerClass').textContent=runner.className;$('runnerLevel').textContent=runner.level;$('runnerWeapon').textContent=runner.weapon;$('statHp').textContent=runner.hp;$('statAtk').textContent=runner.attack;$('statDef').textContent=runner.defense;
-  await Promise.all(roomSpecs.map(async spec=>rooms.set(spec.id,await loadStockRoom(spec.id))));renderRoom();refreshAdvanced();$('useRunner').disabled=false;$('create').disabled=false;$('loginStatus').textContent='Demo access is ready.';
-}catch(error){console.error(error);$('loginStatus').textContent='Could not prepare builder: '+error.message}})();
+(async()=>{try{const [cat,prof,actors]=await Promise.all([fetch(new URL('../flare-p0/data/catalog.json',location.href),{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('Catalogue unavailable');return r.json()}),fetch(new URL('./data/runner.json',location.href),{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('Runner unavailable');return r.json()}),loadS3ActorPack()]);catalog=cat;profile=prof;actorPack=actors;runner=runnerSummary(profile,catalog);$('runnerName').textContent=runner.name;$('runnerClass').textContent=runner.className;$('runnerLevel').textContent=runner.level;$('runnerWeapon').textContent=runner.weapon;$('statHp').textContent=runner.hp;$('statAtk').textContent=runner.attack;$('statDef').textContent=runner.defense;await Promise.all(roomSpecs.map(async spec=>rooms.set(spec.id,await loadStockRoom(spec.id))));renderRoom();refreshAdvanced();$('useRunner').disabled=false;$('create').disabled=false;$('loginStatus').textContent='Demo access is ready.'}catch(error){console.error(error);$('loginStatus').textContent='Could not prepare builder: '+error.message}})();
