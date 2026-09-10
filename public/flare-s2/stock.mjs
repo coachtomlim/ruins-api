@@ -1,4 +1,4 @@
-import {parseMap,parseTiles} from '../flare-p0/src/core/flare.mjs';
+import {parseMap,parseTiles,parseAnimation} from '../flare-p0/src/core/flare.mjs';
 
 export const PIN='2ef474f5f5f368628bc526f9e56f936dac743e49';
 const RAW=`https://raw.githubusercontent.com/flareteam/flare-game/${PIN}/`;
@@ -31,8 +31,20 @@ export async function loadStockRoom(id){
   if(!roomCache.has(id))roomCache.set(id,(async()=>{const spec=ROOMS[id],map=parseMap(await text(RAW+spec.source));map.id=id;map.name=spec.name;const packed=await tileAtlas(map);map.tiles=packed.frames;return{map,tiles:packed.canvas,spec};})());
   return roomCache.get(id);
 }
+async function stockSprite(configPath){
+  const parsed=parseAnimation(await text(`${RAW}mods/fantasycore/${configPath}`));
+  const atlas=await image(`${RAW}mods/fantasycore/${parsed.image}`);
+  return{spec:{animations:parsed.animations},atlas};
+}
 export async function loadActorPack(){
-  if(!spriteCache.promise)spriteCache.promise=(async()=>{const r=await fetch('/flare-p0/data/room.json',{cache:'force-cache'});if(!r.ok)throw Error(`Actor pack ${r.status}`);const ref=await r.json(),atlases={};await Promise.all(Object.entries(ref.sprites).map(async([id,s])=>{atlases[id]=await image('/flare-p0/'+s.atlas);}));return{sprites:ref.sprites,atlases};})();
+  if(!spriteCache.promise)spriteCache.promise=(async()=>{
+    const [hero,goblin,skeleton]=await Promise.all([
+      stockSprite('animations/npcs/knight.txt'),
+      stockSprite('animations/enemies/goblin.txt'),
+      stockSprite('animations/enemies/skeleton.txt')
+    ]);
+    return{sprites:{warrior:hero.spec,goblin:goblin.spec,skeleton:skeleton.spec},atlases:{warrior:hero.atlas,goblin:goblin.atlas,skeleton:skeleton.atlas}};
+  })();
   return spriteCache.promise;
 }
 export async function loadPlayableRoom(id){const [{map,tiles,spec},actors]=await Promise.all([loadStockRoom(id),loadActorPack()]);map.sprites=actors.sprites;return{map,atlases:{tiles,...actors.atlases},spec};}
