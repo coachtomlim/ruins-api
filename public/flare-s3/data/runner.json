@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "id": "warrior-l1",
+  "hero": "warrior",
+  "name": "The Runner",
+  "className": "Warrior",
+  "level": 1,
+  "weapon": "Longsword"
+}
