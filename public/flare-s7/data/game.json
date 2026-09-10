@@ -1,0 +1,25 @@
+{
+  "version": 3,
+  "budget": 100,
+  "defaultTargetHp": 50,
+  "defaultRunner": "warrior-l1",
+  "runners": {
+    "warrior-l1": {"id":"warrior-l1","name":"Rookie Warrior","className":"Warrior","level":1,"hero":"warrior","baseHp":100,"baseAttack":8,"baseDefense":1,"weapon":{"id":"wooden-club","name":"Wooden Club","attack":4,"defense":0}},
+    "warrior-l2": {"id":"warrior-l2","name":"Seasoned Warrior","className":"Warrior","level":2,"hero":"warrior","baseHp":110,"baseAttack":9,"baseDefense":2,"weapon":{"id":"wooden-club","name":"Wooden Club","attack":4,"defense":0}},
+    "warrior-l3": {"id":"warrior-l3","name":"Tough Warrior","className":"Warrior","level":3,"hero":"warrior","baseHp":120,"baseAttack":10,"baseDefense":3,"weapon":{"id":"wooden-club","name":"Wooden Club","attack":4,"defense":0}}
+  },
+  "monsters": {
+    "goblin": {"name":"Goblin","hp":30,"attack":5,"defense":1,"cost":20,"rating":"Light"},
+    "skeleton": {"name":"Skeleton","hp":45,"attack":7,"defense":2,"cost":30,"gold":9,"rating":"Medium","role":"Steady Guard"},
+    "goblin-elite": {"name":"Goblin Elite","hp":55,"attack":9,"defense":2,"cost":40,"gold":12,"rating":"Heavy","role":"Premium Striker","animation":"mods/fantasycore/animations/enemies/goblin_elite.txt"},
+    "antlion": {"name":"Antlion","hp":70,"attack":8,"defense":4,"cost":50,"gold":15,"rating":"Heavy","role":"Durable Tank","animation":"mods/fantasycore/animations/enemies/antlion.txt"}
+  },
+  "items": {
+    "small-potion": {"name":"Small Potion","kind":"heal","heal":10,"cost":15,"label":"+10 HP"},
+    "battle-tonic": {"name":"Battle Tonic","kind":"buff-attack","attack":2,"cost":15,"label":"+2 ATK"},
+    "iron-tonic": {"name":"Iron Tonic","kind":"buff-defense","defense":2,"cost":15,"label":"+2 DEF"},
+    "spike-trap": {"name":"Spike Trap","kind":"trap","damage":30,"cost":20,"oneShot":true,"armorPiercing":false,"label":"SPIKES"},
+    "dart-trap": {"name":"Dart Trap","kind":"trap","damage":16,"cost":15,"oneShot":true,"armorPiercing":true,"label":"DARTS"}
+  },
+  "calibration": {"timingFactor":0.75,"note":"Coarse starting heuristic only; not an outcome guarantee."}
+}
