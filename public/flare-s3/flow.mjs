@@ -13,7 +13,7 @@ export function buildDefaultChallenge({roomId,roomTitle,map,catalog,targetHp=DEF
 export function safeSender(value){const cleaned=String(value||'Buddy').replace(/[<>]/g,'').trim().slice(0,32);return cleaned||'Buddy'}
 export function inviteSender(search){return safeSender(new URLSearchParams(search||'').get('from')||'Buddy')}
 
-function checksum16(payload){return (((payload>>>8)^(payload&255)^0xA7)+((payload*13)&255))&255)}
+function checksum16(payload){const seed=(payload>>>8)^(payload&255)^0xA7;return(seed+((payload*13)&255))&255}
 function encode24(value){let out='';for(let shift=18;shift>=0;shift-=6)out+=ALPHABET[(value>>>shift)&63];return out}
 function decode24(code){if(!/^[A-Za-z0-9_-]{4}$/.test(code))throw Error('Invalid gauntlet code');let value=0;for(const char of code)value=(value<<6)|ALPHABET.indexOf(char);return value>>>0}
 
