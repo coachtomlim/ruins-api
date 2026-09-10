@@ -1,0 +1,44 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#52215f"><title>Run the Gauntlet · S4 Builder</title><link rel="stylesheet" href="../flare-s3/style.css"><link rel="stylesheet" href="style.css"></head><body>
+<main class="shell" id="app">
+  <section class="login-view" id="loginView" aria-labelledby="loginTitle">
+    <div class="login-orb" aria-hidden="true"></div>
+    <div class="login-copy"><div class="eyebrow">RUN THE GAUNTLET</div><h1 id="loginTitle">Dungeon Master access</h1><p>Build a short challenge, then send one clean player link to a friend.</p></div>
+    <form class="login-card" id="loginForm"><label><span>USERNAME</span><input id="username" autocomplete="username" value="Buddy"></label><label><span>PASSWORD</span><input id="password" type="password" autocomplete="current-password" value="Test"></label><button class="primary" type="submit">ENTER BUILDER <span>›</span></button><p class="demo-note">Prototype login: <b>Buddy</b> / <b>Test</b></p><p class="status" id="loginStatus" aria-live="polite"></p></form>
+  </section>
+
+  <section class="builder-view" id="builderView" hidden>
+    <header class="topbar"><div><div class="eyebrow">S4 · BUILDER</div><strong>Build. Send. Survive.</strong></div><div class="progress" aria-label="Builder steps"><span class="active"></span><span></span><span></span></div></header>
+    <div class="viewport"><div class="track" id="track">
+      <section class="screen runner-screen" aria-labelledby="runnerTitle">
+        <div class="screen-copy"><div class="step-label">1 · RUNNER</div><h1 id="runnerTitle">Know your runner.</h1><p>The simple view is enough. Open the stats if you want to plan precisely.</p></div>
+        <div class="runner-card"><div class="runner-visual"><canvas id="runnerCanvas" aria-label="Level 1 warrior preview"></canvas><span class="level-badge">LEVEL <b id="runnerLevel">1</b></span></div><div class="runner-copy"><span class="runner-kicker">YOUR CHARACTER</span><h2 id="runnerName">The Runner</h2><p><span id="runnerClass">Warrior</span> · <span id="runnerWeapon">Wooden Club</span></p><button type="button" class="text-button" id="statsToggle">VIEW STATS</button><div class="stats runner-stats" id="stats" hidden><div><span>HP</span><b id="statHp">100</b><small>health</small></div><div><span>ATK</span><b id="statAtk">12</b><small id="statAtkBreak">8 + 4 weapon</small></div><div><span>DEF</span><b id="statDef">1</b><small id="statDefBreak">1 base</small></div></div></div></div>
+        <button type="button" class="primary" id="useRunner" disabled>USE THIS RUNNER <span>›</span></button>
+      </section>
+
+      <section class="screen room-screen" aria-labelledby="roomTitle">
+        <div class="screen-copy"><div class="step-label">2 · ROOM</div><h1 id="roomTitle">Choose the arena.</h1><p>One room is selected already. Swipe or use the gold arrows.</p></div>
+        <div class="room-stage" id="roomStage"><button type="button" class="room-arrow left" id="prevRoom" aria-label="Previous room"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M38 14 20 32l18 18"/></svg></button><canvas id="roomPreview" aria-label="Selected dungeon room"></canvas><button type="button" class="room-arrow right" id="nextRoom" aria-label="Next room"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="m26 14 18 18-18 18"/></svg></button><div class="room-index" id="roomIndex">1 / 3</div></div>
+        <div class="room-meta"><div><strong id="roomName">Loading…</strong><span id="roomTier">Stock Flare room</span></div><span class="swipe-hint">SWIPE</span></div><button type="button" class="primary" id="useRoom" disabled>USE THIS ROOM <span>›</span></button>
+      </section>
+
+      <section class="screen gauntlet-screen" aria-labelledby="gauntletTitle">
+        <div class="screen-copy"><div class="step-label">3 · GAUNTLET</div><h1 id="gauntletTitle">Set the challenge.</h1><p>Balanced defaults are ready. Customize only if you want more control.</p></div>
+        <div class="summary-card"><div><span>RUNNER</span><strong id="summaryRunner">Level 1 Warrior</strong></div><div><span>ROOM</span><strong id="summaryRoom">Pillar Court</strong></div><div><span>DEFENCES</span><strong id="summaryDefences">Goblin + Skeleton + Potion</strong></div><div><span>TARGET</span><strong><b id="summaryTarget">50</b>% HP</strong></div></div>
+        <button type="button" class="secondary" id="customize">CUSTOMIZE</button>
+        <div class="advanced s4-advanced" id="advanced" hidden>
+          <div class="comparison-heading"><span>KNOW THE ENCOUNTER</span><small>These numbers drive the actual fight.</small></div>
+          <div class="monster-comparison">
+            <article class="monster-card" data-monster="goblin"><div><b>GOBLIN</b><em>LIGHT</em></div><dl><div><dt>HP</dt><dd id="goblinHp">30</dd></div><div><dt>ATK</dt><dd id="goblinAtk">5</dd></div><div><dt>DEF</dt><dd id="goblinDef">1</dd></div><div><dt>COST</dt><dd id="goblinCost">20</dd></div></dl><small id="goblinVs">Hits runner for 4 · runner hits for 11</small></article>
+            <article class="monster-card" data-monster="skeleton"><div><b>SKELETON</b><em>MEDIUM</em></div><dl><div><dt>HP</dt><dd id="skeletonHp">45</dd></div><div><dt>ATK</dt><dd id="skeletonAtk">7</dd></div><div><dt>DEF</dt><dd id="skeletonDef">2</dd></div><div><dt>COST</dt><dd id="skeletonCost">30</dd></div></dl><small id="skeletonVs">Hits runner for 6 · runner hits for 10</small></article>
+          </div>
+          <div class="preset-row"><button type="button" data-preset="light">LIGHT <span>35</span></button><button type="button" data-preset="balanced" class="active">BALANCED <span>65</span></button><button type="button" data-preset="heavy">HEAVY <span>95</span></button></div>
+          <div class="compact-grid"><label>Guard 1<select id="enemy1"><option value="none">Empty · 0</option><option value="goblin" selected>Goblin · 20</option><option value="skeleton">Skeleton · 30</option></select></label><label>Guard 2<select id="enemy2"><option value="none">Empty · 0</option><option value="goblin">Goblin · 20</option><option value="skeleton" selected>Skeleton · 30</option></select></label><label>Guard 3<select id="enemy3"><option value="none" selected>Empty · 0</option><option value="goblin">Goblin · 20</option><option value="skeleton">Skeleton · 30</option></select></label><label class="potion"><input type="checkbox" id="potion" checked> Potion · 15</label></div>
+          <label class="trap-row"><span><b>Spike Trap</b><small id="trapDetail">8 raw damage · one use</small></span><input type="checkbox" id="trap"><strong>20</strong></label>
+          <div class="target-line"><label for="target">Target HP</label><output id="targetOut">50%</output></div><input id="target" type="range" min="5" max="95" step="5" value="50"><div class="budget-line"><span id="budgetMessage">35 gold remaining</span><i><b id="budgetFill"></b></i></div>
+        </div>
+        <div class="share-panel" id="sharePanel" hidden><div class="share-ready"><span>PLAYER LINK READY</span><strong>Send this short link to your friend.</strong></div><div class="share-actions"><button type="button" id="share">SHARE</button><button type="button" id="copy">COPY LINK</button><a id="openPlayer" href="#">OPEN PLAYER</a></div><input id="playerUrl" readonly aria-label="Player challenge URL"></div>
+        <button type="button" class="primary create" id="create" disabled>CREATE PLAYER LINK <span>›</span></button><p class="status" id="buildStatus" aria-live="polite">Preparing defaults…</p>
+      </section>
+    </div></div>
+  </section>
+</main><script type="module" src="builder.mjs"></script></body></html>
