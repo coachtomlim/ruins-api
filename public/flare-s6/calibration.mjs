@@ -1,6 +1,6 @@
 import {encounterCost,monsterSummary,trapSummary} from '../flare-s5/game.mjs';
 
-export const S6_VERSION='web-flare-s6-0.1.0';
+export const S6_VERSION='web-flare-s6-0.2.0';
 
 const PRESETS=Object.freeze([
   {id:'soft',enemyTypes:['goblin','none','none'],potion:true,trap:false},
@@ -18,19 +18,21 @@ function hitsBeforeDefeat(monster){
 
 export function estimateEncounter({catalog,model,runnerId,runner,encounter}){
   const monsters=(encounter.enemyTypes||[]).filter(x=>x&&x!=='none').map(id=>monsterSummary(id,model,runnerId,catalog,runner));
-  let raw=0;
-  for(const monster of monsters)raw+=monster.damageToRunner*hitsBeforeDefeat(monster);
-  if(encounter.trap){const trap=trapSummary({items:model.items});raw+=Math.max(1,trap.damage-runner.defense)}
-  if(encounter.potion)raw=Math.max(0,raw-(catalog.items['small-potion']?.heal||0));
-  const hpLossPct=runner.hp?raw/runner.hp*100:100;
-  return Object.freeze({estimatedDamage:raw,estimatedHpPercent:Math.max(0,100-hpLossPct),cost:encounterCost(catalog,encounter)});
+  let gross=0;
+  for(const monster of monsters)gross+=monster.damageToRunner*hitsBeforeDefeat(monster);
+  if(encounter.trap){const trap=trapSummary({items:model.items});gross+=Math.max(1,trap.damage-runner.defense)}
+  if(encounter.potion)gross=Math.max(0,gross-(catalog.items['small-potion']?.heal||0));
+  const timingFactor=Number(model?.calibration?.timingFactor)||0.75;
+  const estimatedDamage=gross*timingFactor;
+  const hpLossPct=runner.hp?estimatedDamage/runner.hp*100:100;
+  return Object.freeze({estimatedDamage:Number(estimatedDamage.toFixed(1)),estimatedHpPercent:Number(Math.max(0,100-hpLossPct).toFixed(1)),cost:encounterCost(catalog,encounter)});
 }
 
 export function difficultyCue(estimatedHpPercent,targetHp){
   const delta=estimatedHpPercent-targetHp;
-  if(delta>24)return Object.freeze({id:'easy',label:'Easy',note:'Probably too gentle for this target.'});
-  if(delta>10)return Object.freeze({id:'fair',label:'Fair',note:'A reasonable starting challenge.'});
-  if(delta>=-10)return Object.freeze({id:'close',label:'On target',note:'Looks close enough to be interesting.'});
+  if(delta>24)return Object.freeze({id:'easy',label:'Easy',note:'Likely too gentle for this target.'});
+  if(delta>10)return Object.freeze({id:'fair',label:'Fair',note:'A sensible starting point, but you may want more danger.'});
+  if(delta>=-10)return Object.freeze({id:'close',label:'Fair',note:'A credible starting point for this runner and target.'});
   return Object.freeze({id:'brutal',label:'Brutal',note:'This may hit harder than the target needs.'});
 }
 
