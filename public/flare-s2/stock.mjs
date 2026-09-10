@@ -9,10 +9,7 @@ export const ROOMS={
 };
 const textCache=new Map(),imageCache=new Map(),roomCache=new Map(),spriteCache={promise:null};
 async function text(url){if(!textCache.has(url))textCache.set(url,fetch(url,{cache:'force-cache'}).then(r=>{if(!r.ok)throw Error(`Source ${r.status}`);return r.text();}));return textCache.get(url);}
-async function image(url){
-  if(!imageCache.has(url))imageCache.set(url,new Promise((resolve,reject)=>{const im=new Image();im.crossOrigin='anonymous';im.decoding='async';im.onload=()=>resolve(im);im.onerror=()=>reject(Error(`Image failed: ${url}`));im.src=url;}));
-  return imageCache.get(url);
-}
+async function image(url){if(!imageCache.has(url))imageCache.set(url,new Promise((resolve,reject)=>{const im=new Image();im.crossOrigin='anonymous';im.decoding='async';im.onload=()=>resolve(im);im.onerror=()=>reject(Error(`Image failed: ${url}`));im.src=url;}));return imageCache.get(url);}
 async function modImage(rel){for(const mod of ['empyrean_campaign','fantasycore']){try{return await image(`${RAW}mods/${mod}/${rel}`);}catch{}}throw Error(`Missing Flare image: ${rel}`);}
 const visible=new Set(['background','background_fringe','object','object_fringe','foreground','foreground_fringe']);
 async function tileAtlas(map){
@@ -31,8 +28,14 @@ export async function loadStockRoom(id){
   if(!roomCache.has(id))roomCache.set(id,(async()=>{const spec=ROOMS[id],map=parseMap(await text(RAW+spec.source));map.id=id;map.name=spec.name;const packed=await tileAtlas(map);map.tiles=packed.frames;return{map,tiles:packed.canvas,spec};})());
   return roomCache.get(id);
 }
+function normalizeAnimations(parsed){
+  for(const a of Object.values(parsed.animations))for(const f of Object.values(a.entries)){f.dw=f.w;f.dh=f.h;}
+  const stance=parsed.animations.stance;
+  if(stance){for(const key of ['run','attack','hit','die'])if(!parsed.animations[key])parsed.animations[key]=stance;}
+  return parsed;
+}
 async function stockSprite(configPath){
-  const parsed=parseAnimation(await text(`${RAW}mods/fantasycore/${configPath}`));
+  const parsed=normalizeAnimations(parseAnimation(await text(`${RAW}mods/fantasycore/${configPath}`)));
   const atlas=await image(`${RAW}mods/fantasycore/${parsed.image}`);
   return{spec:{animations:parsed.animations},atlas};
 }
@@ -50,7 +53,7 @@ export async function loadActorPack(){
 export async function loadPlayableRoom(id){const [{map,tiles,spec},actors]=await Promise.all([loadStockRoom(id),loadActorPack()]);map.sprites=actors.sprites;return{map,atlases:{tiles,...actors.atlases},spec};}
 
 export function drawPreview(canvas,map,atlas){
-  const rect=canvas.getBoundingClientRect(),W=Math.max(180,rect.width||320),H=Math.max(120,rect.height||200),dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);const g=canvas.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);g.fillStyle='#080b0e';g.fillRect(0,0,W,H);
+  const rect=canvas.getBoundingClientRect(),W=Math.max(180,rect.width||320),H=Math.max(120,rect.height||200),dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);const g=canvas.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);g.fillStyle='#160d20';g.fillRect(0,0,W,H);
   const iso=(x,y)=>({x:(x-y)*map.tileWidth/2,y:(x+y)*map.tileHeight/2}),items=[];let order=0;
   for(const layer of map.layers)if(visible.has(layer.type))for(let i=0;i<layer.data.length;i++){const id=layer.data[i];if(!id)continue;const t=map.tiles[id],p=iso(i%map.width+.5,Math.floor(i/map.width)+.5);items.push({t,p,layer:layer.type,depth:p.y,order:order++});}
   const rank=t=>t.startsWith('background')?0:t.startsWith('object')?1:2;items.sort((a,b)=>rank(a.layer)-rank(b.layer)||(rank(a.layer)===1?a.depth-b.depth:0)||a.order-b.order);
