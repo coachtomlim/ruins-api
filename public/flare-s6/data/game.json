@@ -1,0 +1,20 @@
+{
+  "version": 2,
+  "budget": 100,
+  "defaultTargetHp": 50,
+  "defaultRunner": "warrior-l1",
+  "runners": {
+    "warrior-l1": {"id":"warrior-l1","name":"Rookie Warrior","className":"Warrior","level":1,"hero":"warrior","baseHp":100,"baseAttack":8,"baseDefense":1,"weapon":{"id":"wooden-club","name":"Wooden Club","attack":4,"defense":0}},
+    "warrior-l2": {"id":"warrior-l2","name":"Seasoned Warrior","className":"Warrior","level":2,"hero":"warrior","baseHp":110,"baseAttack":9,"baseDefense":2,"weapon":{"id":"wooden-club","name":"Wooden Club","attack":4,"defense":0}},
+    "warrior-l3": {"id":"warrior-l3","name":"Tough Warrior","className":"Warrior","level":3,"hero":"warrior","baseHp":120,"baseAttack":10,"baseDefense":3,"weapon":{"id":"wooden-club","name":"Wooden Club","attack":4,"defense":0}}
+  },
+  "monsters": {
+    "goblin": {"name":"Goblin","hp":30,"attack":5,"defense":1,"cost":20,"rating":"Light"},
+    "skeleton": {"name":"Skeleton","hp":45,"attack":7,"defense":2,"cost":30,"rating":"Medium"}
+  },
+  "items": {
+    "small-potion": {"name":"Small Potion","heal":10,"cost":15},
+    "spike-trap": {"name":"Spike Trap","damage":30,"cost":20,"oneShot":true}
+  },
+  "calibration": {"timingFactor":0.75,"note":"Coarse starting heuristic only; not an outcome guarantee."}
+}
