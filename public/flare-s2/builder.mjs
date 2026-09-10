@@ -16,12 +16,7 @@ function currentSpend(){
   if($('potion').checked)spent+=catalog.items['small-potion'].cost;return spent;
 }
 
-function playerUrl(challenge){
-  const url=new URL('player.html',location.href);
-  const previewToken=new URLSearchParams(location.search).get('_vercel_share');
-  if(previewToken)url.searchParams.set('_vercel_share',previewToken);
-  url.hash='c='+encodeChallenge(challenge);return url;
-}
+function playerUrl(challenge){const url=new URL('player.html',location.href);url.hash='c='+encodeChallenge(challenge);return url;}
 
 function renderRoom(){
   const spec=selectedSpec(),loaded=selectedLoaded();
@@ -83,6 +78,6 @@ let swipeStart=null;$('roomStage').addEventListener('pointerdown',event=>{swipeS
 new ResizeObserver(()=>{if(step===0&&selectedLoaded())drawPreview($('roomPreview'),selectedLoaded().map,selectedLoaded().tiles);}).observe($('roomStage'));
 
 (async()=>{try{
-  const response=await fetch('/flare-p0/data/catalog.json',{cache:'no-cache'});if(!response.ok)throw Error('Catalogue unavailable');catalog=await response.json();await Promise.all(roomSpecs.map(async spec=>loadedRooms.set(spec.id,await loadStockRoom(spec.id))));
+  const response=await fetch(new URL('../flare-p0/data/catalog.json',location.href),{cache:'no-cache'});if(!response.ok)throw Error('Catalogue unavailable');catalog=await response.json();await Promise.all(roomSpecs.map(async spec=>loadedRooms.set(spec.id,await loadStockRoom(spec.id))));
   renderRoom();costs();$('targetOut').textContent=$('target').value;updateNav();
 }catch(error){console.error(error);$('roomName').textContent='Could not load rooms';$('roomTier').textContent=error.message;$('budgetMessage').textContent='Reload to try again.';updateNav();}})();
