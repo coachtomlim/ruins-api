@@ -1,26 +1,105 @@
 import {ROOMS,loadStockRoom,loadActorPack,drawPreview} from '../flare-s2/stock.mjs';
-import {DEFAULTS,validateDemoLogin,runnerSummary,buildDefaultChallenge,makePlayerUrl,inviteSender} from './flow.mjs';
+import {DEFAULTS,validateDemoLogin,runnerSummary,buildDefaultChallenge,makePlayerUrl} from './flow.mjs';
 
 const $=id=>document.getElementById(id);
-const roomSpecs=Object.values(ROOMS);let step=0,roomIndex=0,catalog=null,profile=null,runner=null,currentBuild=null;const rooms=new Map();
-function selectedSpec(){return roomSpecs[roomIndex]}function selectedRoom(){return rooms.get(selectedSpec().id)}
-function goto(n){step=Math.max(0,Math.min(2,n));$('track').style.transform=`translateX(-${step*100}%)`;document.querySelectorAll('.progress span').forEach((d,i)=>d.classList.toggle('active',i===step));if(step===1)requestAnimationFrame(renderRoom);if(step===2)refreshSummary()}
-function spend(){if(!catalog)return 0;let total=0;for(const id of ['enemy1','enemy2','enemy3']){const t=$(id).value;if(t!=='none')total+=catalog.enemies[t].cost}if($('potion').checked)total+=catalog.items['small-potion'].cost;return total}
-function defaultLabels(){const labels=['enemy1','enemy2','enemy3'].map(id=>$(id).value).filter(v=>v!=='none').map(v=>catalog.enemies[v].name);if($('potion').checked)labels.push('Potion');return labels.length?labels.join(' + '):'Empty room'}
-function preset(name){const map={light:['goblin','none','none'],balanced:['goblin','skeleton','none'],heavy:['skeleton','skeleton','goblin']};const values=map[name];if(!values)return;['enemy1','enemy2','enemy3'].forEach((id,i)=>$(id).value=values[i]);$('potion').checked=true;refreshAdvanced()}
-function refreshAdvanced(){const used=spend(),left=DEFAULTS.budget-used;$('budgetMessage').textContent=left>=0?`${left} gold remaining`:`Over budget by ${-left}`;$('budgetMessage').classList.toggle('bad',left<0);$('budgetFill').style.width=`${Math.min(100,used)}%`;$('targetOut').textContent=`${$('target').value}%`;$('summaryTarget').textContent=$('target').value;$('summaryDefences').textContent=defaultLabels();$('run').disabled=left<0||!selectedRoom();currentBuild=null}
-function renderRoom(){const spec=selectedSpec(),loaded=selectedRoom();$('roomName').textContent=spec.name;$('roomTier').textContent=`Stock Flare room · Tier ${spec.tier}`;$('roomIndex').textContent=`${roomIndex+1} / ${roomSpecs.length}`;if(loaded)drawPreview($('roomPreview'),loaded.map,loaded.tiles);$('chooseRoom').disabled=!loaded}
-function changeRoom(delta){roomIndex=(roomIndex+delta+roomSpecs.length)%roomSpecs.length;renderRoom();currentBuild=null}
-function refreshSummary(){$('summaryRunner').textContent=`Level ${runner.level} ${runner.className}`;$('summaryRoom').textContent=selectedSpec().name;refreshAdvanced();$('buildStatus').textContent='Defaults ready. One tap starts the run.'}
-function drawRunner(pack){const canvas=$('runnerCanvas'),sprite=pack.sprites.warrior,atlas=pack.atlases.warrior,a=sprite.animations.stance,f=a.entries['0:7']||a.entries['0:0'];const rect=canvas.getBoundingClientRect(),w=Math.max(140,rect.width||220),h=Math.max(180,rect.height||260),dpr=Math.min(devicePixelRatio||1,2);canvas.width=w*dpr;canvas.height=h*dpr;const g=canvas.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,w,h);if(!f)return;const dw=f.dw??f.w,dh=f.dh??f.h,scale=Math.min(w/(dw*1.3),h/(dh*1.12));g.drawImage(atlas,f.x,f.y,f.w,f.h,w/2-(f.ox??dw/2)*scale,h*.93-(f.oy??dh)*scale,dw*scale,dh*scale)}
+const roomSpecs=Object.values(ROOMS);
+let step=0,roomIndex=0,catalog=null,profile=null,runner=null,actorPack=null,sender='Buddy';
+const rooms=new Map();
 
-$('accept').addEventListener('click',()=>{if(!validateDemoLogin($('username').value,$('password').value)){$('loginStatus').textContent='Demo login is Buddy / Test.';return}$('loginStatus').textContent='Challenge accepted.';goto(1)});
-$('statsToggle').addEventListener('click',()=>{const hidden=$('stats').hidden;$('stats').hidden=!hidden;$('statsToggle').textContent=hidden?'HIDE STATS':'VIEW STATS'});$('statsAgain').addEventListener('click',()=>{$('advanced').hidden=false;$('advancedToggle').textContent='HIDE OPTIONS';$('buildStatus').textContent=`Runner: ${runner.hp} HP · ${runner.attack} ATK · ${runner.defense} DEF · ${runner.weapon}.`});
-$('prevRoom').addEventListener('click',()=>changeRoom(-1));$('nextRoom').addEventListener('click',()=>changeRoom(1));$('chooseRoom').addEventListener('click',()=>goto(2));
-$('advancedToggle').addEventListener('click',()=>{const wasHidden=$('advanced').hidden;$('advanced').hidden=!wasHidden;$('advancedToggle').textContent=wasHidden?'HIDE OPTIONS':'CUSTOMIZE'});for(const b of document.querySelectorAll('[data-preset]'))b.addEventListener('click',()=>{document.querySelectorAll('[data-preset]').forEach(x=>x.classList.toggle('active',x===b));preset(b.dataset.preset)});for(const id of ['enemy1','enemy2','enemy3','potion'])$(id).addEventListener('change',refreshAdvanced);$('target').addEventListener('input',refreshAdvanced);
-$('run').addEventListener('click',()=>{try{const built=buildDefaultChallenge({roomId:selectedSpec().id,roomTitle:selectedSpec().name,map:selectedRoom().map,catalog,targetHp:Number($('target').value),enemyTypes:['enemy1','enemy2','enemy3'].map(id=>$(id).value),potion:$('potion').checked});currentBuild=built;location.href=makePlayerUrl(location.href,built.challenge,{autostart:true}).href}catch(e){$('buildStatus').textContent=e.message}});
-let swipeStart=null;$('roomStage').addEventListener('pointerdown',e=>swipeStart={x:e.clientX,y:e.clientY,id:e.pointerId});$('roomStage').addEventListener('pointerup',e=>{if(!swipeStart||swipeStart.id!==e.pointerId)return;const dx=e.clientX-swipeStart.x,dy=e.clientY-swipeStart.y;swipeStart=null;if(Math.abs(dx)>42&&Math.abs(dx)>Math.abs(dy)*1.15)changeRoom(dx<0?1:-1)});
-document.addEventListener('keydown',e=>{if(['INPUT','SELECT','TEXTAREA'].includes(e.target?.tagName))return;if(step===1&&e.key==='ArrowLeft')changeRoom(-1);if(step===1&&e.key==='ArrowRight')changeRoom(1)});
-new ResizeObserver(()=>{if(step===1&&selectedRoom())renderRoom()}).observe($('roomStage'));
+function selectedSpec(){return roomSpecs[roomIndex]}
+function selectedRoom(){return rooms.get(selectedSpec().id)}
+function spend(){
+  if(!catalog)return 0;
+  let total=0;
+  for(const id of ['enemy1','enemy2','enemy3']){const type=$(id).value;if(type!=='none')total+=catalog.enemies[type].cost}
+  if($('potion').checked)total+=catalog.items['small-potion'].cost;
+  return total;
+}
+function defenceLabels(){
+  if(!catalog)return '';
+  const labels=['enemy1','enemy2','enemy3'].map(id=>$(id).value).filter(v=>v!=='none').map(v=>catalog.enemies[v].name);
+  if($('potion').checked)labels.push('Potion');
+  return labels.length?labels.join(' + '):'Empty room';
+}
+function invalidateShare(){
+  $('sharePanel').hidden=true;$('playerUrl').value='';$('openPlayer').href='#';$('create').textContent='CREATE PLAYER LINK ›';
+}
+function goto(n){
+  step=Math.max(0,Math.min(2,n));$('track').style.transform=`translateX(-${step*100}%)`;
+  document.querySelectorAll('.progress span').forEach((dot,i)=>dot.classList.toggle('active',i===step));
+  if(step===1)requestAnimationFrame(renderRoom);
+  if(step===2)refreshSummary();
+}
+function preset(name){
+  const map={light:['goblin','none','none'],balanced:['goblin','skeleton','none'],heavy:['skeleton','skeleton','goblin']};
+  const values=map[name];if(!values)return;
+  ['enemy1','enemy2','enemy3'].forEach((id,i)=>$(id).value=values[i]);$('potion').checked=true;
+  document.querySelectorAll('[data-preset]').forEach(button=>button.classList.toggle('active',button.dataset.preset===name));refreshAdvanced();
+}
+function refreshAdvanced(){
+  const used=spend(),remaining=DEFAULTS.budget-used;
+  $('budgetMessage').textContent=remaining>=0?`${remaining} gold remaining`:`Over budget by ${-remaining}`;
+  $('budgetMessage').classList.toggle('bad',remaining<0);$('budgetFill').style.width=`${Math.min(100,used)}%`;
+  $('targetOut').textContent=`${$('target').value}%`;$('summaryTarget').textContent=$('target').value;$('summaryDefences').textContent=defenceLabels();
+  $('create').disabled=remaining<0||!selectedRoom()||!runner;invalidateShare();
+}
+function refreshSummary(){
+  if(!runner)return;
+  $('summaryRunner').textContent=`Level ${runner.level} ${runner.className}`;$('summaryRoom').textContent=selectedSpec().name;refreshAdvanced();
+  $('buildStatus').textContent='Defaults are ready. Create the player link now, or customize first.';
+}
+function renderRoom(){
+  const spec=selectedSpec(),loaded=selectedRoom();$('roomName').textContent=spec.name;$('roomTier').textContent=`Stock Flare room · Tier ${spec.tier}`;$('roomIndex').textContent=`${roomIndex+1} / ${roomSpecs.length}`;
+  if(loaded)drawPreview($('roomPreview'),loaded.map,loaded.tiles);$('useRoom').disabled=!loaded;invalidateShare();
+}
+function changeRoom(delta){roomIndex=(roomIndex+delta+roomSpecs.length)%roomSpecs.length;renderRoom()}
+function drawRunner(pack){
+  const canvas=$('runnerCanvas'),sprite=pack.sprites.warrior,atlas=pack.atlases.warrior,a=sprite.animations.stance,f=a.entries['0:7']||a.entries['0:0'];
+  const rect=canvas.getBoundingClientRect(),w=Math.max(150,rect.width||220),h=Math.max(190,rect.height||280),dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
+  const g=canvas.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,w,h);if(!f)return;
+  const dw=f.dw??f.w,dh=f.dh??f.h,scale=Math.min(w/(dw*1.35),h/(dh*1.12));g.drawImage(atlas,f.x,f.y,f.w,f.h,w/2-(f.ox??dw/2)*scale,h*.94-(f.oy??dh)*scale,dw*scale,dh*scale);
+}
+function createPlayerLink(){
+  try{
+    const built=buildDefaultChallenge({roomId:selectedSpec().id,roomTitle:selectedSpec().name,map:selectedRoom().map,catalog,targetHp:Number($('target').value),enemyTypes:['enemy1','enemy2','enemy3'].map(id=>$(id).value),potion:$('potion').checked});
+    const url=makePlayerUrl(location.href,built.challenge,{sender});$('playerUrl').value=url.href;$('openPlayer').href=url.href;$('sharePanel').hidden=false;$('create').textContent='UPDATE PLAYER LINK ›';$('buildStatus').textContent=`Player link ready · ${built.spent}/100 gold · target ${built.challenge.targetHp}% HP.`;
+  }catch(error){$('buildStatus').textContent=error.message}
+}
+async function copyPlayerLink(){
+  const value=$('playerUrl').value;if(!value)return;
+  try{await navigator.clipboard.writeText(value);$('buildStatus').textContent='Player link copied.'}
+  catch{$('playerUrl').select();try{document.execCommand('copy');$('buildStatus').textContent='Player link copied.'}catch{$('buildStatus').textContent='Select and copy the player link.'}}
+}
+async function sharePlayerLink(){
+  const url=$('playerUrl').value;if(!url)return;
+  const data={title:'Run the Gauntlet',text:`${sender} built a gauntlet for you.`,url};
+  if(navigator.share){try{await navigator.share(data);$('buildStatus').textContent='Player link shared.';return}catch(error){if(error?.name==='AbortError')return}}
+  await copyPlayerLink();
+}
 
-(async()=>{try{const [cat,prof,actors]=await Promise.all([fetch(new URL('../flare-p0/data/catalog.json',location.href)).then(r=>{if(!r.ok)throw Error('Catalogue unavailable');return r.json()}),fetch(new URL('./data/runner.json',location.href)).then(r=>r.json()),loadActorPack()]);catalog=cat;profile=prof;runner=runnerSummary(profile,catalog);$('sender').textContent=inviteSender(location.search);$('runnerName').textContent=runner.name;$('runnerClass').textContent=runner.className;$('runnerLevel').textContent=runner.level;$('runnerWeapon').textContent=runner.weapon;$('statHp').textContent=runner.hp;$('statAtk').textContent=runner.attack;$('statDef').textContent=runner.defense;drawRunner(actors);await Promise.all(roomSpecs.map(async spec=>rooms.set(spec.id,await loadStockRoom(spec.id))));renderRoom();refreshAdvanced();$('accept').disabled=false;$('loginStatus').textContent='Demo access is prefilled. Accept when ready.';$('run').disabled=false}catch(e){console.error(e);$('loginStatus').textContent='Could not prepare the gauntlet: '+e.message}})();
+$('loginForm').addEventListener('submit',event=>{
+  event.preventDefault();
+  if(!validateDemoLogin($('username').value,$('password').value)){$('loginStatus').textContent='Use Buddy / Test for this prototype.';return}
+  if(!runner||rooms.size!==roomSpecs.length){$('loginStatus').textContent='Still preparing the builder. Try again in a moment.';return}
+  sender=$('username').value.trim()||'Buddy';$('loginView').hidden=true;$('builderView').hidden=false;requestAnimationFrame(()=>{drawRunner(actorPack);goto(0)});
+});
+$('useRunner').addEventListener('click',()=>goto(1));$('statsToggle').addEventListener('click',()=>{const showing=$('stats').hidden;$('stats').hidden=!showing;$('statsToggle').textContent=showing?'HIDE STATS':'VIEW STATS'});
+$('prevRoom').addEventListener('click',()=>changeRoom(-1));$('nextRoom').addEventListener('click',()=>changeRoom(1));$('useRoom').addEventListener('click',()=>goto(2));
+$('customize').addEventListener('click',()=>{const opening=$('advanced').hidden;$('advanced').hidden=!opening;$('customize').textContent=opening?'HIDE OPTIONS':'CUSTOMIZE'});
+for(const button of document.querySelectorAll('[data-preset]'))button.addEventListener('click',()=>preset(button.dataset.preset));
+for(const id of ['enemy1','enemy2','enemy3','potion'])$(id).addEventListener('change',refreshAdvanced);$('target').addEventListener('input',refreshAdvanced);
+$('create').addEventListener('click',createPlayerLink);$('copy').addEventListener('click',copyPlayerLink);$('share').addEventListener('click',sharePlayerLink);
+let swipeStart=null;$('roomStage').addEventListener('pointerdown',event=>swipeStart={x:event.clientX,y:event.clientY,id:event.pointerId});$('roomStage').addEventListener('pointerup',event=>{if(!swipeStart||swipeStart.id!==event.pointerId)return;const dx=event.clientX-swipeStart.x,dy=event.clientY-swipeStart.y;swipeStart=null;if(Math.abs(dx)>42&&Math.abs(dx)>Math.abs(dy)*1.15)changeRoom(dx<0?1:-1)});
+document.addEventListener('keydown',event=>{if($('builderView').hidden||['INPUT','SELECT','TEXTAREA'].includes(event.target?.tagName))return;if(step===1&&event.key==='ArrowLeft'){event.preventDefault();changeRoom(-1)}if(step===1&&event.key==='ArrowRight'){event.preventDefault();changeRoom(1)}});
+new ResizeObserver(()=>{if(!$('builderView').hidden&&step===0&&actorPack)drawRunner(actorPack);if(!$('builderView').hidden&&step===1&&selectedRoom())renderRoom()}).observe($('app'));
+
+(async()=>{try{
+  const [cat,prof,actors]=await Promise.all([
+    fetch(new URL('../flare-p0/data/catalog.json',location.href),{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('Catalogue unavailable');return r.json()}),
+    fetch(new URL('./data/runner.json',location.href),{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('Runner unavailable');return r.json()}),
+    loadActorPack()
+  ]);
+  catalog=cat;profile=prof;actorPack=actors;runner=runnerSummary(profile,catalog);
+  $('runnerName').textContent=runner.name;$('runnerClass').textContent=runner.className;$('runnerLevel').textContent=runner.level;$('runnerWeapon').textContent=runner.weapon;$('statHp').textContent=runner.hp;$('statAtk').textContent=runner.attack;$('statDef').textContent=runner.defense;
+  await Promise.all(roomSpecs.map(async spec=>rooms.set(spec.id,await loadStockRoom(spec.id))));renderRoom();refreshAdvanced();$('useRunner').disabled=false;$('create').disabled=false;$('loginStatus').textContent='Demo access is ready.';
+}catch(error){console.error(error);$('loginStatus').textContent='Could not prepare builder: '+error.message}})();
