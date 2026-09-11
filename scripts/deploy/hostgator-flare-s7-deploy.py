@@ -31,7 +31,7 @@ def request_json(url,*,data=None,extra=None):
  try:return json.loads(raw.decode())
  except Exception:fail(f'cPanel returned non-JSON: {raw[:250]!r}')
 def uapi(module,function,params=None,*,post=False):
- query=urlencode(params or {});url=f'https://{CPANEL_HOST}:2083/execute/{module}/{function}';out=request_json(url,data=query.encode() if post else None,extra={'Content-Type':'application/x-www-form-urlencoded'} if post else None) if post else request_json(url+('?' + query if query else ''));result=out.get('result',{})
+ query=urlencode(params or {});url=f'https://{CPANEL_HOST}:2083/execute/{module}/{function}';out=request_json(url,data=query.encode() if post else None,extra={'Content-Type':'application/x-www-form-urlencoded'} if post else None) if post else request_json(url+('?' + query if query else ''));result=out.get('result',out)
  if not result.get('status'):fail(f'UAPI {module}::{function} failed: {result.get("errors") or result}')
  return out
 def api2(module,function,params):
@@ -39,7 +39,7 @@ def api2(module,function,params):
  if not event.get('result'):fail(f'cPanel API2 {module}::{function} failed: {event.get("reason") or result}')
  return out
 def names(remote_dir):
- out=uapi('Fileman','list_files',{'dir':remote_dir,'show_hidden':'1'});data=out.get('result',{}).get('data') or [];items=[*(data.get('dirs') or []),*(data.get('files') or [])] if isinstance(data,dict) else data if isinstance(data,list) else [];return {str(x.get('file')) for x in items if isinstance(x,dict) and x.get('file')}
+ out=uapi('Fileman','list_files',{'dir':remote_dir,'show_hidden':'1'});data=out.get('result',out).get('data') or [];items=[*(data.get('dirs') or []),*(data.get('files') or [])] if isinstance(data,dict) else data if isinstance(data,list) else [];return {str(x.get('file')) for x in items if isinstance(x,dict) and x.get('file')}
 def root_for(path):
  norm=path.strip('/')
  for root in ALLOWED:
