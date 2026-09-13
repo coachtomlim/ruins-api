@@ -1,5 +1,5 @@
 {
-  "version": 5,
+  "version": 6,
   "branch": "work/web-flare-s8a-rewards-replay-001",
   "livePredecessor": "S7.1",
   "deployExecuted": false,
@@ -9,6 +9,16 @@
     "public/flare-s8a/rewards.mjs",
     "public/flare-s8a/reward-teaser.mjs",
     "public/flare-s8a/runner-progression.mjs",
+    "public/flare-s8a/runner-snapshot.mjs",
+    "public/flare-s8a/runner-calibration.mjs",
+    "public/flare-s8a/progression-feasibility.mjs",
+    "public/flare-s8a/progression-catalog.mjs",
+    "public/flare-s8a/progression-purchase.mjs",
+    "public/flare-s8a/progression-purchase-view.mjs",
+    "public/flare-s8a/progression-state.mjs",
+    "public/flare-s8a/runner-loadout.mjs",
+    "public/flare-s8a/progression-view-model.mjs",
+    "public/flare-s8a/progression-journey.mjs",
     "public/flare-s8a/journey.mjs",
     "public/flare-s8a/receiver-session.mjs",
     "public/flare-s8a/receiver-view.mjs",
@@ -46,7 +56,10 @@
     "public/flare-s8a/panel-shell.css"
   ],
   "s8bPreparedModules": [
-    "public/flare-s8b/ledger.mjs"
+    "public/flare-s8b/ledger.mjs",
+    "public/flare-s8b/progression-ledger.mjs",
+    "public/flare-s8b/progression-engine.mjs",
+    "public/flare-s8b/challenge-envelope.mjs"
   ],
   "tools": [
     "tools/flare-s8a-preview-server.mjs",
@@ -73,7 +86,8 @@
     "docs/WEB_FLARE_S8_BACKGROUND_PREFLIGHT_CHECKPOINT.md",
     "docs/WEB_FLARE_S8_BACKGROUND_PREFLIGHT_CHECKPOINT_002.md",
     "docs/WEB_FLARE_S8_BACKGROUND_PREFLIGHT_CHECKPOINT_003.md",
-    "docs/WEB_FLARE_S8_BACKGROUND_PREFLIGHT_CHECKPOINT_004.md"
+    "docs/WEB_FLARE_S8_BACKGROUND_PREFLIGHT_CHECKPOINT_004.md",
+    "docs/WEB_FLARE_S8_BACKGROUND_PREFLIGHT_CHECKPOINT_005.md"
   ],
   "acceptanceDocs": [
     "docs/WEB_FLARE_S8A_ACCEPTANCE_SCORECARD.md",
@@ -101,6 +115,11 @@
     "docs/WEB_FLARE_S8B_LEDGER_IDEMPOTENCY_CONTRACT.md",
     "docs/WEB_FLARE_S8B_DUAL_REWARD_SETTLEMENT_CONTRACT.md",
     "docs/WEB_FLARE_S8B_RUNNER_PROGRESSION_CONTRACT.md",
+    "docs/WEB_FLARE_S8B_RUNNER_UPGRADE_TRANSACTION_CONTRACT.md",
+    "docs/WEB_FLARE_S8B_RUNNER_PROGRESS_DATA_MODEL.md",
+    "docs/WEB_FLARE_S8B_RUNNER_PROGRESSION_UX_CONTRACT.md",
+    "docs/WEB_FLARE_S8B_PROGRESSION_ECONOMY_CALIBRATION_PLAN.md",
+    "docs/WEB_FLARE_S8B_EQUIPMENT_VISUAL_CONTRACT.md",
     "docs/WEB_FLARE_S8B_ASSET_OWNERSHIP_CONTRACT.md",
     "docs/WEB_FLARE_S8B_CHALLENGE_RUN_RECORD_CONTRACT.md",
     "docs/WEB_FLARE_S8B_SENDER_IDENTITY_CONTRACT.md",
@@ -118,6 +137,7 @@
   ],
   "governanceDocs": [
     "docs/WEB_FLARE_S8_OPEN_DECISIONS.md",
+    "docs/WEB_FLARE_S8B_OWNER_DECISION_PACKET_001.md",
     "docs/WEB_FLARE_S8_RELEASE_ROLLBACK_CONTRACT.md",
     "docs/WEB_FLARE_S8_VERCEL_AUTODEPLOY_INCIDENT.md"
   ]
