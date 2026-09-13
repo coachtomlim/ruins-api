@@ -4,7 +4,7 @@ import {JOURNEY_STATES,journeyTransitions,canTransition,transitionJourney} from 
 
 const expected={
   invitation:{ACCEPT:'mission'},
-  mission:{USE_DUNGEON:'ready'},
+  mission:{USE_DUNGEON:'ready',CUSTOMIZE:'customize'},
   ready:{CUSTOMIZE:'customize',RUN:'runtime'},
   customize:{DONE:'ready',RUN:'runtime'},
   runtime:{COMPLETE:'rewards'},
