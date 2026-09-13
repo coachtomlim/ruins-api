@@ -19,18 +19,18 @@ Do not recreate, reset or rebase the branch.
 7. `docs/WEB_FLARE_S8A_PREDECESSOR_FREEZE_MATRIX.md`
 8. `docs/WEB_FLARE_S8A_ROUTE_MATRIX.md`
 9. `docs/WEB_FLARE_S8A_ACCEPTANCE_SCORECARD.md`
-10. `docs/WEB_FLARE_S8_BACKGROUND_PREFLIGHT_CHECKPOINT_004.md`
-11. `docs/WEB_FLARE_S8_BACKGROUND_PREFLIGHT_CHECKPOINT_005.md`
-12. `docs/WEB_FLARE_S8_PREFLIGHT_MANIFEST.json`
-13. `docs/WEB_FLARE_S8_VERCEL_AUTODEPLOY_INCIDENT.md`
+10. latest `docs/WEB_FLARE_S8_BACKGROUND_PREFLIGHT_CHECKPOINT_*.md`
+11. `docs/WEB_FLARE_S8_PREFLIGHT_MANIFEST.json`
+12. `docs/WEB_FLARE_S8_VERCEL_AUTODEPLOY_INCIDENT.md`
+13. `docs/WEB_FLARE_S8B_STARTER_LOADOUT_AUTHORITY.md`
 
-Then read the original work order, amendments and supporting contracts referenced by those documents.
+Then read the original S8A work order/amendments and referenced supporting contracts.
 
 ## Mission
 
-Implement S8A once, as one bounded integration build. Consume `public/flare-s8a/prepared.mjs` and the prepared view/state modules rather than rebuilding equivalent behavior inline.
+Implement S8A once, as one bounded integration build. Consume `public/flare-s8a/prepared.mjs` and prepared state/view modules rather than rebuilding equivalent behavior inline.
 
-Primary receiver journey:
+Receiver journey:
 
 `INVITATION -> MISSION + DUNGEON -> OPTIONAL CUSTOMIZE -> READY -> RUN -> REWARDS -> REGISTRATION GATE`
 
@@ -42,40 +42,58 @@ Product meaning:
 
 `Do not kill the Hero. The Hero must clear the dungeon.`
 
+## S8A starter Runner presentation
+
+Owner authority now makes starter gear explicit.
+
+Every S8A demo Runner should present the accepted Wooden Club and Wooden Shield as equipment rather than hiding their bonuses in anonymous stats.
+
+Use the prepared `decomposeLegacyRunnerForStarterGear()` adapter to preserve existing effective S7 balance while decomposing DEF into base + Shield bonus:
+
+- Club contributes +4 ATK;
+- Wooden Shield contributes +1 DEF;
+- no head/chest/hands/legs/feet armor is granted;
+- effective L1/L2/L3 HP/ATK/DEF must remain exactly the existing accepted values.
+
+The S8A Hero presentation should include the stock Flare shield visual (`buckler`) wherever the composed Hero is shown, alongside the existing Club, without mutating frozen predecessor files. Extend S8A composition/adaptation only.
+
+Do not introduce later armor pieces, item purchases or progression balance in S8A.
+
 ## Reward-to-progression meaning
 
-S8A still does not implement persistent purchases, but the reward screen and registration gate must explain why earned Gold matters:
+S8A still has no persistent purchases, but rewards/registration must explain why Gold matters:
 
 `USE GOLD TO UPGRADE YOUR RUNNER`
 
 `Stats · Equipment · Armor`
 
-The Builder reward belongs to the receiver and will eventually improve that receiver's own Runner after an account exists. Never imply that Builder Gold upgrades the friend's incoming Hero-Runner.
+Builder Gold belongs to the receiver and later improves the receiver's own Runner after an account exists. Never imply it upgrades the friend's incoming Runner.
 
-The registration panel should explain that creating an account is required to keep Gold and later use it for Runner progression. `CREATE ACCOUNT` remains non-functional/disabled in S8A unless account work is separately authorized.
+Registration explains that an account is required to keep Gold and use future Runner progression. `CREATE ACCOUNT` remains non-functional/disabled in S8A unless separately authorized.
 
 ## Existing prepared implementation assets
 
-Use, do not duplicate unnecessarily:
+Use rather than duplicate:
 
 - isolated `/m/XXXX` flow;
-- receiver session + journey state machine;
-- receiver state presenter and screen view models;
-- explicit finish-HP goal model;
-- mission/reward copy and target-fit guidance;
-- room carousel + swipe helper;
-- build-budget model;
-- panel customization state;
+- receiver session/journey/view models;
+- finish-HP goal model;
+- mission/reward/target-fit copy;
+- room carousel/swipe;
+- build-budget and panel customization models;
 - ready/runtime/reward/registration/error models;
 - replay/edit preservation;
-- camera controller and camera proof helpers;
-- focus/mobile policies;
-- design tokens and panel-shell CSS;
-- registration memory handoff with no connected account service;
-- local S8A preview server;
-- mobile DOM fixture and stable DOM selector contract.
+- camera controller/proof helpers;
+- focus/mobile policy;
+- design tokens/panel shell;
+- registration memory handoff;
+- local preview server;
+- stable mobile DOM fixture/selectors;
+- explicit Club + Wooden Shield starter loadout;
+- legacy Runner starter-gear decomposition preserving accepted effective stats;
+- common combatant equipment stat semantics for future Runner/monster parity.
 
-Progression modules under `public/flare-s8a/` and `public/flare-s8b/` are preparation for later account-backed work. S8A may use their copy/presentation intent, but must not expose active purchase/equip mutations.
+Progression modules are later-account preparation. S8A may use their presentation/stat decomposition but must not expose active purchase/equip mutations.
 
 ## Required implementation qualities
 
@@ -83,14 +101,16 @@ Progression modules under `public/flare-s8a/` and `public/flare-s8b/` are prepar
 - large bright primary actions;
 - no critical small-text boxes;
 - no long customization page;
-- panel/category navigation instead of vertical control dumping;
-- target, clear requirement and reward incentive visible without hunting below the fold;
-- 100 Gold build budget visibly distinct from earned reward Gold;
-- deterministic simulation remains authoritative;
-- Overview and Follow Hero produce measurable camera changes;
+- one panel/category at a time;
+- target, clear requirement and reward incentive visible without hunting below fold;
+- Dungeon Budget visibly distinct from reward Gold;
+- deterministic simulation authoritative;
+- Overview and Follow Hero visibly/measurably different;
 - dedicated reward screen;
 - clear-only Builder Gold;
-- reward screen visibly explains Runner upgrade purpose;
+- reward screen explains Runner-upgrade purpose;
+- Club and Wooden Shield visibly/semantically explicit without changing accepted effective stats;
+- no starter armor set;
 - memory-only registration handoff;
 - no Buddy/Test routing from Build Your Own.
 
@@ -103,55 +123,35 @@ Do not:
 - implement real accounts/backend;
 - use localStorage/sessionStorage/IndexedDB/cookies as account authority;
 - activate progression purchases/equipment mutations;
-- add gameplay rebalance/content;
+- add later armor/content/rebalance;
+- retrofit equipment onto frozen S7 monsters;
 - deploy HostGator;
 - re-enable or manually deploy to Vercel.
 
-Vercel Git auto-deployment is disabled on this branch. Leave that protection in place.
-
-## Test commands and environment
-
-Start cheap:
-
-`npm run test:s8a-preflight`
-
-Then verify frozen predecessors without requiring old commit objects:
-
-`npm run verify:frozen`
-
-The freeze verifier compares current `HEAD:<path>` Git tree identities for S2-S7.1 against accepted S7.1 fingerprints in `tools/frozen-web-trees.json`. This is safe in shallow clones and avoids the previous false failure caused only by unavailable historical Git objects.
-
-The inherited S7.1 historical-diff test may still require its older commit object when the complete legacy suite is run. If the checkout is shallow, fetch the required accepted commit/history or document that specific environment limitation. Do not weaken product freeze authority.
+Vercel Git auto-deployment is disabled on this branch. Leave it disabled.
 
 ## Test sequence
-
-Run in this order so failures are cheap and diagnosable:
 
 1. `npm run test:s8a-preflight`;
 2. `npm run verify:frozen`;
 3. predecessor tests;
 4. Flare source/asset verification;
 5. S8A integration tests;
-6. mobile browser journeys at 360x800, 390x844, 430x932 using the stable DOM contract;
-7. camera geometry proof;
-8. deterministic Run Again proof;
-9. reward, progression-teaser and registration journey proof;
-10. final complete suite once.
+6. mobile journeys at 360x800, 390x844, 430x932;
+7. starter Club+Shield effective-stat and visual proof;
+8. camera geometry proof;
+9. deterministic Run Again proof;
+10. reward/progression-teaser/registration journey proof;
+11. final complete suite once.
 
-Do not run repeated full-suite matrices unless diagnosing an actual failure.
+Do not repeat full-suite matrices unless diagnosing a real failure.
 
 ## Deployment preparation
 
-Only after PASS:
-
-- identify exact deployable S8A web SHA;
-- prepare bounded S8A HostGator handoff and deploy helper;
-- restrict helper to S8A public roots and `/m`;
-- fingerprint S2-S7.1 before and after;
-- do not execute it.
+Only after PASS identify one deployable S8A web SHA and prepare bounded HostGator handoff/helper restricted to S8A roots and `/m`. Fingerprint S2-S7.1 before/after. Do not execute deployment.
 
 ## Return
 
 Return `S8A TEST STATUS: PASS` or exact blocker/revise reason.
 
-Include branch, starting SHA, ending SHA, deployable web SHA, exact changed files, focused/full test counts, browser evidence, phone viewport evidence, camera proof, Level 3/60% outcome, Hero Gold, Builder Gold, reward-to-progression copy evidence, predecessor freeze evidence, route-isolation evidence, and confirmation that HostGator was not deployed and no Vercel deployment occurred.
+Include branch, starting/ending SHA, deployable web SHA, changed files, focused/full test counts, mobile evidence, camera proof, Club+Shield effective-stat/visual evidence, Level 3/60% result, Hero Gold, Builder Gold, reward-to-progression copy, predecessor freeze/route isolation, and confirmation that HostGator was not deployed and no Vercel deployment occurred.
