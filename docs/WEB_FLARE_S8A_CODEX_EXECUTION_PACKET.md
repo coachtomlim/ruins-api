@@ -44,7 +44,7 @@ Product meaning:
 
 ## S8A starter Runner presentation
 
-Owner authority now makes starter gear explicit.
+Owner authority makes starter gear explicit.
 
 Every S8A demo Runner should present the accepted Wooden Club and Wooden Shield as equipment rather than hiding their bonuses in anonymous stats.
 
@@ -70,6 +70,20 @@ S8A still has no persistent purchases, but rewards/registration must explain why
 Builder Gold belongs to the receiver and later improves the receiver's own Runner after an account exists. Never imply it upgrades the friend's incoming Runner.
 
 Registration explains that an account is required to keep Gold and use future Runner progression. `CREATE ACCOUNT` remains non-functional/disabled in S8A unless separately authorized.
+
+## Later gear acquisition is preparation only
+
+The branch now contains S8B preparation for gear acquired from multiple sources, including Gold purchase and dungeon-run awards, with a future account-to-account exchange path reserved for later design.
+
+That later preparation must NOT expand S8A scope:
+
+- do not generate or award equipment during S8A runs;
+- do not show an active inventory/shop/exchange UI;
+- do not add loot probability or rarity;
+- do not activate Gold spending;
+- do not expose future transfer controls.
+
+It is acceptable for S8A reward/registration copy to explain that future accounts will let players improve and equip their own Runner.
 
 ## Existing prepared implementation assets
 
