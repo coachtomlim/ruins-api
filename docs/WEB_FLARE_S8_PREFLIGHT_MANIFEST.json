@@ -1,8 +1,10 @@
 {
-  "version": 2,
+  "version": 3,
   "branch": "work/web-flare-s8a-rewards-replay-001",
   "livePredecessor": "S7.1",
   "deployExecuted": false,
+  "vercelAutoDeployDisabledOnBranch": true,
+  "vercelTouchedForShutdownOnly": true,
   "s8aPureModules": [
     "public/flare-s8a/rewards.mjs",
     "public/flare-s8a/journey.mjs",
@@ -23,7 +25,18 @@
     "tests/helpers/s8a-camera-proof.mjs",
     "tests/helpers/s8a-layout-proof.mjs"
   ],
+  "authorityDocs": [
+    "docs/WEB_FLARE_S8_AUTHORITY_PRECEDENCE.md",
+    "docs/WEB_FLARE_S8_MASTER_EXECUTION_PLAN.md",
+    "docs/WEB_FLARE_S8A_IMPLEMENTATION_CUTLINE.md",
+    "docs/WEB_FLARE_S8A_IMPLEMENTATION_FILE_MAP.md",
+    "docs/WEB_FLARE_S8A_CODEX_EXECUTION_PACKET.md"
+  ],
   "acceptanceDocs": [
+    "docs/WEB_FLARE_S8A_ACCEPTANCE_SCORECARD.md",
+    "docs/WEB_FLARE_S8A_OWNER_ACCEPTANCE_SCRIPT.md",
+    "docs/WEB_FLARE_S8A_RISK_REGISTER.md",
+    "docs/WEB_FLARE_S8A_HOSTGATOR_ONE_PASS_PLAN.md",
     "docs/WEB_FLARE_S8A_MOBILE_ACCEPTANCE_CONTRACT.md",
     "docs/WEB_FLARE_S8A_UI_STATE_CONTRACT.md",
     "docs/WEB_FLARE_S8A_E2E_SCENARIO_MATRIX.md",
