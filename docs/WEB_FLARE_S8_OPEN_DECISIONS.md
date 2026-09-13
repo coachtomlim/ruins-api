@@ -32,11 +32,24 @@ S8A continues display-name sender context. Persistent S8B challenges should norm
 
 Status: confirm before persistent challenge creation.
 
-## OD-05 Reward economy spend
+## OD-05 Runner progression economy
 
-Gold earning is being introduced before spending/unlock rules.
+**Resolved product purpose:** persisted Gold is spent on improving the player's own Hero-Runner through:
 
-Status: do not invent shops, purchases or asset prices in S8A/S8B account foundation work.
+- permanent Runner stat upgrades: HP, ATK, DEF;
+- equipment, initially the `WEAPON` slot;
+- armor, initially the `ARMOR` slot.
+
+Still unresolved before progression spending is implemented:
+
+- exact Gold prices;
+- stat-upgrade caps/tiers;
+- exact weapon catalog and modifiers;
+- exact armor catalog and modifiers;
+- whether items are one-time purchases, tier upgrades, or both;
+- relationship between persistent progression and displayed Runner level.
+
+Status: Gold purpose is locked. Pricing/catalog/balance values remain Owner decisions. Codex must not invent them during S8A.
 
 ## OD-06 Public challenge lifetime
 
