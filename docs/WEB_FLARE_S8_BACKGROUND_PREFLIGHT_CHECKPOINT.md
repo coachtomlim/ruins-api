@@ -8,32 +8,37 @@ Accepted live predecessor remains S7.1.
 
 ## Completed S8A background preparation
 
-1. Pure reward contract: `public/flare-s8a/rewards.mjs`.
-2. Receiver journey state machine: `public/flare-s8a/journey.mjs`.
-3. Reward and journey tests: `tests/flare-s8a-preflight.test.mjs`.
-4. Memory-only registration handoff and tests.
-5. Mobile acceptance and camera proof contracts/tests.
-6. Mission/reward/registration copy helper and tests.
-7. Canonical mobile UI state contract.
-8. End-to-end browser scenario matrix and fixtures.
-9. Touch/readability and single-viewport panel layout contracts.
-10. Layout/camera measurement helpers and tests.
-11. Frozen receiver copy deck.
-12. Pure runtime camera-mode helper.
-13. Pure customization-panel helper.
-14. Privacy-safe telemetry contract, helper and tests.
-15. Error/recovery contract for invalid invites, asset failures and interrupted guest runs.
-16. Mobile performance budget.
-17. Reward result view model and tests.
-18. Canonical deterministic run-input serializer and tests.
-19. Replay/edit context preservation helper and tests.
-20. Registration gate view model and tests.
+1. Pure reward contract and reward tests.
+2. Receiver journey state machine.
+3. Memory-only registration handoff and registration view model.
+4. Mission/reward copy helpers.
+5. Result view model.
+6. Canonical deterministic run-input serializer.
+7. Replay/edit context preservation helper.
+8. Runtime camera-mode helper.
+9. Customization-panel helper.
+10. Privacy-safe/no-op-capable telemetry helper.
+11. Mobile acceptance, touch/readability and single-viewport panel-layout contracts.
+12. Overview camera geometry proof helper and tests.
+13. Mobile layout measurement helper and tests.
+14. End-to-end scenario matrix and browser fixtures.
+15. Frozen receiver copy deck.
+16. Error/recovery contract.
+17. Mobile performance budget.
+18. Complete authority precedence file.
+19. One-go implementation cutline.
+20. Implementation file map.
+21. Binary acceptance scorecard.
+22. HostGator one-pass deployment plan.
+23. Codex single-entry execution packet.
+24. Implementation risk register.
+25. Owner manual acceptance script.
 
 ## Completed S8B background preparation
 
 1. Account/persistence design.
 2. Provider-neutral auth state machine.
-3. Append-only gold ledger and idempotency contract.
+3. Append-only Gold ledger and idempotency contract.
 4. Asset ownership contract.
 5. Canonical challenge and run record contract.
 6. Provider-neutral account/persistence API contract.
@@ -46,47 +51,38 @@ Accepted live predecessor remains S7.1.
 13. Account UX contract.
 14. Provider-neutral data model.
 15. Data lifecycle contract.
-16. Backend decision gate, with Supabase Auth + PostgreSQL as the leading candidate for evaluation but not yet authorized.
+16. Backend decision gate. Supabase Auth + PostgreSQL remains the leading candidate for later evaluation but is not authorized.
+17. Open-decision register for reward settlement, failed-run Hero Gold, sender identity, reward economy and challenge lifetime.
 
 ## Recovery manifest
 
 Machine-readable inventory: `docs/WEB_FLARE_S8_PREFLIGHT_MANIFEST.json`.
 
-## Latest commit checkpoints
+## Latest planning checkpoints
 
-- `fc9ff59769b290d0fd19beb80e0fd2797161a356` S8A error/recovery contract
-- `9cf844237030a48bbc78666ba938e658a473700a` S8A mobile performance budget
-- `ff81b31a99db75ba4c77444c4e7ac3a561b11734` S8B guest claim security contract
-- `da62f981c8a26124d4604d5255e53fa7db2e7c0e` S8B authorization contract
-- `b25cfe7e6dcc245da423cada147d4425e54b12b9` S8A single-viewport panel layout contract
-- `67aab11c8e7ec4e7c17532bc79672fffa76a8d32` S8A result view model
-- `3e88505245572b221df06c5bf3d4ca006590b334` result view-model tests
-- `3f63dfca959d75c5d8f10e4c912598be116007c5` canonical run-input serializer
-- `65f130bc7b4c95c7c666e31cb3f80eea6a0e99b2` canonical run-input tests
-- `3cd5408eb7fdb7cdec10f278f58bac381287dd2e` replay/edit context helper
-- `4d41d71f92c42d5e165b405d958f5cb7d5e840bf` replay/edit context tests
-- `bc2cf56db636b2bc37e61e19d53828b64c9503a7` registration view model
-- `3fb62d0e08d6000101c38920304936ee4fbb54c1` registration view-model tests
-- `ebc3e39efcf23e3a52d5e9e09abc2848be616fc3` S8B security test matrix
-- `b1edbd8ebdb68ce3c49ad932a85d190ecdf6b683` S8B account UX contract
-- `11c2142950560bacc73e174f78838bab712f9a0d` S8B data model
-- `e0534e181346f2264f132ee28308ed5dbad8e628` S8B data lifecycle contract
-- `258bbd98829a981d83cbe3abded5006994db406b` machine-readable preflight manifest
-- `bf23bb6b1a36b46f3401a537aafac787b37c1ce4` S8B backend decision gate
+- `f626a1e7bbc326cc7eeb244092b21242917e556c` authority precedence
+- `5662d328af07d64ca8952722f7dbab6ad21c66b7` implementation cutline
+- `db0b26a824037388c7d9ce6fbdad25244080603d` implementation file map
+- `696e83b1200235fec68937223c952eed9b1746b4` acceptance scorecard
+- `15ee616b578439512edbe35f8410a1cb3cae98a5` HostGator one-pass deployment plan
+- `dfaa119283713e88ee7c2278bd12b2960869a6f3` Codex execution packet
+- `6581274c80d29f949624af803d2d71b6b4628675` risk register
+- `e5888bed73df93f7b57ae334b05c1e262328bc7c` Owner acceptance script
 
 Earlier checkpoints remain valid in branch history and can be recovered individually.
 
-## Explicitly not done
+## Operating restrictions
 
-- no HostGator deployment
+- no HostGator deployment during planning
 - no live S7.1 modification
 - no real account service
 - no database mutation
 - no browser-based wallet persistence
 - no gameplay rebalance
 - no production telemetry transmission
-- no backend/provider selection has been authorized
+- no backend/provider selection authorized
+- no Vercel operation of any kind
 
 ## Next build
 
-Codex should consume these files as existing preflight authority rather than recreate them. It should integrate the pure modules into S8A, run the complete suite, execute every browser scenario, prove phone layout and Overview camera behavior, and only then prepare a deployable S8A source SHA.
+Codex must treat `docs/WEB_FLARE_S8A_CODEX_EXECUTION_PACKET.md` as the single entry point, consume the prepared modules/contracts/tests, implement S8A once in a bounded integration build, run the complete focused-to-full test sequence, and only then identify one deployable S8A web SHA and prepare but not execute the HostGator handoff.
