@@ -2,143 +2,112 @@
 
 ## Product truth
 
-Earned Gold is not only a score/reward display. Once accounts exist, a player's persisted Gold is a progression resource for improving that player's own Hero-Runner.
-
-The progression loop is:
+Earned Gold is a progression resource for improving the player's own Hero-Runner.
 
 `RECEIVE CHALLENGE -> BUILD DUNGEON -> EARN GOLD -> UPGRADE YOUR RUNNER -> SEND YOUR OWN CHALLENGE`
 
-This creates a reason to keep accepting and building challenges beyond a single score attempt.
+## Stat authority
 
-## Ownership rule
+Effective combat stats are composed from:
 
-The receiver/Dungeon Builder earns Builder Gold for a successful precision clear.
+`base stats + permanent stat upgrades + equipped item modifiers`
 
-When that receiver later becomes a sender, the Gold in their own account may be spent to improve their own Runner.
+Item bonuses must not also be baked into base stats. The same rule applies to monsters that own/equip items.
 
-Hero Gold credited to an authenticated sender also belongs to that sender's player wallet and may fund the same runner-progression system.
+## Starter Runner
 
-Do not merge one player's reward into another player's wallet.
+The initial Rookie Warrior has no armor set.
 
-## Upgrade categories
+Base and starter equipment decomposition:
 
-Initial governed categories are:
+- base HP 100
+- base ATK 8
+- Wooden Club in `WEAPON`: +4 ATK
+- base DEF 0
+- Wooden Shield in `SHIELD`: +1 DEF
+- effective starter: 100 HP / 12 ATK / 1 DEF
 
-### 1. Runner stats
+No starter `HEAD`, `CHEST`, `HANDS`, `LEGS`, or `FEET` item is owned/equipped. Default clothing is visual baseline only and grants no equipment bonus.
 
-Persistent upgrades may improve:
+## Progression categories
+
+Permanent stat upgrades may improve:
 
 - `MAX_HP`
 - `ATTACK`
 - `DEFENSE`
 
-These are account-owned progression on a specific runner, not temporary dungeon-run buffs.
-
-### 2. Equipment
-
-Initial equipment slot:
+Initial equipment slots are:
 
 - `WEAPON`
+- `SHIELD`
+- `HEAD`
+- `CHEST`
+- `HANDS`
+- `LEGS`
+- `FEET`
 
-Equipment is an owned asset that can contribute governed stat modifiers when equipped.
+Armor is acquired piece by piece. This preserves the progression moment of acquiring the first boots, head gear, chest piece, gloves or leg armor.
 
-### 3. Armor
+## Equipment ownership
 
-Initial armor slot:
+Owning an item does not apply its stats. It must be equipped in its matching slot.
 
-- `ARMOR`
+A shield is equipment but not part of the armor-piece set for purchase categorization. Armor pieces are head/chest/hands/legs/feet.
 
-Armor is an owned asset that can contribute governed defensive and/or HP modifiers when equipped.
+## Monster equipment
 
-Do not add accessory, magic, ranged or other slots until separately authorized.
+Monsters may also own/equip governed items. When they do, their item modifiers contribute to effective HP/ATK/DEF exactly once through the same composition rule.
 
-## Effective Runner snapshot
+Frozen S7 monster stats remain legacy effective values until a later S8 content refactor explicitly decomposes them into base stats plus items. Do not alter frozen S7 balance merely to retrofit item ownership.
 
-A challenge must snapshot the exact Runner configuration used when the challenge is created.
+## Challenge snapshot
 
-Recommended effective-stat model:
+A challenge snapshots the exact effective Runner configuration at creation time:
 
-`effective HP = base HP + permanent HP upgrades + equipped HP bonuses`
+- base stats;
+- permanent upgrades;
+- each equipped item identity and modifiers;
+- effective HP / ATK / DEF;
+- rules/content/progression version.
 
-`effective ATK = base ATK + permanent ATK upgrades + equipped weapon/armor ATK bonuses`
-
-`effective DEF = base DEF + permanent DEF upgrades + equipped weapon/armor DEF bonuses`
-
-A later player upgrade must not silently alter an already-issued challenge. Historic challenges remain bound to their recorded Runner snapshot/rules version.
+Later upgrades or equipment changes cannot mutate an already-issued challenge.
 
 ## Gold spending
 
-Gold spent on upgrades is an account transaction and must use the append-only Gold ledger.
+Gold purchases/upgrades use the append-only Gold ledger and server-authoritative catalog values.
 
-Spending must create explicit debit entries, for example:
+Explicit debit reasons include:
 
 - `RUNNER_STAT_UPGRADE`
-- `EQUIPMENT_PURCHASE`
-- `ARMOR_PURCHASE`
+- `EQUIPMENT_PURCHASE` for weapons/shields
+- `ARMOR_PURCHASE` for head/chest/hands/legs/feet
 
-Do not overwrite wallet balance directly.
-
-Every purchase/upgrade mutation must be idempotent and server-authoritative when S8B persistence is implemented.
+Every mutation must be idempotent and must not permit a negative balance.
 
 ## Separate resources
 
-The 100-point `DUNGEON BUDGET` remains completely separate from player Gold.
-
-- Dungeon Budget builds the current receiver dungeon and resets per setup.
-- Gold belongs to the player's account and funds Runner progression.
-
-Selecting monsters/traps/supports never spends persistent Gold.
+The 100-point `DUNGEON BUDGET` is not player Gold. Dungeon construction never spends persistent Gold.
 
 ## S8A presentation
 
-S8A does not implement purchases or persistent progression, but the reward/registration UX may make the purpose of Gold clear with copy such as:
+S8A may explain:
 
 `USE GOLD TO UPGRADE YOUR RUNNER`
 
 `Improve Stats · Equipment · Armor`
 
-Because S8A has no account persistence yet, do not claim that upgrades can be purchased before registration is implemented.
+but must not claim purchases or persistent ownership before accounts exist.
 
-## S8B persistence requirements
+## Economy values not yet locked
 
-The account model needs persistent representations for:
+Still to decide before persistent progression purchase implementation:
 
-- player-owned Runner identity;
-- permanent stat-upgrade state;
-- owned equipment;
-- owned armor;
-- currently equipped weapon;
-- currently equipped armor;
-- immutable Runner snapshot on challenge creation;
-- Gold debit ledger entries for purchases/upgrades.
+- Gold prices;
+- stat increments and caps;
+- later weapon/shield/armor catalog;
+- later item modifiers;
+- whether items are bought once or have upgrade tiers;
+- relationship between progression and displayed Runner level.
 
-## Economy values deliberately not locked here
-
-This contract locks what Gold is for, not exact prices or progression pacing.
-
-Still to decide before the progression shop is implemented:
-
-- Gold cost per HP/ATK/DEF upgrade;
-- maximum upgrade tiers/caps;
-- exact equipment catalog;
-- exact armor catalog;
-- equipment/armor prices;
-- whether assets are bought once or upgraded through tiers;
-- whether Runner level is derived from progression or remains a separate governed tier.
-
-Codex must not invent these values during S8A.
-
-## Test requirements for later persistent implementation
-
-Prove at minimum:
-
-1. Builder Gold credits only the receiver owner.
-2. Hero Gold credits only the sender owner.
-3. Gold debit cannot make balance negative.
-4. Duplicate purchase retries do not double-debit.
-5. Unequipped assets do not affect Runner stats.
-6. Equipped weapon/armor modifiers affect the Runner snapshot exactly once.
-7. Permanent stat upgrades are included exactly once.
-8. Challenges preserve the Runner snapshot even after later upgrades.
-9. Dungeon Budget never consumes account Gold.
-10. A player cannot equip or spend another player's assets/Gold.
+Do not invent those values during S8A.
