@@ -16,6 +16,7 @@ export function buildResultViewModel({result,score,targetHp,senderName='Buddy'}=
     targetHpPercent:target,
     heroReward:Object.freeze({label:copy.heroLabel,value:copy.heroValue,gold:summary.heroGold}),
     builderReward:Object.freeze({label:copy.builderLabel,value:copy.builderValue,sublabel:copy.builderSublabel,gold:summary.builderGold}),
+    progression:Object.freeze({headline:copy.progressionHeadline,detail:copy.progressionDetail,currency:'GOLD'}),
     actions:Object.freeze(['RUN AGAIN','EDIT THIS DUNGEON','SAVE THIS GOAL & BUILD YOUR OWN'])
   });
 }
