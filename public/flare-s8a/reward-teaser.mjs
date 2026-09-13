@@ -12,6 +12,8 @@ export function rewardTeaser(){
     headline:'WIN UP TO 25 GOLD',
     body:'The Hero must clear the dungeon. The closer the finishing HP is to the target, the more Builder Gold you earn.',
     compact:'CLEAR + HIT THE TARGET = MORE GOLD',
+    progressionHeadline:'USE GOLD TO UPGRADE YOUR RUNNER',
+    progressionCategories:Object.freeze(['Stats','Equipment','Armor']),
     tiers:BUILDER_REWARD_TIERS
   });
 }
