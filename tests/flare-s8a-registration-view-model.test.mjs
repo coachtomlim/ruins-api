@@ -12,4 +12,6 @@ test('registration view model carries goal and reward preview without persistenc
   assert.equal(vm.previewHeroGold,24);
   assert.equal(vm.persisted,false);
   assert.deepEqual(vm.actions,['CREATE ACCOUNT','BACK TO REWARDS']);
+  assert.equal(vm.accountAction.enabled,false);
+  assert.match(vm.accountAction.note,/No account or assets are saved yet/i);
 });
