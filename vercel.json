@@ -1,7 +1,25 @@
 {
- "buildCommand":"npm run build:flare","installCommand":"npm install --no-audit --no-fund","outputDirectory":"public",
- "headers":[
-  {"source":"/flare-p0/(.*)","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow"},{"key":"X-Content-Type-Options","value":"nosniff"}]},
-  {"source":"/flare-s2/(.*)","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow"},{"key":"X-Content-Type-Options","value":"nosniff"}]}
- ]
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "git": {
+    "deploymentEnabled": false
+  },
+  "buildCommand": "npm run build:flare",
+  "installCommand": "npm install --no-audit --no-fund",
+  "outputDirectory": "public",
+  "headers": [
+    {
+      "source": "/flare-p0/(.*)",
+      "headers": [
+        {"key": "X-Robots-Tag", "value": "noindex, nofollow"},
+        {"key": "X-Content-Type-Options", "value": "nosniff"}
+      ]
+    },
+    {
+      "source": "/flare-s2/(.*)",
+      "headers": [
+        {"key": "X-Robots-Tag", "value": "noindex, nofollow"},
+        {"key": "X-Content-Type-Options", "value": "nosniff"}
+      ]
+    }
+  ]
 }
