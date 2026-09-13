@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 5,
   "branch": "work/web-flare-s8a-rewards-replay-001",
   "livePredecessor": "S7.1",
   "deployExecuted": false,
@@ -8,6 +8,7 @@
     "public/flare-s8a/prepared.mjs",
     "public/flare-s8a/rewards.mjs",
     "public/flare-s8a/reward-teaser.mjs",
+    "public/flare-s8a/runner-progression.mjs",
     "public/flare-s8a/journey.mjs",
     "public/flare-s8a/receiver-session.mjs",
     "public/flare-s8a/receiver-view.mjs",
@@ -99,6 +100,7 @@
     "docs/WEB_FLARE_S8B_AUTH_STATE_MACHINE.md",
     "docs/WEB_FLARE_S8B_LEDGER_IDEMPOTENCY_CONTRACT.md",
     "docs/WEB_FLARE_S8B_DUAL_REWARD_SETTLEMENT_CONTRACT.md",
+    "docs/WEB_FLARE_S8B_RUNNER_PROGRESSION_CONTRACT.md",
     "docs/WEB_FLARE_S8B_ASSET_OWNERSHIP_CONTRACT.md",
     "docs/WEB_FLARE_S8B_CHALLENGE_RUN_RECORD_CONTRACT.md",
     "docs/WEB_FLARE_S8B_SENDER_IDENTITY_CONTRACT.md",
