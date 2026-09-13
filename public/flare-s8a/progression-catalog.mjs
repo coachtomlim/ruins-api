@@ -2,6 +2,7 @@ import {RUNNER_STAT_KEYS,RUNNER_EQUIPMENT_SLOTS} from './runner-progression.mjs'
 
 const positiveInt=(value,label)=>{const n=Number(value);if(!Number.isInteger(n)||n<=0)throw new Error(`${label} must be a positive integer`);return n};
 const clean=value=>String(value??'').trim();
+const visualLayers=value=>Object.freeze((Array.isArray(value)?value:[]).map(clean).filter(Boolean));
 
 export function normalizeStatUpgrade(spec={}){
   const id=clean(spec.id);if(!id)throw new Error('Stat upgrade id is required');
@@ -15,7 +16,7 @@ export function normalizeEquipmentOffer(spec={}){
   const mods=spec.modifiers||{};
   const normalizedMods={};
   for(const key of RUNNER_STAT_KEYS){const n=Number(mods[key]??0);if(!Number.isFinite(n)||n<0)throw new Error(`Invalid ${key} modifier`);normalizedMods[key]=n;}
-  return Object.freeze({id,kind:'equipment',slot,name:clean(spec.name)||id,goldCost:positiveInt(spec.goldCost,'Equipment Gold cost'),modifiers:Object.freeze(normalizedMods)});
+  return Object.freeze({id,kind:'equipment',slot,name:clean(spec.name)||id,goldCost:positiveInt(spec.goldCost,'Equipment Gold cost'),modifiers:Object.freeze(normalizedMods),visual:Object.freeze({avatarLayers:visualLayers(spec.visual?.avatarLayers)})});
 }
 
 export function normalizeProgressionCatalog(catalog={}){
