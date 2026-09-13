@@ -1,3 +1,5 @@
+import {RUNNER_ARMOR_SLOTS} from './runner-progression.mjs';
+
 const clean=value=>String(value??'').trim();
 const money=value=>{const n=Number(value);if(!Number.isInteger(n)||n<0)throw new Error('Gold balance must be a non-negative integer');return n};
 
@@ -10,7 +12,7 @@ export function progressionOfferById(catalog,offerId){
 
 export function quoteProgressionPurchase({catalog,offerId,goldBalance}={}){
   const balance=money(goldBalance),offer=progressionOfferById(catalog,offerId),cost=money(offer.goldCost);
-  const reasonCode=offer.kind==='stat'?'RUNNER_STAT_UPGRADE':offer.slot==='armor'?'ARMOR_PURCHASE':'EQUIPMENT_PURCHASE';
+  const reasonCode=offer.kind==='stat'?'RUNNER_STAT_UPGRADE':RUNNER_ARMOR_SLOTS.includes(offer.slot)?'ARMOR_PURCHASE':'EQUIPMENT_PURCHASE';
   return Object.freeze({
     offerId:offer.id,
     kind:offer.kind,
