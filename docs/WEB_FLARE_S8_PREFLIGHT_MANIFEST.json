@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "branch": "work/web-flare-s8a-rewards-replay-001",
   "livePredecessor": "S7.1",
   "deployExecuted": false,
@@ -9,12 +9,15 @@
     "public/flare-s8a/registration-handoff.mjs",
     "public/flare-s8a/mission-copy.mjs",
     "public/flare-s8a/runtime-view.mjs",
+    "public/flare-s8a/camera-controller.mjs",
     "public/flare-s8a/customize-panels.mjs",
     "public/flare-s8a/telemetry.mjs",
     "public/flare-s8a/result-view-model.mjs",
     "public/flare-s8a/canonical-run-input.mjs",
     "public/flare-s8a/replay-context.mjs",
-    "public/flare-s8a/registration-view-model.mjs"
+    "public/flare-s8a/registration-view-model.mjs",
+    "public/flare-s8a/target-fit.mjs",
+    "public/flare-s8a/target-fit-action.mjs"
   ],
   "testHelpers": [
     "tests/helpers/s8a-camera-proof.mjs",
@@ -27,17 +30,25 @@
     "docs/WEB_FLARE_S8A_ACCESSIBILITY_TOUCH_CONTRACT.md",
     "docs/WEB_FLARE_S8A_COPY_DECK.md",
     "docs/WEB_FLARE_S8A_PANEL_LAYOUT_CONTRACT.md",
+    "docs/WEB_FLARE_S8A_MOBILE_WIREFRAME.md",
     "docs/WEB_FLARE_S8A_ERROR_RECOVERY_CONTRACT.md",
     "docs/WEB_FLARE_S8A_MOBILE_PERFORMANCE_BUDGET.md",
-    "docs/WEB_FLARE_S8A_TELEMETRY_EVENT_CONTRACT.md"
+    "docs/WEB_FLARE_S8A_TELEMETRY_EVENT_CONTRACT.md",
+    "docs/WEB_FLARE_S8A_AMENDMENT_004_TARGET_FIT_LANGUAGE.md",
+    "docs/WEB_FLARE_S8A_AMENDMENT_005_BUILD_BUDGET_VS_REWARD_GOLD.md",
+    "docs/WEB_FLARE_S8_GAME_RESOURCE_SEMANTICS.md"
   ],
   "s8bArchitectureDocs": [
     "docs/WEB_FLARE_S8B_ACCOUNT_PERSISTENCE_CONTRACT.md",
     "docs/WEB_FLARE_S8B_AUTH_STATE_MACHINE.md",
     "docs/WEB_FLARE_S8B_LEDGER_IDEMPOTENCY_CONTRACT.md",
+    "docs/WEB_FLARE_S8B_DUAL_REWARD_SETTLEMENT_CONTRACT.md",
     "docs/WEB_FLARE_S8B_ASSET_OWNERSHIP_CONTRACT.md",
     "docs/WEB_FLARE_S8B_CHALLENGE_RUN_RECORD_CONTRACT.md",
+    "docs/WEB_FLARE_S8B_SENDER_IDENTITY_CONTRACT.md",
+    "docs/WEB_FLARE_S8B_INVITE_IDENTITY_EVOLUTION.md",
     "docs/WEB_FLARE_S8B_ACCOUNT_BACKEND_OPTIONS.md",
+    "docs/WEB_FLARE_S8B_BACKEND_DECISION_GATE.md",
     "docs/WEB_FLARE_S8B_API_CONTRACT.md",
     "docs/WEB_FLARE_S8B_PROTOTYPE_LOGIN_RETIREMENT.md",
     "docs/WEB_FLARE_S8B_CLAIM_SECURITY_CONTRACT.md",
@@ -47,7 +58,8 @@
     "docs/WEB_FLARE_S8B_DATA_MODEL.md",
     "docs/WEB_FLARE_S8B_DATA_LIFECYCLE_CONTRACT.md"
   ],
-  "releaseDocs": [
+  "governanceDocs": [
+    "docs/WEB_FLARE_S8_OPEN_DECISIONS.md",
     "docs/WEB_FLARE_S8_RELEASE_ROLLBACK_CONTRACT.md",
     "docs/WEB_FLARE_S8_BACKGROUND_PREFLIGHT_CHECKPOINT.md"
   ]
