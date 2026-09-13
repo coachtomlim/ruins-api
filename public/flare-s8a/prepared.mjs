@@ -1,5 +1,7 @@
 export * from './rewards.mjs';
+export * from './reward-teaser.mjs';
 export * from './journey.mjs';
+export * from './goal.mjs';
 export * from './mission-copy.mjs';
 export * from './registration-handoff.mjs';
 export * from './registration-view-model.mjs';
