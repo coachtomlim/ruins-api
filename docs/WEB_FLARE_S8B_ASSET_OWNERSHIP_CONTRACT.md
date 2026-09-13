@@ -9,8 +9,10 @@ Define what an account actually owns before implementing persistence.
 Initial player-owned records may include:
 
 - saved goals;
-- owned runner unlocks;
-- owned cosmetic or gameplay assets introduced later;
+- player-owned Runner profiles;
+- permanent Runner stat upgrades;
+- owned weapons;
+- owned armor;
 - authored/saved dungeon configurations;
 - challenge history references;
 - reward ledger history.
@@ -32,13 +34,34 @@ Each ownership record should identify:
 
 Use a unique constraint that prevents duplicate active ownership for the same player and asset unless the future design explicitly supports stackable assets.
 
+Initial gameplay equipment asset types are:
+
+- `WEAPON`
+- `ARMOR`
+
+Owning an item does not automatically apply its stats. It must be equipped in the matching slot on the owner's Runner profile.
+
+## Runner progression
+
+Persistent Runner progression is account-owned state.
+
+It includes:
+
+- permanent HP bonus;
+- permanent ATK bonus;
+- permanent DEF bonus;
+- equipped weapon ownership reference;
+- equipped armor ownership reference.
+
+The exact Gold costs, caps and item catalog are governed separately by the Runner Progression Contract.
+
 ## Saved goal
 
 A saved goal is not a mutable copy of an invitation URL. It is a domain record containing at minimum:
 
 - owner player ID;
 - source sender display name/reference when known;
-- runner identity and level/version;
+- runner identity and level/version snapshot;
 - target finishing HP;
 - source challenge/run reference;
 - created timestamp.
@@ -57,10 +80,16 @@ When persistent dungeon saving is introduced, store data references rather than 
 - budget used;
 - owner player ID.
 
+## Challenge snapshot rule
+
+When a player sends a challenge, persist the exact effective Runner snapshot used at creation time, including base stats, permanent stat upgrades, equipped weapon modifiers and equipped armor modifiers.
+
+Later upgrades to that player's Runner must not mutate historic challenge behavior.
+
 ## Versioning
 
 All stored game assets/configurations should carry a rules/content version so later balance changes do not silently reinterpret historic challenges.
 
 ## Deletion and history
 
-Deleting a saved dungeon or goal should not erase immutable run/reward ledger history needed for reconciliation.
+Deleting a saved dungeon or goal should not erase immutable run/reward/purchase ledger history needed for reconciliation.
