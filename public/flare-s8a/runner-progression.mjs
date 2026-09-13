@@ -1,5 +1,6 @@
 export const RUNNER_STAT_KEYS=Object.freeze(['hp','attack','defense']);
-export const RUNNER_EQUIPMENT_SLOTS=Object.freeze(['weapon','armor']);
+export const RUNNER_EQUIPMENT_SLOTS=Object.freeze(['weapon','shield','head','chest','hands','legs','feet']);
+export const RUNNER_ARMOR_SLOTS=Object.freeze(['head','chest','hands','legs','feet']);
 
 const finiteNonNegative=value=>{
   const n=Number(value);
@@ -7,7 +8,7 @@ const finiteNonNegative=value=>{
   return n;
 };
 
-function modifiers(value={}){
+export function normalizeModifiers(value={}){
   return Object.freeze({
     hp:finiteNonNegative(value.hp??0),
     attack:finiteNonNegative(value.attack??0),
@@ -21,25 +22,36 @@ export function normalizeOwnedEquipment(asset,slot){
   const id=String(asset.id||'').trim();
   if(!id)throw new Error(`${slot} asset id is required`);
   if(asset.slot&&asset.slot!==slot)throw new Error(`${id} cannot be equipped in ${slot}`);
-  return Object.freeze({id,slot,modifiers:modifiers(asset.modifiers)});
+  return Object.freeze({id,slot,modifiers:normalizeModifiers(asset.modifiers)});
 }
 
-export function applyRunnerProgression(baseRunner,{statBonuses={},weapon=null,armor=null}={}){
+export function equipmentModifiers(equipment={}){
+  const total={hp:0,attack:0,defense:0};
+  for(const slot of RUNNER_EQUIPMENT_SLOTS){
+    const mods=equipment?.[slot]?.modifiers;if(!mods)continue;
+    for(const key of RUNNER_STAT_KEYS)total[key]+=finiteNonNegative(mods[key]??0);
+  }
+  return Object.freeze(total);
+}
+
+export function applyRunnerProgression(baseRunner,progression={}){
   if(!baseRunner)throw new Error('Base runner is required');
   const base=Object.freeze({
     hp:finiteNonNegative(baseRunner.hp),
     attack:finiteNonNegative(baseRunner.attack),
     defense:finiteNonNegative(baseRunner.defense)
   });
-  const training=modifiers(statBonuses),equippedWeapon=normalizeOwnedEquipment(weapon,'weapon'),equippedArmor=normalizeOwnedEquipment(armor,'armor');
-  const weaponMods=equippedWeapon?.modifiers||modifiers(),armorMods=equippedArmor?.modifiers||modifiers();
+  const training=normalizeModifiers(progression.statBonuses||{}),input=progression.equipment||{},equipped={};
+  for(const slot of RUNNER_EQUIPMENT_SLOTS)equipped[slot]=normalizeOwnedEquipment(input[slot]??progression[slot]??null,slot);
+  const gear=equipmentModifiers(equipped);
   return Object.freeze({
-    hp:base.hp+training.hp+weaponMods.hp+armorMods.hp,
-    attack:base.attack+training.attack+weaponMods.attack+armorMods.attack,
-    defense:base.defense+training.defense+weaponMods.defense+armorMods.defense,
+    hp:base.hp+training.hp+gear.hp,
+    attack:base.attack+training.attack+gear.attack,
+    defense:base.defense+training.defense+gear.defense,
     base,
     statBonuses:training,
-    equipment:Object.freeze({weapon:equippedWeapon,armor:equippedArmor})
+    equipmentBonuses:gear,
+    equipment:Object.freeze(equipped)
   });
 }
 
