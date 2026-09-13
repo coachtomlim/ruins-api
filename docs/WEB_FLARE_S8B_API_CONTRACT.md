@@ -9,6 +9,7 @@ Provider-neutral contract for the first persistent account implementation.
 - Mutations accept an idempotency key where retries could duplicate state.
 - Server responses are authoritative for persisted state and wallet balance.
 - Client must reconcile unknown outcomes by reading state before retrying a mutation.
+- Browser-submitted prices, stat modifiers, ownership flags and wallet balances are never authoritative.
 
 ## POST `/api/account/claim-guest-run`
 
@@ -47,9 +48,63 @@ Returns active owned asset records. Global catalog availability remains separate
 
 Returns recent canonical run history sufficient for reward/replay reconciliation.
 
+## GET `/api/me/runners`
+
+Returns the authenticated player's owned Runner records with:
+
+- Runner identity/template;
+- permanent stat progression;
+- equipped weapon and armor;
+- effective HP / ATK / DEF;
+- progression/catalog version metadata.
+
+## GET `/api/progression/catalog`
+
+Returns the currently active, versioned progression offers that the player is allowed to see.
+
+The server remains authoritative for prices, modifiers, tiers and caps. S8A/S8B planning does not lock the actual offer values yet.
+
+## POST `/api/me/runners/{runnerId}/purchases`
+
+Purchases one authorized stat upgrade, weapon or armor offer.
+
+Request:
+
+- `offer_id`
+- `idempotency_key`
+
+Do not accept authoritative `gold_cost`, `amount`, `stat_modifier`, `player_id` or wallet balance from the browser.
+
+Server transaction must:
+
+1. resolve authenticated player;
+2. verify Runner ownership;
+3. resolve current progression offer;
+4. verify tier/cap legality;
+5. verify sufficient Gold;
+6. append one idempotent Gold debit;
+7. persist the stat upgrade or item ownership;
+8. return updated Gold balance and Runner progression state.
+
+## POST `/api/me/runners/{runnerId}/loadout`
+
+Equips owned weapon/armor without spending Gold unless a future rule explicitly authorizes an equip fee.
+
+Request may include:
+
+- `weapon_ownership_id` or null;
+- `armor_ownership_id` or null;
+- `idempotency_key` when retry protection is needed.
+
+Server verifies both Runner and items belong to the authenticated player and slots are valid.
+
+Returns refreshed effective Runner snapshot.
+
 ## POST `/api/challenges`
 
-Creates a persistent sender challenge. Request carries runner identity and target only. Room/monsters/traps/supports remain receiver-run choices.
+Creates a persistent sender challenge. Request carries current owned Runner identity plus target only. Room/monsters/traps/supports remain receiver-run choices.
+
+The server snapshots the exact effective Runner stats, permanent progression summary, equipped weapon, equipped armor and rules/content version at creation time. Later Runner upgrades must not mutate the issued challenge.
 
 ## POST `/api/runs`
 
@@ -60,8 +115,15 @@ Future server-recorded run intake. Must validate rules/content version and deter
 - `401 AUTH_REQUIRED`
 - `403 FORBIDDEN`
 - `404 CLAIM_NOT_FOUND`
+- `404 RUNNER_NOT_FOUND`
+- `404 OFFER_NOT_FOUND`
 - `409 CLAIM_ALREADY_OWNED` when owned by another identity
+- `409 UPGRADE_ALREADY_APPLIED` when a non-repeatable tier was already applied
+- `409 STALE_CATALOG` when a quote/version is no longer valid
 - `422 INVALID_CLAIM` / `INVALID_CHALLENGE`
+- `422 INSUFFICIENT_GOLD`
+- `422 UPGRADE_CAP_REACHED`
+- `422 INVALID_LOADOUT`
 - `429 RATE_LIMITED`
 - `500 SERVER_ERROR`
 
