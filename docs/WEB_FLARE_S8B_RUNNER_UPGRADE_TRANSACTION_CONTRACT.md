@@ -2,92 +2,77 @@
 
 ## Purpose
 
-Define the server-authoritative mutation boundary for spending persisted Gold on the player's own Runner without locking final prices or catalogs yet.
+Define the server-authoritative mutation boundary for spending persisted Gold on the player's own Runner without locking final prices/catalog values.
 
 ## Supported mutation classes
 
-Initial classes:
-
 - `STAT_UPGRADE`
-- `EQUIPMENT_PURCHASE`
-- `ARMOR_PURCHASE`
+- `EQUIPMENT_PURCHASE` for weapon/shield
+- `ARMOR_PURCHASE` for head/chest/hands/legs/feet
 - `EQUIP_ITEM`
 
-No other slots or progression classes are authorized by this contract.
+Governed equipment slots are:
+
+`WEAPON`, `SHIELD`, `HEAD`, `CHEST`, `HANDS`, `LEGS`, `FEET`.
+
+## Starter grants
+
+The initial Wooden Club and Wooden Shield are starter-owned assets, not Gold purchases. Account initialization grants them and equips them without creating a debit ledger entry.
 
 ## Authority
 
-The server resolves:
+The server resolves authenticated player identity, wallet balance, Runner ownership, offer/catalog entry, tier/cap, asset ownership, slot, authoritative Gold cost and idempotency state.
 
-- authenticated player identity;
-- player wallet balance;
-- Runner ownership;
-- progression offer/catalog entry;
-- current upgrade tier/cap;
-- active asset ownership;
-- authoritative Gold cost;
-- idempotency state.
-
-The browser may request an offer ID but must not supply an authoritative price, stat modifier, wallet balance, or owner ID.
+The browser may request an offer ID but never supplies authoritative price, modifier, balance or owner identity.
 
 ## Purchase transaction
 
-A successful Gold-spending upgrade should be atomic:
+A Gold-spending upgrade is atomic:
 
 1. authenticate player;
-2. verify Runner belongs to player;
-3. resolve progression offer from authoritative catalog/version;
-4. verify offer is currently legal for Runner state/tier;
-5. verify Gold balance is sufficient;
-6. reserve unique idempotency key;
+2. verify Runner ownership;
+3. resolve authoritative progression offer/version;
+4. verify offer is legal for current Runner state;
+5. verify Gold balance;
+6. reserve idempotency key;
 7. append explicit negative Gold ledger entry;
-8. persist stat upgrade or asset ownership;
-9. return updated wallet balance and Runner progression snapshot.
+8. persist stat upgrade or item ownership;
+9. return updated balance and progression snapshot.
 
-If any step fails, no partial Gold debit or partial upgrade remains.
+Failure leaves no partial debit or partial ownership.
 
-## Idempotency
+## Debit reason
 
-Repeated requests with the same idempotency key must return the original purchase result and must not create another debit or another copy of the upgrade.
-
-Suggested key families:
-
-- `runner-stat:<player>:<runner>:<offer>:<client-operation>`
-- `equipment-buy:<player>:<runner>:<offer>:<client-operation>`
-- `armor-buy:<player>:<runner>:<offer>:<client-operation>`
-
-The exact key generator may differ, but uniqueness and retry safety are mandatory.
+- permanent stat upgrade → `RUNNER_STAT_UPGRADE`
+- weapon or shield purchase → `EQUIPMENT_PURCHASE`
+- head/chest/hands/legs/feet purchase → `ARMOR_PURCHASE`
 
 ## Equip transaction
 
-Equipping an already-owned item does not itself spend Gold unless a future rule explicitly says so.
+Equipping an already-owned item does not spend Gold unless a later rule explicitly changes that.
 
-Equip flow:
+Equip flow verifies Runner ownership, item ownership, active state and exact slot match before replacing the current slot reference atomically and returning refreshed effective stats.
 
-1. authenticate player;
-2. verify Runner belongs to player;
-3. verify asset is active and belongs to same player;
-4. verify asset slot matches requested slot;
-5. replace equipped asset in that slot atomically;
-6. return refreshed effective Runner stats.
+## Effective-stat rule
+
+`effective stats = base stats + permanent stat upgrades + equipped item modifiers`
+
+Each equipped item contributes once. The server must not both bake an item's bonus into base stats and add it as equipment.
+
+The same composition rule applies to governed monster loadouts, although player purchase transactions do not own/mutate monster equipment.
 
 ## Challenge snapshot boundary
 
-When a player sends a new challenge, the challenge records the current effective Runner snapshot. Later purchases or loadout changes cannot mutate an issued challenge.
+Challenge creation snapshots all current equipped slots and effective stats. Later purchases/loadout changes cannot mutate an issued challenge.
 
-## Fail-closed rules
+## Idempotency
 
-Reject:
+Repeated purchase requests with the same idempotency key return the original result and cannot create another debit or duplicate ownership/upgrade.
 
-- insufficient Gold;
-- negative or client-supplied prices;
-- cross-player Runner mutation;
-- cross-player equipment use;
-- wrong-slot equipment;
-- duplicate non-idempotent tier application;
-- stale catalog/version when the server requires a newer quote;
-- upgrades beyond configured cap.
+## Fail closed
 
-## Values intentionally unresolved
+Reject insufficient Gold, client-supplied prices, cross-player mutation, unowned items, wrong-slot equipment, duplicate non-idempotent tier application, stale required catalog version, and cap violations.
 
-This contract does not define Gold prices, upgrade amounts, tier caps, weapon/armor catalog, or Runner-level progression. Those remain balance decisions and must be supplied by an authorized progression catalog before implementation.
+## Values unresolved
+
+Gold prices, upgrade amounts, caps, later item modifiers/catalog and Runner-level semantics remain balance decisions.
