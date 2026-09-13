@@ -8,6 +8,8 @@ test('mission screen states precision-clear intent and reward incentive',()=>{
   assert.match(vm.incentive,/higher score \+ more gold/i);
   assert.match(vm.warning,/Do not kill the Hero/i);
   assert.equal(vm.rewardCue,'CLEAR NEAR 50% HP · WIN UP TO 25 GOLD');
+  assert.equal(vm.reward.headline,'WIN UP TO 25 GOLD');
+  assert.match(vm.reward.body,/must clear/i);
   assert.equal(vm.actions.primary,'USE THIS DUNGEON');
   assert.equal(vm.actions.secondary,'CUSTOMIZE — OPTIONAL');
   assert.equal(vm.room.label,'1 / 6');
