@@ -14,12 +14,19 @@ export function starterRunnerState({runnerId='warrior-l1'}={}){
 
 export function starterOwnershipRecords({playerId,runnerId='warrior-l1'}={}){
   const player=clean(playerId),runner=clean(runnerId);if(!player||!runner)throw new Error('playerId and runnerId are required');
-  return Object.freeze([STARTER_CLUB,STARTER_SHIELD].map(item=>Object.freeze({
-    playerId:player,
-    runnerId:runner,
-    assetKey:item.id,
-    slot:item.slot,
-    acquisitionReason:'STARTER_GRANT',
-    ledgerEntryId:null
-  })));
+  return Object.freeze([STARTER_CLUB,STARTER_SHIELD].map(item=>{
+    const ownershipId=`starter-${player}-${runner}-${item.id}`;
+    return Object.freeze({
+      ownershipId,
+      playerId:player,
+      runnerId:runner,
+      assetKey:item.id,
+      itemId:item.id,
+      slot:item.slot,
+      acquisitionReason:'STARTER_GRANT',
+      sourceId:`starter:${runner}`,
+      idempotencyKey:`starter:${player}:${runner}:${item.id}`,
+      ledgerEntryId:null
+    });
+  }));
 }
