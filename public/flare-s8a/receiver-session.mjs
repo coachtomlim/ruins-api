@@ -1,5 +1,6 @@
 import {JOURNEY_STATES,transitionJourney} from './journey.mjs';
 import {rewardSummary} from './rewards.mjs';
+import {validateTerminalResult} from './run-result.mjs';
 
 const clone=value=>value==null?value:structuredClone(value);
 const freeze=value=>Object.freeze(value);
@@ -37,7 +38,8 @@ export function advanceReceiver(session,event,payload={}){
     case 'RUN':return patch(session,{journey:transitionJourney(session.journey,'RUN'),lastResult:null,score:null,reward:null});
     case 'COMPLETE':{
       const result=clone(payload.result)||{},score=Number(payload.score);
-      if(!result.status||!Number.isFinite(score))throw new Error('Authoritative terminal result and score are required');
+      validateTerminalResult(result);
+      if(!Number.isFinite(score))throw new Error('Authoritative terminal score is required');
       const reward=rewardSummary({result,score,senderName:session.senderName});
       return patch(session,{journey:transitionJourney(session.journey,'COMPLETE'),lastResult:freeze(result),score,reward});
     }
