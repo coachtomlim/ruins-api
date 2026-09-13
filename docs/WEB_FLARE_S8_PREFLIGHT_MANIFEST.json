@@ -1,36 +1,78 @@
 {
-  "version": 3,
+  "version": 4,
   "branch": "work/web-flare-s8a-rewards-replay-001",
   "livePredecessor": "S7.1",
   "deployExecuted": false,
   "vercelAutoDeployDisabledOnBranch": true,
-  "vercelTouchedForShutdownOnly": true,
-  "s8aPureModules": [
+  "s8aModules": [
+    "public/flare-s8a/prepared.mjs",
     "public/flare-s8a/rewards.mjs",
+    "public/flare-s8a/reward-teaser.mjs",
     "public/flare-s8a/journey.mjs",
-    "public/flare-s8a/registration-handoff.mjs",
+    "public/flare-s8a/receiver-session.mjs",
+    "public/flare-s8a/receiver-view.mjs",
+    "public/flare-s8a/goal.mjs",
+    "public/flare-s8a/flow.mjs",
     "public/flare-s8a/mission-copy.mjs",
+    "public/flare-s8a/share-copy.mjs",
+    "public/flare-s8a/invitation-view-model.mjs",
+    "public/flare-s8a/mission-view-model.mjs",
+    "public/flare-s8a/room-carousel.mjs",
+    "public/flare-s8a/swipe.mjs",
+    "public/flare-s8a/budget-view-model.mjs",
+    "public/flare-s8a/customize-panels.mjs",
+    "public/flare-s8a/customize-view-model.mjs",
+    "public/flare-s8a/ready-view-model.mjs",
     "public/flare-s8a/runtime-view.mjs",
     "public/flare-s8a/camera-controller.mjs",
-    "public/flare-s8a/customize-panels.mjs",
-    "public/flare-s8a/telemetry.mjs",
+    "public/flare-s8a/runtime-hud-view-model.mjs",
     "public/flare-s8a/result-view-model.mjs",
-    "public/flare-s8a/canonical-run-input.mjs",
     "public/flare-s8a/replay-context.mjs",
+    "public/flare-s8a/canonical-run-input.mjs",
+    "public/flare-s8a/registration-handoff.mjs",
     "public/flare-s8a/registration-view-model.mjs",
+    "public/flare-s8a/registration-action-state.mjs",
+    "public/flare-s8a/error-view-model.mjs",
+    "public/flare-s8a/screen-shell.mjs",
+    "public/flare-s8a/focus-policy.mjs",
+    "public/flare-s8a/mobile-policy.mjs",
     "public/flare-s8a/target-fit.mjs",
-    "public/flare-s8a/target-fit-action.mjs"
+    "public/flare-s8a/target-fit-action.mjs",
+    "public/flare-s8a/telemetry.mjs"
+  ],
+  "s8aStyles": [
+    "public/flare-s8a/tokens.css",
+    "public/flare-s8a/panel-shell.css"
+  ],
+  "s8bPreparedModules": [
+    "public/flare-s8b/ledger.mjs"
+  ],
+  "tools": [
+    "tools/flare-s8a-preview-server.mjs",
+    "tools/verify-frozen-web-trees.mjs",
+    "tools/frozen-web-trees.json"
   ],
   "testHelpers": [
     "tests/helpers/s8a-camera-proof.mjs",
     "tests/helpers/s8a-layout-proof.mjs"
+  ],
+  "fixtures": [
+    "tests/fixtures/s8a-e2e-scenarios.json",
+    "tests/fixtures/s8a-mobile-panels.html"
   ],
   "authorityDocs": [
     "docs/WEB_FLARE_S8_AUTHORITY_PRECEDENCE.md",
     "docs/WEB_FLARE_S8_MASTER_EXECUTION_PLAN.md",
     "docs/WEB_FLARE_S8A_IMPLEMENTATION_CUTLINE.md",
     "docs/WEB_FLARE_S8A_IMPLEMENTATION_FILE_MAP.md",
-    "docs/WEB_FLARE_S8A_CODEX_EXECUTION_PACKET.md"
+    "docs/WEB_FLARE_S8A_CODEX_EXECUTION_PACKET.md",
+    "docs/WEB_FLARE_S8A_INTEGRATION_READINESS.md"
+  ],
+  "checkpoints": [
+    "docs/WEB_FLARE_S8_BACKGROUND_PREFLIGHT_CHECKPOINT.md",
+    "docs/WEB_FLARE_S8_BACKGROUND_PREFLIGHT_CHECKPOINT_002.md",
+    "docs/WEB_FLARE_S8_BACKGROUND_PREFLIGHT_CHECKPOINT_003.md",
+    "docs/WEB_FLARE_S8_BACKGROUND_PREFLIGHT_CHECKPOINT_004.md"
   ],
   "acceptanceDocs": [
     "docs/WEB_FLARE_S8A_ACCEPTANCE_SCORECARD.md",
@@ -49,7 +91,8 @@
     "docs/WEB_FLARE_S8A_TELEMETRY_EVENT_CONTRACT.md",
     "docs/WEB_FLARE_S8A_AMENDMENT_004_TARGET_FIT_LANGUAGE.md",
     "docs/WEB_FLARE_S8A_AMENDMENT_005_BUILD_BUDGET_VS_REWARD_GOLD.md",
-    "docs/WEB_FLARE_S8_GAME_RESOURCE_SEMANTICS.md"
+    "docs/WEB_FLARE_S8_GAME_RESOURCE_SEMANTICS.md",
+    "docs/WEB_FLARE_S8_GOAL_MODEL_CONTRACT.md"
   ],
   "s8bArchitectureDocs": [
     "docs/WEB_FLARE_S8B_ACCOUNT_PERSISTENCE_CONTRACT.md",
@@ -74,6 +117,6 @@
   "governanceDocs": [
     "docs/WEB_FLARE_S8_OPEN_DECISIONS.md",
     "docs/WEB_FLARE_S8_RELEASE_ROLLBACK_CONTRACT.md",
-    "docs/WEB_FLARE_S8_BACKGROUND_PREFLIGHT_CHECKPOINT.md"
+    "docs/WEB_FLARE_S8_VERCEL_AUTODEPLOY_INCIDENT.md"
   ]
 }
