@@ -7,6 +7,7 @@ export * from './combatant-equipment.mjs';
 export * from './monster-loadout.mjs';
 export * from './gear-slots-view.mjs';
 export * from './equipment-acquisition-view.mjs';
+export * from './gear-journey.mjs';
 export * from './runner-snapshot.mjs';
 export * from './runner-calibration.mjs';
 export * from './progression-feasibility.mjs';
