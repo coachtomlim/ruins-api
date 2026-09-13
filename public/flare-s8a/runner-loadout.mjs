@@ -21,6 +21,6 @@ export function validateEquip({playerId,runnerId,slot,assetId,offer,assets=[]}={
   return Object.freeze({playerId:player,runnerId:runner,slot:targetSlot,assetId:asset});
 }
 
-export function loadoutView({weapon=null,armor=null}={}){
-  return Object.freeze({weapon:weapon?text(weapon):null,armor:armor?text(armor):null});
+export function loadoutView(loadout={}){
+  return Object.freeze(Object.fromEntries(RUNNER_EQUIPMENT_SLOTS.map(slot=>[slot,loadout?.[slot]?text(loadout[slot]):null])));
 }
