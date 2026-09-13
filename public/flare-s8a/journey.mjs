@@ -10,7 +10,7 @@ export const JOURNEY_STATES = Object.freeze({
 
 const T = Object.freeze({
   invitation: Object.freeze({ ACCEPT: 'mission' }),
-  mission: Object.freeze({ USE_DUNGEON: 'ready' }),
+  mission: Object.freeze({ USE_DUNGEON: 'ready', CUSTOMIZE: 'customize' }),
   ready: Object.freeze({ CUSTOMIZE: 'customize', RUN: 'runtime' }),
   customize: Object.freeze({ DONE: 'ready', RUN: 'runtime' }),
   runtime: Object.freeze({ COMPLETE: 'rewards' }),
