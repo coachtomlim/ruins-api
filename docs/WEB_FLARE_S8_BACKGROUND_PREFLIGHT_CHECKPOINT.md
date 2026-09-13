@@ -11,62 +11,70 @@ Accepted live predecessor remains S7.1.
 1. Pure reward contract: `public/flare-s8a/rewards.mjs`.
 2. Receiver journey state machine: `public/flare-s8a/journey.mjs`.
 3. Reward and journey tests: `tests/flare-s8a-preflight.test.mjs`.
-4. Memory-only registration handoff: `public/flare-s8a/registration-handoff.mjs`.
-5. Registration handoff tests: `tests/flare-s8a-registration-handoff.test.mjs`.
-6. Mobile acceptance contract: `docs/WEB_FLARE_S8A_MOBILE_ACCEPTANCE_CONTRACT.md`.
-7. Overview camera proof helper and tests.
-8. Mission, reward and registration copy helpers: `public/flare-s8a/mission-copy.mjs` plus tests.
-9. Canonical mobile UI state contract: `docs/WEB_FLARE_S8A_UI_STATE_CONTRACT.md`.
-10. End-to-end browser scenario matrix: `docs/WEB_FLARE_S8A_E2E_SCENARIO_MATRIX.md`.
-11. Touch/readability contract: `docs/WEB_FLARE_S8A_ACCESSIBILITY_TOUCH_CONTRACT.md`.
-12. Layout/camera measurement helpers and tests: `tests/helpers/s8a-layout-proof.mjs`, `tests/flare-s8a-layout-proof.test.mjs`.
-13. Frozen receiver copy deck: `docs/WEB_FLARE_S8A_COPY_DECK.md`.
-14. Browser acceptance fixtures: `tests/fixtures/s8a-e2e-scenarios.json`.
-15. Pure runtime camera-mode helper: `public/flare-s8a/runtime-view.mjs`.
-16. Pure customization-panel helper: `public/flare-s8a/customize-panels.mjs`.
-17. UI helper tests: `tests/flare-s8a-ui-helpers.test.mjs`.
-18. Privacy-safe telemetry event contract: `docs/WEB_FLARE_S8A_TELEMETRY_EVENT_CONTRACT.md`.
-19. Injectable/no-op-capable telemetry helper and tests: `public/flare-s8a/telemetry.mjs`, `tests/flare-s8a-telemetry.test.mjs`.
+4. Memory-only registration handoff and tests.
+5. Mobile acceptance and camera proof contracts/tests.
+6. Mission/reward/registration copy helper and tests.
+7. Canonical mobile UI state contract.
+8. End-to-end browser scenario matrix and fixtures.
+9. Touch/readability and single-viewport panel layout contracts.
+10. Layout/camera measurement helpers and tests.
+11. Frozen receiver copy deck.
+12. Pure runtime camera-mode helper.
+13. Pure customization-panel helper.
+14. Privacy-safe telemetry contract, helper and tests.
+15. Error/recovery contract for invalid invites, asset failures and interrupted guest runs.
+16. Mobile performance budget.
+17. Reward result view model and tests.
+18. Canonical deterministic run-input serializer and tests.
+19. Replay/edit context preservation helper and tests.
+20. Registration gate view model and tests.
 
 ## Completed S8B background preparation
 
-1. Account/persistence design: `docs/WEB_FLARE_S8B_ACCOUNT_PERSISTENCE_CONTRACT.md`.
-2. Provider-neutral auth state machine: `docs/WEB_FLARE_S8B_AUTH_STATE_MACHINE.md`.
-3. Append-only gold ledger and idempotency contract: `docs/WEB_FLARE_S8B_LEDGER_IDEMPOTENCY_CONTRACT.md`.
-4. Asset ownership contract: `docs/WEB_FLARE_S8B_ASSET_OWNERSHIP_CONTRACT.md`.
-5. Canonical challenge and run record contract: `docs/WEB_FLARE_S8B_CHALLENGE_RUN_RECORD_CONTRACT.md`.
-6. Provider-neutral account/persistence API contract: `docs/WEB_FLARE_S8B_API_CONTRACT.md`.
-7. Account backend option assessment: `docs/WEB_FLARE_S8B_ACCOUNT_BACKEND_OPTIONS.md`.
-8. Prototype `Buddy / Test` retirement plan: `docs/WEB_FLARE_S8B_PROTOTYPE_LOGIN_RETIREMENT.md`.
-9. Release/rollback contract preserving isolated S8A and S7.1 rollback: `docs/WEB_FLARE_S8_RELEASE_ROLLBACK_CONTRACT.md`.
+1. Account/persistence design.
+2. Provider-neutral auth state machine.
+3. Append-only gold ledger and idempotency contract.
+4. Asset ownership contract.
+5. Canonical challenge and run record contract.
+6. Provider-neutral account/persistence API contract.
+7. Account backend option assessment.
+8. Prototype `Buddy / Test` retirement plan.
+9. Release/rollback contract preserving isolated S8A and S7.1 rollback.
+10. Guest claim security contract.
+11. Player-data authorization/RLS contract.
+12. Security test matrix.
+13. Account UX contract.
+14. Provider-neutral data model.
+15. Data lifecycle contract.
+16. Backend decision gate, with Supabase Auth + PostgreSQL as the leading candidate for evaluation but not yet authorized.
 
-## Recent commit checkpoints
+## Recovery manifest
 
-- `f46c661424b3b3d5c6324ad262f90e46e2776adb` mission/reward copy helper
-- `13269cabf6b6014df62b5036e766c00259a54955` mission/reward copy tests
-- `bc29c70cf229ae59b200496a038e2aff5a4c48e3` UI state contract
-- `f865f088fffa8296a1553c2027462a9c7e7dc09d` E2E scenario matrix
-- `727890dae34af1e027e44260f202db562f4295f0` accessibility/touch contract
-- `6d8e7cdcd714ec41bb03181ce630ca1709e7bb73` layout proof helper
-- `8fbbc250bdf094af5223ccb97380c888c7c3cd2a` layout proof tests
-- `8ba578e548649ca67023b20bf2d6d5458a44999e` auth state machine
-- `11257417ddeec60d893b7d984203e18b68703a6e` ledger/idempotency contract
-- `118b26fe25b2a34beb2024ddf520c628489d18cd` asset ownership contract
-- `8078972d6f0c69bddbdb1af20469c7f2383add07` challenge/run record contract
-- `6e03826cf20f69ec36f4767345099b425bdafe59` release/rollback contract
-- `d64c0d3068d1f0edddbcc96761353d5dce5fab13` backend option assessment
-- `4a364da2a98c267510b097ae44405407cf105f95` receiver copy deck
-- `9b1a172a8658fd76e6add07bab681a106f632785` E2E scenario fixtures
-- `985a715c48bab5c2c5e541ca7f5d54ba3f217e20` camera-mode helper
-- `7f459b91091d1dd3901dc449138f9034d48c6cfa` customization-panel helper
-- `8becf68977b7263c915661a620f960729782bc54` UI helper tests
-- `f1cf4e895ca6329896dbf3a43a899db9c6408d17` API contract
-- `2b6eb761a53543aee4f1cb46e8d0b3b843a779a6` prototype login retirement
-- `78b25313d89be327cdd982cbb9ca487bc99af3d1` telemetry event contract
-- `90159be8a7107f69d06b1f06ba7f332996c92673` telemetry helper
-- `d0700563d2bf351fe4967e5a40f398329e98a834` telemetry tests
+Machine-readable inventory: `docs/WEB_FLARE_S8_PREFLIGHT_MANIFEST.json`.
 
-Earlier checkpoints remain valid and are in branch history.
+## Latest commit checkpoints
+
+- `fc9ff59769b290d0fd19beb80e0fd2797161a356` S8A error/recovery contract
+- `9cf844237030a48bbc78666ba938e658a473700a` S8A mobile performance budget
+- `ff81b31a99db75ba4c77444c4e7ac3a561b11734` S8B guest claim security contract
+- `da62f981c8a26124d4604d5255e53fa7db2e7c0e` S8B authorization contract
+- `b25cfe7e6dcc245da423cada147d4425e54b12b9` S8A single-viewport panel layout contract
+- `67aab11c8e7ec4e7c17532bc79672fffa76a8d32` S8A result view model
+- `3e88505245572b221df06c5bf3d4ca006590b334` result view-model tests
+- `3f63dfca959d75c5d8f10e4c912598be116007c5` canonical run-input serializer
+- `65f130bc7b4c95c7c666e31cb3f80eea6a0e99b2` canonical run-input tests
+- `3cd5408eb7fdb7cdec10f278f58bac381287dd2e` replay/edit context helper
+- `4d41d71f92c42d5e165b405d958f5cb7d5e840bf` replay/edit context tests
+- `bc2cf56db636b2bc37e61e19d53828b64c9503a7` registration view model
+- `3fb62d0e08d6000101c38920304936ee4fbb54c1` registration view-model tests
+- `ebc3e39efcf23e3a52d5e9e09abc2848be616fc3` S8B security test matrix
+- `b1edbd8ebdb68ce3c49ad932a85d190ecdf6b683` S8B account UX contract
+- `11c2142950560bacc73e174f78838bab712f9a0d` S8B data model
+- `e0534e181346f2264f132ee28308ed5dbad8e628` S8B data lifecycle contract
+- `258bbd98829a981d83cbe3abded5006994db406b` machine-readable preflight manifest
+- `bf23bb6b1a36b46f3401a537aafac787b37c1ce4` S8B backend decision gate
+
+Earlier checkpoints remain valid in branch history and can be recovered individually.
 
 ## Explicitly not done
 
@@ -77,6 +85,7 @@ Earlier checkpoints remain valid and are in branch history.
 - no browser-based wallet persistence
 - no gameplay rebalance
 - no production telemetry transmission
+- no backend/provider selection has been authorized
 
 ## Next build
 
