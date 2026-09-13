@@ -1,0 +1,14 @@
+{
+  "viewports": [
+    {"id":"narrow-phone","width":360,"height":800},
+    {"id":"iphone-class","width":390,"height":844},
+    {"id":"large-phone","width":430,"height":932}
+  ],
+  "scenarios": [
+    {"id":"default-clear","runnerId":"warrior-l3","targetHp":60,"expect":{"cleared":true,"builderGold":20,"missionContains":"GET THE HERO TO THE EXIT AT ~60% HP"}},
+    {"id":"mission-50","runnerId":"warrior-l1","targetHp":50,"expect":{"missionContains":"GET THE HERO TO THE EXIT AT ~50% HP","rewardCueContains":"WIN UP TO 25 GOLD"}},
+    {"id":"failed-run","runnerId":"warrior-l1","targetHp":40,"forceOutcome":"dead","expect":{"builderGold":0,"outcome":"HERO DID NOT CLEAR"}},
+    {"id":"sender-sanitization","runnerId":"warrior-l1","targetHp":50,"sender":"<Tom>","expect":{"visibleSender":"Tom"}},
+    {"id":"registration-gate","runnerId":"warrior-l2","targetHp":55,"expect":{"registrationTitle":"CREATE YOUR DUNGEON RUNNER ACCOUNT","persisted":false}}
+  ]
+}
