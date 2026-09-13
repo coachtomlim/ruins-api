@@ -1,5 +1,6 @@
 export * from './rewards.mjs';
 export * from './reward-teaser.mjs';
+export * from './runner-progression.mjs';
 export * from './journey.mjs';
 export * from './goal.mjs';
 export * from './flow.mjs';
