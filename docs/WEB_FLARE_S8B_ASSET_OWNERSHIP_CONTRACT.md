@@ -2,94 +2,79 @@
 
 ## Goal
 
-Define what an account actually owns before implementing persistence.
+Define persistent player-owned game state before backend implementation.
 
-## Asset classes
+## Player-owned classes
 
-Initial player-owned records may include:
+Initial account-owned records may include:
 
 - saved goals;
 - player-owned Runner profiles;
 - permanent Runner stat upgrades;
-- owned weapons;
-- owned armor;
+- owned equipment;
 - authored/saved dungeon configurations;
 - challenge history references;
-- reward ledger history.
+- reward/purchase ledger history.
 
-Rooms, monsters, traps and supports that are globally available in the current prototype are catalog content, not automatically duplicated as player-owned records.
+Rooms, monsters, traps and supports that are globally available content are not automatically duplicated as player-owned records.
 
-## Ownership record
+## Equipment ownership
 
-Each ownership record should identify:
+Initial Runner equipment slots:
+
+- `WEAPON`
+- `SHIELD`
+- `HEAD`
+- `CHEST`
+- `HANDS`
+- `LEGS`
+- `FEET`
+
+Ownership record:
 
 - `ownership_id`
 - `player_id`
 - `asset_type`
 - `asset_key`
+- `slot`
 - `acquisition_reason`
 - `source_id`
 - `created_at`
 - optional `revoked_at`
 
-Use a unique constraint that prevents duplicate active ownership for the same player and asset unless the future design explicitly supports stackable assets.
+Owning an item does not automatically apply its stats. The item must be equipped on the owner's Runner in the matching slot.
 
-Initial gameplay equipment asset types are:
+## Starter ownership
 
-- `WEAPON`
-- `ARMOR`
+New-player starter ownership grants exactly:
 
-Owning an item does not automatically apply its stats. It must be equipped in the matching slot on the owner's Runner profile.
+- Wooden Club, slot `WEAPON`
+- Wooden Shield, slot `SHIELD`
+
+No head/chest/hands/legs/feet armor is granted at onset. Default avatar clothing is a visual baseline only and is not an owned armor set.
+
+Starter grants do not require a Gold debit. Their acquisition reason should identify them as starter assets.
 
 ## Runner progression
 
-Persistent Runner progression is account-owned state.
-
-It includes:
-
-- permanent HP bonus;
-- permanent ATK bonus;
-- permanent DEF bonus;
-- equipped weapon ownership reference;
-- equipped armor ownership reference.
-
-The exact Gold costs, caps and item catalog are governed separately by the Runner Progression Contract.
+Persistent Runner state includes permanent HP/ATK/DEF upgrades plus loadout references for every governed equipment slot.
 
 ## Saved goal
 
-A saved goal is not a mutable copy of an invitation URL. It is a domain record containing at minimum:
-
-- owner player ID;
-- source sender display name/reference when known;
-- runner identity and level/version snapshot;
-- target finishing HP;
-- source challenge/run reference;
-- created timestamp.
-
-The saved goal becomes the starting point for the receiver to build and send their own challenge later.
+A saved goal stores domain data, not DOM/UI state. It includes owner, source challenge/run/sender context, Runner snapshot identity and target finishing HP.
 
 ## Dungeon configuration
 
-When persistent dungeon saving is introduced, store data references rather than serialized DOM/UI state:
+Store room/enemy/trap/support IDs, rules/content version, budget used and owner ID rather than serialized UI state.
 
-- room ID;
-- enemy selections;
-- trap selections;
-- support selections;
-- rules/content version;
-- budget used;
-- owner player ID.
+## Challenge snapshot
 
-## Challenge snapshot rule
+When a player sends a challenge, persist the exact effective Runner snapshot used at creation, including each equipped item and modifier. Later upgrades cannot mutate historic challenge behavior.
 
-When a player sends a challenge, persist the exact effective Runner snapshot used at creation time, including base stats, permanent stat upgrades, equipped weapon modifiers and equipped armor modifiers.
+## Monster equipment distinction
 
-Later upgrades to that player's Runner must not mutate historic challenge behavior.
+Monsters can use the same governed item/modifier semantics, but monster loadouts are content/rules state, not player-owned asset records unless a future feature explicitly changes that ownership model.
 
-## Versioning
+## Versioning and history
 
-All stored game assets/configurations should carry a rules/content version so later balance changes do not silently reinterpret historic challenges.
-
-## Deletion and history
-
-Deleting a saved dungeon or goal should not erase immutable run/reward/purchase ledger history needed for reconciliation.
+Stored game assets/configurations carry rules/content/progression versions. Deleting a saved goal/dungeon must not erase immutable run/reward/purchase history needed for reconciliation.
