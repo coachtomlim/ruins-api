@@ -2,23 +2,23 @@
 
 ## Product goal
 
-After Gold is persisted to an account, the player should immediately understand that Gold improves **their own Hero-Runner** for future challenges.
+After Gold is persisted, the player should immediately understand that Gold improves **their own Hero-Runner** for future challenges.
 
-The progression loop should feel like a continuation of the reward screen, not a separate admin page.
+The progression loop should feel like a continuation of rewards, not an admin page.
 
 ## Mobile entry
 
-Primary account-facing entry:
+Primary entry:
 
 `UPGRADE YOUR RUNNER`
 
-The top of the screen keeps visible:
+Keep visible:
 
 - current Gold balance;
 - active Runner name/level;
 - effective HP / ATK / DEF;
-- equipped weapon;
-- equipped armor.
+- starter/equipped weapon and shield;
+- visible empty/filled armor-piece slots.
 
 Use large touch targets and panel navigation. Do not create a dense inventory spreadsheet on phone.
 
@@ -32,99 +32,77 @@ Initial categories:
 
 One category is active at a time.
 
-### Stats panel
+### Stats
 
-Shows current effective stat plus the next authorized upgrade offer where one exists.
+Shows current effective stat and next authorized permanent upgrade offer.
 
-Example shape only, not price authority:
+### Equipment
 
-`HP 110  →  +10 HP`
+Shows `WEAPON` and `SHIELD` ownership/loadout offers.
 
-`Cost: [server-authoritative Gold price]`
+Starter state visibly begins with:
 
-### Equipment panel
+- Wooden Club equipped
+- Wooden Shield equipped
 
-Shows owned and purchasable `WEAPON` offers.
+Each card shows item name, stat modifiers, owned/equipped state, authoritative Gold cost when purchasable, and one clear action such as `BUY`, `EQUIP`, or `EQUIPPED`.
 
-Each card shows:
+### Armor
 
-- item name;
-- stat modifiers;
-- owned/equipped state;
-- server-authoritative Gold cost when purchasable;
-- one clear action: `BUY`, `EQUIP`, or `EQUIPPED`.
+Shows piece-by-piece slots:
 
-### Armor panel
+- `HEAD`
+- `CHEST`
+- `HANDS`
+- `LEGS`
+- `FEET`
 
-Same pattern for `ARMOR`.
+A new account begins with all five empty. Empty slots should look intentionally available rather than broken or missing.
+
+The first acquisition of a piece such as footwear or head gear should be a visible reward/progression moment. Show the new item's name, slot and stat effect, then allow `EQUIP`.
+
+Do not bundle the five armor locations into one set for v1.
+
+## Acquisition source neutrality
+
+The UX can celebrate `NEW FOOTWEAR!`, `NEW HEAD GEAR!`, etc. without assuming whether the item came from a shop, reward, drop or unlock. The source is governed by the later economy/acquisition design.
 
 ## Purchase confirmation
 
-Before a Gold-spending mutation, show a compact confirmation panel with:
+Before a Gold-spending mutation, show item/upgrade, exact stat effect, current Gold, cost, remaining Gold, and explicit confirm/cancel actions.
 
-- upgrade/item name;
-- exact stat effect;
-- current Gold;
-- cost;
-- Gold remaining after purchase;
-- `BUY UPGRADE` / `BUY ITEM`;
-- `CANCEL`.
+The browser quote is not authority. Server revalidates catalog, ownership, cap and balance.
 
-The browser display is only a quote. The server revalidates cost, ownership, tier/cap and balance before mutation.
+## Success
 
-## Success state
-
-After server confirmation:
+After authoritative mutation:
 
 `RUNNER UPGRADED`
 
-Show:
-
-- Gold spent;
-- new balance;
-- changed HP / ATK / DEF;
-- new equipment state if relevant;
-- primary action `USE THIS RUNNER` or return to progression panel.
-
-Do not animate/claim success before the authoritative mutation returns.
-
-## Failure states
-
-### Insufficient Gold
-
-`NOT ENOUGH GOLD`
-
-Show current balance and amount needed. Do not debit or partially apply.
-
-### Stale price/catalog
-
-Refresh the server quote and ask the player to confirm the new value. Never silently charge a different amount.
-
-### Retry/unknown result
-
-Read authoritative account state before retrying. Idempotency prevents double debit.
+Show Gold spent, new balance, changed stats, and loadout change. Do not claim success before the server confirms.
 
 ## Equip flow
 
-Equipping an already-owned item should not require a purchase confirmation unless a future rule explicitly adds an equip cost.
+Equipping an already-owned item has no Gold cost unless a future rule explicitly adds one. Wrong-slot and cross-player equip attempts fail closed.
 
-Show effective stat changes immediately after authoritative loadout update.
+## Challenge creation
 
-## Challenge creation handoff
+Before challenge creation, show the exact Runner configuration that will be snapshotted:
 
-When the player creates a challenge, show the exact current Runner snapshot that will be frozen into the challenge:
-
-- HP / ATK / DEF;
+- effective HP / ATK / DEF;
 - weapon;
-- armor;
+- shield;
+- equipped head/chest/hands/legs/feet pieces;
 - target HP condition.
 
-A later Runner upgrade must not alter an already-sent challenge.
+Later upgrades cannot alter an issued challenge.
 
 ## S8A boundary
 
-The current guest S8A reward screen may tease:
+Guest S8A may tease:
 
 `USE GOLD TO UPGRADE YOUR RUNNER`
 
-but must not expose active purchase controls until account-backed progression exists.
+`Stats · Equipment · Armor`
+
+but must not expose active purchase controls before account-backed progression exists.
