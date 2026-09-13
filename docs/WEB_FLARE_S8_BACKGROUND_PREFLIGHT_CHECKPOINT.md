@@ -15,7 +15,8 @@ Accepted live predecessor remains S7.1.
 5. Registration handoff tests: `tests/flare-s8a-registration-handoff.test.mjs`.
 6. Mobile acceptance contract: `docs/WEB_FLARE_S8A_MOBILE_ACCEPTANCE_CONTRACT.md`.
 7. Overview-camera proof helper: `tests/helpers/s8a-camera-proof.mjs`.
-8. S8B account and persistence design: `docs/WEB_FLARE_S8B_ACCOUNT_PERSISTENCE_CONTRACT.md`.
+8. Camera contract tests: `tests/flare-s8a-camera-contract.test.mjs`.
+9. S8B account and persistence design: `docs/WEB_FLARE_S8B_ACCOUNT_PERSISTENCE_CONTRACT.md`.
 
 ## Commit checkpoints
 
@@ -27,6 +28,8 @@ Accepted live predecessor remains S7.1.
 - `200fa29f95629fe2b657d6e2d26cc92bc1175e78` mobile acceptance contract
 - `524a0fd1f96e08af7a5fe8b57e0f45107463de9f` S8B persistence contract
 - `2344c258de68e00e1b36b6bb37f8e8db591dd5c6` camera proof helper
+- `828527cce04d4f0558e27436cd559949d64dabe2` first durable background checkpoint
+- `aa4ad157bfd1fc97ec6cff3839941930ffb48ab6` camera contract tests
 
 ## Explicitly not done
 
