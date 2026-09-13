@@ -14,9 +14,12 @@ Do not recreate, reset or rebase the branch.
 2. `docs/WEB_FLARE_S8_MASTER_EXECUTION_PLAN.md`
 3. `docs/WEB_FLARE_S8A_IMPLEMENTATION_CUTLINE.md`
 4. `docs/WEB_FLARE_S8A_IMPLEMENTATION_FILE_MAP.md`
-5. `docs/WEB_FLARE_S8A_ACCEPTANCE_SCORECARD.md`
-6. `docs/WEB_FLARE_S8_BACKGROUND_PREFLIGHT_CHECKPOINT.md`
-7. `docs/WEB_FLARE_S8_PREFLIGHT_MANIFEST.json`
+5. `docs/WEB_FLARE_S8A_PREDECESSOR_FREEZE_MATRIX.md`
+6. `docs/WEB_FLARE_S8A_ROUTE_MATRIX.md`
+7. `docs/WEB_FLARE_S8A_ACCEPTANCE_SCORECARD.md`
+8. `docs/WEB_FLARE_S8_BACKGROUND_PREFLIGHT_CHECKPOINT.md`
+9. `docs/WEB_FLARE_S8_PREFLIGHT_MANIFEST.json`
+10. `docs/WEB_FLARE_S8_VERCEL_AUTODEPLOY_INCIDENT.md`
 
 Then read the original work order, amendments and supporting contracts referenced by those documents.
 
@@ -62,7 +65,15 @@ Do not:
 - use localStorage/sessionStorage/IndexedDB/cookies as account authority;
 - add progression/content/rebalance;
 - deploy HostGator;
-- touch Vercel.
+- re-enable or touch Vercel deployment settings.
+
+Vercel Git auto-deployment is already disabled on this branch. Leave `vercel.json` deployment disabling in place.
+
+## Test environment note
+
+One previous automatic Vercel build ran 124 Node tests with 123 passing. Its sole failure was not a product assertion: the Vercel checkout lacked historical commit `4ca60cab...`, causing the inherited freeze test's `git diff` command to fail with `fatal: bad object`.
+
+Use a normal/full repository checkout with the required historical commit objects present before running frozen-file verification. Do not weaken or delete the freeze assertion just to accommodate shallow history.
 
 ## Test sequence
 
@@ -70,7 +81,7 @@ Run in this order so failures are cheap and diagnosable:
 
 1. focused prepared S8A pure-module tests;
 2. predecessor test suite;
-3. frozen-file diff verification;
+3. frozen-file diff verification with required Git history present;
 4. Flare source/asset verification;
 5. S8A integration tests;
 6. mobile browser journeys at 360x800, 390x844, 430x932;
@@ -94,4 +105,4 @@ Only after PASS:
 
 Return `S8A TEST STATUS: PASS` or exact blocker/revise reason.
 
-Include branch, starting SHA, ending SHA, deployable web SHA, exact changed files, tests, browser evidence, camera proof, Level 3/60% outcome, Hero Gold, Builder Gold, predecessor freeze evidence, route-isolation evidence, and confirmation that neither HostGator nor Vercel was touched.
+Include branch, starting SHA, ending SHA, deployable web SHA, exact changed files, tests, browser evidence, camera proof, Level 3/60% outcome, Hero Gold, Builder Gold, predecessor freeze evidence, route-isolation evidence, and confirmation that HostGator was not deployed and Vercel auto-deployment remained disabled.
