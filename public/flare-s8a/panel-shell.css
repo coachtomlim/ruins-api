@@ -18,6 +18,7 @@
   overflow:hidden;
 }
 .dr-panel-body{min-height:0;overflow:hidden;display:flex;flex-direction:column;gap:var(--dr-gap)}
+.dr-panel-scroll{min-height:0;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-gutter:stable}
 .dr-primary,.dr-secondary,.dr-tab{font:800 16px/1 system-ui;border-radius:14px;border:0;padding:0 16px}
 .dr-primary{min-height:var(--dr-primary-min-height);background:var(--dr-gold);color:#1b1320}
 .dr-secondary{min-height:var(--dr-secondary-min-height);background:var(--dr-panel-strong);color:var(--dr-cream);border:1px solid color-mix(in srgb,var(--dr-gold) 55%,transparent)}
@@ -29,3 +30,7 @@
 .dr-action-row{display:grid;gap:8px}
 .dr-action-row.two{grid-template-columns:1fr 1fr}
 .dr-visually-hidden{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+@media (max-height:760px){
+  .dr-panel{gap:8px;padding-top:max(8px,env(safe-area-inset-top));padding-bottom:max(8px,env(safe-area-inset-bottom))}
+  .dr-panel-body{gap:8px}
+}
