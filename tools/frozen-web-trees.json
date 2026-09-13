@@ -1,0 +1,12 @@
+{
+  "authorityCommit": "e599229ce9373614b1b164e0aa9f7ec37fea53a0",
+  "trees": {
+    "public/flare-s2": "b938b9f182f159311356b667d49460819db5b824",
+    "public/flare-s3": "0cfcf97b7fcfe4cae91407abd06981319802f7c9",
+    "public/flare-s4": "189fc7bc9d1b9b6917819d2e4c7ee6ef17a62090",
+    "public/flare-s5": "75dd107c0de073d0efbdecb87cbb6ce8bbb70304",
+    "public/flare-s6": "20d7d98353992ae07236dd6f2d3c4fa125dbbb2d",
+    "public/flare-s7": "abea8908a41164fedf9c74a8eaa24c0b7a7ce7c9",
+    "public/flare-s71": "091f3ce81a85aadebb9f5555a9db4f3617773702"
+  }
+}
