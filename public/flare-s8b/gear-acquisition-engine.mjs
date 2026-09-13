@@ -2,6 +2,7 @@ import {foldGoldLedger} from './ledger.mjs';
 import {progressionDebitEntry,foldGoldLedgerNonNegative} from './progression-ledger.mjs';
 import {quoteProgressionOffer} from '../flare-s8a/progression-quote.mjs';
 import {equipmentItemById} from '../flare-s8a/equipment-catalog.mjs';
+import {RUNNER_ARMOR_SLOTS} from '../flare-s8a/runner-progression.mjs';
 import {normalizeGearInstance} from './gear-instance.mjs';
 
 const clean=value=>String(value??'').trim();
@@ -29,11 +30,12 @@ export function purchaseGear({account,offers,equipmentCatalog,offerId,operationK
   if(quote.kind!=='item'||!quote.itemId)throw new Error('Gear purchase requires an item offer');
   if(!quote.affordable)throw new Error('Insufficient Gold');
   const item=equipmentItemById(equipmentCatalog,quote.itemId);
-  const debit=progressionDebitEntry({ledgerEntryId:ledgerId,playerId:account.accountId,goldCost:quote.cost,reasonCode:'EQUIPMENT_PURCHASE',sourceId:offerId,idempotencyKey:key});
+  const reasonCode=RUNNER_ARMOR_SLOTS.includes(item.slot)?'ARMOR_PURCHASE':'EQUIPMENT_PURCHASE';
+  const debit=progressionDebitEntry({ledgerEntryId:ledgerId,playerId:account.accountId,goldCost:quote.cost,reasonCode,sourceId:offerId,idempotencyKey:key});
   const ledgerEntries=[...account.ledgerEntries,debit];foldGoldLedgerNonNegative(ledgerEntries);
   const gear=normalizeGearInstance({instanceId,accountId:account.accountId,itemId:item.id,slot:item.slot,source:'PURCHASE',sourceId:key});
   const next=createGearAccount({accountId:account.accountId,ledgerEntries,gearInstances:[...account.gearInstances,gear]});
-  return Object.freeze({account:next,duplicate:false,balance:foldGoldLedger(next.ledgerEntries).balance,gear});
+  return Object.freeze({account:next,duplicate:false,balance:foldGoldLedger(next.ledgerEntries).balance,gear,reasonCode});
 }
 
 export function grantRunGear({account,equipmentCatalog,itemId,runAwardId,gearInstanceId}={}){
