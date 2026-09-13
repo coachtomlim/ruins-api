@@ -20,6 +20,8 @@ export function rewardCopy({sender='Buddy',heroGold=0,builderGold=0,cleared=fals
     builderLabel:'YOU EARNED',
     builderValue:`${Math.max(0,Number(builderGold)||0)} GOLD`,
     builderSublabel:'Dungeon Builder reward',
+    progressionHeadline:'USE GOLD TO UPGRADE YOUR RUNNER',
+    progressionDetail:'Improve Stats · Equipment · Armor',
     outcome:cleared?'HERO CLEARED':'HERO DID NOT CLEAR'
   });
 }
@@ -28,7 +30,8 @@ export function registrationCopy({targetHp,sender='Buddy'}={}){
   const target=clampTarget(targetHp),name=cleanName(sender);
   return Object.freeze({
     title:'CREATE YOUR DUNGEON RUNNER ACCOUNT',
-    body:'Create an account to save this goal, keep your gold and store your game assets.',
+    body:'Create an account to save this goal, keep your Gold, upgrade your Runner and store your game assets.',
+    progression:'Use Gold for Runner stats, equipment and armor.',
     carriedGoal:`Save ${name}'s target: finish near ${target}% HP.`,
     notSaved:'Nothing has been saved yet.'
   });
