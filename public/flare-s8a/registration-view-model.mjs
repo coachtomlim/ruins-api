@@ -1,4 +1,5 @@
 import {registrationCopy} from './mission-copy.mjs';
+import {registrationActionState} from './registration-action-state.mjs';
 
 export function buildRegistrationViewModel(handoff={}){
   const sender=handoff?.senderName||'Buddy';
@@ -16,6 +17,7 @@ export function buildRegistrationViewModel(handoff={}){
     previewBuilderGold:Number(reward.builderGold)||0,
     previewHeroGold:Number(reward.heroGold)||0,
     persisted:false,
+    accountAction:registrationActionState({accountServiceAvailable:false}),
     actions:Object.freeze(['CREATE ACCOUNT','BACK TO REWARDS'])
   });
 }
