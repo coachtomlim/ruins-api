@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import {execFileSync} from 'node:child_process';
+import {pathToFileURL} from 'node:url';
 
 const manifest=JSON.parse(fs.readFileSync(new URL('./frozen-web-trees.json',import.meta.url),'utf8'));
 
@@ -22,7 +23,7 @@ export function assertFrozenWebTrees(options={}){
   return results;
 }
 
-if(import.meta.url===new URL(`file://${process.argv[1]?.replaceAll('\\','/')}`).href){
+if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
   const results=assertFrozenWebTrees();
   for(const x of results)console.log(`PASS ${x.path} ${x.actual}`);
 }
