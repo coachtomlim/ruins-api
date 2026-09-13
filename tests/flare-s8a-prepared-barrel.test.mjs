@@ -8,8 +8,9 @@ test('prepared S8A module barrel is Node-safe and exposes integration contracts'
     'buildRegistrationHandoff','buildRegistrationViewModel','buildResultViewModel','createReplayContext','buildRuntimeHudViewModel',
     'buildCustomizeViewModel','buildMissionViewModel','buildReadyViewModel','buildInvitationViewModel','buildErrorViewModel',
     'buildRoomCarousel','roomSwipeDirection','createReceiverSession','buildReceiverView','focusTargetForJourney','mobilePolicy','encodeInviteCode',
-    'applyRunnerProgression','createRunnerSnapshot','calibrationRunnerFromSnapshot','assessProgressionChallengeability',
-    'normalizeProgressionCatalog','quoteProgressionPurchase','purchaseIntent','buildProgressionPurchaseView','deriveRunnerProgressionState',
-    'validateEquip','buildProgressionViewModel','transitionProgression'
+    'applyRunnerProgression','rookieStarterProgression','rookieStarterSnapshot','applyCombatantEquipment','createMonsterProfile',
+    'createRunnerSnapshot','calibrationRunnerFromSnapshot','assessProgressionChallengeability','normalizeProgressionCatalog',
+    'quoteProgressionPurchase','purchaseIntent','buildProgressionPurchaseView','deriveRunnerProgressionState','validateEquip',
+    'buildProgressionViewModel','transitionProgression'
   ])assert.equal(typeof prepared[name],'function',name);
 });
