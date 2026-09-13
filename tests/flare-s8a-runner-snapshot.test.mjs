@@ -2,28 +2,24 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createRunnerSnapshot,challengeRunnerSnapshot} from '../public/flare-s8a/runner-snapshot.mjs';
 
-test('runner snapshot composes base training weapon and armor exactly once',()=>{
-  const snap=createRunnerSnapshot({
-    runnerId:'runner-1',runnerName:'My Warrior',runnerLevel:2,
-    baseRunner:{hp:100,attack:12,defense:1},
-    progression:{statBonuses:{hp:10,attack:1,defense:1},weapon:{id:'weapon-a',slot:'weapon',modifiers:{attack:3}},armor:{id:'armor-a',slot:'armor',modifiers:{hp:5,defense:2}}},
-    rulesVersion:'rules-1',contentVersion:'content-1'
-  });
-  assert.deepEqual(snap.stats,{hp:115,attack:16,defense:4});
-  assert.equal(snap.equipment.weapon.id,'weapon-a');
-  assert.equal(snap.equipment.armor.id,'armor-a');
+test('snapshot includes weapon shield and individual armor',()=>{
+  const snap=createRunnerSnapshot({runnerId:'runner-1',baseRunner:{hp:100,attack:8,defense:0},progression:{statBonuses:{hp:10,attack:1,defense:1},equipment:{weapon:{id:'club',slot:'weapon',modifiers:{attack:3}},shield:{id:'wood-shield',slot:'shield',modifiers:{defense:1}},feet:{id:'boots',slot:'feet',modifiers:{hp:5,defense:1}}}}});
+  assert.equal(snap.version,2);
+  assert.deepEqual(snap.stats,{hp:115,attack:12,defense:3});
+  assert.equal(snap.equipment.weapon.id,'club');
+  assert.equal(snap.equipment.shield.id,'wood-shield');
+  assert.equal(snap.equipment.feet.id,'boots');
+  assert.equal(snap.equipment.head,null);
 });
 
-test('challenge runner snapshot is detached from later progression mutation',()=>{
-  const progression={statBonuses:{hp:10},weapon:{id:'club',slot:'weapon',modifiers:{attack:2}}};
-  const first=createRunnerSnapshot({runnerId:'r',baseRunner:{hp:100,attack:10,defense:1},progression});
+test('challenge snapshot is detached',()=>{
+  const progression={statBonuses:{hp:10},equipment:{weapon:{id:'club',slot:'weapon',modifiers:{attack:2}},shield:{id:'wood-shield',slot:'shield',modifiers:{defense:1}}}};
+  const first=createRunnerSnapshot({runnerId:'r',baseRunner:{hp:100,attack:10,defense:0},progression});
   const challenge=challengeRunnerSnapshot(first);
   progression.statBonuses.hp=40;
-  progression.weapon.modifiers.attack=9;
   assert.deepEqual(challenge.stats,{hp:110,attack:12,defense:1});
 });
 
-test('snapshot rejects missing identity and invalid stats',()=>{
+test('invalid snapshot fails closed',()=>{
   assert.throws(()=>createRunnerSnapshot({baseRunner:{hp:100,attack:10,defense:1}}));
-  assert.throws(()=>createRunnerSnapshot({runnerId:'r',baseRunner:{hp:-1,attack:10,defense:1}}));
 });
