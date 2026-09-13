@@ -20,8 +20,9 @@ Do not recreate, reset or rebase the branch.
 8. `docs/WEB_FLARE_S8A_ROUTE_MATRIX.md`
 9. `docs/WEB_FLARE_S8A_ACCEPTANCE_SCORECARD.md`
 10. `docs/WEB_FLARE_S8_BACKGROUND_PREFLIGHT_CHECKPOINT_004.md`
-11. `docs/WEB_FLARE_S8_PREFLIGHT_MANIFEST.json`
-12. `docs/WEB_FLARE_S8_VERCEL_AUTODEPLOY_INCIDENT.md`
+11. `docs/WEB_FLARE_S8_BACKGROUND_PREFLIGHT_CHECKPOINT_005.md`
+12. `docs/WEB_FLARE_S8_PREFLIGHT_MANIFEST.json`
+13. `docs/WEB_FLARE_S8_VERCEL_AUTODEPLOY_INCIDENT.md`
 
 Then read the original work order, amendments and supporting contracts referenced by those documents.
 
@@ -40,6 +41,18 @@ Product meaning:
 `Closer to the target = higher score + more Gold.`
 
 `Do not kill the Hero. The Hero must clear the dungeon.`
+
+## Reward-to-progression meaning
+
+S8A still does not implement persistent purchases, but the reward screen and registration gate must explain why earned Gold matters:
+
+`USE GOLD TO UPGRADE YOUR RUNNER`
+
+`Stats · Equipment · Armor`
+
+The Builder reward belongs to the receiver and will eventually improve that receiver's own Runner after an account exists. Never imply that Builder Gold upgrades the friend's incoming Hero-Runner.
+
+The registration panel should explain that creating an account is required to keep Gold and later use it for Runner progression. `CREATE ACCOUNT` remains non-functional/disabled in S8A unless account work is separately authorized.
 
 ## Existing prepared implementation assets
 
@@ -62,6 +75,8 @@ Use, do not duplicate unnecessarily:
 - local S8A preview server;
 - mobile DOM fixture and stable DOM selector contract.
 
+Progression modules under `public/flare-s8a/` and `public/flare-s8b/` are preparation for later account-backed work. S8A may use their copy/presentation intent, but must not expose active purchase/equip mutations.
+
 ## Required implementation qualities
 
 - portrait-phone first;
@@ -75,6 +90,7 @@ Use, do not duplicate unnecessarily:
 - Overview and Follow Hero produce measurable camera changes;
 - dedicated reward screen;
 - clear-only Builder Gold;
+- reward screen visibly explains Runner upgrade purpose;
 - memory-only registration handoff;
 - no Buddy/Test routing from Build Your Own.
 
@@ -86,7 +102,8 @@ Do not:
 - change old routes;
 - implement real accounts/backend;
 - use localStorage/sessionStorage/IndexedDB/cookies as account authority;
-- add progression/content/rebalance;
+- activate progression purchases/equipment mutations;
+- add gameplay rebalance/content;
 - deploy HostGator;
 - re-enable or manually deploy to Vercel.
 
@@ -118,7 +135,7 @@ Run in this order so failures are cheap and diagnosable:
 6. mobile browser journeys at 360x800, 390x844, 430x932 using the stable DOM contract;
 7. camera geometry proof;
 8. deterministic Run Again proof;
-9. reward and registration journey proof;
+9. reward, progression-teaser and registration journey proof;
 10. final complete suite once.
 
 Do not run repeated full-suite matrices unless diagnosing an actual failure.
@@ -137,4 +154,4 @@ Only after PASS:
 
 Return `S8A TEST STATUS: PASS` or exact blocker/revise reason.
 
-Include branch, starting SHA, ending SHA, deployable web SHA, exact changed files, focused/full test counts, browser evidence, phone viewport evidence, camera proof, Level 3/60% outcome, Hero Gold, Builder Gold, predecessor freeze evidence, route-isolation evidence, and confirmation that HostGator was not deployed and no Vercel deployment occurred.
+Include branch, starting SHA, ending SHA, deployable web SHA, exact changed files, focused/full test counts, browser evidence, phone viewport evidence, camera proof, Level 3/60% outcome, Hero Gold, Builder Gold, reward-to-progression copy evidence, predecessor freeze evidence, route-isolation evidence, and confirmation that HostGator was not deployed and no Vercel deployment occurred.
