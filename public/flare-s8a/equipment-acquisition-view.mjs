@@ -2,6 +2,7 @@ import {RUNNER_EQUIPMENT_SLOTS,RUNNER_ARMOR_SLOTS} from './runner-progression.mj
 
 const clean=value=>String(value??'').trim();
 const labelForSlot=slot=>({weapon:'WEAPON',shield:'SHIELD',head:'HEAD GEAR',chest:'CHEST ARMOR',hands:'GLOVES',legs:'LEG ARMOR',feet:'FOOTWEAR'})[slot]||slot.toUpperCase();
+const sourceLabel=source=>({STARTER:'STARTER GEAR',PURCHASE:'ACQUIRED WITH GOLD',DROP:'DUNGEON DROP',FUTURE_TRANSFER:'TRANSFERRED'})[clean(source)]||clean(source)||'UNSPECIFIED';
 
 export function buildEquipmentAcquisitionView({item,alreadyOwned=false,source=''}={}){
   const id=clean(item?.id),slot=clean(item?.slot);if(!id||!RUNNER_EQUIPMENT_SLOTS.includes(slot))throw new Error('Valid equipment item is required');
@@ -20,6 +21,8 @@ export function buildEquipmentAcquisitionView({item,alreadyOwned=false,source=''
     headline:firstArmor?`NEW ${labelForSlot(slot)}!`:'NEW GEAR!',
     body:firstArmor?`You acquired your first ${labelForSlot(slot).toLowerCase()}. Equip it to use its bonuses.`:'Equip this item to use its bonuses.',
     source:clean(source)||'UNSPECIFIED',
-    action:'EQUIP'
+    sourceLabel:sourceLabel(source),
+    action:'EQUIP',
+    secondaryAction:'KEEP IN INVENTORY'
   });
 }
