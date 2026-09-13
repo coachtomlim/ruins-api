@@ -1,0 +1,22 @@
+:root{
+  --dr-bg:#120d16;
+  --dr-panel:#24172a;
+  --dr-panel-strong:#321c3a;
+  --dr-cream:#fff4df;
+  --dr-gold:#efc76e;
+  --dr-teal:#8fd4c6;
+  --dr-rose:#df8999;
+  --dr-muted:#c9bdc9;
+  --dr-danger:#e77979;
+  --dr-body-size:16px;
+  --dr-small-size:14px;
+  --dr-title-size:clamp(28px,8vw,42px);
+  --dr-target-size:clamp(34px,11vw,54px);
+  --dr-primary-min-height:56px;
+  --dr-secondary-min-height:52px;
+  --dr-tab-min-height:48px;
+  --dr-radius:18px;
+  --dr-gap:12px;
+  --dr-safe-top:max(12px,env(safe-area-inset-top));
+  --dr-safe-bottom:max(12px,env(safe-area-inset-bottom));
+}
