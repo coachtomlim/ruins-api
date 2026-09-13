@@ -19,6 +19,17 @@ test('novice receiver session preserves room and encounter through run and rewar
   assert.equal(s.persisted,false);
 });
 
+test('optional customization can open from mission only after a room is selected',()=>{
+  let s=createReceiverSession({invite:{runnerId:'warrior-l1',targetHp:50}});
+  s=advanceReceiver(s,'ACCEPT');
+  assert.throws(()=>advanceReceiver(s,'CUSTOMIZE'),/Choose a dungeon first/);
+  s=selectDungeon(s,'iron-labyrinth-03');
+  s=advanceReceiver(s,'CUSTOMIZE');
+  assert.equal(s.journey,JOURNEY_STATES.CUSTOMIZE);
+  s=advanceReceiver(s,'DONE');
+  assert.equal(s.journey,JOURNEY_STATES.READY);
+});
+
 test('run again clears only terminal result and preserves deterministic inputs',()=>{
   let s=createReceiverSession({invite:{runnerId:'warrior-l3',targetHp:60}});
   s=advanceReceiver(s,'ACCEPT');s=selectDungeon(s,'iron-labyrinth-01');s=advanceReceiver(s,'USE_DUNGEON');
@@ -45,5 +56,8 @@ test('receiver session fails closed when run or result prerequisites are missing
   let s=createReceiverSession();
   s=advanceReceiver(s,'ACCEPT');
   assert.throws(()=>advanceReceiver(s,'USE_DUNGEON'));
-  assert.throws(()=>advanceReceiver(s,'COMPLETE',{result:{status:'cleared'},score:98}));
+  s=selectDungeon(s,'iron-labyrinth-01');
+  s=advanceReceiver(s,'USE_DUNGEON');s=advanceReceiver(s,'RUN');
+  assert.throws(()=>advanceReceiver(s,'COMPLETE',{result:{status:'mystery'},score:98}),/terminal run result/i);
+  assert.throws(()=>advanceReceiver(s,'COMPLETE',{result:{status:'cleared'},score:NaN}),/score/i);
 });
