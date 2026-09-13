@@ -1,3 +1,5 @@
+import {RUNNER_EQUIPMENT_SLOTS} from './runner-progression.mjs';
+
 const clean=value=>String(value??'').trim();
 
 function byId(catalog={}){
@@ -12,13 +14,13 @@ export function deriveRunnerProgressionState({catalog,statPurchaseOfferIds=[],ow
     const offer=offers.get(id);if(!offer||offer.kind!=='stat')throw new Error(`Unknown stat upgrade offer: ${id}`);
     bonuses[offer.stat]+=Number(offer.amount)||0;
   }
-  const owned=new Set(ownedAssetIds.map(clean).filter(Boolean));
-  const equipment={weapon:null,armor:null};
-  for(const slot of ['weapon','armor']){
+  const owned=new Set(ownedAssetIds.map(clean).filter(Boolean)),equipment={};
+  for(const slot of RUNNER_EQUIPMENT_SLOTS){
+    equipment[slot]=null;
     const id=clean(loadout?.[slot]);if(!id)continue;
     if(!owned.has(id))throw new Error(`Equipped ${slot} is not owned`);
     const offer=offers.get(id);if(!offer||offer.kind!=='equipment'||offer.slot!==slot)throw new Error(`Invalid ${slot} offer: ${id}`);
     equipment[slot]=Object.freeze({id:offer.id,slot:offer.slot,modifiers:Object.freeze({...offer.modifiers})});
   }
-  return Object.freeze({statBonuses:Object.freeze(bonuses),weapon:equipment.weapon,armor:equipment.armor});
+  return Object.freeze({statBonuses:Object.freeze(bonuses),equipment:Object.freeze(equipment),...equipment});
 }
