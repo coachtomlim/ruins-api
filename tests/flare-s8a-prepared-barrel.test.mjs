@@ -9,8 +9,10 @@ test('prepared S8A module barrel is Node-safe and exposes integration contracts'
     'buildCustomizeViewModel','buildMissionViewModel','buildReadyViewModel','buildInvitationViewModel','buildErrorViewModel',
     'buildRoomCarousel','roomSwipeDirection','createReceiverSession','buildReceiverView','focusTargetForJourney','mobilePolicy','encodeInviteCode',
     'applyRunnerProgression','rookieStarterProgression','rookieStarterSnapshot','decomposeLegacyRunnerForStarterGear',
-    'applyCombatantEquipment','createMonsterProfile','buildGearSlotsView','buildEquipmentAcquisitionView','createRunnerSnapshot',
-    'calibrationRunnerFromSnapshot','assessProgressionChallengeability','normalizeProgressionCatalog','quoteProgressionPurchase',
-    'purchaseIntent','buildProgressionPurchaseView','deriveRunnerProgressionState','validateEquip','buildProgressionViewModel','transitionProgression'
+    'applyCombatantEquipment','createMonsterProfile','createEquippedMonster','normalizeEquipmentCatalog','buildGearSlotsView',
+    'buildEquipmentAcquisitionView','buildEquipmentInventoryItem','transitionGearJourney','createRunnerSnapshot',
+    'calibrationRunnerFromSnapshot','assessProgressionChallengeability','normalizeProgressionCatalog','normalizeProgressionOffers',
+    'quoteProgressionPurchase','purchaseIntent','buildProgressionPurchaseView','deriveRunnerProgressionState','validateEquip',
+    'buildProgressionViewModel','transitionProgression'
   ])assert.equal(typeof prepared[name],'function',name);
 });
