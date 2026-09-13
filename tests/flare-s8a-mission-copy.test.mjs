@@ -18,12 +18,16 @@ test('mission sanitizes sender and clamps target',()=>{
   assert.doesNotMatch(m.senderLine,/[<>]/);
 });
 
-test('reward copy separates hero and builder ownership',()=>{
+test('reward copy separates hero and builder ownership and explains progression use',()=>{
   const r=rewardCopy({sender:'Buddy',heroGold:24,builderGold:20,cleared:true});
   assert.equal(r.heroLabel,"BUDDY'S HERO EARNED");
   assert.equal(r.heroValue,'24 GOLD');
   assert.equal(r.builderLabel,'YOU EARNED');
   assert.equal(r.builderValue,'20 GOLD');
+  assert.equal(r.progressionHeadline,'USE GOLD TO UPGRADE YOUR RUNNER');
+  assert.match(r.progressionDetail,/Stats/);
+  assert.match(r.progressionDetail,/Equipment/);
+  assert.match(r.progressionDetail,/Armor/);
   assert.equal(r.outcome,'HERO CLEARED');
 });
 
@@ -33,10 +37,12 @@ test('failed run copy cannot imply a successful clear',()=>{
   assert.equal(r.builderValue,'0 GOLD');
 });
 
-test('registration copy explains future persistence without claiming a save',()=>{
+test('registration copy explains future persistence and runner progression without claiming a save',()=>{
   const r=registrationCopy({targetHp:60,sender:'Tom'});
   assert.equal(r.title,'CREATE YOUR DUNGEON RUNNER ACCOUNT');
   assert.match(r.body,/save this goal/i);
+  assert.match(r.body,/upgrade your Runner/i);
+  assert.match(r.progression,/stats, equipment and armor/i);
   assert.match(r.carriedGoal,/60% HP/);
   assert.match(r.notSaved,/Nothing has been saved yet/);
 });
