@@ -7,6 +7,7 @@ test('registration handoff carries current goal and rewards without claiming per
   assert.equal(h.version,1);
   assert.equal(h.senderName,'Tom');
   assert.equal(h.goal.targetHp,60);
+  assert.deepEqual(h.goalSpec,{goalVersion:1,goalType:'FINISH_HP_PERCENT',payload:{targetHpPercent:60}});
   assert.equal(h.rewardPreview.builderGold,20);
   assert.equal(h.persisted,false);
   assert.equal(h.dungeon.roomId,'iron-labyrinth-03');
