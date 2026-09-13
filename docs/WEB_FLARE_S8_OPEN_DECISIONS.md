@@ -43,3 +43,25 @@ Status: do not invent shops, purchases or asset prices in S8A/S8B account founda
 Expiry/revocation behavior for persistent challenge links is not yet defined.
 
 Status: defer until S8B challenge persistence design.
+
+## OD-07 Persistent invite format
+
+The stateless four-character invite cannot uniquely identify sender ownership, settlement or run history.
+
+Recommendation: S8B persistent challenges use a new isolated opaque challenge token route while `/m/XXXX` remains frozen for S8A.
+
+Status: decide with backend architecture.
+
+## OD-08 Post-registration landing
+
+After a receiver creates an account, should the saved incoming goal open directly into a dungeon-building workspace, become a reusable goal template, or first land on a new player home screen?
+
+Recommendation: preserve the conversion momentum and land directly on a builder with the saved goal visibly loaded, while also storing it in the account.
+
+Status: Owner confirmation required before S8B UX implementation.
+
+## OD-09 Starter assets
+
+Which rooms, monsters, traps, supports and runners become owned starter assets versus globally available catalog content is not yet defined.
+
+Status: do not create artificial ownership restrictions in S8A or the S8B account foundation. Decide as part of progression/economy design.
