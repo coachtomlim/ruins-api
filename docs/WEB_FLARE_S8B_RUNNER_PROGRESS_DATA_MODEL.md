@@ -2,13 +2,11 @@
 
 ## Purpose
 
-Extend the account model so Gold can improve a player's own Hero-Runner through permanent stats, equipment and armor while preserving immutable challenge history.
+Persist player-owned Runner progression so Gold can improve stats and individual equipment while preserving immutable challenge history.
 
 ## `player_runner`
 
-One persistent player-owned Runner instance.
-
-Required fields:
+Persistent player-owned Runner instance:
 
 - `player_runner_id`
 - `player_id`
@@ -17,11 +15,11 @@ Required fields:
 - `progression_version`
 - timestamps
 
-The template supplies governed base stats/art/class identity. Progression is stored separately.
+The template supplies governed base stats/art/class identity. Item bonuses are not baked into the base stats.
 
 ## `runner_stat_upgrade`
 
-Append-only or uniquely tiered records describing permanent stat gains.
+Permanent stat gains:
 
 - `upgrade_id`
 - `player_runner_id`
@@ -32,90 +30,95 @@ Append-only or uniquely tiered records describing permanent stat gains.
 - `ledger_entry_id`
 - `created_at`
 
-Unique constraints must prevent the same tier/offer being applied twice when the catalog defines one-time tiers.
-
 ## `progression_catalog`
 
-Authoritative versioned definitions, not browser-owned values.
+Versioned server-authoritative definitions.
 
-Stat offer fields:
+Equipment offers use one of:
 
-- offer ID
-- stat key
-- amount
-- tier/cap metadata
-- Gold cost
-- active/version metadata
+- `WEAPON`
+- `SHIELD`
+- `HEAD`
+- `CHEST`
+- `HANDS`
+- `LEGS`
+- `FEET`
 
-Equipment offer fields:
-
-- item ID
-- slot = WEAPON or ARMOR
-- modifiers
-- Gold cost
-- active/version metadata
-
-Exact catalog values are not locked yet.
+Each item defines governed modifiers plus visual/source metadata. Exact prices and later item modifiers are not locked yet.
 
 ## `runner_item_ownership`
 
-Owned weapon/armor instance or durable ownership record.
+Durable item ownership:
 
 - ownership ID
 - player ID
 - item ID
-- acquired via ledger entry/source
+- slot
+- acquisition reason
+- optional Gold ledger entry or starter-grant source
 - acquired timestamp
 - optional revoked timestamp
 
-Items are non-stackable by default unless a later item explicitly authorizes quantity.
+Starter Club and Wooden Shield are granted ownership records and do not require a Gold debit.
 
 ## `runner_loadout`
 
-Current equipment selection for one player Runner.
+Current equipment selection for one Runner:
 
 - player Runner ID
 - weapon ownership ID or null
-- armor ownership ID or null
+- shield ownership ID or null
+- head ownership ID or null
+- chest ownership ID or null
+- hands ownership ID or null
+- legs ownership ID or null
+- feet ownership ID or null
 - updated timestamp
 
-The equipped ownership rows must belong to the same player.
+Every equipped ownership row must belong to the same player and match the slot.
+
+## Starter state
+
+Rookie Warrior starts with:
+
+- base HP 100
+- base ATK 8
+- base DEF 0
+- Wooden Club equipped: +4 ATK
+- Wooden Shield equipped: +1 DEF
+- all armor-piece slots empty
+
+Effective starter stats remain 100 HP / 12 ATK / 1 DEF.
 
 ## Effective stats
 
-Derived from:
+Derived only from:
 
-`base Runner template + permanent stat upgrades + equipped weapon modifiers + equipped armor modifiers`
+`base Runner template + permanent stat upgrades + all equipped item modifiers`
 
-Do not store an unaudited manually editable effective-stat total as the sole authority.
-
-A materialized/cached effective total may exist for performance if it is reproducible from the authoritative components.
+Do not store an unaudited manually editable effective total as sole authority.
 
 ## Challenge Runner snapshot
 
-Every persistent challenge stores an immutable snapshot containing at minimum:
+Every persistent challenge stores immutable:
 
-- Runner template/identity
-- displayed level/version
+- Runner identity/template
 - effective HP / ATK / DEF
-- permanent upgrade summary or progression version
-- equipped weapon identity/modifiers
-- equipped armor identity/modifiers
-- rules/content version
+- permanent upgrade summary/version
+- all equipped item identities, slots and modifiers
+- rules/content/progression version
 
-The challenge uses this snapshot even if the owner upgrades or changes equipment later.
+Later progression cannot alter historic challenge behavior.
 
-## Relationship to Gold ledger
+## Monster compatibility
 
-Each paid stat upgrade or item acquisition must reference its Gold debit ledger entry.
-
-Deleting/changing a loadout must never delete the ledger history that explains how the item or upgrade was acquired.
+The same item definition/modifier model may be referenced by monster loadouts. A monster item contributes the same governed modifier semantics as a Runner item. Monster ownership/loadout belongs to content/rules data rather than a player account unless a later feature explicitly introduces owned monsters.
 
 ## Security constraints
 
-- player can mutate only their own Runner;
-- purchase cost is server-resolved;
-- item ownership is server-resolved;
+- player mutates only their own Runner;
+- server resolves cost and ownership;
 - cross-player equipping is forbidden;
-- challenge snapshot is immutable after challenge creation;
-- historical challenge/run records are not recalculated from the player's current Runner state.
+- wrong-slot equipping is forbidden;
+- challenge snapshots are immutable;
+- historical results are not recalculated from current progression.
