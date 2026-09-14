@@ -8,6 +8,12 @@ When a guest chooses `SAVE THIS GOAL & BUILD YOUR OWN`, registration must eventu
 
 Preferred implementation direction: managed authentication plus PostgreSQL persistence. Supabase Auth + PostgreSQL is a strong fit, but the implementation choice remains an S8B gate and must be verified before mutation.
 
+This application persistence is separate from HOTEL orchestration. Dungeon
+Runner consumes Gamma Mission Control as a logical control-plane project, but
+Gamma must not store or transact player identities, challenges, runs, rewards,
+wallet entries, owned assets or progression. HOTEL onboarding therefore does
+not require a separate Dungeon Runner Supabase project.
+
 ## Core entities
 
 ### player_profile

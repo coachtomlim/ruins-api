@@ -1,14 +1,22 @@
 # WEB-FLARE S8B Supabase Proof Plan
 
-Status: candidate evaluation only. Do not create or modify production infrastructure from this document.
+Status: conditional candidate evaluation only. Do not create a Supabase project
+for HOTEL onboarding and do not create or modify production infrastructure from
+this document.
 
 ## Goal
 
-If the Owner selects Supabase Auth + PostgreSQL for S8B, run one bounded staging proof before building the full account system.
+If the separate Dungeon Runner persistence gate selects Supabase Auth +
+PostgreSQL for S8B application state, run one bounded staging proof before
+building the full account system. Gamma Mission Control remains the shared
+HOTEL control plane and is not the application database.
 
 ## Proof surface
 
-Use a dedicated non-production Supabase project and an isolated frontend route/build.
+Use a Dungeon Runner-owned, non-production Supabase environment and an isolated
+frontend route/build. This environment exists only if Supabase is selected for
+application persistence; it is not created merely because Dungeon Runner is a
+logical Gamma/HOTEL project.
 
 Prove only:
 
