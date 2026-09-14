@@ -8,7 +8,11 @@ const port=Number(process.env.PORT||4178);
 const types={'.html':'text/html; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.txt':'text/plain; charset=utf-8','.png':'image/png','.webp':'image/webp'};
 
 export function localPath(requestUrl){
-  let pathname=decodeURIComponent(new URL(requestUrl,'http://localhost').pathname);
+  const suppliedPath=String(requestUrl||'').split(/[?#]/,1)[0];
+  if(decodeURIComponent(suppliedPath).split('/').includes('..')||/%2e/i.test(suppliedPath))throw Error('outside public root');
+  const rawPath=new URL(requestUrl,'http://localhost').pathname;
+  const decoded=decodeURIComponent(rawPath);
+  let pathname=decoded;
   if(/^\/m\/[A-Za-z0-9_-]{4}\/?$/.test(pathname))pathname='/flare-s8a/challenge.html';
   if(pathname.startsWith('/quick-dungeon/'))pathname=pathname.slice('/quick-dungeon'.length);
   if(pathname.endsWith('/'))pathname+='index.html';
