@@ -1,6 +1,6 @@
 # WEB-FLARE S8 Open Decisions
 
-These items are deliberately unresolved. Codex must not invent answers during S8A implementation.
+These items are deliberately unresolved unless marked resolved below. Do not invent answers during implementation.
 
 ## OD-01 Persistent reward settlement trigger
 
@@ -8,7 +8,7 @@ Question: after retries/edits, which run becomes the persistent settlement in S8
 
 Recommendation: account holder uses explicit `CLAIM / FINISH CHALLENGE`; guest conversion uses `SAVE THIS GOAL & BUILD YOUR OWN` to settle the current run.
 
-Status: Owner decision required before S8B reward persistence.
+Status: Owner decision required before S8B reward persistence is activated.
 
 ## OD-02 Hero Gold on failed run
 
@@ -20,9 +20,20 @@ Status: Owner decision required before S8B settlement.
 
 ## OD-03 Account backend
 
-Leading candidate: Supabase Auth + PostgreSQL.
+**Resolved:** Supabase Auth + PostgreSQL selected as the Dungeon Runner S8B application backend after the isolated provider proof passed.
 
-Status: evaluation recommended; no provider authorized yet.
+Staging authority:
+
+- project: `Dungeon Runner S8B Staging`
+- project ref: `qpgwqmduqtqidmhbuclw`
+- region: `ap-southeast-1`
+- production email confirmation: REQUIRED
+
+Gamma Mission Control remains `CONTROL_PLANE_ONLY` and is not the Dungeon Runner application database.
+
+Canonical decision detail:
+
+`docs/WEB_FLARE_S8B_SUPABASE_SELECTION_AND_PROOF_ACCEPTANCE.md`
 
 ## OD-04 Challenge sender identity
 
@@ -54,13 +65,13 @@ Expiry/revocation behavior for persistent challenge links is not yet defined.
 
 Recommendation: S8B persistent challenges use a new isolated opaque challenge token route while `/m/XXXX` remains frozen for S8A.
 
-Status: decide with backend architecture.
+Status: decide before persistent challenge activation.
 
 ## OD-08 Post-registration landing
 
 Recommendation: preserve conversion momentum and land directly on a builder with the saved goal visibly loaded, while also storing it in the account.
 
-Status: Owner confirmation required before S8B UX implementation.
+Status: Owner confirmation required before conversion UX implementation.
 
 ## OD-09 Starter content beyond Runner gear
 
