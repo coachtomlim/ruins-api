@@ -18,7 +18,7 @@ const encounter=()=>({enemyTypes:[...document.querySelectorAll('[data-enemy-slot
 const usedBudget=e=>encounterCost(catalog,e);
 const labels=(ids,kind)=>ids.filter(id=>id!=='none').map(id=>kind==='monster'?catalog.enemies[id]?.name:model.items?.[id]?.name||model.items?.[id]?.label||id);
 function context(){const e=encounter(),estimate=estimateEncounter({catalog,model,runnerId:invite.runnerId,runner,encounter:e});return{runnerName:runner.name,runnerLevel:runner.level,roomName:selectedSpec().name,roomIndex,roomCount:specs.length,estimatedHpPercent:estimate.estimatedHpPercent,usedBudget:usedBudget(e),totalBudget:model.budget||100,activePanel,monsters:labels(e.enemyTypes,'monster'),traps:labels(e.trapTypes,'item'),supports:labels(e.supportTypes,'item')};}
-function show(){const view=buildReceiverView({session,context:context()});for(const root of document.querySelectorAll('[data-screen]'))root.hidden=root.dataset.screen!==view.shell.screen;requestAnimationFrame(()=>$(view.shell.headingId)?.focus());renderCurrent(view);}
+function show(){const view=buildReceiverView({session,context:context()});for(const root of document.querySelectorAll('[data-screen]'))root.hidden=root.dataset.screen!==view.shell.state;requestAnimationFrame(()=>$(view.shell.headingId)?.focus());renderCurrent(view);}
 function renderCurrent(view){
   const m=view.model;
   if(view.kind==='invitation'){$('senderName').textContent=session.senderName;$('inviteRunner').textContent=`Level ${runner.level} ${runner.name}`;$('inviteTarget').textContent=`Target ${invite.targetHp}% HP`;}

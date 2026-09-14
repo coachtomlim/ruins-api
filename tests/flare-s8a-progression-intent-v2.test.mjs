@@ -12,7 +12,7 @@ test('item purchase intent references offer and item without duplicating item st
   assert.equal(intent.itemId,'boots');
   assert.equal(intent.offerId,'buy-boots');
   assert.equal(intent.amount,-20);
-  assert.equal(intent.reasonCode,'EQUIPMENT_PURCHASE');
+  assert.equal(intent.reasonCode,'ARMOR_PURCHASE');
   assert.equal('modifiers' in intent,false);
 });
 
