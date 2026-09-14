@@ -1,6 +1,9 @@
 -- Fix PL/pgSQL output-parameter/column ambiguity in ensure_starter_account.
+-- The return-column name changes, so PostgreSQL requires the function to be dropped first.
 
-create or replace function public.ensure_starter_account()
+drop function if exists public.ensure_starter_account();
+
+create function public.ensure_starter_account()
 returns table (
   player_runner_id uuid,
   starter_runner_template_id text,
