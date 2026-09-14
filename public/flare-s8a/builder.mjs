@@ -1,4 +1,4 @@
-import {loadS3ActorPack} from '../flare-s3/actors.mjs';
+import {loadS3ActorPack} from './actors.mjs';
 import {runnerIds,applyRunnerModel,runnerSummary} from '../flare-s71/game.mjs';
 import {buildChallengeInvite} from './builder-invite.mjs';
 import {decomposeLegacyRunnerForStarterGear} from './starter-runner-adapter.mjs';

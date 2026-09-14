@@ -1,4 +1,4 @@
-import {loadS3ActorPack} from '../flare-s3/actors.mjs';
+import {loadS3ActorPack} from './actors.mjs';
 import {S7_ROOMS,loadS7StockRoom,drawPreview} from '../flare-s71/rooms.mjs';
 import {applyRunnerModel,runnerSummary,encounterCost,TRAP_IDS,SUPPORT_IDS} from '../flare-s71/game.mjs';
 import {calibrateEncounter,estimateEncounter} from '../flare-s71/calibration.mjs';
