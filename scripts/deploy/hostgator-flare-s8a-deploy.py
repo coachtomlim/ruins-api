@@ -295,7 +295,7 @@ def deploy() -> None:
 def s8a_gate() -> None:
     base = PUBLIC_BASE + '/quick-dungeon/flare-s8a/'
     expect(base, {'text/html'}, b'DUNGEON RUNNER')
-    expect(base + 'builder.mjs', {'text/javascript', 'application/javascript'}, b'CREATE CHALLENGE LINK')
+    expect(base + 'builder.mjs', {'text/javascript', 'application/javascript'}, b'buildChallengeInvite')
     expect(base + 'challenge.html', {'text/html'}, b'GET THE HERO TO THE EXIT')
     expect(base + 'challenge.mjs', {'text/javascript', 'application/javascript'}, b'installRuntime')
     expect(base + 'runtime-controller.mjs', {'text/javascript', 'application/javascript'}, b'OVERVIEW')
