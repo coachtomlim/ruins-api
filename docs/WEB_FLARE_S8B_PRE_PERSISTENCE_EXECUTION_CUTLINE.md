@@ -1,5 +1,7 @@
 # WEB-FLARE S8B Pre-Persistence Execution Cutline
 
+> **STATUS: SUPERSEDED FOR APPLICATION-PERSISTENCE GATING.** The Owner has reopened the backend gate and selected Supabase Auth + PostgreSQL after the provider proof passed. See `docs/WEB_FLARE_S8B_SUPABASE_SELECTION_AND_PROOF_ACCEPTANCE.md`. The Gamma/HOTEL `CONTROL_PLANE_ONLY` boundary below remains authoritative.
+
 ## Purpose
 
 Define what S8B work may proceed while the Dungeon Runner persistence/backend gate remains closed.
@@ -9,7 +11,7 @@ This cutline sits under the accepted Gamma/HOTEL architecture:
 - Gamma logical project: `DUNGEON-RUNNER-S8B`
 - adapter: `DUNGEON-RUNNER-HOTEL-CONTROL-PLANE-v1`
 - boundary: `CONTROL_PLANE_ONLY`
-- application persistence: `UNDECIDED_EXTERNAL_TO_GAMMA`
+- application persistence: originally `UNDECIDED_EXTERNAL_TO_GAMMA`, now Supabase Auth + PostgreSQL under Dungeon Runner authority
 
 Gamma is orchestration infrastructure only. It is not the Dungeon Runner application database.
 
@@ -84,56 +86,48 @@ Continue project-management/orchestration registration, work items, dependencies
 
 Gamma may store opaque references to an eventual application environment after one exists, but no player/gameplay application records.
 
-## Work prohibited until backend gate reopens
+## Historical work prohibition while gate was closed
 
-Do not:
+The following restrictions applied until the Owner reopened the backend gate:
 
-- provision a Dungeon Runner application Supabase project/branch or equivalent provider environment;
-- apply the preserved Supabase proof migration;
-- put Dungeon Runner application data in Gamma Mission Control;
-- activate real registration/login/session persistence;
-- activate cross-device saved goals;
-- activate persistent challenge records;
-- activate guest-to-account reward settlement;
-- activate durable Gold wallet/ledger;
-- activate persistent equipment ownership/loadouts;
-- activate persistent purchases/upgrades;
-- expose service/admin secrets to browser code;
-- mutate live S8A account gate into a fake persisted experience.
+- no Dungeon Runner application provider provisioning;
+- no provider migration application;
+- no application data in Gamma Mission Control;
+- no real registration/session persistence;
+- no cross-device saves;
+- no persistent challenges/reward settlement/Gold/equipment/progression;
+- no service/admin secrets in browser code;
+- no mutation of live S8A into a fake persisted experience.
 
-## Preserved conditional provider-proof artifacts
+The first two restrictions are now superseded by the accepted Supabase selection. All security, Gamma-boundary and S8A-live protections remain in force.
 
-The branch `work/web-flare-s8b-account-proof-001` remains conditional evidence only.
+## Preserved provider-proof artifacts
 
-Preserved artifacts:
+The branch `work/web-flare-s8b-account-proof-001` remains evidence of the bounded provider proof.
+
+Preserved artifacts include:
 
 - `docs/WEB_FLARE_S8B_SUPABASE_PROOF_PLAN_001.md`
-- `supabase/migrations/20260914_s8b_account_proof.sql`
-- `docs/WEB_FLARE_S8B_ACCOUNT_PROOF_RECONCILIATION_001.md`
+- proof migrations under `supabase/migrations/`
+- `docs/WEB_FLARE_S8B_SUPABASE_PROOF_CHECKPOINT_001.md`
+- `docs/WEB_FLARE_S8B_AUTH_CONFIRMATION_PROOF_DECISION.md`
 
-They may be reconsidered only when the Owner intentionally reopens the application persistence/backend gate.
+Proof-only database structures are not automatically production schema authority.
 
-## Immediate recommended S8B workstream
+## Current workstream
 
-Proceed with `S8B-PRE-PERSISTENCE-001`:
+The active workstream is now defined by:
 
-1. audit existing S8A/S8B pure modules against this cutline;
-2. define one backend-neutral `DungeonRunnerAccountPort` contract;
-3. align saved-goal, reward-claim, wallet, Runner progression, equipment ownership and challenge DTOs behind that port;
-4. build a memory-only test adapter for automated contract tests only;
-5. run progression/economy calibration without locking prices until Owner review;
-6. keep all live S8A routes and behavior frozen.
+`docs/WEB_FLARE_S8B_SUPABASE_SELECTION_AND_PROOF_ACCEPTANCE.md`
 
-A memory-only adapter is test infrastructure only. It must never be described as durable account storage or shipped as persistence authority.
+on:
 
-## Reopen trigger
+`work/web-flare-s8b-supabase-integration-001`
 
-The backend gate should be reopened only when S8B is ready to activate one or more of:
+It begins with the account foundation slice and deliberately excludes guest reward settlement until the remaining settlement-policy decision is closed.
 
-- real accounts/session identity;
-- cross-device saves;
-- persistent public challenges;
-- durable reward claims/Gold;
-- durable equipment ownership/progression.
+## Historical reopen trigger
 
-At that point the Owner selects the application backend and authorizes a bounded provider proof outside Gamma.
+This gate was to reopen when S8B was ready to activate real accounts/session identity, cross-device saves, persistent challenges, durable rewards/Gold, or durable equipment/progression.
+
+That trigger has now occurred. The Owner selected Supabase and the isolated provider proof passed.
