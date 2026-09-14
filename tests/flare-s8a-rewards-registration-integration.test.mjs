@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';
+const [source,html]=await Promise.all([readFile(new URL('../public/flare-s8a/challenge.mjs',import.meta.url),'utf8'),readFile(new URL('../public/flare-s8a/challenge.html',import.meta.url),'utf8')]);
+test('terminal result renders separate Hero and Builder reward ownership',()=>{assert.match(source,/m\.heroReward\.label/);assert.match(source,/m\.heroReward\.value/);assert.match(source,/m\.builderReward\.value/);assert.match(html,/USE GOLD TO UPGRADE YOUR RUNNER/);});
+test('reward continuations preserve replay edit and registration journey events',()=>{for(const event of ['EDIT_DUNGEON','SAVE_GOAL','BACK_TO_REWARDS'])assert.match(source,new RegExp(event));});
+test('registration is a disabled memory-only gate with no credential form',()=>{assert.match(html,/CREATE YOUR DUNGEON RUNNER ACCOUNT/);assert.match(html,/id="createAccount"[^>]*disabled/);assert.doesNotMatch(html,/type="password"|type="email"|Buddy \/ Test/);assert.doesNotMatch(source,/localStorage|sessionStorage|indexedDB|fetch\([^)]*account/);});
