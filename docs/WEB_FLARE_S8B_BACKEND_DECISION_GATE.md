@@ -1,51 +1,63 @@
 # WEB-FLARE S8B Backend Decision Gate
 
-Before implementing real accounts, choose the backend/auth architecture explicitly.
+Status: **CLOSED / PASS**
+
+The Owner has selected **Supabase Auth + PostgreSQL** as the Dungeon Runner S8B application backend after a successful isolated provider proof.
 
 ## HOTEL / Gamma boundary
 
-HOTEL onboarding does not require or authorize a Dungeon Runner Supabase
-project. Dungeon Runner S8B staging is a logical project in the shared Gamma
-Mission Control control plane. Gamma owns orchestration metadata only; it does
-not own Dungeon Runner identity, gameplay, challenge, run, reward, wallet,
-inventory, equipment or progression state.
+HOTEL/Gamma remains independent control-plane infrastructure.
 
-The decision in this document is solely whether Dungeon Runner independently
-needs persistent cloud application state and, if so, which product-owned
-backend provides it.
+Gamma Mission Control owns orchestration metadata only. It must not store or transact Dungeon Runner identity, gameplay, challenge, run, reward, wallet, inventory, equipment, saved-goal or progression state.
 
-## Decision inputs
+The Dungeon Runner application backend is therefore external to Gamma even though the project is coordinated through Gamma/HOTEL.
 
-Compare candidate approaches against:
+## Selected application backend
 
-1. managed credential handling;
-2. transaction support for reward claim + saved goal + ledger mutation;
-3. player-scoped authorization/RLS capability;
-4. retry/idempotency support;
-5. operational complexity on mobile web deployment;
-6. secret management;
-7. backup/export/recovery options;
-8. account deletion/data export support;
-9. cost and expected player scale;
-10. compatibility with HostGator-hosted frontend.
+- provider: Supabase Auth + PostgreSQL
+- staging project: `Dungeon Runner S8B Staging`
+- project ref: `qpgwqmduqtqidmhbuclw`
+- region: `ap-southeast-1`
+- production email confirmation policy: REQUIRED
 
-## Current leading option
+## Decision inputs satisfied
 
-Supabase Auth + PostgreSQL remains one candidate for application persistence
-because it combines managed authentication with relational/transactional
-persistence and row-level security. It is not a HOTEL dependency and would be
-provisioned outside Gamma under Dungeon Runner authority.
+The bounded staging proof demonstrated:
 
-This is not yet an implementation authorization.
+1. managed credential/session handling;
+2. transactional/idempotent reward mutation;
+3. player-scoped RLS isolation;
+4. retry safety without duplicate Gold;
+5. browser-compatible managed Auth;
+6. public-client credential boundary with no service-role exposure;
+7. authenticated saved-goal persistence;
+8. sign-out and unauthenticated denial.
 
-## Gate to start S8B implementation
+Account deletion/export, production SMTP/deliverability, recovery UX and production operational sizing remain launch-readiness concerns, not blockers to the bounded S8B staging integration slice.
 
-Owner explicitly selects the backend approach after reviewing the bounded provider proof plan.
+## Gate result
 
-Then create a dedicated S8B branch with:
+The provider-selection gate is satisfied.
 
-- provider setup isolated from production;
-- an isolated test/staging environment appropriate to the selected provider;
-- no migration of Buddy/Test;
-- no production secrets in repository;
-- a bounded proof of registration, session, saved goal, one idempotent reward claim and sign-out before broader account functionality.
+Proceed on:
+
+`work/web-flare-s8b-supabase-integration-001`
+
+under the authority of:
+
+`docs/WEB_FLARE_S8B_SUPABASE_SELECTION_AND_PROOF_ACCEPTANCE.md`
+
+## Current integration constraint
+
+Backend selection does not authorize unresolved reward/product policy to be invented.
+
+The first integration slice therefore activates only:
+
+- managed account/session adapter;
+- authenticated profile;
+- starter Runner provisioning;
+- starter Club + Shield ownership/loadout;
+- authenticated saved-goal persistence;
+- backend-fed account-ready state.
+
+Guest reward settlement, persistent challenge issuance, purchases/upgrades and live S8A wiring remain separately gated.
