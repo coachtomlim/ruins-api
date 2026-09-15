@@ -49,13 +49,34 @@ Status: confirm before persistent challenge creation.
 
 **Resolved starter:** Wooden Club +4 ATK, Wooden Shield +1 DEF, no starter armor pieces.
 
+**Resolved calibration policy:**
+
+- atomic permanent-stat units: `+5 HP`, `+1 ATK`, `+1 DEF`;
+- fixed Dungeon Budget remains `100`;
+- launch progression must keep projected effective Runner state inside the versioned `PREFERRED` challengeability envelope;
+- cumulative projected power governs progression eligibility rather than independent stat maxima;
+- armor and stat training share one cumulative power envelope;
+- armor slots do not default to `+1 DEF` each;
+- deeper progression requires stronger governed dungeon content rather than silently raising Dungeon Budget.
+
+Candidate Gold bands are accepted as **pacing guidance only**, not exact offer prices:
+
+- `+5 HP`: 20-25 Gold;
+- `+1 ATK`: 25-35 Gold;
+- `+1 DEF`: 35-50 Gold;
+- modest first armor piece: 25-40 Gold.
+
 Still unresolved:
 
-- exact Gold prices;
-- stat upgrade caps/tiers;
-- later item catalog and modifiers;
-- whether later items are purchased once, upgraded through tiers, or both;
-- relationship between progression and displayed Runner level.
+- exact Gold price for each concrete offer;
+- concrete later item catalog and modifiers;
+- equipment upgrade tiers;
+- relationship between progression and displayed Runner level;
+- exact acquisition mix across purchase, drops/rewards and future trade.
+
+Canonical calibration acceptance:
+
+`docs/WEB_FLARE_S8B_ECONOMY_CALIBRATION_ACCEPTANCE_001.md`
 
 ## OD-06 Public challenge lifetime
 
