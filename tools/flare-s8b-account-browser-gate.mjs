@@ -84,26 +84,41 @@ async function runJourney(){
       hp:document.querySelector('#runnerHp').textContent,
       attack:document.querySelector('#runnerAttack').textContent,
       defense:document.querySelector('#runnerDefense').textContent,
-      loadout:document.querySelector('#loadoutGrid').textContent,
-      emptySlots:[...document.querySelectorAll('#loadoutGrid .empty')].length,
+      baseHp:document.querySelector('#baseHp').textContent,
+      baseAttack:document.querySelector('#baseAttack').textContent,
+      baseDefense:document.querySelector('#baseDefense').textContent,
       scrollWidth:document.documentElement.scrollWidth,
       viewportWidth:innerWidth
     }));
     assert(first.displayName==='S8B Client Proof','Profile did not come from backend trigger state');
     assert(first.gold==='0','New account Gold was not zero');
     assert(first.runner==='Rookie Warrior','Starter Runner missing');
-    assert(first.hp==='100'&&first.attack==='12'&&first.defense==='1','Starter effective stats incorrect');
-    assert(first.loadout.includes('Wooden Club')&&first.loadout.includes('Wooden Shield'),'Starter equipment missing');
-    assert(first.emptySlots===5,'Five empty armor slots were not shown');
+    assert(first.baseHp==='100'&&first.baseAttack==='8'&&first.baseDefense==='0','Authoritative base stats incorrect');
+    assert(first.hp==='100'&&first.attack==='12'&&first.defense==='1','Authoritative effective stats incorrect');
     assert(first.scrollWidth<=first.viewportWidth,`Ready view overflow at ${viewport.width}x${viewport.height}`);
-    for(const selector of ['#signOut','#saveDemoGoal']){
+
+    for(const selector of ['#signOut','#saveDemoGoal','#statsTab','#equipmentTab','#armorTab']){
       const height=await page.locator(selector).evaluate(element=>element.getBoundingClientRect().height);
       assert(height>=44,`${selector} below 44px at ${viewport.width}x${viewport.height}`);
     }
 
+    await page.locator('#equipmentTab').click();
+    await page.locator('#equipmentPanel').waitFor({state:'visible'});
+    const equipment=await page.locator('#equipmentGrid').textContent();
+    assert(equipment.includes('Wooden Club')&&equipment.includes('+4 ATK'),'Authoritative Club missing');
+    assert(equipment.includes('Wooden Shield')&&equipment.includes('+1 DEF'),'Authoritative Shield missing');
+
+    await page.locator('#armorTab').click();
+    await page.locator('#armorPanel').waitFor({state:'visible'});
+    assert(await page.locator('#armorGrid .empty').count()===5,'Five authoritative empty armor slots were not shown');
+    for(const label of ['HEAD','CHEST','HANDS','LEGS','FEET'])assert((await page.locator('#armorGrid').textContent()).includes(label),`${label} slot missing`);
+
+    await page.locator('#statsTab').click();
+    await page.locator('#statsPanel').waitFor({state:'visible'});
+
     await page.reload({waitUntil:'networkidle'});
     await page.locator('#readyView').waitFor({state:'visible',timeout:30000});
-    assert((await page.locator('#runnerName').textContent())==='Rookie Warrior','Account Ready did not reconstruct after reload');
+    assert((await page.locator('#runnerName').textContent())==='Rookie Warrior','Runner Hub did not reconstruct after reload');
     await page.goto(`${accountUrl}?navigation=${viewport.width}`,{waitUntil:'networkidle'});
     await page.locator('#readyView').waitFor({state:'visible',timeout:30000});
 
@@ -129,14 +144,16 @@ async function runJourney(){
     assert(anon.every(row=>(row.status===200&&row.count===0)||[401,403].includes(row.status)),`Unauthenticated data exposed: ${JSON.stringify(anon)}`);
     assert(requests.some(row=>row.url.includes('/auth/v1/token')&&row.method==='POST'),'Managed sign-in was not called');
     assert(requests.some(row=>row.url.includes('/rpc/ensure_starter_account')&&row.method==='POST'),'Starter RPC was not called');
+    assert(requests.some(row=>row.url.includes('/rpc/get_account_runner_state')&&row.method==='POST'),'Authoritative Runner state RPC was not called');
     if(viewport.width===390){
       assert(requests.some(row=>row.url.includes('/rpc/save_account_goal')&&row.method==='POST'),'Saved-goal RPC was not called');
       assert(!requests.some(row=>row.url.includes('/rest/v1/saved_goal')&&row.method==='POST'),'Direct saved_goal write detected');
     }
     assert(!requests.some(row=>/claim_proof_builder_reward|claimGuestRun/i.test(row.url)),'Product reward claim unexpectedly activated');
+    assert(!requests.some(row=>/runner_template_catalog|runner_item_catalog/.test(row.url)&&row.method!=='GET'),'Catalog mutation unexpectedly activated');
     assert(applicationErrors.length===0,`Console errors at ${viewport.width}x${viewport.height}: ${applicationErrors.join(' | ')}`);
     assert(applicationNotFound.length===0,`404s at ${viewport.width}x${viewport.height}: ${applicationNotFound.join(' | ')}`);
-    results.push({viewport:`${viewport.width}x${viewport.height}`,accountReady:true,sessionReload:true,navigation:true,gold:0,stats:'100/12/1',club:true,shield:true,emptyArmorSlots:5,goal,signOut:true,unauthenticatedProtection:true,consoleErrors:0,notFound:0});
+    results.push({viewport:`${viewport.width}x${viewport.height}`,accountReady:true,sessionReload:true,navigation:true,gold:0,baseStats:'100/8/0',effectiveStats:'100/12/1',club:true,shield:true,emptyArmorSlots:5,runnerPanels:true,goal,signOut:true,unauthenticatedProtection:true,consoleErrors:0,notFound:0});
     await page.close();
   }
   console.log(JSON.stringify({phase:'journey',status:'PASS',viewports:results},null,2));
