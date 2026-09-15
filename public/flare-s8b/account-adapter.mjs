@@ -1,6 +1,6 @@
 export const ACCOUNT_CAPABILITIES=Object.freeze([
   'register','signIn','signOut','getMe','getSession','ensureStarterAccount',
-  'loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
+  'loadRunnerState','loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
 ]);
 
 const clean=value=>String(value??'').trim();
@@ -52,6 +52,7 @@ export function unavailableAccountAdapter(){
     getMe:unavailable,
     getSession:unavailable,
     ensureStarterAccount:unavailable,
+    loadRunnerState:unavailable,
     loadAccountState:unavailable,
     loadSavedGoals:unavailable,
     saveGoal:unavailable,
@@ -84,28 +85,29 @@ export function createSupabaseAccountAdapter({client}={}){
     return rows[0]??null;
   }
 
+  async function loadRunnerState(playerRunnerId=null){
+    const id=clean(playerRunnerId);
+    const state=resultData('loadRunnerState',await client.rpc('get_account_runner_state',{p_player_runner_id:id||null}));
+    if(!state||typeof state!=='object'||Array.isArray(state))throw new Error('AUTHORITATIVE_RUNNER_STATE_REQUIRED');
+    return Object.freeze({...state});
+  }
+
   async function loadSavedGoals(){
     return resultData('loadSavedGoals',await client.from('saved_goal').select('*').order('created_at',{ascending:false}))||[];
   }
 
-  async function loadAccountState(){
+  async function loadAccountState({playerRunnerId=null}={}){
     const me=await getMe();
     if(!me)throw new Error('AUTH_REQUIRED');
     const profile=resultData('loadProfile',await client.from('player_profile').select('*').eq('id',me.id).single());
-    const runners=resultData('loadRunners',await client.from('player_runner').select('*').eq('owner_player_id',me.id).order('created_at',{ascending:true}))||[];
-    const runner=runners[0]??null;
-    if(!runner)throw new Error('STARTER_ACCOUNT_REQUIRED');
-    const ownedEquipment=resultData('loadOwnedEquipment',await client.from('runner_item_ownership').select('*').eq('owner_player_id',me.id).is('revoked_at',null).order('acquired_at',{ascending:true}))||[];
-    const loadout=resultData('loadRunnerLoadout',await client.from('runner_loadout').select('*').eq('player_runner_id',runner.id).single());
+    const runnerState=await loadRunnerState(playerRunnerId);
     const ledger=resultData('loadWalletLedger',await client.from('wallet_ledger').select('delta_gold').eq('player_id',me.id))||[];
     const savedGoals=await loadSavedGoals();
     const goldBalance=ledger.reduce((sum,row)=>sum+(Number(row?.delta_gold)||0),0);
     return Object.freeze({
       identity:Object.freeze({id:me.id,email:me.email}),
       profile:Object.freeze({...profile}),
-      runner:Object.freeze({...runner}),
-      ownedEquipment:Object.freeze(ownedEquipment.map(row=>Object.freeze({...row}))),
-      loadout:Object.freeze({...loadout}),
+      runnerState,
       savedGoals:Object.freeze(savedGoals.map(row=>Object.freeze({...row}))),
       goldBalance
     });
@@ -113,7 +115,7 @@ export function createSupabaseAccountAdapter({client}={}){
 
   async function bootstrapAuthenticatedAccount(){
     const starter=await ensureStarterAccount();
-    const account=await loadAccountState();
+    const account=await loadAccountState({playerRunnerId:starter?.player_runner_id||null});
     return Object.freeze({starter,account});
   }
 
@@ -153,6 +155,6 @@ export function createSupabaseAccountAdapter({client}={}){
 
   return Object.freeze({
     available:true,provider:'supabase',register,signIn,signOut,getMe,getSession,
-    ensureStarterAccount,loadAccountState,loadSavedGoals,saveGoal,claimGuestRun
+    ensureStarterAccount,loadRunnerState,loadAccountState,loadSavedGoals,saveGoal,claimGuestRun
   });
 }
