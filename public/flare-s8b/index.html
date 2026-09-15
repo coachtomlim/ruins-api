@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#160f1d">
+  <link rel="icon" href="data:,">
+  <title>Dungeon Runner · S8B Account</title>
+  <link rel="stylesheet" href="account.css">
+</head>
+<body>
+  <main class="account-shell" id="app">
+    <header class="masthead">
+      <span class="eyebrow">DUNGEON RUNNER · S8B</span>
+      <strong>ACCOUNT FOUNDATION</strong>
+      <span class="staging">STAGING</span>
+    </header>
+
+    <section class="panel signed-out" id="signedOutView" aria-labelledby="welcomeTitle">
+      <div class="hero-mark" aria-hidden="true"><span>DR</span></div>
+      <div class="intro">
+        <span class="eyebrow">KEEP YOUR RUNNER</span>
+        <h1 id="welcomeTitle">Build a lasting account.</h1>
+        <p>Save goals and keep your Rookie Warrior ready for the next dungeon.</p>
+      </div>
+      <div class="auth-tabs" role="tablist" aria-label="Account action">
+        <button id="showCreate" class="tab" role="tab" aria-selected="true" type="button">CREATE ACCOUNT</button>
+        <button id="showSignIn" class="tab" role="tab" aria-selected="false" type="button">SIGN IN</button>
+      </div>
+      <form id="createForm" class="auth-form" aria-label="Create account">
+        <label><span>DISPLAY NAME</span><input name="displayName" autocomplete="name" required maxlength="64" placeholder="Your name"></label>
+        <label><span>EMAIL</span><input name="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>
+        <label><span>PASSWORD</span><input name="password" type="password" autocomplete="new-password" required minlength="8" placeholder="8+ characters"></label>
+        <button class="primary" type="submit">CREATE ACCOUNT <span>›</span></button>
+      </form>
+      <form id="signInForm" class="auth-form" aria-label="Sign in" hidden>
+        <label><span>EMAIL</span><input name="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>
+        <label><span>PASSWORD</span><input name="password" type="password" autocomplete="current-password" required placeholder="Your password"></label>
+        <button class="primary" type="submit">SIGN IN <span>›</span></button>
+      </form>
+      <p class="status" id="authStatus" role="alert" aria-live="polite"></p>
+      <p class="policy-note">Email confirmation is required. Dungeon Runner never stores your password.</p>
+    </section>
+
+    <section class="panel pending" id="pendingView" aria-labelledby="pendingTitle" hidden>
+      <div class="mail-seal" aria-hidden="true">✦</div>
+      <span class="eyebrow">ONE MORE STEP</span>
+      <h1 id="pendingTitle">CHECK YOUR EMAIL</h1>
+      <p>Confirm your email address, then sign in to continue.</p>
+      <button class="secondary" id="pendingSignIn" type="button">GO TO SIGN IN</button>
+    </section>
+
+    <section class="panel loading" id="loadingView" aria-live="polite" hidden>
+      <div class="spinner" aria-hidden="true"></div>
+      <strong>LOADING YOUR RUNNER…</strong>
+      <p>Reading authoritative account state.</p>
+    </section>
+
+    <section class="panel account-ready" id="readyView" aria-labelledby="readyTitle" hidden>
+      <div class="ready-heading">
+        <div><span class="eyebrow">FOUNDATION COMPLETE</span><h1 id="readyTitle">ACCOUNT READY</h1></div>
+        <button class="text-action" id="signOut" type="button">SIGN OUT</button>
+      </div>
+      <div class="identity-row"><div><span>PLAYER</span><strong id="displayName">—</strong><small id="accountEmail">—</small></div><div class="gold"><span>GOLD</span><strong id="goldBalance">0</strong></div></div>
+      <article class="runner-card">
+        <div class="runner-badge" aria-hidden="true">RW</div>
+        <div class="runner-info"><span>YOUR RUNNER</span><h2 id="runnerName">Rookie Warrior</h2><div class="stats"><b><span id="runnerHp">100</span><small>HP</small></b><b><span id="runnerAttack">12</span><small>ATK</small></b><b><span id="runnerDefense">1</span><small>DEF</small></b></div></div>
+      </article>
+      <section class="loadout-section" aria-labelledby="loadoutTitle"><div class="section-title"><h2 id="loadoutTitle">EQUIPMENT</h2><span>7 SLOTS</span></div><div class="loadout-grid" id="loadoutGrid"></div></section>
+      <section class="goal-card"><div><span class="eyebrow">SAVED GOAL</span><strong id="savedGoalLabel">No saved goal yet</strong></div><button class="secondary" id="saveDemoGoal" type="button">SAVE TOM · L3 · 60%</button><p class="status" id="goalStatus" role="alert" aria-live="polite"></p></section>
+      <p class="boundary-note">Account foundation only. Guest rewards remain unsettled.</p>
+    </section>
+  </main>
+  <script src="config.js"></script>
+  <script src="vendor/supabase.js"></script>
+  <script type="module" src="account-app.mjs"></script>
+</body>
+</html>
