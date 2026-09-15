@@ -10,7 +10,8 @@
   "test:s8a-preflight": "node --test tests/flare-s8*.test.mjs",
   "verify:frozen": "node tools/verify-frozen-web-trees.mjs",
   "build:flare": "npm test && node tools/flare-assets.mjs && node tools/flare-s2-verify.mjs",
-  "build:s8b-account": "node tools/flare-s8b-vendor.mjs"
+  "build:s8b-account": "node tools/flare-s8b-vendor.mjs",
+  "gate:s8b-account": "node tools/flare-s8b-account-browser-gate.mjs"
  },
  "devDependencies": {
   "@sparticuz/chromium": "138.0.2",
