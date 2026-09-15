@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#160f1d">
   <link rel="icon" href="data:,">
-  <title>Dungeon Runner · S8B Account</title>
+  <title>Dungeon Runner · S8B Runner Hub</title>
   <link rel="stylesheet" href="account.css">
 </head>
 <body>
   <main class="account-shell" id="app">
     <header class="masthead">
       <span class="eyebrow">DUNGEON RUNNER · S8B</span>
-      <strong>ACCOUNT FOUNDATION</strong>
+      <strong>RUNNER HUB</strong>
       <span class="staging">STAGING</span>
     </header>
 
@@ -21,7 +21,7 @@
       <div class="intro">
         <span class="eyebrow">KEEP YOUR RUNNER</span>
         <h1 id="welcomeTitle">Build a lasting account.</h1>
-        <p>Save goals and keep your Rookie Warrior ready for the next dungeon.</p>
+        <p>Save goals and keep your Runner ready for the next dungeon.</p>
       </div>
       <div class="auth-tabs" role="tablist" aria-label="Account action">
         <button id="showCreate" class="tab" role="tab" aria-selected="true" type="button">CREATE ACCOUNT</button>
@@ -58,17 +58,63 @@
 
     <section class="panel account-ready" id="readyView" aria-labelledby="readyTitle" hidden>
       <div class="ready-heading">
-        <div><span class="eyebrow">FOUNDATION COMPLETE</span><h1 id="readyTitle">ACCOUNT READY</h1></div>
+        <div><span class="eyebrow">ACCOUNT FOUNDATION</span><h1 id="readyTitle">ACCOUNT READY</h1></div>
         <button class="text-action" id="signOut" type="button">SIGN OUT</button>
       </div>
-      <div class="identity-row"><div><span>PLAYER</span><strong id="displayName">—</strong><small id="accountEmail">—</small></div><div class="gold"><span>GOLD</span><strong id="goldBalance">0</strong></div></div>
+
+      <div class="identity-row">
+        <div><span>PLAYER</span><strong id="displayName">—</strong><small id="accountEmail">—</small></div>
+        <div class="gold"><span>GOLD</span><strong id="goldBalance">0</strong></div>
+      </div>
+
       <article class="runner-card">
         <div class="runner-badge" aria-hidden="true">RW</div>
-        <div class="runner-info"><span>YOUR RUNNER</span><h2 id="runnerName">Rookie Warrior</h2><div class="stats"><b><span id="runnerHp">100</span><small>HP</small></b><b><span id="runnerAttack">12</span><small>ATK</small></b><b><span id="runnerDefense">1</span><small>DEF</small></b></div></div>
+        <div class="runner-info">
+          <span>YOUR RUNNER</span>
+          <h2 id="runnerName">—</h2>
+          <div class="stats">
+            <b><span id="runnerHp">—</span><small>HP</small></b>
+            <b><span id="runnerAttack">—</span><small>ATK</small></b>
+            <b><span id="runnerDefense">—</span><small>DEF</small></b>
+          </div>
+        </div>
       </article>
-      <section class="loadout-section" aria-labelledby="loadoutTitle"><div class="section-title"><h2 id="loadoutTitle">EQUIPMENT</h2><span>7 SLOTS</span></div><div class="loadout-grid" id="loadoutGrid"></div></section>
-      <section class="goal-card"><div><span class="eyebrow">SAVED GOAL</span><strong id="savedGoalLabel">No saved goal yet</strong></div><button class="secondary" id="saveDemoGoal" type="button">SAVE TOM · L3 · 60%</button><p class="status" id="goalStatus" role="alert" aria-live="polite"></p></section>
-      <p class="boundary-note">Account foundation only. Guest rewards remain unsettled.</p>
+
+      <div class="runner-tabs" role="tablist" aria-label="Runner details">
+        <button class="runner-tab" id="statsTab" type="button" role="tab" aria-selected="true">STATS</button>
+        <button class="runner-tab" id="equipmentTab" type="button" role="tab" aria-selected="false">EQUIPMENT</button>
+        <button class="runner-tab" id="armorTab" type="button" role="tab" aria-selected="false">ARMOR</button>
+      </div>
+
+      <section class="runner-panel" id="statsPanel" role="tabpanel" aria-labelledby="statsTab">
+        <div class="section-title"><h2>AUTHORITATIVE STATS</h2><span>BASE → EFFECTIVE</span></div>
+        <div class="stat-table" aria-label="Runner stats">
+          <div><span>HP</span><small>BASE <b id="baseHp">—</b></small><strong id="effectiveHp">—</strong></div>
+          <div><span>ATK</span><small>BASE <b id="baseAttack">—</b></small><strong id="effectiveAttack">—</strong></div>
+          <div><span>DEF</span><small>BASE <b id="baseDefense">—</b></small><strong id="effectiveDefense">—</strong></div>
+        </div>
+        <p class="panel-note">Effective values come from governed Runner and equipment state.</p>
+      </section>
+
+      <section class="runner-panel" id="equipmentPanel" role="tabpanel" aria-labelledby="equipmentTab" hidden>
+        <div class="section-title"><h2>EQUIPMENT</h2><span>READ ONLY</span></div>
+        <div class="equipment-grid" id="equipmentGrid"></div>
+        <p class="panel-note">Weapon and shield ownership are account-backed. Equip changes are not active yet.</p>
+      </section>
+
+      <section class="runner-panel" id="armorPanel" role="tabpanel" aria-labelledby="armorTab" hidden>
+        <div class="section-title"><h2>ARMOR</h2><span>5 SLOTS</span></div>
+        <div class="armor-grid" id="armorGrid"></div>
+        <p class="panel-note">Armor begins empty. Future pieces will be acquired one slot at a time.</p>
+      </section>
+
+      <section class="goal-card">
+        <div><span class="eyebrow">SAVED GOAL</span><strong id="savedGoalLabel">No saved goal yet</strong></div>
+        <button class="secondary" id="saveDemoGoal" type="button">SAVE TOM · L3 · 60%</button>
+        <p class="status" id="goalStatus" role="alert" aria-live="polite"></p>
+      </section>
+
+      <p class="boundary-note">Runner Hub is read only. Guest rewards, upgrades and purchases remain inactive.</p>
     </section>
   </main>
   <script src="config.js"></script>
