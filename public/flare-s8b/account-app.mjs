@@ -55,6 +55,15 @@ function gearCell(slot){
   return cell;
 }
 
+function trainingOfferCell(offer){
+  const cell=document.createElement('article');cell.className='training-offer';
+  const name=document.createElement('strong');name.textContent=offer.name;
+  const effect=document.createElement('span');effect.textContent=offer.effectLabel;
+  const price=document.createElement('small');price.textContent=offer.priceLabel;
+  cell.append(name,effect,price);
+  return cell;
+}
+
 function renderReady(account){
   const vm=buildAccountReadyViewFromBackend(account);
   activeRunnerId=vm.runner.id;
@@ -74,6 +83,7 @@ function renderReady(account){
   byId('savedGoalLabel').textContent=vm.savedGoalLabel;
   byId('equipmentGrid').replaceChildren(...vm.equipment.map(gearCell));
   byId('armorGrid').replaceChildren(...vm.armor.map(gearCell));
+  byId('trainingOffers').replaceChildren(...vm.progressionOffers.map(trainingOfferCell));
   byId('goalStatus').textContent='';
   selectRunnerPanel('stats');
   showView('readyView');

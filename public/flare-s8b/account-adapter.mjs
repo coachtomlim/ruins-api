@@ -1,6 +1,6 @@
 export const ACCOUNT_CAPABILITIES=Object.freeze([
   'register','signIn','signOut','getMe','getSession','ensureStarterAccount',
-  'loadRunnerState','loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
+  'loadRunnerState','loadProgressionOffers','loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
 ]);
 
 const clean=value=>String(value??'').trim();
@@ -53,6 +53,7 @@ export function unavailableAccountAdapter(){
     getSession:unavailable,
     ensureStarterAccount:unavailable,
     loadRunnerState:unavailable,
+    loadProgressionOffers:unavailable,
     loadAccountState:unavailable,
     loadSavedGoals:unavailable,
     saveGoal:unavailable,
@@ -96,6 +97,14 @@ export function createSupabaseAccountAdapter({client}={}){
     return resultData('loadSavedGoals',await client.from('saved_goal').select('*').order('created_at',{ascending:false}))||[];
   }
 
+  async function loadProgressionOffers(){
+    const rows=resultData('loadProgressionOffers',await client.from('progression_offer_catalog')
+      .select('catalog_version,offer_id,kind,stat_key,stat_amount,gold_cost')
+      .eq('active',true)
+      .order('gold_cost',{ascending:true}))||[];
+    return Object.freeze(rows.map(row=>Object.freeze({...row})));
+  }
+
   async function loadAccountState({playerRunnerId=null}={}){
     const me=await getMe();
     if(!me)throw new Error('AUTH_REQUIRED');
@@ -103,12 +112,14 @@ export function createSupabaseAccountAdapter({client}={}){
     const runnerState=await loadRunnerState(playerRunnerId);
     const ledger=resultData('loadWalletLedger',await client.from('wallet_ledger').select('delta_gold').eq('player_id',me.id))||[];
     const savedGoals=await loadSavedGoals();
+    const progressionOffers=await loadProgressionOffers();
     const goldBalance=ledger.reduce((sum,row)=>sum+(Number(row?.delta_gold)||0),0);
     return Object.freeze({
       identity:Object.freeze({id:me.id,email:me.email}),
       profile:Object.freeze({...profile}),
       runnerState,
       savedGoals:Object.freeze(savedGoals.map(row=>Object.freeze({...row}))),
+      progressionOffers,
       goldBalance
     });
   }
@@ -155,6 +166,6 @@ export function createSupabaseAccountAdapter({client}={}){
 
   return Object.freeze({
     available:true,provider:'supabase',register,signIn,signOut,getMe,getSession,
-    ensureStarterAccount,loadRunnerState,loadAccountState,loadSavedGoals,saveGoal,claimGuestRun
+    ensureStarterAccount,loadRunnerState,loadProgressionOffers,loadAccountState,loadSavedGoals,saveGoal,claimGuestRun
   });
 }

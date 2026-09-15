@@ -2,6 +2,7 @@ const SLOT_KEYS=Object.freeze(['weapon','shield','head','chest','hands','legs','
 const SLOT_LABELS=Object.freeze({weapon:'WEAPON',shield:'SHIELD',head:'HEAD',chest:'CHEST',hands:'HANDS',legs:'LEGS',feet:'FEET'});
 const EQUIPMENT_SLOTS=Object.freeze(['weapon','shield']);
 const ARMOR_SLOTS=Object.freeze(['head','chest','hands','legs','feet']);
+const STAT_LABELS=Object.freeze({hp:'HP',attack:'ATK',defense:'DEF'});
 
 const clean=value=>String(value??'').trim();
 
@@ -24,6 +25,29 @@ function modifierLabel(modifiers){
     if(value!==0)parts.push(`${value>0?'+':''}${value} ${label}`);
   }
   return parts.join(' · ')||'NO STAT BONUS';
+}
+
+function offerName(offerId){
+  return offerId.split('-').filter(Boolean).map(part=>part.length===1?part.toUpperCase():`${part[0].toUpperCase()}${part.slice(1)}`).join(' ');
+}
+
+export function normalizeProgressionOffers(rows){
+  if(!Array.isArray(rows))throw new Error('AUTHORITATIVE_PROGRESSION_OFFERS_REQUIRED');
+  const seen=new Set();
+  return Object.freeze(rows.map(raw=>{
+    const catalogVersion=clean(raw?.catalog_version),offerId=clean(raw?.offer_id);
+    const kind=clean(raw?.kind).toUpperCase(),statKey=clean(raw?.stat_key).toLowerCase();
+    const statAmount=Number(raw?.stat_amount),goldCost=Number(raw?.gold_cost);
+    if(!catalogVersion||!offerId||seen.has(`${catalogVersion}:${offerId}`))throw new Error('AUTHORITATIVE_PROGRESSION_OFFER_ID_INVALID');
+    if(kind!=='STAT'||!STAT_LABELS[statKey]||!Number.isInteger(statAmount)||statAmount<=0)throw new Error(`AUTHORITATIVE_PROGRESSION_OFFER_INVALID:${offerId}`);
+    if(!Number.isInteger(goldCost)||goldCost<=0)throw new Error(`AUTHORITATIVE_PROGRESSION_PRICE_INVALID:${offerId}`);
+    seen.add(`${catalogVersion}:${offerId}`);
+    return Object.freeze({
+      catalogVersion,offerId,name:offerName(offerId),kind,statKey,statAmount,goldCost,
+      effectLabel:`+${statAmount} ${STAT_LABELS[statKey]}`,
+      priceLabel:`${goldCost} Gold`
+    });
+  }));
 }
 
 export function normalizeAuthoritativeRunnerState(state){
@@ -90,6 +114,7 @@ export function buildAccountReadyViewFromBackend(account){
     ?`${latestGoal.source_sender_name||'Friend'} · ${latestGoal.source_runner_name||latestGoal.source_runner_id} · ${latestGoal.target_hp}% HP`
     :'No saved goal yet';
   const gearBySlot=Object.fromEntries(runnerState.gear.map(row=>[row.slot,row]));
+  const progressionOffers=normalizeProgressionOffers(account.progressionOffers??[]);
   return Object.freeze({
     title:'ACCOUNT READY',
     displayName:String(account.profile.display_name||account.identity?.email||'Player'),
@@ -108,6 +133,7 @@ export function buildAccountReadyViewFromBackend(account){
     gear:runnerState.gear,
     equipment:Object.freeze(EQUIPMENT_SLOTS.map(slot=>gearBySlot[slot])),
     armor:Object.freeze(ARMOR_SLOTS.map(slot=>gearBySlot[slot])),
+    progressionOffers,
     panels:Object.freeze(['stats','equipment','armor']),
     actions:Object.freeze(['BUILD YOUR CHALLENGE','UPGRADE YOUR RUNNER'])
   });

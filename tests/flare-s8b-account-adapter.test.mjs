@@ -33,7 +33,12 @@ function fixtureClient({signupSession=null,runnerState=RUNNER_STATE}={}){
   const tables={
     player_profile:[{id:user.id,display_name:'Ada'}],
     wallet_ledger:[],
-    saved_goal:[{id:'goal-a',owner_player_id:user.id,source_sender_name:'Tom',source_runner_id:'warrior-l3',source_runner_name:'Tough Warrior',source_runner_level:3,target_hp:60}]
+    saved_goal:[{id:'goal-a',owner_player_id:user.id,source_sender_name:'Tom',source_runner_id:'warrior-l3',source_runner_name:'Tough Warrior',source_runner_level:3,target_hp:60}],
+    progression_offer_catalog:[
+      {catalog_version:'s8b-launch-progression-001',offer_id:'endurance-i',kind:'STAT',stat_key:'hp',stat_amount:5,gold_cost:20},
+      {catalog_version:'s8b-launch-progression-001',offer_id:'strike-i',kind:'STAT',stat_key:'attack',stat_amount:1,gold_cost:30},
+      {catalog_version:'s8b-launch-progression-001',offer_id:'guard-i',kind:'STAT',stat_key:'defense',stat_amount:1,gold_cost:40}
+    ]
   };
   return {
     calls,user,session,
@@ -67,7 +72,7 @@ test('unconfigured adapter is explicit and fails closed',async()=>{
 test('adapter contract requires authoritative Runner capability',()=>{
   assert.deepEqual(ACCOUNT_CAPABILITIES,[
     'register','signIn','signOut','getMe','getSession','ensureStarterAccount',
-    'loadRunnerState','loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
+    'loadRunnerState','loadProgressionOffers','loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
   ]);
   assert.throws(()=>validateAccountAdapter({register(){}}),/missing signIn/i);
 });
@@ -118,6 +123,8 @@ test('sign in provisions starter then maps authoritative account state',async()=
   assert.equal(result.account.runnerState.runner_name,'Rookie Warrior');
   assert.deepEqual(result.account.runnerState.effective_stats,{hp:100,attack:12,defense:1});
   assert.equal(result.account.goldBalance,0);
+  assert.equal(result.account.progressionOffers.length,3);
+  assert.deepEqual(result.account.progressionOffers.map(row=>row.gold_cost),[20,30,40]);
   const starterIndex=client.calls.findIndex(call=>call[0]==='rpc'&&call[1]==='ensure_starter_account');
   const runnerIndex=client.calls.findIndex(call=>call[0]==='rpc'&&call[1]==='get_account_runner_state');
   assert.ok(starterIndex>=0&&runnerIndex>starterIndex,'starter RPC must precede authoritative Runner projection');
