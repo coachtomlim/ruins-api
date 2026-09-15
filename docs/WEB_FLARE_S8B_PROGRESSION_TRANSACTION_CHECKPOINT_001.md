@@ -29,17 +29,35 @@ Added:
 - read-only RLS for own purchase/stat-event history
 - explicit no-client-access policy for challengeability envelope
 
-No concrete catalog version, offer or challengeability row is active in staging.
+No concrete catalog version or offer is active in staging.
 
-Post-proof staging authority remains deliberately empty:
+The verified launch-eligible `PREFERRED` envelope is now materialized as server authority for calibration version:
+
+`s8b-economy-calibration-001`
+
+It contains exactly 9 states from the verified 84-state matrix:
+
+- `100/12/1` — delta 1.8
+- `100/12/2` — delta 6.5
+- `100/13/1` — delta 3.5
+- `105/12/1` — delta 0.7
+- `105/12/2` — delta 10.0
+- `105/13/1` — delta 7.1
+- `110/12/1` — delta 3.6
+- `115/12/1` — delta 7.0
+- `120/12/1` — delta 10.0
+
+EDGE and OUTSIDE states are intentionally absent from the purchase-eligible envelope.
+
+Current staging progression state:
 
 - active/draft progression catalog versions: 0
 - progression offers: 0
-- challengeability envelope rows: 0
+- challengeability envelope rows: 9
 - progression purchases: 0
 - stat upgrade events: 0
 
-Therefore product spending remains fail-closed.
+Therefore product spending remains fail-closed because no active catalog or offer exists.
 
 ## Accepted stat-unit enforcement
 
@@ -144,18 +162,22 @@ Verified in that transaction:
 - anonymous role cannot execute the purchase RPC;
 - authenticated role can execute the purchase RPC.
 
-The proof returned `PASS` and rollback restored staging to:
+The proof returned `PASS` and rollback restored all synthetic player/test state to zero.
+
+The later envelope materialization is governed infrastructure rather than proof residue.
+
+Current durable staging counts are:
 
 - Auth users: 0
 - player profiles: 0
 - player Runners: 0
-- owned items: 0
+- owned player items: 0
 - loadouts: 0
 - progression purchases: 0
 - stat events: 0
 - progression catalog versions: 0
 - progression offers: 0
-- envelope rows: 0
+- PREFERRED envelope rows: 9
 - governed Runner templates: 1
 - governed starter items: 2
 
@@ -189,6 +211,6 @@ This checkpoint does not activate:
 
 ## Next decision/design boundary
 
-The transaction foundation is ready for a first concrete catalog, but the Owner must still approve exact offer prices and any concrete non-starter item modifier before activation.
+The transaction foundation and PREFERRED envelope are ready for a first concrete catalog, but the Owner must still approve exact offer prices and any concrete non-starter item modifier before activation.
 
-The next design task should produce the smallest useful launch catalog recommendation, constrained by the accepted price bands and PREFERRED challengeability envelope, without activating it until Owner approval.
+The next design task should produce the smallest useful launch catalog recommendation, constrained by the accepted price bands and the nine-state PREFERRED envelope, without activating it until Owner approval.
