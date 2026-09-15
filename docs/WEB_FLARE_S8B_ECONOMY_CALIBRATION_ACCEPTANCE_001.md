@@ -2,21 +2,17 @@
 
 ## Decision
 
-`S8B ECONOMY CALIBRATION VERIFY: ACCEPTED`
+`OD-05 CALIBRATION POLICY: OWNER ACCEPTED`
 
 Branch:
 
 `work/web-flare-s8b-economy-calibration-001`
 
-Verified source/tool authority:
+Verified calibration authority before Owner acceptance:
 
 `8efd295e24a37fa65b4c852d44db12a39d3881e6`
 
-## Independent PM audit
-
-The PM independently reread the remote branch and confirmed it remained exactly at the expected verification SHA before recording this acceptance.
-
-The calibration verification returned:
+## Verified evidence
 
 - focused tests: `3/3 PASS`
 - full suite: `327/327 PASS`
@@ -29,7 +25,7 @@ The calibration verification returned:
 - HostGator/Vercel/main: untouched
 - worktree: clean
 
-Verified calibration anchor states:
+Verified anchor states:
 
 - `100/12/1` -> `PREFERRED`
 - `120/12/1` -> `PREFERRED` boundary
@@ -38,28 +34,49 @@ Verified calibration anchor states:
 - `120/13/1` -> `OUTSIDE`
 - `110/13/2` -> `OUTSIDE`
 
-## Acceptance boundary
+## Accepted OD-05 calibration policy
 
-This accepts the calibration evidence and tooling only.
+The Owner accepted the following governing policy for S8B progression design:
 
-It does not yet accept or activate the recommended OD-05 policy values, Gold bands, purchase catalog, progression caps, Supabase purchase mutations, reward settlement, or deeper dungeon-content changes.
+1. atomic permanent-stat units are `+5 HP`, `+1 ATK`, and `+1 DEF`;
+2. the fixed Dungeon Budget remains `100`;
+3. launch progression offers must keep the projected effective Runner state inside the versioned `PREFERRED` challengeability envelope;
+4. cumulative projected Runner power governs eligibility, not independent HP/ATK/DEF maxima;
+5. armor and permanent training share the same cumulative power envelope;
+6. armor slots do not automatically receive `+1 DEF` each;
+7. deeper progression requires stronger governed dungeon content rather than silently increasing Dungeon Budget;
+8. candidate Gold bands remain pacing guidance only until concrete offers are accepted:
+   - `+5 HP` equivalent: 20-25 Gold
+   - `+1 ATK` equivalent: 25-35 Gold
+   - `+1 DEF` equivalent: 35-50 Gold
+   - first modest armor piece: 25-40 Gold.
 
-Owner approval is still required before the OD-05 recommendation becomes governing design authority.
+## Still unresolved
 
-## Recommended Owner policy awaiting approval
+This policy acceptance does not yet select or activate:
 
-1. Atomic stat units: `+5 HP`, `+1 ATK`, `+1 DEF`.
-2. Launch progression offers must keep projected effective Runner state inside the `PREFERRED` challengeability envelope under the fixed `100` Dungeon Budget.
-3. Candidate Gold bands remain pacing guidance only until concrete catalog/play evidence:
-   - `+5 HP`: 20-25 Gold
-   - `+1 ATK`: 25-35 Gold
-   - `+1 DEF`: 35-50 Gold
-   - modest first armor piece: 25-40 Gold
-4. Armor and stat training share the same cumulative power envelope; do not default every armor slot to `+1 DEF`.
-5. Deeper progression requires stronger governed dungeon content rather than silently raising the Dungeon Budget.
+- exact Gold price for a concrete offer;
+- exact later armor/item catalog;
+- equipment upgrade tiers;
+- displayed Runner-level progression rules;
+- exact acquisition mix across purchase/drop/reward/future trade;
+- reward settlement OD-01/OD-02;
+- persistent challenge OD-04/OD-06/OD-07.
 
-## Next gate
+## Authorized next foundation work
 
-Owner decision: ACCEPT / REVISE the OD-05 calibration policy.
+A secure fail-closed progression transaction foundation may now be implemented without activating any concrete offer.
 
-If accepted, the next bounded design slice is the first versioned progression catalog and server-side purchase transaction design, while reward settlement remains separately gated by OD-01/OD-02.
+Required properties:
+
+- versioned server-owned offer catalog;
+- no active offer until exact modifier and exact Gold price are accepted;
+- server-authoritative and idempotent wallet debit;
+- per-player serialization so balance cannot go negative under concurrency;
+- server-side Runner ownership validation;
+- append-only/auditable stat upgrade events;
+- equipment purchase creates ownership but does not imply equip;
+- challengeability envelope must authorize the projected resulting effective state before a stat purchase can commit;
+- absent catalog/envelope data fails closed;
+- browser cannot directly mutate progression authority;
+- S8A remains frozen.
