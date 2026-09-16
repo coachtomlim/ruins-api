@@ -45,6 +45,8 @@ test('account UI calls governed goal and Runner paths and does not activate rewa
   assert.doesNotMatch(app,/purchase_progression_offer|\.insert\s*\(/i);
   assert.match(app,/vm\.progressionOffers\.map\(trainingOfferCell\)/);
   assert.match(adapter,/from\('progression_offer_catalog'\)/);
+  assert.match(adapter,/client\.rpc\('purchase_progression_offer'/);
+  assert.doesNotMatch(adapter,/\.from\(['"](?:progression_purchase|runner_stat_upgrade_event|wallet_ledger)['"]\).*\.(?:insert|update|upsert|delete)/is);
   assert.match(adapter,/get_account_runner_state/);
   assert.match(adapter,/PRODUCT_REWARD_CLAIM_NOT_ENABLED/);
   assert.doesNotMatch(view,/rookieStarterSnapshot|ITEM_CATALOG|wooden-club|wooden-shield/);

@@ -54,6 +54,7 @@ function fixtureClient({signupSession=null,runnerState=RUNNER_STATE}={}){
       if(name==='ensure_starter_account')return {data:[{player_runner_id:'runner-a',starter_runner_template_id:'warrior-l1',weapon_ownership_id:'club-own',shield_ownership_id:'shield-own',starter_created:true}],error:null};
       if(name==='get_account_runner_state')return {data:runnerState,error:null};
       if(name==='save_account_goal')return {data:[{saved_goal_id:'goal-a',runner_id:'warrior-l3',runner_name:'Tough Warrior',runner_level:3,target_hp:60}],error:null};
+      if(name==='purchase_progression_offer')return {data:[{progression_purchase_id:'purchase-a',ledger_entry_id:'ledger-a',catalog_version:'s8b-launch-progression-001',offer_id:args.p_offer_id,gold_spent:20,balance:80,duplicate:false,stat_event_id:'event-a',ownership_id:null}],error:null};
       return {data:null,error:{message:'unexpected rpc'}};
     }
   };
@@ -72,7 +73,7 @@ test('unconfigured adapter is explicit and fails closed',async()=>{
 test('adapter contract requires authoritative Runner capability',()=>{
   assert.deepEqual(ACCOUNT_CAPABILITIES,[
     'register','signIn','signOut','getMe','getSession','ensureStarterAccount',
-    'loadRunnerState','loadProgressionOffers','loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
+    'loadRunnerState','loadProgressionOffers','purchaseProgressionOffer','loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
   ]);
   assert.throws(()=>validateAccountAdapter({register(){}}),/missing signIn/i);
 });
@@ -142,6 +143,36 @@ test('saved goal uses only the governed RPC and reads goals back',async()=>{
     'rpc','save_account_goal',{p_source_sender_name:'Tom',p_runner_id:'warrior-l3',p_target_hp:60}
   ]);
   assert.equal(client.calls.some(call=>call[0]==='insert'),false);
+});
+
+test('progression purchase uses only the governed RPC and returns its authoritative result',async()=>{
+  const client=fixtureClient();
+  const adapter=createSupabaseAccountAdapter({client});
+  const result=await adapter.purchaseProgressionOffer({
+    playerRunnerId:'runner-a',offerId:'endurance-i',idempotencyKey:'proof-key-a'
+  });
+  assert.equal(result.progression_purchase_id,'purchase-a');
+  assert.equal(result.ledger_entry_id,'ledger-a');
+  assert.equal(result.balance,80);
+  assert.deepEqual(client.calls[0],[
+    'rpc','purchase_progression_offer',{
+      p_player_runner_id:'runner-a',p_offer_id:'endurance-i',p_idempotency_key:'proof-key-a'
+    }
+  ]);
+  assert.equal(client.calls.some(call=>['insert','update','upsert','delete'].includes(call[0])),false);
+});
+
+test('progression purchase propagates governed RPC errors without client decisions',async()=>{
+  const client=fixtureClient();
+  client.rpc=async(name,args)=>{
+    client.calls.push(['rpc',name,args]);
+    return {data:null,error:{code:'P0001',message:'PROJECTED_RUNNER_OUTSIDE_PREFERRED_ENVELOPE'}};
+  };
+  const adapter=createSupabaseAccountAdapter({client});
+  await assert.rejects(
+    ()=>adapter.purchaseProgressionOffer({playerRunnerId:'runner-a',offerId:'guard-i',idempotencyKey:'proof-key-b'}),
+    error=>error.name==='AccountAdapterError'&&error.operation==='purchaseProgressionOffer'&&error.code==='P0001'&&/PROJECTED_RUNNER_OUTSIDE_PREFERRED_ENVELOPE/.test(error.message)
+  );
 });
 
 test('sign out is local and product reward claim remains disabled',async()=>{

@@ -1,6 +1,6 @@
 export const ACCOUNT_CAPABILITIES=Object.freeze([
   'register','signIn','signOut','getMe','getSession','ensureStarterAccount',
-  'loadRunnerState','loadProgressionOffers','loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
+  'loadRunnerState','loadProgressionOffers','purchaseProgressionOffer','loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
 ]);
 
 const clean=value=>String(value??'').trim();
@@ -54,6 +54,7 @@ export function unavailableAccountAdapter(){
     ensureStarterAccount:unavailable,
     loadRunnerState:unavailable,
     loadProgressionOffers:unavailable,
+    purchaseProgressionOffer:unavailable,
     loadAccountState:unavailable,
     loadSavedGoals:unavailable,
     saveGoal:unavailable,
@@ -103,6 +104,19 @@ export function createSupabaseAccountAdapter({client}={}){
       .eq('active',true)
       .order('gold_cost',{ascending:true}))||[];
     return Object.freeze(rows.map(row=>Object.freeze({...row})));
+  }
+
+  async function purchaseProgressionOffer({playerRunnerId,offerId,idempotencyKey}={}){
+    const runnerId=clean(playerRunnerId),authoritativeOfferId=clean(offerId),key=clean(idempotencyKey);
+    if(!runnerId||!authoritativeOfferId||!key)throw new Error('RUNNER_OFFER_IDEMPOTENCY_REQUIRED');
+    const rows=resultData('purchaseProgressionOffer',await client.rpc('purchase_progression_offer',{
+      p_player_runner_id:runnerId,
+      p_offer_id:authoritativeOfferId,
+      p_idempotency_key:key
+    }))||[];
+    const purchase=rows[0]??null;
+    if(!purchase)throw new Error('AUTHORITATIVE_PURCHASE_RESULT_REQUIRED');
+    return Object.freeze({...purchase});
   }
 
   async function loadAccountState({playerRunnerId=null}={}){
@@ -166,6 +180,6 @@ export function createSupabaseAccountAdapter({client}={}){
 
   return Object.freeze({
     available:true,provider:'supabase',register,signIn,signOut,getMe,getSession,
-    ensureStarterAccount,loadRunnerState,loadProgressionOffers,loadAccountState,loadSavedGoals,saveGoal,claimGuestRun
+    ensureStarterAccount,loadRunnerState,loadProgressionOffers,purchaseProgressionOffer,loadAccountState,loadSavedGoals,saveGoal,claimGuestRun
   });
 }
