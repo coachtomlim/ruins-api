@@ -50,6 +50,21 @@ export function normalizeProgressionOffers(rows){
   }));
 }
 
+export function progressionOfferState(offer,goldBalance){
+  if(offer?.purchased)return Object.freeze({state:'purchased',label:'PURCHASED',disabled:true});
+  if(Number(goldBalance)<Number(offer?.goldCost))return Object.freeze({state:'insufficient',label:'NOT ENOUGH GOLD',disabled:true});
+  return Object.freeze({state:'available',label:'BUY UPGRADE',disabled:false});
+}
+
+export function progressionPurchaseMessage(error){
+  const message=clean(error?.message||error).toUpperCase();
+  if(message.includes('OFFER_ALREADY_PURCHASED'))return Object.freeze({kind:'known',message:'You already own this upgrade.'});
+  if(message.includes('PROJECTED_RUNNER_OUTSIDE_PREFERRED_ENVELOPE'))return Object.freeze({kind:'known',message:'This upgrade is not available for your current Runner build.'});
+  if(message.includes('INSUFFICIENT_GOLD'))return Object.freeze({kind:'known',message:'Not enough Gold for this upgrade.'});
+  if(message.includes('IDEMPOTENCY_CONFLICT'))return Object.freeze({kind:'known',message:'This purchase request no longer matches the selected upgrade. Close and try again.'});
+  return Object.freeze({kind:'unknown',message:'Purchase status is uncertain. Retry this purchase or reload your Runner.'});
+}
+
 export function normalizeAuthoritativeRunnerState(state){
   if(!state||typeof state!=='object'||Array.isArray(state))throw new Error('AUTHORITATIVE_RUNNER_STATE_REQUIRED');
   const playerRunnerId=clean(state.player_runner_id);
@@ -114,7 +129,14 @@ export function buildAccountReadyViewFromBackend(account){
     ?`${latestGoal.source_sender_name||'Friend'} · ${latestGoal.source_runner_name||latestGoal.source_runner_id} · ${latestGoal.target_hp}% HP`
     :'No saved goal yet';
   const gearBySlot=Object.fromEntries(runnerState.gear.map(row=>[row.slot,row]));
-  const progressionOffers=normalizeProgressionOffers(account.progressionOffers??[]);
+  const purchases=Array.isArray(account.progressionPurchases)?account.progressionPurchases:[];
+  const purchasedKeys=new Set(purchases
+    .filter(row=>clean(row?.player_runner_id)===runnerState.playerRunnerId)
+    .map(row=>`${clean(row?.catalog_version)}:${clean(row?.offer_id)}`));
+  const progressionOffers=Object.freeze(normalizeProgressionOffers(account.progressionOffers??[]).map(offer=>{
+    const purchased=purchasedKeys.has(`${offer.catalogVersion}:${offer.offerId}`);
+    return Object.freeze({...offer,purchased,action:progressionOfferState({...offer,purchased},account.goldBalance)});
+  }));
   return Object.freeze({
     title:'ACCOUNT READY',
     displayName:String(account.profile.display_name||account.identity?.email||'Player'),

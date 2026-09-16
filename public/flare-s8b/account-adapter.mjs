@@ -1,6 +1,6 @@
 export const ACCOUNT_CAPABILITIES=Object.freeze([
   'register','signIn','signOut','getMe','getSession','ensureStarterAccount',
-  'loadRunnerState','loadProgressionOffers','purchaseProgressionOffer','loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
+  'loadRunnerState','loadProgressionOffers','loadProgressionPurchases','purchaseProgressionOffer','loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
 ]);
 
 const clean=value=>String(value??'').trim();
@@ -54,6 +54,7 @@ export function unavailableAccountAdapter(){
     ensureStarterAccount:unavailable,
     loadRunnerState:unavailable,
     loadProgressionOffers:unavailable,
+    loadProgressionPurchases:unavailable,
     purchaseProgressionOffer:unavailable,
     loadAccountState:unavailable,
     loadSavedGoals:unavailable,
@@ -106,6 +107,15 @@ export function createSupabaseAccountAdapter({client}={}){
     return Object.freeze(rows.map(row=>Object.freeze({...row})));
   }
 
+  async function loadProgressionPurchases(playerRunnerId=null){
+    let request=client.from('progression_purchase')
+      .select('player_runner_id,catalog_version,offer_id,created_at');
+    const runnerId=clean(playerRunnerId);
+    if(runnerId)request=request.eq('player_runner_id',runnerId);
+    const rows=resultData('loadProgressionPurchases',await request.order('created_at',{ascending:false}))||[];
+    return Object.freeze(rows.map(row=>Object.freeze({...row})));
+  }
+
   async function purchaseProgressionOffer({playerRunnerId,offerId,idempotencyKey}={}){
     const runnerId=clean(playerRunnerId),authoritativeOfferId=clean(offerId),key=clean(idempotencyKey);
     if(!runnerId||!authoritativeOfferId||!key)throw new Error('RUNNER_OFFER_IDEMPOTENCY_REQUIRED');
@@ -127,6 +137,7 @@ export function createSupabaseAccountAdapter({client}={}){
     const ledger=resultData('loadWalletLedger',await client.from('wallet_ledger').select('delta_gold').eq('player_id',me.id))||[];
     const savedGoals=await loadSavedGoals();
     const progressionOffers=await loadProgressionOffers();
+    const progressionPurchases=await loadProgressionPurchases(runnerState.player_runner_id);
     const goldBalance=ledger.reduce((sum,row)=>sum+(Number(row?.delta_gold)||0),0);
     return Object.freeze({
       identity:Object.freeze({id:me.id,email:me.email}),
@@ -134,6 +145,7 @@ export function createSupabaseAccountAdapter({client}={}){
       runnerState,
       savedGoals:Object.freeze(savedGoals.map(row=>Object.freeze({...row}))),
       progressionOffers,
+      progressionPurchases,
       goldBalance
     });
   }
@@ -180,6 +192,6 @@ export function createSupabaseAccountAdapter({client}={}){
 
   return Object.freeze({
     available:true,provider:'supabase',register,signIn,signOut,getMe,getSession,
-    ensureStarterAccount,loadRunnerState,loadProgressionOffers,purchaseProgressionOffer,loadAccountState,loadSavedGoals,saveGoal,claimGuestRun
+    ensureStarterAccount,loadRunnerState,loadProgressionOffers,loadProgressionPurchases,purchaseProgressionOffer,loadAccountState,loadSavedGoals,saveGoal,claimGuestRun
   });
 }

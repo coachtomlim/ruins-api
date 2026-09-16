@@ -1,11 +1,14 @@
 import {buildAccountReadyViewFromBackend} from './account-ready-view.mjs';
 import {createBrowserAccountAdapter} from './supabase-browser.mjs';
+import {createStatPurchaseFlow} from './stat-purchase-flow.mjs';
 
 const byId=id=>document.getElementById(id);
 const views=['signedOutView','pendingView','loadingView','readyView'];
 const runnerPanels=['stats','equipment','armor'];
 let adapter=null;
 let activeRunnerId=null;
+let readyViewModel=null;
+let purchaseFlow=null;
 
 function showView(id){for(const view of views)byId(view).hidden=view!==id}
 
@@ -60,12 +63,64 @@ function trainingOfferCell(offer){
   const name=document.createElement('strong');name.textContent=offer.name;
   const effect=document.createElement('span');effect.textContent=offer.effectLabel;
   const price=document.createElement('small');price.textContent=offer.priceLabel;
-  cell.append(name,effect,price);
+  const button=document.createElement('button');button.type='button';button.className='purchase-action';
+  button.textContent=offer.action.label;button.disabled=offer.action.disabled;
+  button.dataset.offerId=offer.offerId;button.dataset.state=offer.action.state;
+  button.addEventListener('click',()=>openPurchaseConfirmation(offer));
+  cell.append(name,effect,price,button);
   return cell;
+}
+
+function closePurchaseConfirmation(){
+  purchaseFlow?.cancel();
+  byId('purchaseDialog').hidden=true;
+}
+
+function openPurchaseConfirmation(offer){
+  if(!purchaseFlow?.begin(offer,activeRunnerId))return;
+  byId('confirmOfferName').textContent=offer.name;
+  byId('confirmOfferEffect').textContent=offer.effectLabel;
+  byId('confirmOfferCost').textContent=offer.priceLabel;
+  byId('confirmBalance').textContent=String(readyViewModel.goldBalance);
+  byId('confirmRemaining').textContent=`${readyViewModel.goldBalance-offer.goldCost} Gold`;
+  byId('confirmPurchase').textContent='CONFIRM PURCHASE';
+  byId('confirmPurchase').disabled=false;
+  byId('cancelPurchase').disabled=false;
+  byId('purchaseDialogStatus').textContent='';
+  byId('purchaseStatus').textContent='';
+  byId('purchaseDialog').hidden=false;
+  byId('confirmPurchase').focus();
+}
+
+async function refreshReady(){
+  renderReady(await adapter.loadAccountState({playerRunnerId:activeRunnerId}));
+}
+
+async function confirmPurchase(){
+  const button=byId('confirmPurchase');
+  if(purchaseFlow.inFlight)return;
+  button.disabled=true;button.textContent='PROCESSING…';
+  byId('cancelPurchase').disabled=true;
+  byId('purchaseDialogStatus').textContent='Waiting for authoritative account state…';
+  const result=await purchaseFlow.confirm();
+  if(result.status==='success'){
+    byId('purchaseStatus').textContent='RUNNER UPGRADED';
+    byId('purchaseDialog').hidden=true;
+    return;
+  }
+  if(result.status==='error'){
+    byId('purchaseStatus').textContent=result.feedback.message;
+    if(result.feedback.kind==='unknown'){
+      button.disabled=false;button.textContent='RETRY PURCHASE';
+      byId('cancelPurchase').disabled=false;
+      byId('purchaseDialogStatus').textContent=result.feedback.message;
+    }else byId('purchaseDialog').hidden=true;
+  }
 }
 
 function renderReady(account){
   const vm=buildAccountReadyViewFromBackend(account);
+  readyViewModel=vm;
   activeRunnerId=vm.runner.id;
   byId('displayName').textContent=vm.displayName;
   byId('accountEmail').textContent=vm.email;
@@ -102,6 +157,8 @@ byId('showCreate').addEventListener('click',()=>selectAuth('create'));
 byId('showSignIn').addEventListener('click',()=>selectAuth('signin'));
 byId('pendingSignIn').addEventListener('click',()=>selectAuth('signin'));
 for(const panel of runnerPanels)byId(`${panel}Tab`).addEventListener('click',()=>selectRunnerPanel(panel));
+byId('cancelPurchase').addEventListener('click',closePurchaseConfirmation);
+byId('confirmPurchase').addEventListener('click',confirmPurchase);
 
 byId('createForm').addEventListener('submit',async event=>{
   event.preventDefault();
@@ -140,6 +197,7 @@ byId('signOut').addEventListener('click',async()=>{
 
 try{
   adapter=createBrowserAccountAdapter();
+  purchaseFlow=createStatPurchaseFlow({purchase:payload=>adapter.purchaseProgressionOffer(payload),refresh:refreshReady});
   await restoreSession();
 }catch(error){
   selectAuth('create');

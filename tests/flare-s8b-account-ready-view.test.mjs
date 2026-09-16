@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {buildAccountReadyViewFromBackend,normalizeAuthoritativeRunnerState} from '../public/flare-s8b/account-ready-view.mjs';
+import {buildAccountReadyViewFromBackend,normalizeAuthoritativeRunnerState,progressionOfferState,progressionPurchaseMessage} from '../public/flare-s8b/account-ready-view.mjs';
 
 function runnerState(overrides={}){
   return {
@@ -23,6 +23,11 @@ function account(state=runnerState()){
     profile:{id:'player-a',display_name:'Ada'},
     runnerState:state,
     savedGoals:[{source_sender_name:'Tom',source_runner_name:'Tough Warrior',target_hp:60}],
+    progressionOffers:[
+      {catalog_version:'launch',offer_id:'endurance-i',kind:'STAT',stat_key:'hp',stat_amount:5,gold_cost:20},
+      {catalog_version:'launch',offer_id:'strike-i',kind:'STAT',stat_key:'attack',stat_amount:1,gold_cost:30}
+    ],
+    progressionPurchases:[],
     goldBalance:0
   };
 }
@@ -42,6 +47,21 @@ test('backend Runner Hub uses authoritative stats and gear without recalculation
   assert.equal(vm.equipment[1].modifierLabel,'+1 DEF');
   assert.deepEqual(vm.armor.map(row=>row.slot),['head','chest','hands','legs','feet']);
   assert.ok(vm.armor.every(row=>row.equipped===false));
+});
+
+test('training actions derive from authoritative Gold and own purchase history',()=>{
+  const source=account();source.goldBalance=20;
+  source.progressionPurchases=[{player_runner_id:'runner-a',catalog_version:'launch',offer_id:'strike-i'}];
+  const vm=buildAccountReadyViewFromBackend(source);
+  assert.deepEqual(vm.progressionOffers.map(row=>row.action.state),['available','purchased']);
+  assert.equal(progressionOfferState(vm.progressionOffers[0],0).state,'insufficient');
+});
+
+test('governed purchase failures map to friendly state without hiding unknown outcomes',()=>{
+  assert.equal(progressionPurchaseMessage(new Error('INSUFFICIENT_GOLD')).message,'Not enough Gold for this upgrade.');
+  assert.equal(progressionPurchaseMessage(new Error('PROJECTED_RUNNER_OUTSIDE_PREFERRED_ENVELOPE')).kind,'known');
+  assert.equal(progressionPurchaseMessage(new Error('network lost')).kind,'unknown');
+  assert.match(progressionPurchaseMessage(new Error('network lost')).message,/uncertain/i);
 });
 
 test('effective stats are accepted exactly from backend even when they do not match client arithmetic',()=>{
