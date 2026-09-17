@@ -71,3 +71,26 @@ test('mobile controls meet minimum target and config contains no credential',asy
   assert.doesNotMatch(config,/sb_(?:publishable|secret)_|service_role/i);
   assert.equal(version.trim(),'@supabase/supabase-js 2.116.0');
 });
+
+test('purchase success acknowledgment sits above the Runner card and training offers, and Gold purpose is explained',async()=>{
+  const html=await read('public/flare-s8b/index.html');
+  assert.match(html,/id="purchaseStatus"[^>]*role="status"[^>]*aria-live="polite"/);
+  const identityIndex=html.indexOf('id="displayName"');
+  const statusIndex=html.indexOf('id="purchaseStatus"');
+  const runnerCardIndex=html.indexOf('class="runner-card"');
+  const trainingOffersIndex=html.indexOf('id="trainingOffers"');
+  assert.ok(identityIndex>-1&&statusIndex>-1&&runnerCardIndex>-1&&trainingOffersIndex>-1,'expected markup missing');
+  assert.ok(identityIndex<statusIndex,'purchaseStatus should follow the Player/Gold identity row');
+  assert.ok(statusIndex<runnerCardIndex,'purchaseStatus should precede the Runner card');
+  assert.ok(statusIndex<trainingOffersIndex,'purchaseStatus should precede the training offer list');
+  assert.match(html,/Spend Gold to permanently upgrade your Runner\./);
+  assert.doesNotMatch(html,/catalog|calibration|PREFERRED envelope/i);
+});
+
+test('success wording only fires after authoritative purchase success, never on cancel',async()=>{
+  const app=await read('public/flare-s8b/account-app.mjs');
+  assert.match(app,/status==='success'[\s\S]{0,80}byId\('purchaseStatus'\)\.textContent='RUNNER UPGRADED'/);
+  assert.doesNotMatch(app,/closePurchaseConfirmation[\s\S]{0,120}RUNNER UPGRADED/);
+  const cancelBody=app.match(/function closePurchaseConfirmation\(\)\{[\s\S]*?\}/)?.[0]||'';
+  assert.doesNotMatch(cancelBody,/RUNNER UPGRADED/);
+});
