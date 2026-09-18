@@ -122,12 +122,8 @@ async function runJourney(){
     await page.goto(`${accountUrl}?navigation=${viewport.width}`,{waitUntil:'networkidle'});
     await page.locator('#readyView').waitFor({state:'visible',timeout:30000});
 
-    let goal='not-run';
-    if(viewport.width===390){
-      await page.locator('#saveDemoGoal').click();
-      await page.waitForFunction(()=>document.querySelector('#savedGoalLabel')?.textContent.includes('Tom · Tough Warrior · 60% HP'));
-      goal=await page.locator('#savedGoalLabel').textContent();
-    }
+    const goalCardHidden=await page.locator('#goalCard').isHidden();
+    assert(goalCardHidden,'New account should not show an empty challenge-goal card');
     await page.locator('#signOut').click();
     await page.locator('#signInForm').waitFor({state:'visible'});
     assert(await page.locator('#readyView').isHidden(),'Account Ready remained visible after sign-out');
@@ -145,15 +141,12 @@ async function runJourney(){
     assert(requests.some(row=>row.url.includes('/auth/v1/token')&&row.method==='POST'),'Managed sign-in was not called');
     assert(requests.some(row=>row.url.includes('/rpc/ensure_starter_account')&&row.method==='POST'),'Starter RPC was not called');
     assert(requests.some(row=>row.url.includes('/rpc/get_account_runner_state')&&row.method==='POST'),'Authoritative Runner state RPC was not called');
-    if(viewport.width===390){
-      assert(requests.some(row=>row.url.includes('/rpc/save_account_goal')&&row.method==='POST'),'Saved-goal RPC was not called');
-      assert(!requests.some(row=>row.url.includes('/rest/v1/saved_goal')&&row.method==='POST'),'Direct saved_goal write detected');
-    }
+    assert(!requests.some(row=>row.url.includes('/rest/v1/saved_goal')&&row.method==='POST'),'Direct saved_goal write detected');
     assert(!requests.some(row=>/claim_proof_builder_reward|claimGuestRun/i.test(row.url)),'Product reward claim unexpectedly activated');
     assert(!requests.some(row=>/runner_template_catalog|runner_item_catalog/.test(row.url)&&row.method!=='GET'),'Catalog mutation unexpectedly activated');
     assert(applicationErrors.length===0,`Console errors at ${viewport.width}x${viewport.height}: ${applicationErrors.join(' | ')}`);
     assert(applicationNotFound.length===0,`404s at ${viewport.width}x${viewport.height}: ${applicationNotFound.join(' | ')}`);
-    results.push({viewport:`${viewport.width}x${viewport.height}`,accountReady:true,sessionReload:true,navigation:true,gold:0,baseStats:'100/8/0',effectiveStats:'100/12/1',club:true,shield:true,emptyArmorSlots:5,runnerPanels:true,goal,signOut:true,unauthenticatedProtection:true,consoleErrors:0,notFound:0});
+    results.push({viewport:`${viewport.width}x${viewport.height}`,accountReady:true,sessionReload:true,navigation:true,gold:0,baseStats:'100/8/0',effectiveStats:'100/12/1',club:true,shield:true,emptyArmorSlots:5,runnerPanels:true,goalCardHidden,signOut:true,unauthenticatedProtection:true,consoleErrors:0,notFound:0});
     await page.close();
   }
   console.log(JSON.stringify({phase:'journey',status:'PASS',viewports:results},null,2));
