@@ -75,3 +75,14 @@ test('practice layout provides full-dungeon preview and mobile runtime safeguard
   assert.match(css,/runtime-screen \.receiver-play-stage\{min-height:0\}/);
   assert.match(css,/result-card\{max-height:min\(92vh,760px\);overflow:auto\}/);
 });
+
+
+test('room preview canvas is pinned to the room stage and redraw observes the sized container',async()=>{
+  const [css,app]=await Promise.all([
+    read('public/flare-s8b/practice.css'),
+    read('public/flare-s8b/practice-app.mjs')
+  ]);
+  assert.match(css,/room-screen #roomPreview\{position:absolute;inset:0;width:100%;height:100%;display:block\}/);
+  assert.match(app,/new ResizeObserver\(\(\)=>\{if\(step===0&&selectedRoom\(\)\)renderRoom\(\)\}\)\.observe\(\$\('roomStage'\)\)/);
+  assert.doesNotMatch(app,/ResizeObserver[^\n]*practiceApp/);
+});
