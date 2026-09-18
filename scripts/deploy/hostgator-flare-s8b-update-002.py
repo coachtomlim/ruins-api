@@ -97,6 +97,20 @@ FROZEN_FILES = [
     ('public/flare-s71/hero-preview.mjs', '/quick-dungeon/flare-s71/hero-preview.mjs'),
     ('public/flare-s8a/index.html', '/quick-dungeon/flare-s8a/'),
     ('public/flare-s8a/builder.mjs', '/quick-dungeon/flare-s8a/builder.mjs'),
+    ('public/flare-s8a/actors.mjs', '/quick-dungeon/flare-s8a/actors.mjs'),
+    ('public/flare-s8a/starter-loadout.mjs', '/quick-dungeon/flare-s8a/starter-loadout.mjs'),
+    ('public/flare-s8a/stock-equipment-visuals.mjs', '/quick-dungeon/flare-s8a/stock-equipment-visuals.mjs'),
+    ('public/flare-s7/rooms.mjs', '/quick-dungeon/flare-s7/rooms.mjs'),
+    ('public/flare-s7/actors.mjs', '/quick-dungeon/flare-s7/actors.mjs'),
+    ('public/flare-s7/simulation.mjs', '/quick-dungeon/flare-s7/simulation.mjs'),
+    ('public/flare-s7/renderer.mjs', '/quick-dungeon/flare-s7/renderer.mjs'),
+    ('public/flare-s7/game.mjs', '/quick-dungeon/flare-s7/game.mjs'),
+    ('public/flare-s7/calibration.mjs', '/quick-dungeon/flare-s7/calibration.mjs'),
+    ('public/flare-s7/style.css', '/quick-dungeon/flare-s7/style.css'),
+    ('public/flare-s6/style.css', '/quick-dungeon/flare-s6/style.css'),
+    ('public/flare-s5/style.css', '/quick-dungeon/flare-s5/style.css'),
+    ('public/flare-s3/style.css', '/quick-dungeon/flare-s3/style.css'),
+    ('public/flare-s71/style.css', '/quick-dungeon/flare-s71/style.css'),
 ]
 
 ROUTE_SMOKES = [
