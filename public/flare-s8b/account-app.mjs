@@ -92,7 +92,8 @@ function renderPending(){showView('pendingView')}
 
 function gearCell(slot){
   const cell=document.createElement('div');
-  cell.className=`gear-slot${slot.equipped?'':' empty'}`;
+  cell.className=`gear-slot${slot.equipped?' equipped':' empty'}`;
+  cell.dataset.slot=slot.slot;
   const label=document.createElement('span');label.textContent=slot.label;
   const value=document.createElement('strong');value.textContent=slot.equipped?slot.itemName:'EMPTY';
   const modifier=document.createElement('small');modifier.textContent=slot.equipped?slot.modifierLabel:'READY FOR GEAR';
@@ -180,7 +181,7 @@ function renderReady(account){
   const hasGoal=vm.savedGoalLabel!=='No saved goal yet';
   byId('goalCard').hidden=!hasGoal;
   if(hasGoal)byId('savedGoalLabel').textContent=vm.savedGoalLabel;
-  byId('equipmentGrid').replaceChildren(...vm.equipment.map(gearCell));
+  byId('flareLoadout').replaceChildren(...vm.gear.map(gearCell));
   byId('armorGrid').replaceChildren(...vm.armor.map(gearCell));
   byId('trainingOffers').replaceChildren(...vm.progressionOffers.map(trainingOfferCell));
   selectRunnerPanel('stats');
