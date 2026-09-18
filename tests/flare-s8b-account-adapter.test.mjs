@@ -100,6 +100,24 @@ test('registration maps email-confirmation signup to CHECK_EMAIL without bootstr
   assert.equal(client.calls.some(call=>call[0]==='rpc'),false);
 });
 
+test('registration can pin email confirmation back to the current app URL',async()=>{
+  const client=fixtureClient();
+  const adapter=createSupabaseAccountAdapter({client});
+  await adapter.register({
+    displayName:'Ada',email:'a@example.test',password:'correct horse battery staple',
+    emailRedirectTo:'https://think-2-thrive.com/quick-dungeon/flare-s8b/?ignored=1#token'
+  });
+  assert.deepEqual(client.calls[0],[
+    'signUp',{email:'a@example.test',password:'correct horse battery staple',options:{
+      data:{display_name:'Ada'},emailRedirectTo:'https://think-2-thrive.com/quick-dungeon/flare-s8b/'
+    }}
+  ]);
+  await assert.rejects(
+    ()=>adapter.register({displayName:'Ada',email:'a@example.test',password:'secret123',emailRedirectTo:'http://example.com/'}),
+    /EMAIL_REDIRECT_URL_MUST_USE_HTTPS/
+  );
+});
+
 test('authoritative Runner state is loaded through governed RPC',async()=>{
   const client=fixtureClient();
   const adapter=createSupabaseAccountAdapter({client});
