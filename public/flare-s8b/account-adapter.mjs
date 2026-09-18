@@ -5,6 +5,18 @@ export const ACCOUNT_CAPABILITIES=Object.freeze([
 
 const clean=value=>String(value??'').trim();
 
+function normalizeEmailRedirectTo(value){
+  const raw=clean(value);
+  if(!raw)return '';
+  let parsed;
+  try{parsed=new URL(raw)}catch{throw new Error('EMAIL_REDIRECT_URL_INVALID')}
+  if(!['https:','http:'].includes(parsed.protocol))throw new Error('EMAIL_REDIRECT_URL_INVALID');
+  if(parsed.protocol==='http:'&&!['localhost','127.0.0.1','::1'].includes(parsed.hostname))throw new Error('EMAIL_REDIRECT_URL_MUST_USE_HTTPS');
+  parsed.hash='';
+  parsed.search='';
+  return parsed.href;
+}
+
 function operationError(operation,error){
   const message=clean(error?.message||error?.code||error)||`${operation} failed`;
   const wrapped=new Error(message);
@@ -156,10 +168,13 @@ export function createSupabaseAccountAdapter({client}={}){
     return Object.freeze({starter,account});
   }
 
-  async function register({displayName,email,password}={}){
+  async function register({displayName,email,password,emailRedirectTo}={}){
     const name=clean(displayName),address=clean(email),secret=String(password??'');
     if(!name||!address||!secret)throw new Error('DISPLAY_NAME_EMAIL_PASSWORD_REQUIRED');
-    const data=resultData('register',await client.auth.signUp({email:address,password:secret,options:{data:{display_name:name}}}));
+    const redirect=normalizeEmailRedirectTo(emailRedirectTo);
+    const options={data:{display_name:name}};
+    if(redirect)options.emailRedirectTo=redirect;
+    const data=resultData('register',await client.auth.signUp({email:address,password:secret,options}));
     if(!data?.session)return Object.freeze({status:'CHECK_EMAIL',pendingConfirmation:true,userId:data?.user?.id??null,session:null});
     const bootstrapped=await bootstrapAuthenticatedAccount();
     return Object.freeze({status:'AUTHENTICATED',pendingConfirmation:false,userId:data.user?.id??null,session:data.session,...bootstrapped});
