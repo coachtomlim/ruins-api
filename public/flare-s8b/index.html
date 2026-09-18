@@ -53,12 +53,12 @@
     <section class="panel loading" id="loadingView" aria-live="polite" hidden>
       <div class="spinner" aria-hidden="true"></div>
       <strong>LOADING YOUR RUNNER…</strong>
-      <p>Reading authoritative account state.</p>
+      <p>Getting your Runner ready.</p>
     </section>
 
     <section class="panel account-ready" id="readyView" aria-labelledby="readyTitle" hidden>
       <div class="ready-heading">
-        <div><span class="eyebrow">ACCOUNT FOUNDATION</span><h1 id="readyTitle">ACCOUNT READY</h1></div>
+        <div><span class="eyebrow">YOUR HERO-RUNNER</span><h1 id="readyTitle">YOUR RUNNER</h1></div>
         <button class="text-action" id="signOut" type="button">SIGN OUT</button>
       </div>
 
@@ -70,7 +70,7 @@
       <p class="status purchase-status" id="purchaseStatus" role="status" aria-live="polite"></p>
 
       <article class="runner-card">
-        <div class="runner-badge" aria-hidden="true">RW</div>
+        <div class="runner-portrait"><canvas id="runnerHeroCanvas" aria-label="Animated Rookie Warrior with Wooden Club and Wooden Shield"></canvas><small id="runnerHeroStatus" role="status" aria-live="polite"></small></div>
         <div class="runner-info">
           <span>YOUR RUNNER</span>
           <h2 id="runnerName">—</h2>
@@ -89,13 +89,13 @@
       </div>
 
       <section class="runner-panel" id="statsPanel" role="tabpanel" aria-labelledby="statsTab">
-        <div class="section-title"><h2>AUTHORITATIVE STATS</h2><span>BASE → EFFECTIVE</span></div>
+        <div class="section-title"><h2>RUNNER STATS</h2><span>BASE → CURRENT</span></div>
         <div class="stat-table" aria-label="Runner stats">
           <div><span>HP</span><small>BASE <b id="baseHp">—</b></small><strong id="effectiveHp">—</strong></div>
           <div><span>ATK</span><small>BASE <b id="baseAttack">—</b></small><strong id="effectiveAttack">—</strong></div>
           <div><span>DEF</span><small>BASE <b id="baseDefense">—</b></small><strong id="effectiveDefense">—</strong></div>
         </div>
-        <p class="panel-note">Effective values come from governed Runner and equipment state.</p>
+        <p class="panel-note">Current values include permanent training and equipped gear.</p>
         <section class="training-card" aria-labelledby="trainingTitle">
           <div class="section-title"><h2 id="trainingTitle">RUNNER TRAINING</h2><span>PERMANENT STATS</span></div>
           <p class="panel-note">Spend Gold to permanently upgrade your Runner.</p>
@@ -104,24 +104,22 @@
       </section>
 
       <section class="runner-panel" id="equipmentPanel" role="tabpanel" aria-labelledby="equipmentTab" hidden>
-        <div class="section-title"><h2>EQUIPMENT</h2><span>READ ONLY</span></div>
+        <div class="section-title"><h2>YOUR EQUIPMENT</h2><span>CURRENT LOADOUT</span></div>
         <div class="equipment-grid" id="equipmentGrid"></div>
-        <p class="panel-note">Weapon and shield ownership are account-backed. Equip changes are not active yet.</p>
+        <p class="panel-note">Your current weapon and shield are equipped on this Runner. Gear changes are not active yet.</p>
       </section>
 
       <section class="runner-panel" id="armorPanel" role="tabpanel" aria-labelledby="armorTab" hidden>
         <div class="section-title"><h2>ARMOR</h2><span>5 SLOTS</span></div>
         <div class="armor-grid" id="armorGrid"></div>
-        <p class="panel-note">Armor begins empty. Future pieces will be acquired one slot at a time.</p>
+        <p class="panel-note">Empty armor slots are ready for future gear, one piece at a time.</p>
       </section>
 
-      <section class="goal-card">
-        <div><span class="eyebrow">SAVED GOAL</span><strong id="savedGoalLabel">No saved goal yet</strong></div>
-        <button class="secondary" id="saveDemoGoal" type="button">SAVE TOM · L3 · 60%</button>
-        <p class="status" id="goalStatus" role="alert" aria-live="polite"></p>
+      <section class="goal-card" id="goalCard" hidden>
+        <div><span class="eyebrow">CHALLENGE GOAL</span><strong id="savedGoalLabel">No saved goal yet</strong></div>
       </section>
 
-      <p class="boundary-note">Stat training is governed by your account. Equipment and armor changes remain inactive.</p>
+      <p class="boundary-note">Training changes this Runner permanently. Equipment and armor changes remain inactive for now.</p>
     </section>
   </main>
   <section class="purchase-dialog" id="purchaseDialog" role="dialog" aria-modal="true" aria-labelledby="purchaseDialogTitle" hidden>
