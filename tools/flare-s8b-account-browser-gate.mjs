@@ -107,7 +107,7 @@ async function runJourney(){
 
     await page.locator('#equipmentTab').click();
     await page.locator('#equipmentPanel').waitFor({state:'visible'});
-    const equipment=await page.locator('#equipmentGrid').textContent();
+    const equipment=await page.locator('#flareLoadout').textContent();
     assert(equipment.includes('Wooden Club')&&equipment.includes('+4 ATK'),'Authoritative Club missing');
     assert(equipment.includes('Wooden Shield')&&equipment.includes('+1 DEF'),'Authoritative Shield missing');
 
