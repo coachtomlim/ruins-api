@@ -18,9 +18,13 @@ test('browser adapter uses injected public config and official SDK persistence',
   }]]);
 });
 
-test('static account surface has auth states and stat-only governed training',async()=>{
+test('static account surface is player-facing and keeps stat training governed',async()=>{
   const html=await read('public/flare-s8b/index.html');
-  for(const text of ['RUNNER HUB','CREATE ACCOUNT','SIGN IN','CHECK YOUR EMAIL','ACCOUNT READY','STATS','EQUIPMENT','ARMOR','SAVE TOM · L3 · 60%','SIGN OUT'])assert.match(html,new RegExp(text.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
+  for(const text of ['RUNNER HUB','CREATE ACCOUNT','SIGN IN','CHECK YOUR EMAIL','YOUR RUNNER','RUNNER STATS','STATS','EQUIPMENT','ARMOR','SIGN OUT'])assert.match(html,new RegExp(text.replace(/[.*+?^${}()|[\]\\]/g,'\\test('static account surface has auth states and stat-only governed training',async()=>{
+  const html=await read('public/flare-s8b/index.html');
+  for(const text of ['RUNNER HUB','CREATE ACCOUNT','SIGN IN','CHECK YOUR EMAIL','ACCOUNT READY','STATS','EQUIPMENT','ARMOR','SAVE TOM · L3 · 60%','SIGN OUT'])assert.match(html,new RegExp(text.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));')));
+  assert.match(html,/id="runnerHeroCanvas"/);
+  assert.doesNotMatch(html,/ACCOUNT FOUNDATION|AUTHORITATIVE STATS|SAVE TOM · L3 · 60%/);
   assert.match(html,/Confirm your email address, then sign in to continue\./);
   assert.match(html,/id="statsPanel"/);
   assert.match(html,/id="equipmentPanel"/);
@@ -40,15 +44,18 @@ test('static account surface has auth states and stat-only governed training',as
   assert.doesNotMatch(html,/https:\/\/[^"']*(unpkg|jsdelivr|esm\.sh)/i);
 });
 
-test('account UI calls governed goal and Runner paths and does not activate reward claiming',async()=>{
+test('account UI uses authoritative Runner paths, real Hero preview, and does not expose synthetic goal or reward actions',async()=>{
   const [app,adapter,view]=await Promise.all([
     read('public/flare-s8b/account-app.mjs'),read('public/flare-s8b/account-adapter.mjs'),read('public/flare-s8b/account-ready-view.mjs')
   ]);
-  assert.match(app,/adapter\.saveGoal\(\{senderName:'Tom',runnerId:'warrior-l3',targetHp:60\}\)/);
+  assert.doesNotMatch(app,/saveDemoGoal|senderName:'Tom',runnerId:'warrior-l3'/);
   assert.match(app,/adapter\.ensureStarterAccount\(\)/);
   assert.match(app,/adapter\.loadAccountState\(\{playerRunnerId:/);
   assert.doesNotMatch(app,/claimGuestRun|claim_proof_builder_reward/);
   assert.match(app,/adapter\.purchaseProgressionOffer\(payload\)/);
+  assert.match(app,/loadS3ActorPack/);
+  assert.match(app,/startComposedHeroStance/);
+  assert.match(app,/emailRedirectTo:appRedirectUrl\(\)/);
   assert.doesNotMatch(app,/purchase_progression_offer|\.insert\s*\(/i);
   assert.match(app,/vm\.progressionOffers\.map\(trainingOfferCell\)/);
   assert.match(adapter,/from\('progression_offer_catalog'\)/);
