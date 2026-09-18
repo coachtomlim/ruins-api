@@ -3,6 +3,9 @@ import {createBrowserAccountAdapter} from './supabase-browser.mjs';
 import {createStatPurchaseFlow} from './stat-purchase-flow.mjs';
 import {loadS3ActorPack} from '../flare-s8a/actors.mjs';
 import {startComposedHeroStance} from '../flare-s71/hero-preview.mjs';
+import {createPracticeRunnerSnapshot} from './practice-runner-snapshot.mjs';
+
+const PRACTICE_SNAPSHOT_KEY='s8bPracticeSnapshot';
 
 const byId=id=>document.getElementById(id);
 const views=['signedOutView','pendingView','loadingView','readyView'];
@@ -225,6 +228,16 @@ byId('signInForm').addEventListener('submit',async event=>{
 byId('signOut').addEventListener('click',async()=>{
   byId('signOut').disabled=true;
   try{await adapter.signOut();selectAuth('signin')}catch(error){byId('purchaseStatus').textContent=errorMessage(error)}finally{byId('signOut').disabled=false}
+});
+
+byId('testYourRunner').addEventListener('click',()=>{
+  try{
+    const snapshot=createPracticeRunnerSnapshot(readyViewModel);
+    sessionStorage.setItem(PRACTICE_SNAPSHOT_KEY,JSON.stringify(snapshot));
+    location.href='practice.html';
+  }catch(error){
+    byId('purchaseStatus').textContent=errorMessage(error);
+  }
 });
 
 try{
