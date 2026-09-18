@@ -4,3 +4,27 @@
 .practice-stats-strip span{font-size:9px;color:#a997ab;font-weight:900;letter-spacing:.06em}
 .practice-stats-strip b{font-size:18px;color:#efc76e}
 #backToRunner{display:inline-flex;align-items:center;justify-content:center;min-height:44px;text-decoration:none}
+
+/* S8B UAT2: room selection should show the whole dungeon at useful resolution. */
+.receiver-app{width:min(1180px,100%)}
+.room-screen,.build-screen{overflow-y:auto;overflow-x:hidden;scrollbar-gutter:stable}
+.room-screen .room-stage{flex:0 0 auto;width:100%;height:clamp(320px,52vh,620px);min-height:320px}
+.room-screen #roomPreview{width:100%;height:100%;display:block}
+.runtime-screen{overflow:hidden}
+.runtime-screen .receiver-play-stage{min-height:0}
+
+/* Result overlays may scroll on short/mobile screens without shrinking the run canvas. */
+.result-cover{overflow:auto;padding:10px}
+.result-card{max-height:min(92vh,760px);overflow:auto}
+
+@media(max-width:620px){
+  .receiver-app{padding-left:6px;padding-right:6px}
+  .room-screen .room-stage{height:clamp(300px,44vh,430px);min-height:300px}
+  .room-screen .onboarding-steps{grid-template-columns:1fr;gap:5px}
+  .room-screen .onboarding-steps li{padding:7px 9px}
+  .runtime-screen .run-head h1{font-size:22px}
+  .runtime-screen .receiver-play-stage{min-height:48vh}
+  .result-card{width:min(96%,430px);padding:13px}
+  .result-actions{grid-template-columns:1fr}
+}
+
