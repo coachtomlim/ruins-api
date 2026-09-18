@@ -23,9 +23,22 @@ function stopRunnerVisual(){
   stopRunnerPreview=()=>{};
 }
 
-async function renderRunnerVisual(){
+function supportsStarterVisual(vm){
+  const gear=Array.isArray(vm?.gear)?vm.gear:[];
+  const bySlot=Object.fromEntries(gear.map(row=>[row.slot,row]));
+  return bySlot.weapon?.equipped===true&&bySlot.weapon?.gfx==='club'&&
+    bySlot.shield?.equipped===true&&bySlot.shield?.gfx==='buckler'&&
+    ['head','chest','hands','legs','feet'].every(slot=>bySlot[slot]?.equipped===false);
+}
+
+async function renderRunnerVisual(vm){
   const canvas=byId('runnerHeroCanvas'),status=byId('runnerHeroStatus');
   if(!canvas)return;
+  if(!supportsStarterVisual(vm)){
+    stopRunnerVisual();
+    status.textContent='Runner visual unavailable for this loadout.';
+    return;
+  }
   try{
     status.textContent='';
     const actors=await (actorPackPromise??=loadS3ActorPack());
@@ -169,7 +182,7 @@ function renderReady(account){
   byId('trainingOffers').replaceChildren(...vm.progressionOffers.map(trainingOfferCell));
   selectRunnerPanel('stats');
   showView('readyView');
-  void renderRunnerVisual();
+  void renderRunnerVisual(vm);
 }
 
 async function restoreSession(){
