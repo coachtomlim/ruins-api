@@ -96,8 +96,11 @@ async function runJourney(){
     assert(first.baseHp==='100'&&first.baseAttack==='8'&&first.baseDefense==='0','Authoritative base stats incorrect');
     assert(first.hp==='100'&&first.attack==='12'&&first.defense==='1','Authoritative effective stats incorrect');
     assert(first.scrollWidth<=first.viewportWidth,`Ready view overflow at ${viewport.width}x${viewport.height}`);
+    await page.locator('#runnerHeroCanvas').waitFor({state:'visible'});
+    const heroBox=await page.locator('#runnerHeroCanvas').boundingBox();
+    assert(heroBox&&heroBox.width>80&&heroBox.height>100,`Runner Hero preview is not visibly sized at ${viewport.width}x${viewport.height}`);
 
-    for(const selector of ['#signOut','#saveDemoGoal','#statsTab','#equipmentTab','#armorTab']){
+    for(const selector of ['#signOut','#statsTab','#equipmentTab','#armorTab']){
       const height=await page.locator(selector).evaluate(element=>element.getBoundingClientRect().height);
       assert(height>=44,`${selector} below 44px at ${viewport.width}x${viewport.height}`);
     }
