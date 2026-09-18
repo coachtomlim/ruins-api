@@ -103,7 +103,7 @@ $('rebuild').addEventListener('click',()=>{playing=false;paused=false;$('resultC
 let swipe=null;
 $('roomStage').addEventListener('pointerdown',e=>swipe={x:e.clientX,y:e.clientY,id:e.pointerId});
 $('roomStage').addEventListener('pointerup',e=>{if(!swipe||swipe.id!==e.pointerId)return;const dx=e.clientX-swipe.x,dy=e.clientY-swipe.y;swipe=null;if(Math.abs(dx)>42&&Math.abs(dx)>Math.abs(dy)*1.15)changeRoom(dx<0?1:-1)});
-new ResizeObserver(()=>{if(step===0&&selectedRoom())renderRoom()}).observe($('practiceApp'));
+new ResizeObserver(()=>{if(step===0&&selectedRoom())renderRoom()}).observe($('roomStage'));
 requestAnimationFrame(frame);
 
 (async()=>{
