@@ -1,6 +1,8 @@
 import {buildAccountReadyViewFromBackend} from './account-ready-view.mjs';
 import {createBrowserAccountAdapter} from './supabase-browser.mjs';
 import {createStatPurchaseFlow} from './stat-purchase-flow.mjs';
+import {loadS3ActorPack} from '../flare-s8a/actors.mjs';
+import {startComposedHeroStance} from '../flare-s71/hero-preview.mjs';
 
 const byId=id=>document.getElementById(id);
 const views=['signedOutView','pendingView','loadingView','readyView'];
@@ -9,8 +11,31 @@ let adapter=null;
 let activeRunnerId=null;
 let readyViewModel=null;
 let purchaseFlow=null;
+let actorPackPromise=null;
+let stopRunnerPreview=()=>{};
 
 function showView(id){for(const view of views)byId(view).hidden=view!==id}
+
+function appRedirectUrl(){return new URL('./',location.href).href}
+
+function stopRunnerVisual(){
+  stopRunnerPreview();
+  stopRunnerPreview=()=>{};
+}
+
+async function renderRunnerVisual(){
+  const canvas=byId('runnerHeroCanvas'),status=byId('runnerHeroStatus');
+  if(!canvas)return;
+  try{
+    status.textContent='';
+    const actors=await (actorPackPromise??=loadS3ActorPack());
+    stopRunnerVisual();
+    stopRunnerPreview=startComposedHeroStance(canvas,actors);
+  }catch(error){
+    console.error(error);
+    status.textContent='Runner preview unavailable.';
+  }
+}
 
 function errorMessage(error){
   const message=String(error?.message||error||'Something went wrong');
@@ -35,6 +60,7 @@ function selectAuth(mode){
   byId('showSignIn').setAttribute('aria-selected',String(!create));
   byId('authStatus').textContent='';
   activeRunnerId=null;
+  stopRunnerVisual();
   showView('signedOutView');
 }
 
@@ -135,13 +161,15 @@ function renderReady(account){
   byId('effectiveHp').textContent=String(vm.runner.stats.hp);
   byId('effectiveAttack').textContent=String(vm.runner.stats.attack);
   byId('effectiveDefense').textContent=String(vm.runner.stats.defense);
-  byId('savedGoalLabel').textContent=vm.savedGoalLabel;
+  const hasGoal=vm.savedGoalLabel!=='No saved goal yet';
+  byId('goalCard').hidden=!hasGoal;
+  if(hasGoal)byId('savedGoalLabel').textContent=vm.savedGoalLabel;
   byId('equipmentGrid').replaceChildren(...vm.equipment.map(gearCell));
   byId('armorGrid').replaceChildren(...vm.armor.map(gearCell));
   byId('trainingOffers').replaceChildren(...vm.progressionOffers.map(trainingOfferCell));
-  byId('goalStatus').textContent='';
   selectRunnerPanel('stats');
   showView('readyView');
+  void renderRunnerVisual();
 }
 
 async function restoreSession(){
@@ -165,7 +193,7 @@ byId('createForm').addEventListener('submit',async event=>{
   const form=event.currentTarget,data=new FormData(form);
   setBusy(form,true);byId('authStatus').textContent='Creating your account…';
   try{
-    const result=await adapter.register({displayName:data.get('displayName'),email:data.get('email'),password:data.get('password')});
+    const result=await adapter.register({displayName:data.get('displayName'),email:data.get('email'),password:data.get('password'),emailRedirectTo:appRedirectUrl()});
     form.reset();
     if(result.pendingConfirmation)renderPending();else renderReady(result.account);
   }catch(error){byId('authStatus').textContent=errorMessage(error)}finally{setBusy(form,false)}
@@ -181,18 +209,9 @@ byId('signInForm').addEventListener('submit',async event=>{
   }catch(error){byId('authStatus').textContent=errorMessage(error)}finally{setBusy(form,false)}
 });
 
-byId('saveDemoGoal').addEventListener('click',async event=>{
-  const button=event.currentTarget;button.disabled=true;byId('goalStatus').textContent='Saving through the governed account RPC…';
-  try{
-    await adapter.saveGoal({senderName:'Tom',runnerId:'warrior-l3',targetHp:60});
-    renderReady(await adapter.loadAccountState({playerRunnerId:activeRunnerId}));
-    byId('goalStatus').textContent='Saved from authoritative account state.';
-  }catch(error){byId('goalStatus').textContent=errorMessage(error)}finally{button.disabled=false}
-});
-
 byId('signOut').addEventListener('click',async()=>{
   byId('signOut').disabled=true;
-  try{await adapter.signOut();selectAuth('signin')}catch(error){byId('goalStatus').textContent=errorMessage(error)}finally{byId('signOut').disabled=false}
+  try{await adapter.signOut();selectAuth('signin')}catch(error){byId('purchaseStatus').textContent=errorMessage(error)}finally{byId('signOut').disabled=false}
 });
 
 try{
