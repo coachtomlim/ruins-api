@@ -30,6 +30,9 @@ test('static account surface is player-facing and keeps stat training governed',
   assert.match(html,/Confirm your email address, then sign in to continue\./);
   assert.match(html,/id="statsPanel"/);
   assert.match(html,/id="equipmentPanel"/);
+  assert.match(html,/id="flareLoadout"/);
+  assert.match(html,/FLARE LOADOUT/);
+  assert.match(html,/MAIN · OFF · ARMOR/);
   assert.match(html,/id="armorPanel"/);
   assert.match(html,/RUNNER TRAINING/);
   assert.match(html,/PERMANENT STATS/);
