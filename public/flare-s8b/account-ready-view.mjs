@@ -1,5 +1,5 @@
 const SLOT_KEYS=Object.freeze(['weapon','shield','head','chest','hands','legs','feet']);
-const SLOT_LABELS=Object.freeze({weapon:'WEAPON',shield:'SHIELD',head:'HEAD',chest:'CHEST',hands:'HANDS',legs:'LEGS',feet:'FEET'});
+const SLOT_LABELS=Object.freeze({weapon:'MAIN HAND',shield:'OFF HAND',head:'HEAD',chest:'CHEST',hands:'HANDS',legs:'LEGS',feet:'FEET'});
 const EQUIPMENT_SLOTS=Object.freeze(['weapon','shield']);
 const ARMOR_SLOTS=Object.freeze(['head','chest','hands','legs','feet']);
 const STAT_LABELS=Object.freeze({hp:'HP',attack:'ATK',defense:'DEF'});
