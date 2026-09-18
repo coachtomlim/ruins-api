@@ -66,3 +66,12 @@ test('Runner Hub visual fails closed for an unsupported loadout instead of showi
   assert.match(app,/if\(!supportsStarterVisual\(vm\)\)\{/);
   assert.match(app,/Runner visual unavailable for this loadout\./);
 });
+
+
+test('practice layout provides full-dungeon preview and mobile runtime safeguards',async()=>{
+  const css=await read('public/flare-s8b/practice.css');
+  assert.match(css,/room-screen \.room-stage\{[^}]*height:clamp\(320px,52vh,620px\)/);
+  assert.match(css,/@media\(max-width:620px\)[\s\S]*room-screen \.room-stage\{[^}]*height:clamp\(300px,44vh,430px\)/);
+  assert.match(css,/runtime-screen \.receiver-play-stage\{min-height:0\}/);
+  assert.match(css,/result-card\{max-height:min\(92vh,760px\);overflow:auto\}/);
+});
