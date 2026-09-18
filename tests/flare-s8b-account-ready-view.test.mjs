@@ -41,6 +41,9 @@ test('backend Runner Hub uses authoritative stats and gear without recalculation
   assert.deepEqual(vm.runner.stats,{hp:100,attack:12,defense:1});
   assert.equal(vm.savedGoalLabel,'Tom · Tough Warrior · 60% HP');
   assert.deepEqual(vm.panels,['stats','equipment','armor']);
+  assert.equal(vm.equipment[0].label,'MAIN HAND');
+  assert.equal(vm.equipment[1].label,'OFF HAND');
+  assert.equal(vm.armor.find(row=>row.slot==='hands').label,'HANDS');
   assert.equal(vm.equipment[0].itemName,'Wooden Club');
   assert.equal(vm.equipment[0].modifierLabel,'+4 ATK');
   assert.equal(vm.equipment[1].itemName,'Wooden Shield');
