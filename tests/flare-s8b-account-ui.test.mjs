@@ -4,6 +4,7 @@ import {readFile} from 'node:fs/promises';
 import {createBrowserAccountAdapter} from '../public/flare-s8b/supabase-browser.mjs';
 
 const read=path=>readFile(new URL(`../${path}`,import.meta.url),'utf8');
+const escapeRegExp=value=>value.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 
 test('browser adapter uses injected public config and official SDK persistence',()=>{
   const calls=[];
@@ -20,10 +21,11 @@ test('browser adapter uses injected public config and official SDK persistence',
 
 test('static account surface is player-facing and keeps stat training governed',async()=>{
   const html=await read('public/flare-s8b/index.html');
-  for(const text of ['RUNNER HUB','CREATE ACCOUNT','SIGN IN','CHECK YOUR EMAIL','YOUR RUNNER','RUNNER STATS','STATS','EQUIPMENT','ARMOR','SIGN OUT'])assert.match(html,new RegExp(text.replace(/[.*+?^${}()|[\]\\]/g,'\\test('static account surface has auth states and stat-only governed training',async()=>{
-  const html=await read('public/flare-s8b/index.html');
-  for(const text of ['RUNNER HUB','CREATE ACCOUNT','SIGN IN','CHECK YOUR EMAIL','ACCOUNT READY','STATS','EQUIPMENT','ARMOR','SAVE TOM · L3 · 60%','SIGN OUT'])assert.match(html,new RegExp(text.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));')));
+  for(const text of ['RUNNER HUB','CREATE ACCOUNT','SIGN IN','CHECK YOUR EMAIL','YOUR RUNNER','RUNNER STATS','STATS','EQUIPMENT','ARMOR','SIGN OUT']){
+    assert.match(html,new RegExp(escapeRegExp(text)));
+  }
   assert.match(html,/id="runnerHeroCanvas"/);
+  assert.match(html,/Animated Rookie Warrior with Wooden Club and Wooden Shield/);
   assert.doesNotMatch(html,/ACCOUNT FOUNDATION|AUTHORITATIVE STATS|SAVE TOM · L3 · 60%/);
   assert.match(html,/Confirm your email address, then sign in to continue\./);
   assert.match(html,/id="statsPanel"/);
@@ -74,6 +76,7 @@ test('mobile controls meet minimum target and config contains no credential',asy
   assert.match(css,/\.primary,.secondary\{min-height:54px/);
   assert.match(css,/\.text-action\{min-height:44px/);
   assert.match(css,/\.runner-tab\{min-height:44px/);
+  assert.match(css,/\.runner-portrait/);
   assert.match(config,/__FLARE_S8B_PUBLIC_CONFIG__/);
   assert.doesNotMatch(config,/sb_(?:publishable|secret)_|service_role/i);
   assert.equal(version.trim(),'@supabase/supabase-js 2.116.0');
