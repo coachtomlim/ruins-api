@@ -19,6 +19,7 @@ function sameEncounter(a,b){return a&&b&&JSON.stringify(a.enemyTypes)===JSON.str
 
 function goto(n){
   step=Math.max(0,Math.min(2,n));
+  $('practiceApp').dataset.step=String(step);
   document.querySelectorAll('.receiver-progress span').forEach((d,i)=>d.classList.toggle('active',i<=step));
   $('practiceTrack').style.transform=`translateX(-${step*100}%)`;
   $('topTitle').textContent=['Choose the dungeon','Optional customization','The run'][step];
