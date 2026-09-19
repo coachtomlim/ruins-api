@@ -28,3 +28,5 @@
   .result-actions{grid-template-columns:1fr}
 }
 
+
+.result-actions button,.result-actions a{min-height:44px}
