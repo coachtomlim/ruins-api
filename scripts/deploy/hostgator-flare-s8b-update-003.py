@@ -327,7 +327,7 @@ def expect(url: str, types: set[str], marker: bytes | None = None):
 def frozen_gate() -> None:
     for path, public_path in FROZEN_FILES:
         live, _ = expect(PUBLIC_BASE + public_path, {
-            'text/html', 'text/javascript', 'application/javascript', 'application/json'
+            'text/html', 'text/css', 'text/javascript', 'application/javascript', 'application/json'
         })
         expected = git_bytes_any_ref(path)
         if hashlib.sha256(live).digest() != hashlib.sha256(expected).digest():
