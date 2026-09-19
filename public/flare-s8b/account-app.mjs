@@ -59,6 +59,7 @@ function errorMessage(error){
   if(/invalid login credentials/i.test(message))return 'Email or password is incorrect.';
   if(/email not confirmed/i.test(message))return 'Confirm your email, then sign in.';
   if(/rate limit/i.test(message))return 'Too many attempts. Please wait and try again.';
+  if(/DAILY_LOGIN/i.test(message))return 'Daily Bonus is unavailable. Please try again later.';
   if(/AUTHORITATIVE_|RUNNER_|LOADOUT_/i.test(message))return 'Runner data is unavailable. Please try again later.';
   return message.replace(/^AccountAdapterError:\s*/,'');
 }
@@ -114,6 +115,15 @@ function trainingOfferCell(offer){
   return cell;
 }
 
+function renderDailyLogin(dailyLogin){
+  byId('dailyLoginStreak').textContent=dailyLogin.streakLabel;
+  byId('dailyLoginDetail').textContent=dailyLogin.detail;
+  byId('dailyLoginReset').textContent=dailyLogin.resetLabel;
+  const button=byId('dailyLoginClaim');
+  button.textContent=dailyLogin.actionLabel;
+  button.disabled=dailyLogin.actionDisabled;
+}
+
 function closePurchaseConfirmation(){
   purchaseFlow?.cancel();
   byId('purchaseDialog').hidden=true;
@@ -137,6 +147,25 @@ function openPurchaseConfirmation(offer){
 
 async function refreshReady(){
   renderReady(await adapter.loadAccountState({playerRunnerId:activeRunnerId}));
+}
+
+async function claimDailyLogin(){
+  const button=byId('dailyLoginClaim');
+  if(readyViewModel?.dailyLogin?.actionDisabled)return;
+  button.disabled=true;
+  button.textContent='CLAIMING…';
+  byId('dailyLoginStatus').textContent='Claiming your server-authoritative Daily Bonus…';
+  try{
+    const claim=await adapter.claimDailyLoginBonus();
+    await refreshReady();
+    byId('dailyLoginStatus').textContent=`+${Number(claim.gold_awarded)||0} GOLD ADDED`;
+  }catch(error){
+    byId('dailyLoginStatus').textContent=errorMessage(error);
+    if(!readyViewModel?.dailyLogin?.actionDisabled){
+      button.disabled=false;
+      button.textContent=readyViewModel.dailyLogin.actionLabel;
+    }
+  }
 }
 
 async function confirmPurchase(){
@@ -168,6 +197,7 @@ function renderReady(account){
   byId('displayName').textContent=vm.displayName;
   byId('accountEmail').textContent=vm.email;
   byId('goldBalance').textContent=String(vm.goldBalance);
+  renderDailyLogin(vm.dailyLogin);
   byId('runnerName').textContent=vm.runner.name;
   byId('runnerHp').textContent=String(vm.runner.stats.hp);
   byId('runnerAttack').textContent=String(vm.runner.stats.attack);
@@ -204,6 +234,7 @@ byId('pendingSignIn').addEventListener('click',()=>selectAuth('signin'));
 for(const panel of runnerPanels)byId(`${panel}Tab`).addEventListener('click',()=>selectRunnerPanel(panel));
 byId('cancelPurchase').addEventListener('click',closePurchaseConfirmation);
 byId('confirmPurchase').addEventListener('click',confirmPurchase);
+byId('dailyLoginClaim').addEventListener('click',claimDailyLogin);
 
 byId('createForm').addEventListener('submit',async event=>{
   event.preventDefault();
