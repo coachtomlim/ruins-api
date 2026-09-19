@@ -191,6 +191,7 @@ async function confirmPurchase(){
 }
 
 function renderReady(account){
+  byId('dailyLoginStatus').textContent='';
   const vm=buildAccountReadyViewFromBackend(account);
   readyViewModel=vm;
   activeRunnerId=vm.runner.id;
