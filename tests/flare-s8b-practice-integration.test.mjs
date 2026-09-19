@@ -86,3 +86,13 @@ test('room preview canvas is pinned to the room stage and redraw observes the si
   assert.match(app,/new ResizeObserver\(\(\)=>\{if\(step===0&&selectedRoom\(\)\)renderRoom\(\)\}\)\.observe\(\$\('roomStage'\)\)/);
   assert.doesNotMatch(app,/ResizeObserver[^\n]*practiceApp/);
 });
+
+
+test('runtime renderer resizes with the scene canvas and result actions meet touch target',async()=>{
+  const [app,css]=await Promise.all([
+    read('public/flare-s8b/practice-app.mjs'),
+    read('public/flare-s8b/practice.css')
+  ]);
+  assert.match(app,/new ResizeObserver\(\(\)=>\{if\(renderer\)renderer\.resize\(\)\}\)\.observe\(\$\('scene'\)\)/);
+  assert.match(css,/\.result-actions button,\.result-actions a\{min-height:44px\}/);
+});
