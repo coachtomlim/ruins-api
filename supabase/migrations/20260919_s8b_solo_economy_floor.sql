@@ -144,7 +144,7 @@ returns table (
 language plpgsql
 security definer
 set search_path = ''
-as $
+as $$
 declare
   v_player uuid := auth.uid();
   v_profile_id uuid;
