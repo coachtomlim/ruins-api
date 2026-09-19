@@ -1,6 +1,7 @@
 export const ACCOUNT_CAPABILITIES=Object.freeze([
   'register','signIn','signOut','getMe','getSession','ensureStarterAccount',
-  'loadRunnerState','loadProgressionOffers','loadProgressionPurchases','purchaseProgressionOffer','loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
+  'loadRunnerState','loadProgressionOffers','loadProgressionPurchases','purchaseProgressionOffer',
+  'loadDailyLoginStatus','claimDailyLoginBonus','loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
 ]);
 
 const clean=value=>String(value??'').trim();
@@ -68,6 +69,8 @@ export function unavailableAccountAdapter(){
     loadProgressionOffers:unavailable,
     loadProgressionPurchases:unavailable,
     purchaseProgressionOffer:unavailable,
+    loadDailyLoginStatus:unavailable,
+    claimDailyLoginBonus:unavailable,
     loadAccountState:unavailable,
     loadSavedGoals:unavailable,
     saveGoal:unavailable,
@@ -141,6 +144,20 @@ export function createSupabaseAccountAdapter({client}={}){
     return Object.freeze({...purchase});
   }
 
+  async function loadDailyLoginStatus(){
+    const rows=resultData('loadDailyLoginStatus',await client.rpc('get_daily_login_status'))||[];
+    const status=rows[0]??null;
+    if(!status)throw new Error('AUTHORITATIVE_DAILY_LOGIN_STATUS_REQUIRED');
+    return Object.freeze({...status});
+  }
+
+  async function claimDailyLoginBonus(){
+    const rows=resultData('claimDailyLoginBonus',await client.rpc('claim_daily_login_bonus'))||[];
+    const claim=rows[0]??null;
+    if(!claim)throw new Error('AUTHORITATIVE_DAILY_LOGIN_CLAIM_REQUIRED');
+    return Object.freeze({...claim});
+  }
+
   async function loadAccountState({playerRunnerId=null}={}){
     const me=await getMe();
     if(!me)throw new Error('AUTH_REQUIRED');
@@ -150,6 +167,7 @@ export function createSupabaseAccountAdapter({client}={}){
     const savedGoals=await loadSavedGoals();
     const progressionOffers=await loadProgressionOffers();
     const progressionPurchases=await loadProgressionPurchases(runnerState.player_runner_id);
+    const dailyLogin=await loadDailyLoginStatus();
     const goldBalance=ledger.reduce((sum,row)=>sum+(Number(row?.delta_gold)||0),0);
     return Object.freeze({
       identity:Object.freeze({id:me.id,email:me.email}),
@@ -158,6 +176,7 @@ export function createSupabaseAccountAdapter({client}={}){
       savedGoals:Object.freeze(savedGoals.map(row=>Object.freeze({...row}))),
       progressionOffers,
       progressionPurchases,
+      dailyLogin,
       goldBalance
     });
   }
@@ -207,6 +226,7 @@ export function createSupabaseAccountAdapter({client}={}){
 
   return Object.freeze({
     available:true,provider:'supabase',register,signIn,signOut,getMe,getSession,
-    ensureStarterAccount,loadRunnerState,loadProgressionOffers,loadProgressionPurchases,purchaseProgressionOffer,loadAccountState,loadSavedGoals,saveGoal,claimGuestRun
+    ensureStarterAccount,loadRunnerState,loadProgressionOffers,loadProgressionPurchases,purchaseProgressionOffer,
+    loadDailyLoginStatus,claimDailyLoginBonus,loadAccountState,loadSavedGoals,saveGoal,claimGuestRun
   });
 }
