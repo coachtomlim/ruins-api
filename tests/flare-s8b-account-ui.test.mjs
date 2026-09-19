@@ -21,10 +21,14 @@ test('browser adapter uses injected public config and official SDK persistence',
 
 test('static account surface is player-facing and keeps stat training governed',async()=>{
   const html=await read('public/flare-s8b/index.html');
-  for(const text of ['RUNNER HUB','CREATE ACCOUNT','SIGN IN','CHECK YOUR EMAIL','YOUR RUNNER','RUNNER STATS','STATS','EQUIPMENT','ARMOR','SIGN OUT']){
+  for(const text of ['RUNNER HUB','CREATE ACCOUNT','SIGN IN','CHECK YOUR EMAIL','YOUR RUNNER','RUNNER STATS','STATS','EQUIPMENT','ARMOR','SIGN OUT','SOLO GOLD','DAILY BONUS','DAILY TRIAL','COMING NEXT']){
     assert.match(html,new RegExp(escapeRegExp(text)));
   }
   assert.match(html,/id="runnerHeroCanvas"/);
+  assert.match(html,/id="dailyLoginClaim"/);
+  assert.match(html,/id="dailyLoginStreak"/);
+  assert.match(html,/id="dailyLoginStatus"/);
+  assert.match(html,/flareteam\/flare-game\/2ef474f5f5f368628bc526f9e56f936dac743e49\/mods\/fantasycore\/images\/loot\/coins5\.png/);
   assert.match(html,/Animated Rookie Warrior with Wooden Club and Wooden Shield/);
   assert.doesNotMatch(html,/ACCOUNT FOUNDATION|AUTHORITATIVE STATS|SAVE TOM · L3 · 60%/);
   assert.match(html,/Confirm your email address, then sign in to continue\./);
@@ -58,6 +62,8 @@ test('account UI uses authoritative Runner paths, real Hero preview, and does no
   assert.match(app,/adapter\.loadAccountState\(\{playerRunnerId:/);
   assert.doesNotMatch(app,/claimGuestRun|claim_proof_builder_reward/);
   assert.match(app,/adapter\.purchaseProgressionOffer\(payload\)/);
+  assert.match(app,/adapter\.claimDailyLoginBonus\(\)/);
+  assert.match(app,/renderDailyLogin\(vm\.dailyLogin\)/);
   assert.match(app,/loadS3ActorPack/);
   assert.match(app,/startComposedHeroStance/);
   assert.match(app,/emailRedirectTo:appRedirectUrl\(\)/);
@@ -65,8 +71,10 @@ test('account UI uses authoritative Runner paths, real Hero preview, and does no
   assert.match(app,/vm\.progressionOffers\.map\(trainingOfferCell\)/);
   assert.match(adapter,/from\('progression_offer_catalog'\)/);
   assert.match(adapter,/client\.rpc\('purchase_progression_offer'/);
+  assert.match(adapter,/client\.rpc\('get_daily_login_status'/);
+  assert.match(adapter,/client\.rpc\('claim_daily_login_bonus'/);
   assert.match(adapter,/from\('progression_purchase'\)/);
-  assert.doesNotMatch(adapter,/\.from\(['"](?:progression_purchase|runner_stat_upgrade_event|wallet_ledger)['"]\).*\.(?:insert|update|upsert|delete)/is);
+  assert.doesNotMatch(adapter,/\.from\(['"](?:progression_purchase|runner_stat_upgrade_event|wallet_ledger|daily_login_claim)['"]\).*\.(?:insert|update|upsert|delete)/is);
   assert.match(adapter,/get_account_runner_state/);
   assert.match(adapter,/PRODUCT_REWARD_CLAIM_NOT_ENABLED/);
   assert.doesNotMatch(view,/rookieStarterSnapshot|ITEM_CATALOG|wooden-club|wooden-shield/);
@@ -80,6 +88,9 @@ test('mobile controls meet minimum target and config contains no credential',asy
   assert.match(css,/\.text-action\{min-height:44px/);
   assert.match(css,/\.runner-tab\{min-height:44px/);
   assert.match(css,/\.runner-portrait/);
+  assert.match(css,/\.daily-claim\{[^}]*min-height:48px/);
+  assert.match(css,/images\/menus\/inventory\.png/);
+  assert.match(css,/images\/menus\/storage_generic\.png/);
   assert.match(config,/__FLARE_S8B_PUBLIC_CONFIG__/);
   assert.doesNotMatch(config,/sb_(?:publishable|secret)_|service_role/i);
   assert.equal(version.trim(),'@supabase/supabase-js 2.116.0');
