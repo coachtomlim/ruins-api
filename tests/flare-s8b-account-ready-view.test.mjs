@@ -28,6 +28,7 @@ function account(state=runnerState()){
       {catalog_version:'launch',offer_id:'strike-i',kind:'STAT',stat_key:'attack',stat_amount:1,gold_cost:30}
     ],
     progressionPurchases:[],
+    dailyLogin:{reward_day:'2026-09-19',claimed_today:false,current_streak_day:0,next_streak_day:1,claimable_gold:5,next_reset_at:'2026-09-20T00:00:00Z'},
     goldBalance:0
   };
 }
@@ -37,6 +38,8 @@ test('backend Runner Hub uses authoritative stats and gear without recalculation
   assert.equal(vm.displayName,'Ada');
   assert.equal(vm.email,'ada@example.test');
   assert.equal(vm.goldBalance,0);
+  assert.equal(vm.dailyLogin.actionLabel,'CLAIM 5 GOLD');
+  assert.equal(vm.dailyLogin.streakLabel,'DAY 1 OF 7');
   assert.deepEqual(vm.runner.baseStats,{hp:100,attack:8,defense:0});
   assert.deepEqual(vm.runner.stats,{hp:100,attack:12,defense:1});
   assert.equal(vm.savedGoalLabel,'Tom · Tough Warrior · 60% HP');
@@ -50,6 +53,15 @@ test('backend Runner Hub uses authoritative stats and gear without recalculation
   assert.equal(vm.equipment[1].modifierLabel,'+1 DEF');
   assert.deepEqual(vm.armor.map(row=>row.slot),['head','chest','hands','legs','feet']);
   assert.ok(vm.armor.every(row=>row.equipped===false));
+});
+
+test('daily login view is derived from authoritative backend status',()=>{
+  const source=account();
+  source.dailyLogin={reward_day:'2026-09-19',claimed_today:false,current_streak_day:6,next_streak_day:7,claimable_gold:15,next_reset_at:'2026-09-20T00:00:00Z'};
+  const vm=buildAccountReadyViewFromBackend(source);
+  assert.equal(vm.dailyLogin.actionLabel,'CLAIM 15 GOLD');
+  assert.equal(vm.dailyLogin.streakLabel,'DAY 7 OF 7');
+  assert.match(vm.dailyLogin.detail,/\+10 bonus Gold/);
 });
 
 test('training actions derive from authoritative Gold and own purchase history',()=>{
