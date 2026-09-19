@@ -32,9 +32,18 @@ test('claim RPC serializes per player and keeps browser writes behind security d
 });
 
 test('same-day retry returns existing evidence before a second ledger insert',()=>{
-  const existingIndex=migration.indexOf('where c.player_id = v_player\n    and c.reward_day = v_day;');
+  const existingIndex=migration.search(/where c\.player_id = v_player\r?\n\s+and c\.reward_day = v_day;/);
   const ledgerIndex=migration.indexOf('insert into public.wallet_ledger');
   assert.ok(existingIndex>-1&&ledgerIndex>-1&&existingIndex<ledgerIndex);
   assert.match(migration,/v_existing\.base_gold \+ v_existing\.streak_bonus_gold/);
   assert.match(migration,/true,\s+\(\(v_day \+ 1\)::timestamp at time zone 'UTC'\)/i);
+});
+
+
+test('claim function has a balanced dollar-quoted body',()=>{
+  const functionStart=migration.indexOf('create or replace function public.claim_daily_login_bonus()');
+  assert.ok(functionStart>=0,'claim_daily_login_bonus missing');
+  const body=migration.slice(functionStart);
+  assert.match(body,/security definer\s+set search_path = ''\s+as \$\$/i);
+  assert.match(body,/\$\$;\s+revoke all on function public\.claim_daily_login_bonus\(\)/i);
 });
