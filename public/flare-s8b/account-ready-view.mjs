@@ -1,3 +1,5 @@
+import {dailyLoginView} from './daily-login.mjs';
+
 const SLOT_KEYS=Object.freeze(['weapon','shield','head','chest','hands','legs','feet']);
 const SLOT_LABELS=Object.freeze({weapon:'MAIN HAND',shield:'OFF HAND',head:'HEAD',chest:'CHEST',hands:'HANDS',legs:'LEGS',feet:'FEET'});
 const EQUIPMENT_SLOTS=Object.freeze(['weapon','shield']);
@@ -137,12 +139,14 @@ export function buildAccountReadyViewFromBackend(account){
     const purchased=purchasedKeys.has(`${offer.catalogVersion}:${offer.offerId}`);
     return Object.freeze({...offer,purchased,action:progressionOfferState({...offer,purchased},account.goldBalance)});
   }));
+  const dailyLogin=dailyLoginView(account.dailyLogin);
   return Object.freeze({
     title:'ACCOUNT READY',
     displayName:String(account.profile.display_name||account.identity?.email||'Player'),
     email:String(account.identity?.email||''),
     savedGoalLabel,
     goldBalance:Math.max(0,Number(account.goldBalance)||0),
+    dailyLogin,
     runner:Object.freeze({
       id:runnerState.playerRunnerId,
       templateId:runnerState.runnerTemplateId,
