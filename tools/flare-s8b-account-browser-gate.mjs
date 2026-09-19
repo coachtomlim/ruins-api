@@ -96,11 +96,14 @@ async function runJourney(){
     assert(first.baseHp==='100'&&first.baseAttack==='8'&&first.baseDefense==='0','Authoritative base stats incorrect');
     assert(first.hp==='100'&&first.attack==='12'&&first.defense==='1','Authoritative effective stats incorrect');
     assert(first.scrollWidth<=first.viewportWidth,`Ready view overflow at ${viewport.width}x${viewport.height}`);
+    const dailyLabel=await page.locator('#dailyLoginClaim').textContent();
+    assert(/CLAIM (?:5|15) GOLD|CLAIMED TODAY/.test(dailyLabel),'Daily Bonus authoritative state missing');
+    assert((await page.locator('.daily-trial-teaser').textContent()).includes('Practice stays unlimited and reward-free'),'Daily Trial boundary copy missing');
     await page.locator('#runnerHeroCanvas').waitFor({state:'visible'});
     const heroBox=await page.locator('#runnerHeroCanvas').boundingBox();
     assert(heroBox&&heroBox.width>80&&heroBox.height>100,`Runner Hero preview is not visibly sized at ${viewport.width}x${viewport.height}`);
 
-    for(const selector of ['#signOut','#statsTab','#equipmentTab','#armorTab']){
+    for(const selector of ['#signOut','#dailyLoginClaim','#statsTab','#equipmentTab','#armorTab']){
       const height=await page.locator(selector).evaluate(element=>element.getBoundingClientRect().height);
       assert(height>=44,`${selector} below 44px at ${viewport.width}x${viewport.height}`);
     }
@@ -144,12 +147,14 @@ async function runJourney(){
     assert(requests.some(row=>row.url.includes('/auth/v1/token')&&row.method==='POST'),'Managed sign-in was not called');
     assert(requests.some(row=>row.url.includes('/rpc/ensure_starter_account')&&row.method==='POST'),'Starter RPC was not called');
     assert(requests.some(row=>row.url.includes('/rpc/get_account_runner_state')&&row.method==='POST'),'Authoritative Runner state RPC was not called');
+    assert(requests.some(row=>row.url.includes('/rpc/get_daily_login_status')&&row.method==='POST'),'Daily Bonus status RPC was not called');
+    assert(!requests.some(row=>row.url.includes('/rpc/claim_daily_login_bonus')),'Browser gate must not mutate Daily Bonus state');
     assert(!requests.some(row=>row.url.includes('/rest/v1/saved_goal')&&row.method==='POST'),'Direct saved_goal write detected');
     assert(!requests.some(row=>/claim_proof_builder_reward|claimGuestRun/i.test(row.url)),'Product reward claim unexpectedly activated');
     assert(!requests.some(row=>/runner_template_catalog|runner_item_catalog/.test(row.url)&&row.method!=='GET'),'Catalog mutation unexpectedly activated');
     assert(applicationErrors.length===0,`Console errors at ${viewport.width}x${viewport.height}: ${applicationErrors.join(' | ')}`);
     assert(applicationNotFound.length===0,`404s at ${viewport.width}x${viewport.height}: ${applicationNotFound.join(' | ')}`);
-    results.push({viewport:`${viewport.width}x${viewport.height}`,accountReady:true,sessionReload:true,navigation:true,gold:0,baseStats:'100/8/0',effectiveStats:'100/12/1',club:true,shield:true,emptyArmorSlots:5,runnerPanels:true,goalCardHidden,signOut:true,unauthenticatedProtection:true,consoleErrors:0,notFound:0});
+    results.push({viewport:`${viewport.width}x${viewport.height}`,accountReady:true,sessionReload:true,navigation:true,gold:0,dailyBonus:true,baseStats:'100/8/0',effectiveStats:'100/12/1',club:true,shield:true,emptyArmorSlots:5,runnerPanels:true,goalCardHidden,signOut:true,unauthenticatedProtection:true,consoleErrors:0,notFound:0});
     await page.close();
   }
   console.log(JSON.stringify({phase:'journey',status:'PASS',viewports:results},null,2));
