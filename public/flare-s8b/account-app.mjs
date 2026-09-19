@@ -158,7 +158,7 @@ async function claimDailyLogin(){
   try{
     const claim=await adapter.claimDailyLoginBonus();
     await refreshReady();
-    byId('dailyLoginStatus').textContent=`+${Number(claim.gold_awarded)||0} GOLD ADDED`;
+    byId('dailyLoginStatus').textContent=claim.duplicate===true?'ALREADY CLAIMED TODAY':`+${Number(claim.gold_awarded)||0} GOLD ADDED`;
   }catch(error){
     byId('dailyLoginStatus').textContent=errorMessage(error);
     if(!readyViewModel?.dailyLogin?.actionDisabled){
