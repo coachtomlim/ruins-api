@@ -41,6 +41,7 @@ function fixtureClient({signupSession=null,runnerState=RUNNER_STATE}={}){
     ],
     progression_purchase:[]
   };
+  const dailyLogin={reward_day:'2026-09-19',claimed_today:false,current_streak_day:0,next_streak_day:1,claimable_gold:5,next_reset_at:'2026-09-20T00:00:00Z'};
   return {
     calls,user,session,
     auth:{
@@ -56,6 +57,8 @@ function fixtureClient({signupSession=null,runnerState=RUNNER_STATE}={}){
       if(name==='get_account_runner_state')return {data:runnerState,error:null};
       if(name==='save_account_goal')return {data:[{saved_goal_id:'goal-a',runner_id:'warrior-l3',runner_name:'Tough Warrior',runner_level:3,target_hp:60}],error:null};
       if(name==='purchase_progression_offer')return {data:[{progression_purchase_id:'purchase-a',ledger_entry_id:'ledger-a',catalog_version:'s8b-launch-progression-001',offer_id:args.p_offer_id,gold_spent:20,balance:80,duplicate:false,stat_event_id:'event-a',ownership_id:null}],error:null};
+      if(name==='get_daily_login_status')return {data:[dailyLogin],error:null};
+      if(name==='claim_daily_login_bonus')return {data:[{claim_id:'daily-a',ledger_entry_id:'daily-ledger-a',reward_day:'2026-09-19',streak_day:1,base_gold:5,streak_bonus_gold:0,gold_awarded:5,balance:5,duplicate:false,next_reset_at:'2026-09-20T00:00:00Z'}],error:null};
       return {data:null,error:{message:'unexpected rpc'}};
     }
   };
@@ -74,7 +77,8 @@ test('unconfigured adapter is explicit and fails closed',async()=>{
 test('adapter contract requires authoritative Runner capability',()=>{
   assert.deepEqual(ACCOUNT_CAPABILITIES,[
     'register','signIn','signOut','getMe','getSession','ensureStarterAccount',
-    'loadRunnerState','loadProgressionOffers','loadProgressionPurchases','purchaseProgressionOffer','loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
+    'loadRunnerState','loadProgressionOffers','loadProgressionPurchases','purchaseProgressionOffer',
+    'loadDailyLoginStatus','claimDailyLoginBonus','loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
   ]);
   assert.throws(()=>validateAccountAdapter({register(){}}),/missing signIn/i);
 });
@@ -145,6 +149,7 @@ test('sign in provisions starter then maps authoritative account state',async()=
   assert.equal(result.account.goldBalance,0);
   assert.equal(result.account.progressionOffers.length,3);
   assert.deepEqual(result.account.progressionPurchases,[]);
+  assert.equal(result.account.dailyLogin.claimable_gold,5);
   assert.deepEqual(result.account.progressionOffers.map(row=>row.gold_cost),[20,30,40]);
   const starterIndex=client.calls.findIndex(call=>call[0]==='rpc'&&call[1]==='ensure_starter_account');
   const runnerIndex=client.calls.findIndex(call=>call[0]==='rpc'&&call[1]==='get_account_runner_state');
@@ -193,6 +198,20 @@ test('progression purchase propagates governed RPC errors without client decisio
     ()=>adapter.purchaseProgressionOffer({playerRunnerId:'runner-a',offerId:'guard-i',idempotencyKey:'proof-key-b'}),
     error=>error.name==='AccountAdapterError'&&error.operation==='purchaseProgressionOffer'&&error.code==='P0001'&&/PROJECTED_RUNNER_OUTSIDE_PREFERRED_ENVELOPE/.test(error.message)
   );
+});
+
+test('daily login status and claim use governed RPCs only',async()=>{
+  const client=fixtureClient();
+  const adapter=createSupabaseAccountAdapter({client});
+  const status=await adapter.loadDailyLoginStatus();
+  assert.equal(status.claimable_gold,5);
+  assert.deepEqual(client.calls[0],['rpc','get_daily_login_status',undefined]);
+  client.calls.length=0;
+  const claim=await adapter.claimDailyLoginBonus();
+  assert.equal(claim.gold_awarded,5);
+  assert.equal(claim.balance,5);
+  assert.deepEqual(client.calls[0],['rpc','claim_daily_login_bonus',undefined]);
+  assert.equal(client.calls.some(call=>['insert','update','upsert','delete'].includes(call[0])),false);
 });
 
 test('sign out is local and product reward claim remains disabled',async()=>{
