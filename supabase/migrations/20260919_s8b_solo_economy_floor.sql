@@ -143,8 +143,8 @@ returns table (
 )
 language plpgsql
 security definer
-set search_path = public
-as $$
+set search_path = ''
+as $
 declare
   v_player uuid := auth.uid();
   v_profile_id uuid;
