@@ -1,4 +1,5 @@
 import {readFile} from 'node:fs/promises';
+import {pathToFileURL} from 'node:url';
 import {parseMap} from '../public/flare-p0/src/core/flare.mjs';
 import {Simulation} from '../public/flare-s7/simulation.mjs';
 import {applyRunnerModel,buildS7Challenge} from '../public/flare-s7/game.mjs';
@@ -101,4 +102,4 @@ async function main(){
   }
 }
 
-await main();
+if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href)await main();
