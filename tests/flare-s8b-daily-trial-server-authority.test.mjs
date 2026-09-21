@@ -50,14 +50,14 @@ test('start RPC snapshots the exact fixed FAIR encounter and calibrated 65-point
   assert.match(migration,/"supportTypes":\["small-potion"\]/i);
   assert.match(migration,/"trapTypes":\[\]/i);
   assert.match(migration,/fair-goblin-skeleton-potion-001/i);
-  assert.match(migration,/\n\s*65,\n\s*5,/);
+  assert.match(migration,/\r?\n\s*65,\r?\n\s*5,/);
 });
 
 test('settlement accepts only run id, waits for server settle_after and credits fixed +5 once',()=>{
   assert.match(migration,/create or replace function public\.settle_daily_trial\(p_run_id uuid\)/i);
   assert.match(migration,/if now\(\) < v_run\.settle_after then\s+raise exception 'DAILY_TRIAL_NOT_COMPLETE'/i);
   assert.match(migration,/v_key := 'daily-trial:' \|\| v_player::text \|\| ':' \|\| v_run\.trial_day::text/i);
-  assert.match(migration,/\n\s*5,\n\s*'daily_trial_reward'/i);
+  assert.match(migration,/\r?\n\s*5,\r?\n\s*'daily_trial_reward'/i);
   assert.match(migration,/if v_run\.settled_at is not null then[\s\S]*?true,/i);
   assert.doesNotMatch(migration,/settle_daily_trial\([^)]*(?:reward|gold|hp|score|status)/i);
 });
