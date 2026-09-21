@@ -186,6 +186,42 @@ begin
     return;
   end if;
 
+  -- Preserve discoverability for a run started before UTC midnight but not yet settled.
+  select * into v_run
+  from public.daily_trial_run r
+  where r.player_id = v_player
+    and r.trial_day < v_day
+    and r.settled_at is null
+  order by r.trial_day desc, r.started_at desc, r.id desc
+  limit 1;
+
+  if found then
+    return query
+    select
+      v_run.trial_day,
+      v_run.trial_version,
+      case
+        when now() >= v_run.settle_after then 'CLAIMABLE'
+        else 'RUNNING'
+      end,
+      v_run.id,
+      v_run.room_id,
+      v_run.room_name,
+      v_run.rules_version,
+      v_run.content_version,
+      v_run.runner_snapshot,
+      v_run.reward_gold,
+      v_run.expected_ticks,
+      round(v_run.expected_ticks::numeric / 60, 2),
+      v_run.settle_after,
+      v_run.runner_hp,
+      v_run.runner_attack,
+      v_run.runner_defense,
+      v_run.encounter_id,
+      v_run.budget_spent;
+    return;
+  end if;
+
   return query
   select
     v_day,
