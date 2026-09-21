@@ -1,0 +1,29 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#52215f"><title>Dungeon Runner · S8B Daily Trial</title><link rel="stylesheet" href="/quick-dungeon/flare-s3/style.css"><link rel="stylesheet" href="/quick-dungeon/flare-s5/style.css"><link rel="stylesheet" href="/quick-dungeon/flare-s6/style.css"><link rel="stylesheet" href="/quick-dungeon/flare-s7/style.css"><link rel="stylesheet" href="/quick-dungeon/flare-s71/style.css"><link rel="stylesheet" href="daily-trial.css"></head><body>
+<main class="dt-app" id="dtApp" data-mode="loading">
+  <header class="dt-top">
+    <a class="dt-back" href="index.html" id="dtBack">‹ HUB</a>
+    <div><div class="eyebrow">DUNGEON RUNNER · S8B · DAILY TRIAL</div><strong id="dtTitle">Daily Trial</strong></div>
+  </header>
+  <section class="dt-info" id="dtInfo" aria-label="Today's Trial">
+    <div><span>ROOM</span><strong id="dtRoom">—</strong></div>
+    <div><span>TRIAL</span><strong>FAIR · FIXED</strong></div>
+    <div><span>RUNNER</span><strong id="dtRunner">—</strong></div>
+    <div><span>REWARD</span><strong id="dtReward">—</strong></div>
+  </section>
+  <div class="dt-stage" id="dtStage">
+    <canvas id="scene" aria-label="Daily Trial dungeon run"></canvas>
+    <div class="dt-hud"><span>HP <b id="hp">—</b></span><span><b id="time">0.0</b>s</span></div>
+    <div class="dt-cover" id="dtCover" hidden><div class="dt-card"><span class="step-label" id="dtResultLabel">TRIAL COMPLETE</span><p id="dtResultText"></p></div></div>
+  </div>
+  <div class="dt-tools" id="dtTools"><button type="button" id="overview">OVERVIEW</button><button type="button" id="pause" disabled>PAUSE</button></div>
+  <section class="dt-claim" aria-live="polite">
+    <p class="status" id="dtStatus" role="status">Loading your Daily Trial…</p>
+    <button type="button" class="primary" id="claim" hidden>CLAIM 5 GOLD</button>
+    <div class="dt-claimed" id="dtClaimed" hidden><strong>DAILY TRIAL CLAIMED</strong><span>GOLD <b id="dtBalance">—</b></span></div>
+    <a class="dt-hub-link" href="index.html" id="dtHubLink">BACK TO HUB</a>
+  </section>
+</main>
+<script src="config.js"></script>
+<script src="vendor/supabase.js"></script>
+<script type="module" src="daily-trial-app.mjs"></script>
+</body></html>

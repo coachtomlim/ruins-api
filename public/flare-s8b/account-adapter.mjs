@@ -1,7 +1,8 @@
 export const ACCOUNT_CAPABILITIES=Object.freeze([
   'register','signIn','signOut','getMe','getSession','ensureStarterAccount',
   'loadRunnerState','loadProgressionOffers','loadProgressionPurchases','purchaseProgressionOffer',
-  'loadDailyLoginStatus','claimDailyLoginBonus','loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
+  'loadDailyLoginStatus','claimDailyLoginBonus',
+  'loadDailyTrialStatus','startDailyTrial','loadDailyTrialRun','settleDailyTrial','loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
 ]);
 
 const clean=value=>String(value??'').trim();
@@ -71,6 +72,10 @@ export function unavailableAccountAdapter(){
     purchaseProgressionOffer:unavailable,
     loadDailyLoginStatus:unavailable,
     claimDailyLoginBonus:unavailable,
+    loadDailyTrialStatus:unavailable,
+    startDailyTrial:unavailable,
+    loadDailyTrialRun:unavailable,
+    settleDailyTrial:unavailable,
     loadAccountState:unavailable,
     loadSavedGoals:unavailable,
     saveGoal:unavailable,
@@ -158,6 +163,37 @@ export function createSupabaseAccountAdapter({client}={}){
     return Object.freeze({...claim});
   }
 
+  async function loadDailyTrialStatus(){
+    const rows=resultData('loadDailyTrialStatus',await client.rpc('get_daily_trial_status'))||[];
+    const status=rows[0]??null;
+    if(!status)throw new Error('AUTHORITATIVE_DAILY_TRIAL_STATUS_REQUIRED');
+    return Object.freeze({...status});
+  }
+
+  async function startDailyTrial(){
+    const rows=resultData('startDailyTrial',await client.rpc('start_daily_trial'))||[];
+    const run=rows[0]??null;
+    if(!run)throw new Error('AUTHORITATIVE_DAILY_TRIAL_START_REQUIRED');
+    return Object.freeze({...run});
+  }
+
+  async function loadDailyTrialRun(runId){
+    const id=clean(runId);
+    if(!id)throw new Error('DAILY_TRIAL_RUN_ID_REQUIRED');
+    const row=resultData('loadDailyTrialRun',await client.from('daily_trial_run').select('*').eq('id',id).single());
+    if(!row)throw new Error('AUTHORITATIVE_DAILY_TRIAL_RUN_REQUIRED');
+    return Object.freeze({...row});
+  }
+
+  async function settleDailyTrial(runId){
+    const id=clean(runId);
+    if(!id)throw new Error('DAILY_TRIAL_RUN_ID_REQUIRED');
+    const rows=resultData('settleDailyTrial',await client.rpc('settle_daily_trial',{p_run_id:id}))||[];
+    const settlement=rows[0]??null;
+    if(!settlement)throw new Error('AUTHORITATIVE_DAILY_TRIAL_SETTLEMENT_REQUIRED');
+    return Object.freeze({...settlement});
+  }
+
   async function loadAccountState({playerRunnerId=null}={}){
     const me=await getMe();
     if(!me)throw new Error('AUTH_REQUIRED');
@@ -168,6 +204,7 @@ export function createSupabaseAccountAdapter({client}={}){
     const progressionOffers=await loadProgressionOffers();
     const progressionPurchases=await loadProgressionPurchases(runnerState.player_runner_id);
     const dailyLogin=await loadDailyLoginStatus();
+    const dailyTrial=await loadDailyTrialStatus();
     const goldBalance=ledger.reduce((sum,row)=>sum+(Number(row?.delta_gold)||0),0);
     return Object.freeze({
       identity:Object.freeze({id:me.id,email:me.email}),
@@ -177,6 +214,7 @@ export function createSupabaseAccountAdapter({client}={}){
       progressionOffers,
       progressionPurchases,
       dailyLogin,
+      dailyTrial,
       goldBalance
     });
   }
@@ -227,6 +265,7 @@ export function createSupabaseAccountAdapter({client}={}){
   return Object.freeze({
     available:true,provider:'supabase',register,signIn,signOut,getMe,getSession,
     ensureStarterAccount,loadRunnerState,loadProgressionOffers,loadProgressionPurchases,purchaseProgressionOffer,
-    loadDailyLoginStatus,claimDailyLoginBonus,loadAccountState,loadSavedGoals,saveGoal,claimGuestRun
+    loadDailyLoginStatus,claimDailyLoginBonus,
+    loadDailyTrialStatus,startDailyTrial,loadDailyTrialRun,settleDailyTrial,loadAccountState,loadSavedGoals,saveGoal,claimGuestRun
   });
 }

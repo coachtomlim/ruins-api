@@ -81,12 +81,18 @@
           </div>
           <button class="daily-claim" id="dailyLoginClaim" type="button">CLAIM GOLD</button>
         </div>
-        <div class="daily-trial-teaser" aria-label="Daily Trial coming next">
-          <span>DAILY TRIAL</span>
-          <strong>COMING NEXT</strong>
-          <small>One rewarded clear per day. Practice stays unlimited and reward-free.</small>
+        <div class="daily-trial-card" id="dailyTrialCard" data-state="loading" aria-labelledby="dailyTrialTitle">
+          <div class="daily-trial-copy">
+            <span class="eyebrow">SOLO GOLD · ONE CLEAR PER DAY</span>
+            <h2 id="dailyTrialTitle">DAILY TRIAL</h2>
+            <strong id="dailyTrialRoom">—</strong>
+            <b id="dailyTrialState">—</b>
+            <p id="dailyTrialDetail">Practice stays unlimited and reward-free.</p>
+          </div>
+          <button class="daily-trial-action" id="dailyTrialAction" type="button" disabled>START DAILY TRIAL</button>
         </div>
         <p class="status economy-status" id="dailyLoginStatus" role="status" aria-live="polite"></p>
+        <p class="status economy-status" id="dailyTrialStatus" role="status" aria-live="polite"></p>
       </section>
 
       <article class="runner-card">

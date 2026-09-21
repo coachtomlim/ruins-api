@@ -33,6 +33,7 @@ function fixtureClient({signupSession=null,runnerState=RUNNER_STATE}={}){
   const tables={
     player_profile:[{id:user.id,display_name:'Ada'}],
     wallet_ledger:[],
+    daily_trial_run:[{id:'trial-run-a',trial_day:'2026-09-19',room_id:'iron-labyrinth-01'}],
     saved_goal:[{id:'goal-a',owner_player_id:user.id,source_sender_name:'Tom',source_runner_id:'warrior-l3',source_runner_name:'Tough Warrior',source_runner_level:3,target_hp:60}],
     progression_offer_catalog:[
       {catalog_version:'s8b-launch-progression-001',offer_id:'endurance-i',kind:'STAT',stat_key:'hp',stat_amount:5,gold_cost:20},
@@ -41,6 +42,8 @@ function fixtureClient({signupSession=null,runnerState=RUNNER_STATE}={}){
     ],
     progression_purchase:[]
   };
+  const dailyTrialStatus={trial_day:'2026-09-19',trial_version:'s8b-daily-trial-001',state:'AVAILABLE',run_id:null,room_id:'iron-labyrinth-01',room_name:'Pillar Court',rules_version:'web-flare-0.2.0',content_version:'web-flare-s7-0.1.0',runner_snapshot:null,reward_gold:5,expected_ticks:614,expected_seconds:'10.23',settle_after:null,runner_hp:null,runner_attack:null,runner_defense:null,encounter_id:'fair-goblin-skeleton-potion-001',budget_spent:65};
+  const dailyTrialRun={id:'trial-run-a',player_id:user.id,trial_day:'2026-09-19',room_id:'iron-labyrinth-01'};
   const dailyLogin={reward_day:'2026-09-19',claimed_today:false,current_streak_day:0,next_streak_day:1,claimable_gold:5,next_reset_at:'2026-09-20T00:00:00Z'};
   return {
     calls,user,session,
@@ -58,6 +61,9 @@ function fixtureClient({signupSession=null,runnerState=RUNNER_STATE}={}){
       if(name==='save_account_goal')return {data:[{saved_goal_id:'goal-a',runner_id:'warrior-l3',runner_name:'Tough Warrior',runner_level:3,target_hp:60}],error:null};
       if(name==='purchase_progression_offer')return {data:[{progression_purchase_id:'purchase-a',ledger_entry_id:'ledger-a',catalog_version:'s8b-launch-progression-001',offer_id:args.p_offer_id,gold_spent:20,balance:80,duplicate:false,stat_event_id:'event-a',ownership_id:null}],error:null};
       if(name==='get_daily_login_status')return {data:[dailyLogin],error:null};
+      if(name==='get_daily_trial_status')return {data:[dailyTrialStatus],error:null};
+      if(name==='start_daily_trial')return {data:[{run_id:'trial-run-a',trial_day:'2026-09-19',duplicate:false,reward_gold:5}],error:null};
+      if(name==='settle_daily_trial')return {data:[{run_id:args.p_run_id,reward_gold:5,balance:5,duplicate:false,ledger_entry_id:'trial-ledger-a'}],error:null};
       if(name==='claim_daily_login_bonus')return {data:[{claim_id:'daily-a',ledger_entry_id:'daily-ledger-a',reward_day:'2026-09-19',streak_day:1,base_gold:5,streak_bonus_gold:0,gold_awarded:5,balance:5,duplicate:false,next_reset_at:'2026-09-20T00:00:00Z'}],error:null};
       return {data:null,error:{message:'unexpected rpc'}};
     }
@@ -78,7 +84,9 @@ test('adapter contract requires authoritative Runner capability',()=>{
   assert.deepEqual(ACCOUNT_CAPABILITIES,[
     'register','signIn','signOut','getMe','getSession','ensureStarterAccount',
     'loadRunnerState','loadProgressionOffers','loadProgressionPurchases','purchaseProgressionOffer',
-    'loadDailyLoginStatus','claimDailyLoginBonus','loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
+    'loadDailyLoginStatus','claimDailyLoginBonus',
+    'loadDailyTrialStatus','startDailyTrial','loadDailyTrialRun','settleDailyTrial',
+    'loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
   ]);
   assert.throws(()=>validateAccountAdapter({register(){}}),/missing signIn/i);
 });
@@ -221,4 +229,48 @@ test('sign out is local and product reward claim remains disabled',async()=>{
   assert.deepEqual(client.calls[0],['signOut',{scope:'local'}]);
   await assert.rejects(()=>adapter.claimGuestRun({}),/PRODUCT_REWARD_CLAIM_NOT_ENABLED/);
   assert.equal(client.calls.some(call=>call[0]==='rpc'&&/reward/i.test(call[1])),false);
+});
+
+test('daily trial capabilities use only the governed RPCs and one read-only table select',async()=>{
+  const client=fixtureClient();
+  const adapter=createSupabaseAccountAdapter({client});
+  const status=await adapter.loadDailyTrialStatus();
+  assert.equal(status.state,'AVAILABLE');
+  assert.deepEqual(client.calls.at(-1),['rpc','get_daily_trial_status',undefined]);
+  const started=await adapter.startDailyTrial();
+  assert.equal(started.run_id,'trial-run-a');
+  assert.deepEqual(client.calls.at(-1),['rpc','start_daily_trial',undefined]);
+  const run=await adapter.loadDailyTrialRun('trial-run-a');
+  assert.equal(run.id,'trial-run-a');
+  assert.deepEqual(client.calls.at(-1),['from','daily_trial_run']);
+  const settled=await adapter.settleDailyTrial('trial-run-a');
+  assert.equal(settled.reward_gold,5);
+  assert.deepEqual(client.calls.at(-1),['rpc','settle_daily_trial',{p_run_id:'trial-run-a'}]);
+  assert.equal(client.calls.some(call=>['insert','update','upsert','delete'].includes(call[0])),false);
+});
+
+test('daily trial settlement and run lookup require a run id and never send browser reward fields',async()=>{
+  const client=fixtureClient();
+  const adapter=createSupabaseAccountAdapter({client});
+  await assert.rejects(()=>adapter.settleDailyTrial(''),/DAILY_TRIAL_RUN_ID_REQUIRED/);
+  await assert.rejects(()=>adapter.loadDailyTrialRun('  '),/DAILY_TRIAL_RUN_ID_REQUIRED/);
+  await adapter.startDailyTrial();
+  await adapter.settleDailyTrial('trial-run-a');
+  const rpcArgs=client.calls.filter(call=>call[0]==='rpc'&&/daily_trial/.test(call[1])).map(call=>call[2]);
+  assert.deepEqual(rpcArgs,[undefined,{p_run_id:'trial-run-a'}]);
+});
+
+test('loadAccountState includes the authoritative daily trial status',async()=>{
+  const client=fixtureClient();
+  const adapter=createSupabaseAccountAdapter({client});
+  const account=await adapter.loadAccountState();
+  assert.equal(account.dailyTrial.state,'AVAILABLE');
+  assert.equal(account.dailyTrial.room_name,'Pillar Court');
+  assert.equal(account.dailyLogin.claimable_gold,5);
+});
+
+test('unconfigured adapter also fails closed for daily trial',async()=>{
+  const adapter=unavailableAccountAdapter();
+  for(const name of ['loadDailyTrialStatus','startDailyTrial','loadDailyTrialRun','settleDailyTrial'])
+    await assert.rejects(()=>adapter[name]('x'),/ACCOUNT_SERVICE_NOT_CONFIGURED/);
 });

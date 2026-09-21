@@ -4,6 +4,7 @@ import {createStatPurchaseFlow} from './stat-purchase-flow.mjs';
 import {loadS3ActorPack} from '../flare-s8a/actors.mjs';
 import {startComposedHeroStance} from '../flare-s71/hero-preview.mjs';
 import {createPracticeRunnerSnapshot} from './practice-runner-snapshot.mjs';
+import {dailyTrialErrorMessage} from './daily-trial.mjs';
 
 const PRACTICE_SNAPSHOT_KEY='s8bPracticeSnapshot';
 
@@ -124,6 +125,56 @@ function renderDailyLogin(dailyLogin){
   button.disabled=dailyLogin.actionDisabled;
 }
 
+function renderDailyTrial(trial){
+  const card=byId('dailyTrialCard'),button=byId('dailyTrialAction');
+  if(!trial){
+    card.dataset.state='unavailable';
+    byId('dailyTrialRoom').textContent='—';
+    byId('dailyTrialState').textContent='UNAVAILABLE';
+    byId('dailyTrialDetail').textContent='Daily Trial status is unavailable. Please try again later.';
+    button.textContent='DAILY TRIAL UNAVAILABLE';button.disabled=true;
+    return;
+  }
+  card.dataset.state=trial.state.toLowerCase();
+  byId('dailyTrialRoom').textContent=trial.roomName;
+  byId('dailyTrialState').textContent=trial.statusLabel;
+  byId('dailyTrialDetail').textContent=trial.detail;
+  button.textContent=trial.actionLabel;
+  button.disabled=trial.actionDisabled;
+}
+
+function dailyTrialPage(runId){return `daily-trial.html?run=${encodeURIComponent(runId)}`}
+
+async function runDailyTrialAction(){
+  const trial=readyViewModel?.dailyTrial,button=byId('dailyTrialAction'),status=byId('dailyTrialStatus');
+  if(!trial||trial.actionDisabled)return;
+  button.disabled=true;
+  status.textContent='';
+  try{
+    if(trial.actionKind==='start'){
+      button.textContent='STARTING…';
+      const run=await adapter.startDailyTrial();
+      location.href=dailyTrialPage(run.run_id);
+      return;
+    }
+    if(trial.actionKind==='continue'){
+      location.href=dailyTrialPage(trial.runId);
+      return;
+    }
+    if(trial.actionKind==='claim'){
+      button.textContent='CLAIMING…';
+      const claim=await adapter.settleDailyTrial(trial.runId);
+      await refreshReady();
+      byId('dailyTrialStatus').textContent=claim.duplicate===true?'ALREADY CLAIMED':`+${Number(claim.reward_gold)||0} GOLD ADDED`;
+    }
+  }catch(error){
+    const feedback=dailyTrialErrorMessage(error);
+    if(feedback.kind==='wait'){try{await refreshReady()}catch{}}
+    renderDailyTrial(readyViewModel?.dailyTrial);
+    byId('dailyTrialStatus').textContent=feedback.message;
+  }
+}
+
 function closePurchaseConfirmation(){
   purchaseFlow?.cancel();
   byId('purchaseDialog').hidden=true;
@@ -192,6 +243,7 @@ async function confirmPurchase(){
 
 function renderReady(account){
   byId('dailyLoginStatus').textContent='';
+  byId('dailyTrialStatus').textContent='';
   const vm=buildAccountReadyViewFromBackend(account);
   readyViewModel=vm;
   activeRunnerId=vm.runner.id;
@@ -199,6 +251,7 @@ function renderReady(account){
   byId('accountEmail').textContent=vm.email;
   byId('goldBalance').textContent=String(vm.goldBalance);
   renderDailyLogin(vm.dailyLogin);
+  renderDailyTrial(vm.dailyTrial);
   byId('runnerName').textContent=vm.runner.name;
   byId('runnerHp').textContent=String(vm.runner.stats.hp);
   byId('runnerAttack').textContent=String(vm.runner.stats.attack);
@@ -236,6 +289,7 @@ for(const panel of runnerPanels)byId(`${panel}Tab`).addEventListener('click',()=
 byId('cancelPurchase').addEventListener('click',closePurchaseConfirmation);
 byId('confirmPurchase').addEventListener('click',confirmPurchase);
 byId('dailyLoginClaim').addEventListener('click',claimDailyLogin);
+byId('dailyTrialAction').addEventListener('click',runDailyTrialAction);
 
 byId('createForm').addEventListener('submit',async event=>{
   event.preventDefault();

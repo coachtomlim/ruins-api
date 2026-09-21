@@ -41,3 +41,9 @@ button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allow
 .daily-claim{min-width:126px;min-height:48px;border:1px solid #efc76e88;border-radius:11px;background:var(--gold);color:#231526;font-size:10px;font-weight:950;letter-spacing:.04em;padding:0 10px}.daily-claim:disabled{background:#173833;color:var(--teal);border-color:#8fd4c677;opacity:1}
 .daily-trial-teaser{display:grid;grid-template-columns:auto auto 1fr;gap:7px;align-items:center;border-top:1px solid #ffffff18;padding-top:8px}.daily-trial-teaser span{font-size:9px;font-weight:950;letter-spacing:.1em;color:var(--muted)}.daily-trial-teaser strong{font-size:9px;color:var(--gold)}.daily-trial-teaser small{text-align:right;color:var(--muted);font-size:9px}
 @media(max-width:420px){.daily-bonus{grid-template-columns:48px minmax(0,1fr)}.flare-gold-loot{width:44px;height:44px}.daily-claim{grid-column:1/-1;width:100%}.daily-trial-teaser{grid-template-columns:1fr auto}.daily-trial-teaser small{grid-column:1/-1;text-align:left}}
+.daily-trial-card{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;border-top:1px solid #ffffff18;padding-top:10px}
+.daily-trial-copy{display:grid;gap:2px;min-width:0}.daily-trial-copy h2{margin:0;font-size:18px}.daily-trial-copy strong{font-size:14px}.daily-trial-copy b{color:#efc76e;font-size:12px;letter-spacing:.08em}.daily-trial-copy p{margin:0;color:#a997ab;font-size:12px}
+.daily-trial-action{min-height:48px;min-width:132px;border:1px solid #efc76e88;border-radius:11px;background:var(--gold);color:#231526;font-size:11px;font-weight:950;letter-spacing:.04em;padding:0 14px}
+.daily-trial-action:disabled{background:#173833;color:var(--teal);border-color:#8fd4c677;opacity:1}
+.daily-trial-card[data-state="claimed"] .daily-trial-copy b{color:#8fd4c6}
+@media(max-width:420px){.daily-trial-card{grid-template-columns:1fr}.daily-trial-action{width:100%}}

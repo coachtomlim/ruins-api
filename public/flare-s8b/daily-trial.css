@@ -1,0 +1,25 @@
+.dt-app{width:min(980px,100%);height:100dvh;margin:auto;padding:max(10px,env(safe-area-inset-top)) 10px max(10px,env(safe-area-inset-bottom));display:grid;grid-template-rows:auto auto minmax(0,1fr) auto auto;gap:8px;overflow:hidden;box-sizing:border-box}
+.dt-top{display:flex;align-items:center;gap:10px}
+.dt-back,.dt-hub-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;padding:0 12px;border-radius:12px;background:#ffffff14;color:inherit;text-decoration:none;font-weight:900;letter-spacing:.06em}
+.dt-info{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.dt-info div{display:grid;gap:2px;background:#160f1d;border-radius:10px;padding:7px 8px;min-width:0}
+.dt-info span{font-size:9px;color:#a997ab;font-weight:900;letter-spacing:.06em}
+.dt-info strong{font-size:12px;overflow-wrap:anywhere}
+.dt-stage{position:relative;min-height:0;border-radius:14px;overflow:hidden;background:#0d0813}
+.dt-stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.dt-hud{position:absolute;top:8px;left:8px;right:8px;display:flex;justify-content:space-between;pointer-events:none;font-weight:900;text-shadow:0 1px 3px #000}
+.dt-cover{position:absolute;inset:0;display:grid;place-items:center;background:#0d0813b8;padding:10px}
+.dt-cover[hidden]{display:none}
+.dt-card{display:grid;gap:6px;text-align:center;background:#231730;border-radius:16px;padding:14px 18px;max-width:min(92%,380px)}
+.dt-card p{margin:0}
+.dt-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dt-tools button,.dt-claim .primary{min-height:44px}
+.dt-tools button{border:1px solid #ffffff2a;border-radius:12px;background:#ffffff14;color:inherit;font-weight:900;letter-spacing:.06em}
+.dt-tools button:disabled{opacity:.45}
+.dt-claim{display:grid;gap:8px}
+.dt-claim .status{margin:0;text-align:center}
+.dt-claimed{display:grid;gap:2px;text-align:center;color:#8fd4c6;font-weight:900}
+.dt-claimed b{color:#efc76e}
+.dt-app[data-mode="claimed"] .dt-stage,.dt-app[data-mode="claimed"] .dt-tools,.dt-app[data-mode="failed"] .dt-stage,.dt-app[data-mode="failed"] .dt-tools{display:none}
+.dt-app[data-mode="claimed"],.dt-app[data-mode="failed"]{grid-template-rows:auto auto auto minmax(0,1fr)}
+@media(max-width:620px){.dt-info{grid-template-columns:repeat(2,minmax(0,1fr))}.dt-app{padding-left:8px;padding-right:8px}}

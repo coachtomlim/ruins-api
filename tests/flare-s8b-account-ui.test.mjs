@@ -21,7 +21,7 @@ test('browser adapter uses injected public config and official SDK persistence',
 
 test('static account surface is player-facing and keeps stat training governed',async()=>{
   const html=await read('public/flare-s8b/index.html');
-  for(const text of ['RUNNER HUB','CREATE ACCOUNT','SIGN IN','CHECK YOUR EMAIL','YOUR RUNNER','RUNNER STATS','STATS','EQUIPMENT','ARMOR','SIGN OUT','SOLO GOLD','DAILY BONUS','DAILY TRIAL','COMING NEXT']){
+  for(const text of ['RUNNER HUB','CREATE ACCOUNT','SIGN IN','CHECK YOUR EMAIL','YOUR RUNNER','RUNNER STATS','STATS','EQUIPMENT','ARMOR','SIGN OUT','SOLO GOLD','DAILY BONUS','DAILY TRIAL']){
     assert.match(html,new RegExp(escapeRegExp(text)));
   }
   assert.match(html,/id="runnerHeroCanvas"/);

@@ -1,4 +1,5 @@
 import {dailyLoginView} from './daily-login.mjs';
+import {dailyTrialView} from './daily-trial.mjs';
 
 const SLOT_KEYS=Object.freeze(['weapon','shield','head','chest','hands','legs','feet']);
 const SLOT_LABELS=Object.freeze({weapon:'MAIN HAND',shield:'OFF HAND',head:'HEAD',chest:'CHEST',hands:'HANDS',legs:'LEGS',feet:'FEET'});
@@ -140,6 +141,7 @@ export function buildAccountReadyViewFromBackend(account){
     return Object.freeze({...offer,purchased,action:progressionOfferState({...offer,purchased},account.goldBalance)});
   }));
   const dailyLogin=dailyLoginView(account.dailyLogin);
+  const dailyTrial=account.dailyTrial?dailyTrialView(account.dailyTrial):null;
   return Object.freeze({
     title:'ACCOUNT READY',
     displayName:String(account.profile.display_name||account.identity?.email||'Player'),
@@ -147,6 +149,7 @@ export function buildAccountReadyViewFromBackend(account){
     savedGoalLabel,
     goldBalance:Math.max(0,Number(account.goldBalance)||0),
     dailyLogin,
+    dailyTrial,
     runner:Object.freeze({
       id:runnerState.playerRunnerId,
       templateId:runnerState.runnerTemplateId,
