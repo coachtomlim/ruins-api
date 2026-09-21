@@ -44,7 +44,15 @@ on conflict (trial_version, rotation_slot) do update set
   expected_ticks = excluded.expected_ticks;
 
 alter table public.daily_trial_room_catalog enable row level security;
+
+drop policy if exists daily_trial_room_catalog_select on public.daily_trial_room_catalog;
+create policy daily_trial_room_catalog_select
+on public.daily_trial_room_catalog for select
+to authenticated
+using (true);
+
 revoke all on table public.daily_trial_room_catalog from anon, authenticated;
+grant select on table public.daily_trial_room_catalog to authenticated;
 
 create table if not exists public.daily_trial_run (
   id uuid primary key default gen_random_uuid(),
@@ -54,10 +62,14 @@ create table if not exists public.daily_trial_run (
   trial_version text not null check (trial_version = 's8b-daily-trial-001'),
   room_id text not null,
   room_name text not null,
+  rules_version text not null check (rules_version = 'web-flare-0.2.0'),
+  content_version text not null check (content_version = 'web-flare-s7-0.1.0'),
+  runner_snapshot jsonb not null,
   runner_hp integer not null check (runner_hp > 0),
   runner_attack integer not null check (runner_attack >= 0),
   runner_defense integer not null check (runner_defense >= 0),
   encounter_id text not null check (encounter_id = 'fair-goblin-skeleton-potion-001'),
+  encounter jsonb not null,
   budget_spent integer not null check (budget_spent = 65),
   reward_gold integer not null check (reward_gold = 5),
   expected_ticks integer not null check (expected_ticks > 0 and expected_ticks <= 3600),
@@ -99,6 +111,9 @@ returns table (
   run_id uuid,
   room_id text,
   room_name text,
+  rules_version text,
+  content_version text,
+  runner_snapshot jsonb,
   reward_gold integer,
   expected_ticks integer,
   expected_seconds numeric,
@@ -156,6 +171,9 @@ begin
       v_run.id,
       v_run.room_id,
       v_run.room_name,
+      v_run.rules_version,
+      v_run.content_version,
+      v_run.runner_snapshot,
       v_run.reward_gold,
       v_run.expected_ticks,
       round(v_run.expected_ticks::numeric / 60, 2),
@@ -176,6 +194,9 @@ begin
     null::uuid,
     v_room.room_id,
     v_room.room_name,
+    'web-flare-0.2.0'::text,
+    'web-flare-s7-0.1.0'::text,
+    null::jsonb,
     5,
     v_room.expected_ticks,
     round(v_room.expected_ticks::numeric / 60, 2),
@@ -199,6 +220,9 @@ returns table (
   trial_version text,
   room_id text,
   room_name text,
+  rules_version text,
+  content_version text,
+  runner_snapshot jsonb,
   reward_gold integer,
   expected_ticks integer,
   expected_seconds numeric,
@@ -256,6 +280,9 @@ begin
       v_existing.trial_version,
       v_existing.room_id,
       v_existing.room_name,
+      v_existing.rules_version,
+      v_existing.content_version,
+      v_existing.runner_snapshot,
       v_existing.reward_gold,
       v_existing.expected_ticks,
       round(v_existing.expected_ticks::numeric / 60, 2),
@@ -278,7 +305,7 @@ begin
     raise exception 'DAILY_TRIAL_ROOM_NOT_GOVERNED';
   end if;
 
-  select public.get_account_runner_state(null) into v_state;
+  select public.get_account_runner_state(null::uuid) into v_state;
   v_runner_id := nullif(v_state ->> 'player_runner_id','')::uuid;
   v_hp := (v_state #>> '{effective_stats,hp}')::integer;
   v_attack := (v_state #>> '{effective_stats,attack}')::integer;
@@ -309,10 +336,14 @@ begin
     trial_version,
     room_id,
     room_name,
+    rules_version,
+    content_version,
+    runner_snapshot,
     runner_hp,
     runner_attack,
     runner_defense,
     encounter_id,
+    encounter,
     budget_spent,
     reward_gold,
     expected_ticks,
@@ -325,10 +356,14 @@ begin
     's8b-daily-trial-001',
     v_room.room_id,
     v_room.room_name,
+    'web-flare-0.2.0',
+    'web-flare-s7-0.1.0',
+    v_state,
     v_hp,
     v_attack,
     v_defense,
     'fair-goblin-skeleton-potion-001',
+    '{"enemyTypes":["goblin","skeleton","none"],"supportTypes":["small-potion"],"trapTypes":[]}'::jsonb,
     65,
     5,
     v_room.expected_ticks,
@@ -344,6 +379,9 @@ begin
     's8b-daily-trial-001'::text,
     v_room.room_id,
     v_room.room_name,
+    'web-flare-0.2.0'::text,
+    'web-flare-s7-0.1.0'::text,
+    v_state,
     5,
     v_room.expected_ticks,
     round(v_room.expected_ticks::numeric / 60, 2),
@@ -439,9 +477,6 @@ begin
     raise exception 'DAILY_TRIAL_NOT_COMPLETE';
   end if;
 
-  if v_run.trial_day <> (now() at time zone 'UTC')::date then
-    raise exception 'DAILY_TRIAL_DAY_CLOSED';
-  end if;
 
   v_key := 'daily-trial:' || v_player::text || ':' || v_run.trial_day::text;
   v_settled_at := now();
