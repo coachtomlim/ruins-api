@@ -81,3 +81,15 @@ test('security-definer Daily Trial mutations use empty search paths',()=>{
   assert.match(start,/security definer\s+set search_path = ''/i);
   assert.match(settle,/security definer\s+set search_path = ''/i);
 });
+
+
+test('status preserves latest unsettled prior-day run across UTC midnight',()=>{
+  const statusBody=migration.slice(
+    migration.indexOf('create or replace function public.get_daily_trial_status()'),
+    migration.indexOf('create or replace function public.start_daily_trial()')
+  );
+  assert.match(statusBody,/r\.trial_day < v_day/i);
+  assert.match(statusBody,/r\.settled_at is null/i);
+  assert.match(statusBody,/order by r\.trial_day desc, r\.started_at desc, r\.id desc/i);
+  assert.match(statusBody,/select\s+v_run\.trial_day,[\s\S]*?when now\(\) >= v_run\.settle_after then 'CLAIMABLE'[\s\S]*?else 'RUNNING'/i);
+});
