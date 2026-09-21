@@ -355,3 +355,14 @@ Before applying the candidate migration:
 5. prove no browser-controlled reward/result field exists.
 
 Only after that PASS may the migration be applied to S8B staging for a real start/early-settle/settle/retry/concurrency proof.
+
+
+### Midnight status discoverability
+
+If no run exists for the current UTC day, `get_daily_trial_status()` also returns the latest unsettled prior-day run.
+
+This preserves the `run_id` and CLAIMABLE/RUNNING state when a trial starts shortly before midnight and crosses into the next UTC day.
+
+A settled prior-day run does not suppress the new day's AVAILABLE state.
+
+This is a discovery/UX correction only. It does not change the one-run-per-player-per-day constraint, reward amount, settlement idempotency or trial-day ledger key.
