@@ -173,7 +173,6 @@ async function boot(){
 
 $('claim').addEventListener('click',claim);
 $('pause').addEventListener('click',()=>{if(!playing)return;paused=!paused;$('pause').textContent=paused?'RESUME':'PAUSE'});
-$('overview').addEventListener('click',()=>{if(renderer)renderer.overview=!renderer.overview});
 requestAnimationFrame(frame);
 
 try{await boot()}catch(error){

@@ -95,6 +95,23 @@
         <p class="status economy-status" id="dailyTrialStatus" role="status" aria-live="polite"></p>
       </section>
 
+      <section class="friend-share-card" id="friendShareCard" data-state="idle" aria-labelledby="friendShareTitle">
+        <div class="friend-share-copy">
+          <span class="eyebrow">INVITE A FRIEND</span>
+          <h2 id="friendShareTitle">SHARE WITH A FRIEND</h2>
+          <p id="friendShareDetail">Send a friend a dungeon challenge link. No account needed to play.</p>
+          <input type="text" id="friendShareUrl" readonly hidden aria-label="Friend challenge link">
+        </div>
+        <div class="friend-share-actions">
+          <button type="button" class="primary" id="friendShareGenerate">GENERATE FRIEND LINK</button>
+          <button type="button" id="friendShareOpen" hidden>SHARE</button>
+          <button type="button" id="friendShareCopy" hidden>COPY LINK</button>
+          <button type="button" id="friendShareWhatsapp" hidden>WHATSAPP</button>
+          <button type="button" id="friendShareTelegram" hidden>TELEGRAM</button>
+        </div>
+        <p class="status" id="friendShareStatus" role="status" aria-live="polite"></p>
+      </section>
+
       <article class="runner-card">
         <div class="runner-portrait"><canvas id="runnerHeroCanvas" aria-label="Animated Rookie Warrior with Wooden Club and Wooden Shield"></canvas><small id="runnerHeroStatus" role="status" aria-live="polite"></small></div>
         <div class="runner-info">

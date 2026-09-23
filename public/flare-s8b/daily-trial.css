@@ -12,7 +12,7 @@
 .dt-cover[hidden]{display:none}
 .dt-card{display:grid;gap:6px;text-align:center;background:#231730;border-radius:16px;padding:14px 18px;max-width:min(92%,380px)}
 .dt-card p{margin:0}
-.dt-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dt-tools{display:grid;grid-template-columns:1fr;gap:8px}
 .dt-tools button,.dt-claim .primary{min-height:44px}
 .dt-tools button{border:1px solid #ffffff2a;border-radius:12px;background:#ffffff14;color:inherit;font-weight:900;letter-spacing:.06em}
 .dt-tools button:disabled{opacity:.45}

@@ -5,8 +5,12 @@ import {loadS3ActorPack} from '../flare-s8a/actors.mjs';
 import {startComposedHeroStance} from '../flare-s71/hero-preview.mjs';
 import {createPracticeRunnerSnapshot} from './practice-runner-snapshot.mjs';
 import {dailyTrialErrorMessage} from './daily-trial.mjs';
+import {buildFriendShareLink,friendShareUrlIsSafe,shareFriendLink,copyFriendLink,whatsappShareUrl,telegramShareUrl} from './friend-share.mjs';
 
 const PRACTICE_SNAPSHOT_KEY='s8bPracticeSnapshot';
+let s7ModelPromise=null;
+const loadS7Model=()=>s7ModelPromise??=fetch(new URL('../flare-s7/data/game.json',import.meta.url),{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('S7 game model unavailable');return r.json()});
+let friendLink=null;
 
 const byId=id=>document.getElementById(id);
 const views=['signedOutView','pendingView','loadingView','readyView'];
@@ -175,6 +179,74 @@ async function runDailyTrialAction(){
   }
 }
 
+function resetFriendShare(){
+  friendLink=null;
+  byId('friendShareCard').dataset.state='idle';
+  byId('friendShareUrl').hidden=true;
+  byId('friendShareUrl').value='';
+  for(const id of ['friendShareOpen','friendShareCopy','friendShareWhatsapp','friendShareTelegram'])byId(id).hidden=true;
+  byId('friendShareGenerate').hidden=false;byId('friendShareGenerate').disabled=false;byId('friendShareGenerate').textContent='GENERATE FRIEND LINK';
+  byId('friendShareStatus').textContent='';
+}
+
+async function generateFriendLink(){
+  const button=byId('friendShareGenerate');
+  button.disabled=true;button.textContent='GENERATING…';
+  byId('friendShareStatus').textContent='';
+  try{
+    const model=await loadS7Model();
+    const built=buildFriendShareLink({
+      baseUrl:new URL('./',location.href).href,
+      senderName:readyViewModel.displayName,
+      effectiveHp:readyViewModel.runner.stats.hp,
+      model
+    });
+    if(!friendShareUrlIsSafe(built.url))throw new Error('FRIEND_SHARE_URL_UNSAFE');
+    friendLink=built;
+    byId('friendShareCard').dataset.state='ready';
+    byId('friendShareUrl').hidden=false;byId('friendShareUrl').value=built.url;
+    byId('friendShareGenerate').hidden=true;
+    for(const id of ['friendShareOpen','friendShareCopy','friendShareWhatsapp','friendShareTelegram'])byId(id).hidden=false;
+    byId('friendShareStatus').textContent='Friend link ready.';
+  }catch(error){
+    byId('friendShareStatus').textContent=errorMessage(error);
+    button.disabled=false;button.textContent='GENERATE FRIEND LINK';
+  }
+}
+
+async function openFriendShare(){
+  if(!friendLink)return;
+  try{
+    const result=await shareFriendLink({url:friendLink.url,title:friendLink.share.title,text:friendLink.share.text});
+    if(result.method==='native'&&result.shared)byId('friendShareStatus').textContent='Shared.';
+    else if(result.cancelled)byId('friendShareStatus').textContent='Link is ready to copy or share anytime.';
+    else byId('friendShareStatus').textContent='Sharing is not available on this device. Use Copy Link instead.';
+  }catch(error){
+    byId('friendShareStatus').textContent=errorMessage(error);
+  }
+}
+
+async function copyFriendShare(){
+  if(!friendLink)return;
+  try{
+    const result=await copyFriendLink(friendLink.url);
+    byId('friendShareStatus').textContent=result.copied?'LINK COPIED':'Could not copy automatically — the link is selected below, copy it manually.';
+    if(!result.copied){byId('friendShareUrl').focus();byId('friendShareUrl').select()}
+  }catch(error){
+    byId('friendShareStatus').textContent=errorMessage(error);
+  }
+}
+
+function openFriendShareWhatsapp(){
+  if(!friendLink)return;
+  window.open(whatsappShareUrl(friendLink.url,friendLink.share.text),'_blank','noopener');
+}
+
+function openFriendShareTelegram(){
+  if(!friendLink)return;
+  window.open(telegramShareUrl(friendLink.url,friendLink.share.text),'_blank','noopener');
+}
+
 function closePurchaseConfirmation(){
   purchaseFlow?.cancel();
   byId('purchaseDialog').hidden=true;
@@ -252,6 +324,7 @@ function renderReady(account){
   byId('goldBalance').textContent=String(vm.goldBalance);
   renderDailyLogin(vm.dailyLogin);
   renderDailyTrial(vm.dailyTrial);
+  resetFriendShare();
   byId('runnerName').textContent=vm.runner.name;
   byId('runnerHp').textContent=String(vm.runner.stats.hp);
   byId('runnerAttack').textContent=String(vm.runner.stats.attack);
@@ -290,6 +363,11 @@ byId('cancelPurchase').addEventListener('click',closePurchaseConfirmation);
 byId('confirmPurchase').addEventListener('click',confirmPurchase);
 byId('dailyLoginClaim').addEventListener('click',claimDailyLogin);
 byId('dailyTrialAction').addEventListener('click',runDailyTrialAction);
+byId('friendShareGenerate').addEventListener('click',generateFriendLink);
+byId('friendShareOpen').addEventListener('click',openFriendShare);
+byId('friendShareCopy').addEventListener('click',copyFriendShare);
+byId('friendShareWhatsapp').addEventListener('click',openFriendShareWhatsapp);
+byId('friendShareTelegram').addEventListener('click',openFriendShareTelegram);
 
 byId('createForm').addEventListener('submit',async event=>{
   event.preventDefault();

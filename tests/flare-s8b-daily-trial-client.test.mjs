@@ -189,7 +189,7 @@ test('Hub start calls start_daily_trial with no browser arguments, then navigate
 test('Daily Trial page is a fixed run: no customization, difficulty, budget, room or preset controls',async()=>{
   const html=await read('public/flare-s8b/daily-trial.html');
   assert.doesNotMatch(html,/<select|type="checkbox"|data-preset|prevRoom|nextRoom|roomStage|id="customize"|id="enemy1"|BRUTAL|EASY|Dungeon Budget|RUN THE GAUNTLET/i);
-  assert.match(html,/id="overview"/);
+  assert.doesNotMatch(html,/id="overview"|>OVERVIEW</);
   assert.match(html,/id="pause"/);
   assert.match(html,/id="claim"/);
   assert.match(html,/DAILY TRIAL CLAIMED/);
