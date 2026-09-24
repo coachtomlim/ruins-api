@@ -6,7 +6,7 @@ export const RELEASE_ID='WEB-FLARE-RC1';
 export const RELEASE_SOURCE_SHA='e8c50936fb7c7d665438fb3ef1baa524c8dee637';
 export const RELEASE_GAME_RULES_VERSION=3; // public/flare-s7/data/game.json .version
 export const RELEASE_CONTENT_VERSION='flare-p0-v1.15-stock'; // stock Flare dungeon/asset generation in use
-export const RELEASE_AI_CONTRACT_VERSION='s9-ai-encounter-plan-001'; // ai-encounter-assist.mjs AI_ENCOUNTER_PLAN_VERSION
+export const RELEASE_ENCOUNTER_ADVISOR_VERSION='p10-deterministic-encounter-advisor-001';
 export const RELEASE_MANIFEST_VERSION=1;
 
 export function releaseIdentityLabel(){
