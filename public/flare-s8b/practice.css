@@ -41,6 +41,6 @@
 .advisor-preview-grid div{display:grid;gap:2px;background:#0d0813;border-radius:8px;padding:6px 8px}
 .advisor-preview-grid span{font-size:9px;color:#a997ab;font-weight:900;letter-spacing:.05em}
 .advisor-preview-grid strong{font-size:12px;overflow-wrap:anywhere}
-#aiPreviewSummary{margin:0;font-size:12px;color:#c9b8cb}
+#advisorPreviewSummary{margin:0;font-size:12px;color:#c9b8cb}
 .advisor-preview-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 @media(max-width:420px){.advisor-preview-grid{grid-template-columns:1fr}}
