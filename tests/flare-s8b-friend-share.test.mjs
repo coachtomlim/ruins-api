@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {
-  buildFriendShareLink,friendShareUrlIsSafe,shareFriendLink,copyFriendLink,
+  buildFriendShareLink,buildPersistedFriendShareLink,friendShareUrlIsSafe,shareFriendLink,copyFriendLink,
   whatsappShareUrl,telegramShareUrl,FRIEND_SHARE_DEFAULT_TARGET_HP
 } from '../public/flare-s8b/friend-share.mjs';
 
@@ -132,19 +132,24 @@ test('Hub exposes SHARE WITH A FRIEND as its own social action area, separate fr
   const html=await read('public/flare-s8b/index.html');
   assert.match(html,/id="friendShareCard"/);
   assert.match(html,/SHARE WITH A FRIEND/);
-  assert.match(html,/id="friendShareGenerate">GENERATE FRIEND LINK/);
+  assert.match(html,/id="friendShareGenerate">PUBLISH FRIEND CHALLENGE/);
+  assert.match(html,/id="builderLevel"/);
+  assert.match(html,/id="builderXp"/);
+  assert.match(html,/id="friendShareTarget"/);
+  assert.match(html,/id="challengeJournalList"/);
   for(const id of ['friendShareOpen','friendShareCopy','friendShareWhatsapp','friendShareTelegram','friendShareUrl','friendShareStatus'])
     assert.match(html,new RegExp(`id="${id}"`));
   const dailyTrialIdx=html.indexOf('id="dailyTrialCard"'),friendIdx=html.indexOf('id="friendShareCard"');
   assert.ok(dailyTrialIdx>=0&&friendIdx>dailyTrialIdx,'friend share card is a separate section after the Daily Trial card');
 });
 
-test('Hub wiring generates the link from the authoritative Runner state and current display name only',async()=>{
+test('Hub publishes through server authority then reconstructs the exact frozen public link',async()=>{
   const app=await read('public/flare-s8b/account-app.mjs');
-  assert.match(app,/buildFriendShareLink\(\{/);
-  assert.match(app,/senderName:readyViewModel\.displayName/);
-  assert.match(app,/effectiveHp:readyViewModel\.runner\.stats\.hp/);
+  assert.match(app,/adapter\.createBuilderChallenge\(targetHp\)/);
+  assert.match(app,/buildPersistedFriendShareLink\(\{/);
+  assert.match(app,/challenge,/);
   assert.match(app,/friendShareUrlIsSafe\(built\.url\)/);
+  assert.doesNotMatch(app,/senderName:readyViewModel\.displayName[\s\S]{0,100}effectiveHp:readyViewModel\.runner\.stats\.hp/);
 });
 
 test('no new reward mutation: friend-share source never references wallet, ledger, Gold or claim RPCs',async()=>{
@@ -199,4 +204,30 @@ test('Friend Share touch targets meet the 44px minimum',async()=>{
   const css=await read('public/flare-s8b/account.css');
   assert.match(css,/#friendShareUrl\{[^}]*min-height:44px/);
   assert.match(css,/\.friend-share-actions button\{[^}]*min-height:44px/);
+});
+
+
+test('persisted friend links fail closed if server and frozen S8A invite codes disagree',()=>{
+  const challenge={challenge_id:'challenge-a',runner_id:'warrior-l1',target_hp:60,invite_code:'Qs2Z',sender_name:'Ada'};
+  const link=buildPersistedFriendShareLink({
+    baseUrl:'https://think-2-thrive.com/quick-dungeon/flare-s8b/',challenge,model
+  });
+  assert.equal(link.url,'https://think-2-thrive.com/m/Qs2Z?from=Ada');
+  assert.throws(()=>buildPersistedFriendShareLink({
+    baseUrl:'https://think-2-thrive.com/quick-dungeon/flare-s8b/',
+    challenge:{...challenge,invite_code:'UvVY'},model
+  }),/BUILDER_CHALLENGE_CODE_MISMATCH/);
+});
+
+test('Builder publishing itself carries no Gold or Runner-power reward client authority',async()=>{
+  const [app,adapter]=await Promise.all([
+    read('public/flare-s8b/account-app.mjs'),
+    read('public/flare-s8b/account-adapter.mjs')
+  ]);
+  const publish=app.slice(app.indexOf('async function generateFriendLink'),app.indexOf('async function openFriendShare'));
+  assert.match(publish,/createBuilderChallenge\(targetHp\)/);
+  assert.doesNotMatch(publish,/gold|wallet|runner_xp|equip|stat/i);
+  const create=adapter.slice(adapter.indexOf('async function createBuilderChallenge'),adapter.indexOf('async function loadAccountState'));
+  assert.deepEqual((create.match(/p_target_hp/g)||[]).length,1);
+  assert.doesNotMatch(create,/player_id|runner_id|sender|reward|gold|xp_amount/i);
 });
