@@ -17,18 +17,13 @@ staging with disposable users) remains not run. This does not block internal eng
 it is an accepted external-credential-pending state, consistent with every prior gate in this project
 that hit the same constraint.
 
-## 2. AI provider live proof
+## 2. Encounter Advisor external-service gate
 
-**Status: `AI LIVE PROVIDER PROOF: PENDING_CREDENTIAL`**
+**Status: NOT APPLICABLE**
 
-Checked the local environment for an AI provider key (`AI_ENCOUNTER_PROVIDER_KEY`,
-`ANTHROPIC_API_KEY`). None found. The `suggest-encounter` Edge Function has not been deployed and no
-real-provider proof was run. Production behavior in this state is the correct, honest one: Practice's
-AI Assist panel probes availability at bootstrap (`checkAiAvailability()`), gets `{available:false}`
-from any unreachable/unconfigured endpoint, and presents "AI ASSIST UNAVAILABLE / USE CALIBRATED
-SUGGESTION" — it does not and cannot silently claim AI availability it hasn't confirmed. This is the
-P10 §4/5 blocking requirement, and it is what makes this pending gate safe to leave pending: the
-product never misrepresents its own state either way.
+Current product authority requires deterministic in-app encounter advice. No external AI/LLM
+provider, inference endpoint, AI provider credential, or Supabase AI proxy is part of the product.
+The previous `AI LIVE PROVIDER PROOF: PENDING_CREDENTIAL` gate is retired and is not a release gate.
 
 ## 3. HostGator cPanel connectivity
 
@@ -40,7 +35,7 @@ product never misrepresents its own state either way.
 python scripts/deploy/hostgator-flare-p10-rc1.py auth
 ```
 
-Result: the helper's offline `AI AVAILABILITY HONESTY: PASS` gate ran and passed (confirming the
+Result: the helper's offline `DETERMINISTIC ENCOUNTER ADVISOR: PASS` gate ran and passed (confirming the
 helper's own static logic is sound even when the network call that follows fails), then the network
 call to `gator4116.hostgator.com:2083` failed:
 
