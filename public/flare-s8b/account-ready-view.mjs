@@ -1,5 +1,6 @@
 import {dailyLoginView} from './daily-login.mjs';
 import {dailyTrialView} from './daily-trial.mjs';
+import {progressionSummaryView,equipmentUnlockViews,historyViewRows} from './runner-progression-view.mjs';
 
 const SLOT_KEYS=Object.freeze(['weapon','shield','head','chest','hands','legs','feet']);
 const SLOT_LABELS=Object.freeze({weapon:'MAIN HAND',shield:'OFF HAND',head:'HEAD',chest:'CHEST',hands:'HANDS',legs:'LEGS',feet:'FEET'});
@@ -142,6 +143,11 @@ export function buildAccountReadyViewFromBackend(account){
   }));
   const dailyLogin=dailyLoginView(account.dailyLogin);
   const dailyTrial=account.dailyTrial?dailyTrialView(account.dailyTrial):null;
+  const progressionSummary=account.progression?progressionSummaryView(account.progression):null;
+  const equipmentUnlocks=account.progression?equipmentUnlockViews({
+    progression:account.progression,itemCatalog:account.itemCatalog??[],itemOwnership:account.itemOwnership??[],gear:runnerState.gear
+  }):Object.freeze([]);
+  const history=historyViewRows(account.progressionHistory??[]);
   return Object.freeze({
     title:'ACCOUNT READY',
     displayName:String(account.profile.display_name||account.identity?.email||'Player'),
@@ -150,6 +156,9 @@ export function buildAccountReadyViewFromBackend(account){
     goldBalance:Math.max(0,Number(account.goldBalance)||0),
     dailyLogin,
     dailyTrial,
+    progressionSummary,
+    equipmentUnlocks,
+    history,
     runner:Object.freeze({
       id:runnerState.playerRunnerId,
       templateId:runnerState.runnerTemplateId,

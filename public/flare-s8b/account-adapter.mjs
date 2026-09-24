@@ -2,7 +2,9 @@ export const ACCOUNT_CAPABILITIES=Object.freeze([
   'register','signIn','signOut','getMe','getSession','ensureStarterAccount',
   'loadRunnerState','loadProgressionOffers','loadProgressionPurchases','purchaseProgressionOffer',
   'loadDailyLoginStatus','claimDailyLoginBonus',
-  'loadDailyTrialStatus','startDailyTrial','loadDailyTrialRun','settleDailyTrial','loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
+  'loadDailyTrialStatus','startDailyTrial','loadDailyTrialRun','settleDailyTrial',
+  'loadRunnerProgression','loadRunnerProgressionHistory','loadItemCatalog','loadItemOwnership','equipRunnerItem',
+  'loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
 ]);
 
 const clean=value=>String(value??'').trim();
@@ -76,6 +78,11 @@ export function unavailableAccountAdapter(){
     startDailyTrial:unavailable,
     loadDailyTrialRun:unavailable,
     settleDailyTrial:unavailable,
+    loadRunnerProgression:unavailable,
+    loadRunnerProgressionHistory:unavailable,
+    loadItemCatalog:unavailable,
+    loadItemOwnership:unavailable,
+    equipRunnerItem:unavailable,
     loadAccountState:unavailable,
     loadSavedGoals:unavailable,
     saveGoal:unavailable,
@@ -194,6 +201,42 @@ export function createSupabaseAccountAdapter({client}={}){
     return Object.freeze({...settlement});
   }
 
+  async function loadRunnerProgression(playerRunnerId=null){
+    const rows=resultData('loadRunnerProgression',await client.rpc('get_runner_progression',{p_player_runner_id:clean(playerRunnerId)||null}))||[];
+    const progression=rows[0]??null;
+    if(!progression)throw new Error('AUTHORITATIVE_RUNNER_PROGRESSION_REQUIRED');
+    return Object.freeze({...progression});
+  }
+
+  async function loadRunnerProgressionHistory(playerRunnerId=null,limit=20){
+    const rows=resultData('loadRunnerProgressionHistory',await client.rpc('get_runner_progression_history',{p_player_runner_id:clean(playerRunnerId)||null,p_limit:Number(limit)||20}))||[];
+    return Object.freeze(rows.map(row=>Object.freeze({...row})));
+  }
+
+  async function loadItemCatalog(){
+    const rows=resultData('loadItemCatalog',await client.from('runner_item_catalog')
+      .select('item_id,slot,display_name,hp_modifier,attack_modifier,defense_modifier'))||[];
+    return Object.freeze(rows.map(row=>Object.freeze({...row})));
+  }
+
+  async function loadItemOwnership(){
+    const rows=resultData('loadItemOwnership',await client.from('runner_item_ownership')
+      .select('id,item_id,slot,acquisition_reason,source_ref,revoked_at')
+      .is('revoked_at',null))||[];
+    return Object.freeze(rows.map(row=>Object.freeze({...row})));
+  }
+
+  async function equipRunnerItem({playerRunnerId,ownershipId,slot}={}){
+    const runnerId=clean(playerRunnerId),ownership=clean(ownershipId),targetSlot=clean(slot);
+    if(!runnerId||!ownership||!targetSlot)throw new Error('RUNNER_OWNERSHIP_SLOT_REQUIRED');
+    const rows=resultData('equipRunnerItem',await client.rpc('equip_runner_item',{
+      p_player_runner_id:runnerId,p_ownership_id:ownership,p_slot:targetSlot
+    }))||[];
+    const equip=rows[0]??null;
+    if(!equip)throw new Error('AUTHORITATIVE_EQUIP_RESULT_REQUIRED');
+    return Object.freeze({...equip});
+  }
+
   async function loadAccountState({playerRunnerId=null}={}){
     const me=await getMe();
     if(!me)throw new Error('AUTH_REQUIRED');
@@ -205,6 +248,10 @@ export function createSupabaseAccountAdapter({client}={}){
     const progressionPurchases=await loadProgressionPurchases(runnerState.player_runner_id);
     const dailyLogin=await loadDailyLoginStatus();
     const dailyTrial=await loadDailyTrialStatus();
+    const progression=await loadRunnerProgression(runnerState.player_runner_id);
+    const progressionHistory=await loadRunnerProgressionHistory(runnerState.player_runner_id);
+    const itemCatalog=await loadItemCatalog();
+    const itemOwnership=await loadItemOwnership();
     const goldBalance=ledger.reduce((sum,row)=>sum+(Number(row?.delta_gold)||0),0);
     return Object.freeze({
       identity:Object.freeze({id:me.id,email:me.email}),
@@ -215,6 +262,10 @@ export function createSupabaseAccountAdapter({client}={}){
       progressionPurchases,
       dailyLogin,
       dailyTrial,
+      progression,
+      progressionHistory,
+      itemCatalog,
+      itemOwnership,
       goldBalance
     });
   }
@@ -266,6 +317,8 @@ export function createSupabaseAccountAdapter({client}={}){
     available:true,provider:'supabase',register,signIn,signOut,getMe,getSession,
     ensureStarterAccount,loadRunnerState,loadProgressionOffers,loadProgressionPurchases,purchaseProgressionOffer,
     loadDailyLoginStatus,claimDailyLoginBonus,
-    loadDailyTrialStatus,startDailyTrial,loadDailyTrialRun,settleDailyTrial,loadAccountState,loadSavedGoals,saveGoal,claimGuestRun
+    loadDailyTrialStatus,startDailyTrial,loadDailyTrialRun,settleDailyTrial,
+    loadRunnerProgression,loadRunnerProgressionHistory,loadItemCatalog,loadItemOwnership,equipRunnerItem,
+    loadAccountState,loadSavedGoals,saveGoal,claimGuestRun
   });
 }

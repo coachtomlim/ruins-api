@@ -14,7 +14,7 @@ let friendLink=null;
 
 const byId=id=>document.getElementById(id);
 const views=['signedOutView','pendingView','loadingView','readyView'];
-const runnerPanels=['stats','equipment','armor'];
+const runnerPanels=['stats','equipment','armor','history'];
 let adapter=null;
 let activeRunnerId=null;
 let readyViewModel=null;
@@ -105,6 +105,50 @@ function gearCell(slot){
   const modifier=document.createElement('small');modifier.textContent=slot.equipped?slot.modifierLabel:'READY FOR GEAR';
   cell.append(label,value,modifier);
   return cell;
+}
+
+function renderProgression(summary){
+  byId('progressionLevel').textContent=summary.levelLabel;
+  byId('progressionXp').textContent=summary.xpLabel;
+  byId('progressionFill').style.width=summary.progressPercent+'%';
+}
+
+function unlockRow(unlock){
+  const row=document.createElement('article');row.className='unlock-row';
+  const copy=document.createElement('div');
+  const name=document.createElement('strong');name.textContent=unlock.name;
+  const detail=document.createElement('small');detail.textContent=unlock.slot.toUpperCase()+' · '+unlock.effectLabel;
+  copy.append(name,detail);
+  const button=document.createElement('button');button.type='button';button.className='unlock-action';
+  button.textContent=unlock.action.label;button.disabled=unlock.action.disabled;button.dataset.state=unlock.action.state;
+  button.addEventListener('click',()=>onUnlockAction(unlock));
+  row.append(copy,button);
+  return row;
+}
+
+async function onUnlockAction(unlock){
+  if(unlock.action.state==='owned'){
+    byId('purchaseStatus').textContent='Equipping…';
+    try{
+      await adapter.equipRunnerItem({playerRunnerId:activeRunnerId,ownershipId:unlock.ownershipId,slot:unlock.slot});
+      await refreshReady();
+      byId('purchaseStatus').textContent=unlock.name+' equipped.';
+    }catch(error){
+      byId('purchaseStatus').textContent=errorMessage(error);
+    }
+    return;
+  }
+  if(unlock.action.state!=='available')return;
+  openPurchaseConfirmation(unlock);
+}
+
+function historyRow(entry){
+  const li=document.createElement('li');
+  const badge=document.createElement('b');badge.textContent=entry.badge;
+  const label=document.createElement('span');label.textContent=entry.label;
+  const when=document.createElement('small');when.textContent=new Date(entry.createdAt).toLocaleDateString(undefined,{month:'short',day:'numeric'});
+  li.append(badge,label,when);
+  return li;
 }
 
 function trainingOfferCell(offer){
@@ -341,6 +385,9 @@ function renderReady(account){
   byId('flareLoadout').replaceChildren(...vm.gear.map(gearCell));
   byId('armorGrid').replaceChildren(...vm.armor.map(gearCell));
   byId('trainingOffers').replaceChildren(...vm.progressionOffers.map(trainingOfferCell));
+  renderProgression(vm.progressionSummary);
+  byId('unlockList').replaceChildren(...vm.equipmentUnlocks.map(unlockRow));
+  byId('historyList').replaceChildren(...vm.history.map(historyRow));
   selectRunnerPanel('stats');
   showView('readyView');
   void renderRunnerVisual(vm);

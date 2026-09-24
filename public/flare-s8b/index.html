@@ -125,6 +125,11 @@
         </div>
       </article>
 
+      <article class="progression-card" aria-labelledby="progressionLevel">
+        <div class="progression-head"><strong id="progressionLevel">LEVEL 1</strong><span id="progressionXp">0 / 30 XP</span></div>
+        <div class="progression-bar"><i id="progressionFill" style="width:0%"></i></div>
+      </article>
+
       <button class="primary test-runner-cta" id="testYourRunner" type="button">TEST YOUR RUNNER <span>›</span></button>
       <p class="panel-note practice-note">Practice run · no rewards. Take your current Runner into a dungeon you configure.</p>
 
@@ -132,6 +137,7 @@
         <button class="runner-tab" id="statsTab" type="button" role="tab" aria-selected="true">STATS</button>
         <button class="runner-tab" id="equipmentTab" type="button" role="tab" aria-selected="false">EQUIPMENT</button>
         <button class="runner-tab" id="armorTab" type="button" role="tab" aria-selected="false">ARMOR</button>
+        <button class="runner-tab" id="historyTab" type="button" role="tab" aria-selected="false">HISTORY</button>
       </div>
 
       <section class="runner-panel" id="statsPanel" role="tabpanel" aria-labelledby="statsTab">
@@ -159,6 +165,15 @@
         <div class="section-title"><h2>ARMOR</h2><span>5 SLOTS</span></div>
         <div class="armor-grid" id="armorGrid"></div>
         <p class="panel-note">Empty armor slots are ready for future gear, one piece at a time.</p>
+        <section class="unlock-card" aria-labelledby="unlockTitle">
+          <div class="section-title"><h2 id="unlockTitle">EQUIPMENT UNLOCKS</h2><span>LEVEL GATED</span></div>
+          <div class="unlock-list" id="unlockList" aria-label="Governed equipment unlocks"></div>
+        </section>
+      </section>
+
+      <section class="runner-panel" id="historyPanel" role="tabpanel" aria-labelledby="historyTab" hidden>
+        <div class="section-title"><h2>PROGRESSION HISTORY</h2><span>RECENT FIRST</span></div>
+        <ol class="history-list" id="historyList" aria-label="Recent progression events"></ol>
       </section>
 
       <section class="goal-card" id="goalCard" hidden>

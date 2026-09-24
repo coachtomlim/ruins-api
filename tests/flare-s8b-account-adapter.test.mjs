@@ -40,8 +40,16 @@ function fixtureClient({signupSession=null,runnerState=RUNNER_STATE}={}){
       {catalog_version:'s8b-launch-progression-001',offer_id:'strike-i',kind:'STAT',stat_key:'attack',stat_amount:1,gold_cost:30},
       {catalog_version:'s8b-launch-progression-001',offer_id:'guard-i',kind:'STAT',stat_key:'defense',stat_amount:1,gold_cost:40}
     ],
-    progression_purchase:[]
+    progression_purchase:[],
+    runner_item_catalog:[
+      {item_id:'wooden-club',slot:'weapon',display_name:'Wooden Club',hp_modifier:0,attack_modifier:4,defense_modifier:0},
+      {item_id:'wooden-shield',slot:'shield',display_name:'Wooden Shield',hp_modifier:0,attack_modifier:0,defense_modifier:1},
+      {item_id:'leather-hood',slot:'head',display_name:'Leather Hood',hp_modifier:0,attack_modifier:0,defense_modifier:1}
+    ],
+    runner_item_ownership:[]
   };
+  const runnerProgression={player_runner_id:'runner-a',total_xp:0,runner_level:1,level_threshold:0,next_level_threshold:30,xp_remaining:30,max_level:false,unlocks:[{offerId:'leather-hood',itemId:'leather-hood',minLevel:2,goldCost:35,unlocked:false}],recent_events:[]};
+  const progressionHistory=[];
   const dailyTrialStatus={trial_day:'2026-09-19',trial_version:'s8b-daily-trial-001',state:'AVAILABLE',run_id:null,room_id:'iron-labyrinth-01',room_name:'Pillar Court',rules_version:'web-flare-0.2.0',content_version:'web-flare-s7-0.1.0',runner_snapshot:null,reward_gold:5,expected_ticks:614,expected_seconds:'10.23',settle_after:null,runner_hp:null,runner_attack:null,runner_defense:null,encounter_id:'fair-goblin-skeleton-potion-001',budget_spent:65};
   const dailyTrialRun={id:'trial-run-a',player_id:user.id,trial_day:'2026-09-19',room_id:'iron-labyrinth-01'};
   const dailyLogin={reward_day:'2026-09-19',claimed_today:false,current_streak_day:0,next_streak_day:1,claimable_gold:5,next_reset_at:'2026-09-20T00:00:00Z'};
@@ -62,6 +70,9 @@ function fixtureClient({signupSession=null,runnerState=RUNNER_STATE}={}){
       if(name==='purchase_progression_offer')return {data:[{progression_purchase_id:'purchase-a',ledger_entry_id:'ledger-a',catalog_version:'s8b-launch-progression-001',offer_id:args.p_offer_id,gold_spent:20,balance:80,duplicate:false,stat_event_id:'event-a',ownership_id:null}],error:null};
       if(name==='get_daily_login_status')return {data:[dailyLogin],error:null};
       if(name==='get_daily_trial_status')return {data:[dailyTrialStatus],error:null};
+      if(name==='get_runner_progression')return {data:[runnerProgression],error:null};
+      if(name==='get_runner_progression_history')return {data:progressionHistory,error:null};
+      if(name==='equip_runner_item')return {data:[{player_runner_id:'runner-a',slot:args.p_slot,ownership_id:args.p_ownership_id,item_id:'leather-hood',effective_hp:100,effective_attack:12,effective_defense:2,equipped_at:'2026-09-24T00:00:00Z'}],error:null};
       if(name==='start_daily_trial')return {data:[{run_id:'trial-run-a',trial_day:'2026-09-19',duplicate:false,reward_gold:5}],error:null};
       if(name==='settle_daily_trial')return {data:[{run_id:args.p_run_id,reward_gold:5,balance:5,duplicate:false,ledger_entry_id:'trial-ledger-a'}],error:null};
       if(name==='claim_daily_login_bonus')return {data:[{claim_id:'daily-a',ledger_entry_id:'daily-ledger-a',reward_day:'2026-09-19',streak_day:1,base_gold:5,streak_bonus_gold:0,gold_awarded:5,balance:5,duplicate:false,next_reset_at:'2026-09-20T00:00:00Z'}],error:null};
@@ -86,6 +97,7 @@ test('adapter contract requires authoritative Runner capability',()=>{
     'loadRunnerState','loadProgressionOffers','loadProgressionPurchases','purchaseProgressionOffer',
     'loadDailyLoginStatus','claimDailyLoginBonus',
     'loadDailyTrialStatus','startDailyTrial','loadDailyTrialRun','settleDailyTrial',
+    'loadRunnerProgression','loadRunnerProgressionHistory','loadItemCatalog','loadItemOwnership','equipRunnerItem',
     'loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
   ]);
   assert.throws(()=>validateAccountAdapter({register(){}}),/missing signIn/i);
@@ -163,7 +175,8 @@ test('sign in provisions starter then maps authoritative account state',async()=
   const runnerIndex=client.calls.findIndex(call=>call[0]==='rpc'&&call[1]==='get_account_runner_state');
   assert.ok(starterIndex>=0&&runnerIndex>starterIndex,'starter RPC must precede authoritative Runner projection');
   assert.deepEqual(client.calls[runnerIndex][2],{p_player_runner_id:'runner-a'});
-  assert.equal(client.calls.some(call=>call[0]==='from'&&['player_runner','runner_item_ownership','runner_loadout'].includes(call[1])),false);
+  assert.equal(client.calls.some(call=>call[0]==='from'&&['player_runner','runner_loadout'].includes(call[1])),false);
+  assert.ok(client.calls.some(call=>call[0]==='from'&&call[1]==='runner_item_ownership'),'loadAccountState reads own item ownership (read-only, RLS-scoped)');
 });
 
 test('saved goal uses only the governed RPC and reads goals back',async()=>{
