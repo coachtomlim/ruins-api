@@ -6,8 +6,10 @@ import {startComposedHeroStance} from '../flare-s71/hero-preview.mjs';
 import {createPracticeRunnerSnapshot} from './practice-runner-snapshot.mjs';
 import {dailyTrialErrorMessage} from './daily-trial.mjs';
 import {buildPersistedFriendShareLink,friendShareUrlIsSafe,shareFriendLink,copyFriendLink,whatsappShareUrl,telegramShareUrl} from './friend-share.mjs';
+import {releaseIdentityLabel} from './release-identity.mjs';
 
 const PRACTICE_SNAPSHOT_KEY='s8bPracticeSnapshot';
+{const badge=document.getElementById('releaseIdentityBadge');if(badge)badge.textContent=releaseIdentityLabel()}
 let s7ModelPromise=null;
 const loadS7Model=()=>s7ModelPromise??=fetch(new URL('../flare-s7/data/game.json',import.meta.url),{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('S7 game model unavailable');return r.json()});
 let friendLink=null;
