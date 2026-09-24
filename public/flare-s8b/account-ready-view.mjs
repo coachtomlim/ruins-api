@@ -149,8 +149,8 @@ export function buildAccountReadyViewFromBackend(account){
     progression:account.progression,itemCatalog:account.itemCatalog??[],itemOwnership:account.itemOwnership??[],gear:runnerState.gear
   }):Object.freeze([]);
   const history=historyViewRows(account.progressionHistory??[]);
-  const builderProgression=builderProgressionView(account.builderProgression);
-  const challengeJournal=challengeJournalRows(account.builderChallenges??[]);
+  const builderProgression=account.builderProgression?builderProgressionView(account.builderProgression):null;
+  const challengeJournal=account.builderChallenges?challengeJournalRows(account.builderChallenges):Object.freeze([]);
   return Object.freeze({
     title:'ACCOUNT READY',
     displayName:String(account.profile.display_name||account.identity?.email||'Player'),
