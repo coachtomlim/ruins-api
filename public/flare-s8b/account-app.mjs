@@ -246,6 +246,13 @@ function exposeFriendLink(built,message='Friend link ready.'){
 }
 
 function renderBuilderProgression(builder){
+  if(!builder){
+    byId('builderLevel').textContent='BUILDER PROGRESSION';
+    byId('builderXp').textContent='UNAVAILABLE';
+    byId('builderPublished').textContent='—';
+    byId('builderProgressionFill').style.width='0%';
+    return;
+  }
   byId('builderLevel').textContent=builder.levelLabel;
   byId('builderXp').textContent=builder.xpLabel;
   byId('builderPublished').textContent=builder.publishedLabel;
