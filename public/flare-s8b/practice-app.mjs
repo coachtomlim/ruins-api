@@ -5,9 +5,13 @@ import {Renderer} from '../flare-s7/renderer.mjs';
 import {applyRunnerModel,monsterSummary,encounterCost,buildS7Challenge,actualHpPercent,SUPPORT_IDS,TRAP_IDS} from '../flare-s7/game.mjs';
 import {calibrateEncounter,estimateEncounter,difficultyCue,presetById} from '../flare-s7/calibration.mjs';
 import {applyPracticeRunnerToCatalog} from './practice-runner-catalog.mjs';
+import {finalizePlan,AI_DEFAULT_TARGET_HP} from './ai-encounter-assist.mjs';
+import {requestEncounterSuggestion,createMockEncounterProvider} from './ai-encounter-provider.mjs';
 
 const PRACTICE_TARGET_HP=60;
 const SNAPSHOT_KEY='s8bPracticeSnapshot';
+let aiPlan=null,aiBusy=false;
+const suggestEncounter=globalThis.__S8B_AI_PROVIDER__||((args)=>requestEncounterSuggestion({...args,functionsBaseUrl:globalThis.__FLARE_S8B_PUBLIC_CONFIG__?.url,apiKey:globalThis.__FLARE_S8B_PUBLIC_CONFIG__?.publishableKey}));
 
 const $=id=>document.getElementById(id),roomSpecs=Object.values(S7_ROOMS),rooms=new Map();
 let model=null,snapshot=null,runner=null,catalog=null,roomIndex=0,step=0,sim=null,renderer=null,playing=false,paused=false,elapsed=0,acc=0,prev=0,finishDelay=0,calibrated=null;
@@ -66,6 +70,57 @@ function finishRun(){
 }
 function frame(now){const dt=prev?Math.min(.1,(now-prev)/1000):0;prev=now;if(sim){if(playing&&!paused){elapsed+=dt;if(elapsed>=.35&&sim.status==='running'){acc+=dt;while(acc>=1/60&&sim.status==='running'){sim.step();acc-=1/60}hud()}if(sim.status!=='running'){finishDelay+=dt;if(finishDelay>.45){playing=false;finishRun()}}}renderer.draw(sim,elapsed,dt,matchMedia('(prefers-reduced-motion: reduce)').matches)}requestAnimationFrame(frame)}
 
+function roomSpecsById(){return new Map(roomSpecs.map(spec=>[spec.id,spec]))}
+
+function renderAiPreview(plan){
+  aiPlan=plan;
+  $('aiPreview').hidden=false;
+  $('aiPreviewRoom').textContent=plan.roomName;
+  $('aiPreviewTarget').textContent=plan.targetHp+'% HP';
+  $('aiPreviewMonsters').textContent=plan.encounter.enemyTypes.filter(x=>x!=='none').map(x=>catalog.enemies[x]?.name||x).join(' + ')||'None';
+  $('aiPreviewSupport').textContent=[...plan.encounter.supportTypes,...plan.encounter.trapTypes].map(x=>catalog.items[x]?.label||catalog.items[x]?.name||x).join(' + ')||'None';
+  $('aiPreviewBudget').textContent=plan.budgetUsed+' / '+plan.budget;
+  $('aiPreviewEstimate').textContent='Estimated finish: ~'+plan.estimate.estimatedHpPercent+'% HP';
+  $('aiPreviewSummary').textContent=plan.summary;
+  $('aiApply').disabled=false;
+}
+
+async function runAiSuggestion(){
+  if(aiBusy||!catalog)return;
+  aiBusy=true;
+  $('aiSuggest').disabled=true;$('aiTryAnother').disabled=true;
+  $('aiStatus').textContent='Asking for a suggestion…';
+  try{
+    const brief=$('aiBrief').value;
+    const targetField=$('aiTargetHp').value;
+    const targetHp=targetField?Number(targetField):undefined;
+    const raw=await suggestEncounter({brief,targetHp});
+    const plan=finalizePlan({raw,catalog,model,runnerId:model.defaultRunner,runner,roomSpecsById:roomSpecsById(),budget:100});
+    renderAiPreview(plan);
+    $('aiStatus').textContent=plan.usedFallback?'Provider suggestion could not be used safely; showing a calibrated fallback instead.':plan.repaired?'Suggestion adjusted to fit governed rules.':'Suggestion ready. Review before applying.';
+  }catch(error){
+    try{
+      const plan=finalizePlan({raw:null,catalog,model,runnerId:model.defaultRunner,runner,roomSpecsById:roomSpecsById(),budget:100});
+      renderAiPreview(plan);
+      $('aiStatus').textContent='The suggestion service is unavailable right now; showing a calibrated fallback instead.';
+    }catch(fallbackError){
+      $('aiStatus').textContent=fallbackError.message||'Suggestion unavailable.';
+    }
+  }finally{
+    aiBusy=false;
+    $('aiSuggest').disabled=false;$('aiTryAnother').disabled=false;
+  }
+}
+
+function applyAiPlan(){
+  if(!aiPlan)return;
+  const targetIndex=roomSpecs.findIndex(spec=>spec.id===aiPlan.roomId);
+  if(targetIndex>=0){roomIndex=targetIndex;renderRoom()}
+  applyEncounter(aiPlan.encounter);
+  refreshBuild();
+  $('aiStatus').textContent='Suggestion applied. You can still edit any field below.';
+}
+
 async function runGauntlet(){
   try{
     const spec=selectedSpec(),room=selectedRoom(),e=encounter();
@@ -96,6 +151,9 @@ $('customize').addEventListener('click',()=>{const opening=$('advanced').hidden;
 for(const b of document.querySelectorAll('[data-preset]'))b.addEventListener('click',()=>preset(b.dataset.preset));
 for(const id of ['enemy1','enemy2','enemy3',...SUPPORT_IDS,...TRAP_IDS])$(id).addEventListener('change',refreshBuild);
 $('run').addEventListener('click',runGauntlet);
+$('aiSuggest').addEventListener('click',()=>runAiSuggestion());
+$('aiTryAnother').addEventListener('click',()=>runAiSuggestion());
+$('aiApply').addEventListener('click',applyAiPlan);
 $('pause').addEventListener('click',()=>{if(!playing)return;paused=!paused;$('pause').textContent=paused?'RESUME':'PAUSE'});
 $('overview').addEventListener('click',()=>{if(renderer)renderer.overview=!renderer.overview});
 $('retry').addEventListener('click',begin);
