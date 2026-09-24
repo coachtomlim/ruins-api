@@ -6,7 +6,7 @@ function int(value,label){
   return n;
 }
 
-export const BUILDER_TARGET_OPTIONS=Object.freeze([40,50,60,70,80]);
+export const BUILDER_TARGET_OPTIONS=Object.freeze(Array.from({length:19},(_,index)=>(index+1)*5));
 
 export function builderProgressionView(row){
   if(!row||typeof row!=='object')throw new Error('AUTHORITATIVE_BUILDER_PROGRESSION_REQUIRED');
