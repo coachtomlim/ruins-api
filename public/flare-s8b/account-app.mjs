@@ -498,9 +498,11 @@ byId('signOut').addEventListener('click',async()=>{
   try{await adapter.signOut();selectAuth('signin')}catch(error){byId('purchaseStatus').textContent=errorMessage(error)}finally{byId('signOut').disabled=false}
 });
 
-byId('testYourRunner').addEventListener('click',()=>{
+byId('testYourRunner').addEventListener('click',async()=>{
   try{
-    const snapshot=createPracticeRunnerSnapshot(readyViewModel);
+    let accessToken=null;
+    try{const session=await adapter?.getSession();accessToken=session?.access_token||null}catch{accessToken=null}
+    const snapshot=createPracticeRunnerSnapshot(readyViewModel,{accessToken});
     sessionStorage.setItem(PRACTICE_SNAPSHOT_KEY,JSON.stringify(snapshot));
     location.href='practice.html';
   }catch(error){

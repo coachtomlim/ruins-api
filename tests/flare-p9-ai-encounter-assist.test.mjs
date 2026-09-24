@@ -499,3 +499,32 @@ test('the Edge Function reads its provider key only from its own server-side env
   assert.doesNotMatch(fn,/service_role/i);
   assert.doesNotMatch(fn,/return.*apiKey|plan:.*apiKey/i);
 });
+
+// ---------------- P10 §1: Edge Function bounded-access hardening ----------------
+
+test('suggest-encounter POST requires bearer authentication (bounded access to a paid provider call)',async()=>{
+  const fn=await read('supabase/functions/suggest-encounter/index.ts');
+  assert.match(fn,/authorization/i);
+  assert.match(fn,/AUTH_REQUIRED/);
+  assert.match(fn,/401/);
+  // the auth check must run before the provider is ever called
+  const authIdx=fn.indexOf('AUTH_REQUIRED'),providerIdx=fn.indexOf('await callProvider');
+  assert.ok(authIdx>0&&providerIdx>authIdx,'auth gate must precede the provider call');
+});
+
+test('suggest-encounter GET (the availability probe) requires no authentication, since it carries no secret material or cost',async()=>{
+  const fn=await read('supabase/functions/suggest-encounter/index.ts');
+  const getIdx=fn.indexOf("req.method==='GET'"),authIdx=fn.indexOf('AUTH_REQUIRED');
+  assert.ok(getIdx>0&&getIdx<authIdx,'the GET branch must return before the POST-only auth gate');
+});
+
+test('suggest-encounter rejects a non-JSON Content-Type on POST',async()=>{
+  const fn=await read('supabase/functions/suggest-encounter/index.ts');
+  assert.match(fn,/UNSUPPORTED_MEDIA_TYPE/);
+  assert.match(fn,/415/);
+});
+
+test('the browser provider module sends the practice snapshot access token as a Bearer header when present',async()=>{
+  const provider=await read('public/flare-s8b/ai-encounter-provider.mjs');
+  assert.match(provider,/Authorization:`Bearer \$\{accessToken\}`/);
+});

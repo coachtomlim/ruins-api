@@ -12,7 +12,7 @@ test('Hub exposes a prominent TEST YOUR RUNNER practice CTA',async()=>{
 
 test('Hub CTA builds an immutable practice snapshot and navigates to the practice surface, without touching reward paths',async()=>{
   const app=await read('public/flare-s8b/account-app.mjs');
-  assert.match(app,/createPracticeRunnerSnapshot\(readyViewModel\)/);
+  assert.match(app,/createPracticeRunnerSnapshot\(readyViewModel,\{accessToken\}\)/);
   assert.match(app,/sessionStorage\.setItem\(PRACTICE_SNAPSHOT_KEY/);
   assert.match(app,/location\.href=['"]practice\.html['"]/);
   assert.doesNotMatch(app,/claim_proof_builder_reward|claimGuestRun|purchase_progression_offer\(.*practice/i);

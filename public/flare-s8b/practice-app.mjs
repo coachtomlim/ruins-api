@@ -11,9 +11,11 @@ import {requestEncounterSuggestion,createMockEncounterProvider,checkAiAvailabili
 const PRACTICE_TARGET_HP=60;
 const SNAPSHOT_KEY='s8bPracticeSnapshot';
 let aiPlan=null,aiBusy=false,aiAvailable=null;
-const aiProviderArgs={functionsBaseUrl:globalThis.__FLARE_S8B_PUBLIC_CONFIG__?.url,apiKey:globalThis.__FLARE_S8B_PUBLIC_CONFIG__?.publishableKey};
-const suggestEncounter=globalThis.__S8B_AI_PROVIDER__||((args)=>requestEncounterSuggestion({...args,...aiProviderArgs}));
-const checkAvailability=globalThis.__S8B_AI_AVAILABILITY_PROVIDER__||(()=>checkAiAvailability(aiProviderArgs));
+// `snapshot` is loaded asynchronously during bootstrap, so its accessToken must be read lazily at
+// call time (via this getter), never captured into a module-level const at import time.
+const aiProviderArgs=()=>({functionsBaseUrl:globalThis.__FLARE_S8B_PUBLIC_CONFIG__?.url,apiKey:globalThis.__FLARE_S8B_PUBLIC_CONFIG__?.publishableKey,accessToken:snapshot?.accessToken||undefined});
+const suggestEncounter=globalThis.__S8B_AI_PROVIDER__||((args)=>requestEncounterSuggestion({...args,...aiProviderArgs()}));
+const checkAvailability=globalThis.__S8B_AI_AVAILABILITY_PROVIDER__||(()=>checkAiAvailability(aiProviderArgs()));
 
 // Never present the deterministic fallback as if it were live AI. Probed once at bootstrap
 // (best-effort, never throws); the panel presentation branches on the real result only.

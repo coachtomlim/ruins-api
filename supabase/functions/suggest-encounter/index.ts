@@ -114,6 +114,17 @@ Deno.serve(async (req)=>{
 
   if(req.method!=='POST')return jsonResponse({error:'Method not allowed',code:'METHOD_NOT_ALLOWED'},405,origin);
 
+  // Bounded access: this request triggers a paid provider call, so it must be authenticated the same
+  // way every other mutation-adjacent RPC in this project is (see runner_stat_upgrade_event,
+  // start_daily_trial, etc.) — unauthenticated callers cannot exhaust the provider budget.
+  const authHeader=req.headers.get('authorization');
+  if(!authHeader||!/^Bearer\s+\S+/i.test(authHeader))
+    return jsonResponse({error:'Authentication required.',code:'AUTH_REQUIRED'},401,origin);
+
+  const contentType=req.headers.get('content-type')||'';
+  if(!contentType.toLowerCase().includes('application/json'))
+    return jsonResponse({error:'Content-Type must be application/json.',code:'UNSUPPORTED_MEDIA_TYPE'},415,origin);
+
   const contentLength=Number(req.headers.get('content-length')||'0');
   if(contentLength>MAX_REQUEST_BYTES)return jsonResponse({error:'Request too large',code:'PAYLOAD_TOO_LARGE'},413,origin);
 

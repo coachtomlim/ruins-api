@@ -7,7 +7,7 @@ const finite=(value,label)=>{
 };
 const clean=value=>String(value??'').trim();
 
-export function createPracticeRunnerSnapshot(viewModel){
+export function createPracticeRunnerSnapshot(viewModel,{accessToken}={}){
   const runner=viewModel?.runner;
   if(!runner?.id||!runner?.name)throw new Error('PRACTICE_RUNNER_IDENTITY_REQUIRED');
   if(!runner?.stats||!runner?.baseStats)throw new Error('PRACTICE_RUNNER_STATS_REQUIRED');
@@ -36,6 +36,9 @@ export function createPracticeRunnerSnapshot(viewModel){
     mode:'PRACTICE',
     rewardSettlement:false,
     dungeonBudget:100,
+    // Optional: lets Practice's AI Encounter Assist authenticate to the suggest-encounter Edge
+    // Function without ever importing the Supabase client itself. Never used for progression.
+    accessToken:accessToken?clean(accessToken):null,
     playerRunnerId:clean(runner.id),
     runnerTemplateId:clean(runner.templateId),
     runnerName:clean(runner.name),
