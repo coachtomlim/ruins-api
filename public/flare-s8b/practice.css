@@ -30,17 +30,17 @@
 
 
 .result-actions button,.result-actions a{min-height:44px}
-.ai-assist-card{margin-top:14px;border-top:1px solid #ffffff18;padding-top:12px;display:grid;gap:8px}
-.ai-brief-label,.ai-target-label{display:grid;gap:4px;font-size:11px;font-weight:900;letter-spacing:.04em;color:#a997ab}
-#aiBrief{min-height:44px;border-radius:10px;border:1px solid #ffffff2a;background:#160f1d;color:inherit;padding:8px 10px;font:inherit;resize:vertical}
-#aiTargetHp{min-height:44px;border-radius:10px;border:1px solid #ffffff2a;background:#160f1d;color:inherit;padding:0 10px}
-#aiSuggest,#aiApply,#aiTryAnother{min-height:44px;border-radius:11px;font-weight:900;letter-spacing:.04em}
-.ai-preview{display:grid;gap:8px;background:#160f1d;border-radius:12px;padding:10px 12px}
-.ai-preview-badge{display:inline-block;font-size:9px;font-weight:900;letter-spacing:.08em;color:#efc76e;background:#2a1f33;border-radius:6px;padding:3px 8px;width:max-content}
-.ai-preview-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
-.ai-preview-grid div{display:grid;gap:2px;background:#0d0813;border-radius:8px;padding:6px 8px}
-.ai-preview-grid span{font-size:9px;color:#a997ab;font-weight:900;letter-spacing:.05em}
-.ai-preview-grid strong{font-size:12px;overflow-wrap:anywhere}
+.advisor-card{margin-top:14px;border-top:1px solid #ffffff18;padding-top:12px;display:grid;gap:8px}
+.advisor-brief-label,.advisor-target-label{display:grid;gap:4px;font-size:11px;font-weight:900;letter-spacing:.04em;color:#a997ab}
+#advisorBrief{min-height:44px;border-radius:10px;border:1px solid #ffffff2a;background:#160f1d;color:inherit;padding:8px 10px;font:inherit;resize:vertical}
+#advisorTargetHp{min-height:44px;border-radius:10px;border:1px solid #ffffff2a;background:#160f1d;color:inherit;padding:0 10px}
+#advisorSuggest,#advisorApply,#advisorTryAnother{min-height:44px;border-radius:11px;font-weight:900;letter-spacing:.04em}
+.advisor-preview{display:grid;gap:8px;background:#160f1d;border-radius:12px;padding:10px 12px}
+.advisor-preview-badge{display:inline-block;font-size:9px;font-weight:900;letter-spacing:.08em;color:#efc76e;background:#2a1f33;border-radius:6px;padding:3px 8px;width:max-content}
+.advisor-preview-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.advisor-preview-grid div{display:grid;gap:2px;background:#0d0813;border-radius:8px;padding:6px 8px}
+.advisor-preview-grid span{font-size:9px;color:#a997ab;font-weight:900;letter-spacing:.05em}
+.advisor-preview-grid strong{font-size:12px;overflow-wrap:anywhere}
 #aiPreviewSummary{margin:0;font-size:12px;color:#c9b8cb}
-.ai-preview-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-@media(max-width:420px){.ai-preview-grid{grid-template-columns:1fr}}
+.advisor-preview-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:420px){.advisor-preview-grid{grid-template-columns:1fr}}
