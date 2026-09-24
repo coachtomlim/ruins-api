@@ -1,3 +1,9 @@
+> **SUPERSEDED — DO NOT IMPLEMENT OR DEPLOY AS CURRENT AUTHORITY**
+>
+> External-AI/provider assumptions in this document were retired by
+> `docs/WEB_FLARE_DETERMINISTIC_ENCOUNTER_ADVISOR_AUTHORITY.md`.
+> Current encounter advice is deterministic, local application logic with no external AI/API call.
+
 # WEB-FLARE P9 AI Encounter Assist 001
 
 Status: SOURCE CANDIDATE — provider live proof PENDING (no safe AI-provider credential in this
