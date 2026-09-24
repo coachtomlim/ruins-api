@@ -6,7 +6,7 @@ import {
   sanitizePlayerBrief,parseProviderResponse,validatePlanShape,repairPlan,
   deterministicFallbackPlan,finalizePlan,AIProviderError
 } from '../public/flare-s8b/ai-encounter-assist.mjs';
-import {requestEncounterSuggestion,createMockEncounterProvider,suggestEncounterEndpoint} from '../public/flare-s8b/ai-encounter-provider.mjs';
+import {requestEncounterSuggestion,createMockEncounterProvider,suggestEncounterEndpoint,checkAiAvailability} from '../public/flare-s8b/ai-encounter-provider.mjs';
 import {ROOM_IDS,MONSTER_IDS,TRAP_IDS,SUPPORT_IDS,applyRunnerModel,encounterCost} from '../public/flare-s7/game.mjs';
 import {Simulation} from '../public/flare-s7/simulation.mjs';
 import {parseMap} from '../public/flare-p0/src/core/flare.mjs';
@@ -264,6 +264,29 @@ test('requestEncounterSuggestion sends only brief/targetHp/apikey/Authorization 
   assert.doesNotMatch(JSON.stringify(seenHeaders),/sb_secret_|service_role/i);
 });
 
+test('checkAiAvailability resolves {available:true,version} when the endpoint reports the provider is configured',async()=>{
+  const result=await checkAiAvailability({
+    functionsBaseUrl:'https://example.supabase.co',
+    fetchImpl:async()=>({ok:true,json:async()=>({available:true,version:'s9-ai-encounter-plan-001'})})
+  });
+  assert.deepEqual(result,{available:true,version:'s9-ai-encounter-plan-001'});
+});
+
+test('checkAiAvailability never throws and resolves {available:false} on a non-200, malformed body, network error, or missing config',async()=>{
+  const cases=[
+    {fetchImpl:async()=>({ok:false,json:async()=>({available:true})})},
+    {fetchImpl:async()=>({ok:true,json:async()=>{throw new Error('bad json')}})},
+    {fetchImpl:async()=>({ok:true,json:async()=>({available:'yes'})})},
+    {fetchImpl:async()=>{throw new Error('network down')}},
+    {functionsBaseUrl:''}
+  ];
+  for(const over of cases){
+    const result=await checkAiAvailability({functionsBaseUrl:'https://example.supabase.co',fetchImpl:async()=>({ok:true,json:async()=>({available:true})}),...over});
+    assert.equal(result.available,false);
+    assert.equal(result.version,null);
+  }
+});
+
 test('createMockEncounterProvider replays scripted responses in order and repeats the last entry',async()=>{
   const provider=createMockEncounterProvider([JSON.stringify(legalPlan({roomId:'iron-labyrinth-01'})),JSON.stringify(legalPlan({roomId:'iron-labyrinth-03'}))]);
   assert.match(await provider(),/iron-labyrinth-01/);
@@ -409,6 +432,31 @@ test('Practice app wires Suggest/Apply/Try Another to the deterministic module, 
   assert.match(app,/\$\('aiSuggest'\)\.addEventListener\('click'/);
   assert.match(app,/\$\('aiApply'\)\.addEventListener\('click',applyAiPlan\)/);
   assert.match(app,/\$\('aiTryAnother'\)\.addEventListener\('click'/);
+});
+
+test('Practice app probes AI availability at bootstrap and never assumes it is available',async()=>{
+  const app=await read('public/flare-s8b/practice-app.mjs');
+  assert.match(app,/checkAiAvailability/);
+  assert.match(app,/aiAvailable=null/); // unknown until the probe resolves — never defaults to true
+  assert.match(app,/refreshAiAvailability\(\)/);
+});
+
+test('Practice app never presents the deterministic fallback as live AI: unavailable mode skips the network call and relabels the panel',async()=>{
+  const app=await read('public/flare-s8b/practice-app.mjs');
+  assert.match(app,/AI ASSIST UNAVAILABLE/);
+  assert.match(app,/USE CALIBRATED SUGGESTION/);
+  assert.match(app,/aiAvailable===false/);
+  // the unavailable branch's own block (up to its own return) must never reach suggestEncounter()
+  const startIdx=app.indexOf('if(aiAvailable===false){');
+  const returnIdx=app.indexOf('return;',startIdx);
+  const unavailableBranch=app.slice(startIdx,returnIdx);
+  assert.doesNotMatch(unavailableBranch,/suggestEncounter\(/);
+  assert.match(unavailableBranch,/finalizePlan\(\{raw:null/);
+});
+
+test('renderAiPreview sets the preview badge from plan.isAiGenerated, never a static "AI SUGGESTION" claim',async()=>{
+  const app=await read('public/flare-s8b/practice-app.mjs');
+  assert.match(app,/plan\.isAiGenerated\?'AI SUGGESTION':'CALIBRATED SUGGESTION'/);
 });
 
 test('after Apply, the existing manual fields remain editable (no field is disabled/locked by AI Assist)',async()=>{

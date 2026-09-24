@@ -6,12 +6,28 @@ import {applyRunnerModel,monsterSummary,encounterCost,buildS7Challenge,actualHpP
 import {calibrateEncounter,estimateEncounter,difficultyCue,presetById} from '../flare-s7/calibration.mjs';
 import {applyPracticeRunnerToCatalog} from './practice-runner-catalog.mjs';
 import {finalizePlan,AI_DEFAULT_TARGET_HP} from './ai-encounter-assist.mjs';
-import {requestEncounterSuggestion,createMockEncounterProvider} from './ai-encounter-provider.mjs';
+import {requestEncounterSuggestion,createMockEncounterProvider,checkAiAvailability} from './ai-encounter-provider.mjs';
 
 const PRACTICE_TARGET_HP=60;
 const SNAPSHOT_KEY='s8bPracticeSnapshot';
-let aiPlan=null,aiBusy=false;
-const suggestEncounter=globalThis.__S8B_AI_PROVIDER__||((args)=>requestEncounterSuggestion({...args,functionsBaseUrl:globalThis.__FLARE_S8B_PUBLIC_CONFIG__?.url,apiKey:globalThis.__FLARE_S8B_PUBLIC_CONFIG__?.publishableKey}));
+let aiPlan=null,aiBusy=false,aiAvailable=null;
+const aiProviderArgs={functionsBaseUrl:globalThis.__FLARE_S8B_PUBLIC_CONFIG__?.url,apiKey:globalThis.__FLARE_S8B_PUBLIC_CONFIG__?.publishableKey};
+const suggestEncounter=globalThis.__S8B_AI_PROVIDER__||((args)=>requestEncounterSuggestion({...args,...aiProviderArgs}));
+const checkAvailability=globalThis.__S8B_AI_AVAILABILITY_PROVIDER__||(()=>checkAiAvailability(aiProviderArgs));
+
+// Never present the deterministic fallback as if it were live AI. Probed once at bootstrap
+// (best-effort, never throws); the panel presentation branches on the real result only.
+async function refreshAiAvailability(){
+  try{
+    const result=await checkAvailability();
+    aiAvailable=Boolean(result?.available);
+  }catch{
+    aiAvailable=false;
+  }
+  const mode=$('aiAssistMode'),suggestBtn=$('aiSuggest');
+  if(mode)mode.textContent=aiAvailable?'OPTIONAL':'AI ASSIST UNAVAILABLE';
+  if(suggestBtn)suggestBtn.textContent=aiAvailable?'AI ENCOUNTER ASSIST':'USE CALIBRATED SUGGESTION';
+}
 
 const $=id=>document.getElementById(id),roomSpecs=Object.values(S7_ROOMS),rooms=new Map();
 let model=null,snapshot=null,runner=null,catalog=null,roomIndex=0,step=0,sim=null,renderer=null,playing=false,paused=false,elapsed=0,acc=0,prev=0,finishDelay=0,calibrated=null;
@@ -82,6 +98,8 @@ function renderAiPreview(plan){
   $('aiPreviewBudget').textContent=plan.budgetUsed+' / '+plan.budget;
   $('aiPreviewEstimate').textContent='Estimated finish: ~'+plan.estimate.estimatedHpPercent+'% HP';
   $('aiPreviewSummary').textContent=plan.summary;
+  const badge=$('aiPreviewBadge');
+  if(badge)badge.textContent=plan.isAiGenerated?'AI SUGGESTION':'CALIBRATED SUGGESTION';
   $('aiApply').disabled=false;
 }
 
@@ -89,6 +107,20 @@ async function runAiSuggestion(){
   if(aiBusy||!catalog)return;
   aiBusy=true;
   $('aiSuggest').disabled=true;$('aiTryAnother').disabled=true;
+  if(aiAvailable===false){
+    $('aiStatus').textContent='Building a calibrated suggestion…';
+    try{
+      const plan=finalizePlan({raw:null,catalog,model,runnerId:model.defaultRunner,runner,roomSpecsById:roomSpecsById(),budget:100});
+      renderAiPreview(plan);
+      $('aiStatus').textContent='AI Assist is unavailable right now; showing a calibrated suggestion instead.';
+    }catch(fallbackError){
+      $('aiStatus').textContent=fallbackError.message||'Suggestion unavailable.';
+    }finally{
+      aiBusy=false;
+      $('aiSuggest').disabled=false;$('aiTryAnother').disabled=false;
+    }
+    return;
+  }
   $('aiStatus').textContent='Asking for a suggestion…';
   try{
     const brief=$('aiBrief').value;
@@ -185,6 +217,7 @@ requestAnimationFrame(frame);
     renderRoom();
     $('introStatus').textContent='Your Runner is ready.';
     $('chooseRoom').disabled=!selectedRoom();
+    refreshAiAvailability();
   }catch(error){
     console.error(error);
     $('introStatus').textContent=error.message;

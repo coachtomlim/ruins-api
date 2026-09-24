@@ -54,6 +54,35 @@ export async function requestEncounterSuggestion({
 }
 
 /**
+ * Production feature-availability check. Never throws: any network failure, non-200, or malformed
+ * body resolves to {available:false} so the UI can fail gracefully into the clearly labelled
+ * deterministic CALIBRATED SUGGESTION mode instead of silently presenting a fallback as live AI.
+ * The response contract is intentionally tiny ({available, version}) and carries no provider
+ * identity or secret material.
+ */
+export async function checkAiAvailability({functionsBaseUrl,apiKey,fetchImpl=globalThis.fetch,timeoutMs=4000}={}){
+  let endpoint;
+  try{endpoint=suggestEncounterEndpoint(functionsBaseUrl)}
+  catch{return Object.freeze({available:false,version:null})}
+  const controller=typeof AbortController!=='undefined'?new AbortController():null;
+  const timer=controller?setTimeout(()=>controller.abort(),timeoutMs):null;
+  try{
+    const response=await fetchImpl(endpoint,{
+      method:'GET',
+      headers:{...(apiKey?{apikey:apiKey}:{})},
+      signal:controller?controller.signal:undefined
+    });
+    if(!response.ok)return Object.freeze({available:false,version:null});
+    const body=await response.json();
+    return Object.freeze({available:body?.available===true,version:typeof body?.version==='string'?body.version:null});
+  }catch{
+    return Object.freeze({available:false,version:null});
+  }finally{
+    if(timer)clearTimeout(timer);
+  }
+}
+
+/**
  * A deterministic, network-free stand-in for `requestEncounterSuggestion`, used by tests and by the
  * local/source-backed browser proof when no provider credential is configured. `scriptedResponses`
  * is an array consumed in order (last entry repeats); each entry is either a plan object, a raw string

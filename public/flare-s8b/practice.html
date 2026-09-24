@@ -10,7 +10,7 @@
 <fieldset class="choice-box"><legend>TRAPS</legend><label><input type="checkbox" id="spike-trap"><b>Spike Trap · 20</b><span>30 raw, DEF applies, one use · SPIKES</span></label><label><input type="checkbox" id="dart-trap"><b>Dart Trap · 15</b><span>16 damage, ignores DEF, one use · DARTS</span></label></fieldset>
 <div class="budget-line"><span id="budgetMessage">35 gold remaining</span><i><b id="budgetFill"></b></i></div></div>
 <section class="ai-assist-card" id="aiAssistCard" aria-labelledby="aiAssistTitle">
-  <div class="section-title"><h2 id="aiAssistTitle">AI ENCOUNTER ASSIST</h2><span>OPTIONAL</span></div>
+  <div class="section-title"><h2 id="aiAssistTitle">AI ENCOUNTER ASSIST</h2><span id="aiAssistMode">OPTIONAL</span></div>
   <p class="panel-note">Describe the kind of dungeon you want. This never changes your account and never runs automatically — you choose whether to apply it.</p>
   <label class="ai-brief-label"><span>DESCRIBE YOUR ENCOUNTER</span>
     <textarea id="aiBrief" maxlength="280" rows="2" placeholder="e.g. Skeleton ambush with a few traps"></textarea>
@@ -23,7 +23,7 @@
   </label>
   <button type="button" class="secondary" id="aiSuggest">SUGGEST ENCOUNTER</button>
   <div class="ai-preview" id="aiPreview" hidden>
-    <span class="ai-preview-badge">AI SUGGESTION</span>
+    <span class="ai-preview-badge" id="aiPreviewBadge">AI SUGGESTION</span>
     <div class="ai-preview-grid">
       <div><span>ROOM</span><strong id="aiPreviewRoom">—</strong></div>
       <div><span>TARGET</span><strong id="aiPreviewTarget">—</strong></div>

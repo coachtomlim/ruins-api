@@ -176,7 +176,11 @@ export function finalizePlan({raw,catalog,model,runnerId,runner,roomSpecsById,bu
     roomId:finalRoomSpec.id,roomName:finalRoomSpec.name,
     targetHp:finalTargetHp,encounter:finalEncounter,
     budgetUsed:encounterCost(catalog,finalEncounter),budget,
-    estimate,cue,summary:summary||'AI-suggested encounter, validated against current game rules.',
+    estimate,cue,
+    summary:summary||(usedFallback?'Calibrated by the game’s existing rules.':'AI-suggested encounter, validated against current game rules.'),
+    // isAiGenerated is the single source of truth the UI uses to label a result: it must never say
+    // "AI SUGGESTION" for a plan that was actually produced by the deterministic fallback calibrator.
+    isAiGenerated:!usedFallback,
     repaired,usedFallback,rejected,rejectionReason
   });
 }
