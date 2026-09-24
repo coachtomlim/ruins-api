@@ -5,7 +5,7 @@ import {loadS3ActorPack} from '../flare-s8a/actors.mjs';
 import {startComposedHeroStance} from '../flare-s71/hero-preview.mjs';
 import {createPracticeRunnerSnapshot} from './practice-runner-snapshot.mjs';
 import {dailyTrialErrorMessage} from './daily-trial.mjs';
-import {buildFriendShareLink,buildPersistedFriendShareLink,friendShareUrlIsSafe,shareFriendLink,copyFriendLink,whatsappShareUrl,telegramShareUrl} from './friend-share.mjs';
+import {buildPersistedFriendShareLink,friendShareUrlIsSafe,shareFriendLink,copyFriendLink,whatsappShareUrl,telegramShareUrl} from './friend-share.mjs';
 
 const PRACTICE_SNAPSHOT_KEY='s8bPracticeSnapshot';
 let s7ModelPromise=null;
