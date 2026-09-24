@@ -28,6 +28,22 @@ export function buildFriendShareLink({baseUrl,senderName,effectiveHp,targetHp=FR
   return Object.freeze({url:built.url,code:built.code,runnerId,share:built.share});
 }
 
+export function buildPersistedFriendShareLink({baseUrl,challenge,model}={}){
+  if(!baseUrl)throw new Error('FRIEND_SHARE_BASE_URL_REQUIRED');
+  if(!model)throw new Error('FRIEND_SHARE_MODEL_REQUIRED');
+  if(!challenge||typeof challenge!=='object')throw new Error('AUTHORITATIVE_BUILDER_CHALLENGE_REQUIRED');
+  const runnerId=String(challenge.runner_id||'').trim();
+  const targetHp=Number(challenge.target_hp);
+  const senderName=String(challenge.sender_name||'').trim();
+  const serverCode=String(challenge.invite_code||'').trim();
+  const built=buildChallengeInvite({baseUrl,sender:senderName,runnerId,targetHp,model});
+  if(built.code!==serverCode)throw new Error('BUILDER_CHALLENGE_CODE_MISMATCH');
+  return Object.freeze({
+    challengeId:String(challenge.challenge_id||''),
+    url:built.url,code:built.code,runnerId,targetHp,senderName,share:built.share
+  });
+}
+
 const PRIVATE_URL_PATTERNS=[
   /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i, // uuid (player/runner id)
   /@/, // email
