@@ -68,7 +68,15 @@ function errorMessage(error){
   if(/rate limit/i.test(message))return 'Too many attempts. Please wait and try again.';
   if(/DAILY_LOGIN/i.test(message))return 'Daily Bonus is unavailable. Please try again later.';
   if(/AUTHORITATIVE_|RUNNER_|LOADOUT_/i.test(message))return 'Runner data is unavailable. Please try again later.';
-  return message.replace(/^AccountAdapterError:\s*/,'');
+  const cleaned=message.replace(/^AccountAdapterError:\s*/,'');
+  // Safety net: this project's own errors are short fixed UPPER_SNAKE_CASE codes (AUTH_REQUIRED,
+  // OWNERSHIP_NOT_FOUND, SLOT_MISMATCH, ...) or the plain sentences above. Anything else — a raw
+  // Postgres/network error, a stack trace, an unexpected SQL message — must never reach the player
+  // verbatim (no SQL keywords, column/relation names, or connection details).
+  if(/^[A-Z][A-Z0-9_]*$/.test(cleaned))return cleaned;
+  if(/relation|column|syntax error|duplicate key|violates|permission denied for|constraint|ECONNREFUSED|fetch failed|NetworkError/i.test(cleaned))
+    return 'Something went wrong. Please try again.';
+  return cleaned;
 }
 
 function setBusy(form,busy){

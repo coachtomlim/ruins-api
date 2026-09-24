@@ -1,6 +1,6 @@
 {
   "releaseId": "WEB-FLARE-RC1",
-  "generatedAt": "2026-09-24T07:24:48.674Z",
+  "generatedAt": "2026-09-24T07:44:41.134Z",
   "fileCount": 51,
   "files": [
     {
@@ -167,9 +167,9 @@
     },
     {
       "path": "public/flare-s8b/account-app.mjs",
-      "sha256": "673159b1093b54d6600798bef3b6b15df549e187f2bf063359ffa2a18bf5386a",
+      "sha256": "4994715eb18ea5205e6e103635efc4c413eb0ffae5e6c560a08a4071287a1b04",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 23167
+      "bytes": 23835
     },
     {
       "path": "public/flare-s8b/account-ready-view.mjs",
