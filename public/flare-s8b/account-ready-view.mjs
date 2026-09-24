@@ -1,6 +1,7 @@
 import {dailyLoginView} from './daily-login.mjs';
 import {dailyTrialView} from './daily-trial.mjs';
 import {progressionSummaryView,equipmentUnlockViews,historyViewRows} from './runner-progression-view.mjs';
+import {builderProgressionView,challengeJournalRows} from './builder-progression-view.mjs';
 
 const SLOT_KEYS=Object.freeze(['weapon','shield','head','chest','hands','legs','feet']);
 const SLOT_LABELS=Object.freeze({weapon:'MAIN HAND',shield:'OFF HAND',head:'HEAD',chest:'CHEST',hands:'HANDS',legs:'LEGS',feet:'FEET'});
@@ -148,6 +149,8 @@ export function buildAccountReadyViewFromBackend(account){
     progression:account.progression,itemCatalog:account.itemCatalog??[],itemOwnership:account.itemOwnership??[],gear:runnerState.gear
   }):Object.freeze([]);
   const history=historyViewRows(account.progressionHistory??[]);
+  const builderProgression=builderProgressionView(account.builderProgression);
+  const challengeJournal=challengeJournalRows(account.builderChallenges??[]);
   return Object.freeze({
     title:'ACCOUNT READY',
     displayName:String(account.profile.display_name||account.identity?.email||'Player'),
@@ -159,6 +162,8 @@ export function buildAccountReadyViewFromBackend(account){
     progressionSummary,
     equipmentUnlocks,
     history,
+    builderProgression,
+    challengeJournal,
     runner:Object.freeze({
       id:runnerState.playerRunnerId,
       templateId:runnerState.runnerTemplateId,
