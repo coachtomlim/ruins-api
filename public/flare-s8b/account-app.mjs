@@ -5,7 +5,7 @@ import {loadS3ActorPack} from '../flare-s8a/actors.mjs';
 import {startComposedHeroStance} from '../flare-s71/hero-preview.mjs';
 import {createPracticeRunnerSnapshot} from './practice-runner-snapshot.mjs';
 import {dailyTrialErrorMessage} from './daily-trial.mjs';
-import {buildFriendShareLink,friendShareUrlIsSafe,shareFriendLink,copyFriendLink,whatsappShareUrl,telegramShareUrl} from './friend-share.mjs';
+import {buildFriendShareLink,buildPersistedFriendShareLink,friendShareUrlIsSafe,shareFriendLink,copyFriendLink,whatsappShareUrl,telegramShareUrl} from './friend-share.mjs';
 
 const PRACTICE_SNAPSHOT_KEY='s8bPracticeSnapshot';
 let s7ModelPromise=null;
@@ -229,32 +229,79 @@ function resetFriendShare(){
   byId('friendShareUrl').hidden=true;
   byId('friendShareUrl').value='';
   for(const id of ['friendShareOpen','friendShareCopy','friendShareWhatsapp','friendShareTelegram'])byId(id).hidden=true;
-  byId('friendShareGenerate').hidden=false;byId('friendShareGenerate').disabled=false;byId('friendShareGenerate').textContent='GENERATE FRIEND LINK';
+  byId('friendShareGenerate').hidden=false;byId('friendShareGenerate').disabled=false;byId('friendShareGenerate').textContent='PUBLISH FRIEND CHALLENGE';
   byId('friendShareStatus').textContent='';
+}
+
+function exposeFriendLink(built,message='Friend link ready.'){
+  friendLink=built;
+  byId('friendShareCard').dataset.state='ready';
+  byId('friendShareUrl').hidden=false;
+  byId('friendShareUrl').value=built.url;
+  for(const id of ['friendShareOpen','friendShareCopy','friendShareWhatsapp','friendShareTelegram'])byId(id).hidden=false;
+  byId('friendShareGenerate').hidden=false;
+  byId('friendShareGenerate').disabled=false;
+  byId('friendShareGenerate').textContent='PUBLISH ANOTHER DESIGN';
+  byId('friendShareStatus').textContent=message;
+}
+
+function renderBuilderProgression(builder){
+  byId('builderLevel').textContent=builder.levelLabel;
+  byId('builderXp').textContent=builder.xpLabel;
+  byId('builderPublished').textContent=builder.publishedLabel;
+  byId('builderProgressionFill').style.width=builder.progressPercent+'%';
+}
+
+function challengeJournalRow(challenge){
+  const row=document.createElement('article');row.className='challenge-journal-row';
+  const copy=document.createElement('div');
+  const target=document.createElement('strong');target.textContent=challenge.targetLabel;
+  const detail=document.createElement('small');detail.textContent=`${challenge.runnerId} · ${challenge.dateLabel}`;
+  copy.append(target,detail);
+  const button=document.createElement('button');button.type='button';button.textContent='RE-SHARE';
+  button.addEventListener('click',()=>loadJournalChallenge(challenge));
+  row.append(copy,button);
+  return row;
+}
+
+function renderChallengeJournal(rows){
+  const journal=Array.isArray(rows)?rows:[];
+  byId('challengeJournalList').replaceChildren(...journal.map(challengeJournalRow));
+  byId('challengeJournalEmpty').hidden=journal.length>0;
+}
+
+async function loadJournalChallenge(challenge){
+  try{
+    const model=await loadS7Model();
+    const built=buildPersistedFriendShareLink({baseUrl:new URL('./',location.href).href,challenge,model});
+    if(!friendShareUrlIsSafe(built.url))throw new Error('FRIEND_SHARE_URL_UNSAFE');
+    byId('friendShareTarget').value=String(challenge.targetHp);
+    exposeFriendLink(built,'Challenge loaded from your journal.');
+  }catch(error){
+    byId('friendShareStatus').textContent=errorMessage(error);
+  }
 }
 
 async function generateFriendLink(){
   const button=byId('friendShareGenerate');
-  button.disabled=true;button.textContent='GENERATING…';
+  button.disabled=true;button.textContent='PUBLISHING…';
   byId('friendShareStatus').textContent='';
   try{
+    const targetHp=Number(byId('friendShareTarget').value);
+    const challenge=await adapter.createBuilderChallenge(targetHp);
     const model=await loadS7Model();
-    const built=buildFriendShareLink({
+    const built=buildPersistedFriendShareLink({
       baseUrl:new URL('./',location.href).href,
-      senderName:readyViewModel.displayName,
-      effectiveHp:readyViewModel.runner.stats.hp,
+      challenge,
       model
     });
     if(!friendShareUrlIsSafe(built.url))throw new Error('FRIEND_SHARE_URL_UNSAFE');
-    friendLink=built;
-    byId('friendShareCard').dataset.state='ready';
-    byId('friendShareUrl').hidden=false;byId('friendShareUrl').value=built.url;
-    byId('friendShareGenerate').hidden=true;
-    for(const id of ['friendShareOpen','friendShareCopy','friendShareWhatsapp','friendShareTelegram'])byId(id).hidden=false;
-    byId('friendShareStatus').textContent='Friend link ready.';
+    await refreshReady();
+    const awarded=Number(challenge.builder_xp_awarded)||0;
+    exposeFriendLink(built,challenge.duplicate===true?'Challenge already in your journal.':`CHALLENGE PUBLISHED · +${awarded} BUILDER XP`);
   }catch(error){
     byId('friendShareStatus').textContent=errorMessage(error);
-    button.disabled=false;button.textContent='GENERATE FRIEND LINK';
+    button.disabled=false;button.textContent='PUBLISH FRIEND CHALLENGE';
   }
 }
 
@@ -369,6 +416,8 @@ function renderReady(account){
   renderDailyLogin(vm.dailyLogin);
   renderDailyTrial(vm.dailyTrial);
   resetFriendShare();
+  renderBuilderProgression(vm.builderProgression);
+  renderChallengeJournal(vm.challengeJournal);
   byId('runnerName').textContent=vm.runner.name;
   byId('runnerHp').textContent=String(vm.runner.stats.hp);
   byId('runnerAttack').textContent=String(vm.runner.stats.attack);
