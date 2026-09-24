@@ -9,36 +9,36 @@
 <fieldset class="choice-box"><legend>SUPPORTS · 15 EACH</legend><label><input type="checkbox" id="small-potion"><b>Small Potion</b><span>+10 HP</span></label><label><input type="checkbox" id="battle-tonic"><b>Battle Tonic</b><span>+2 ATK for run</span></label><label><input type="checkbox" id="iron-tonic"><b>Iron Tonic</b><span>+2 DEF for run</span></label></fieldset>
 <fieldset class="choice-box"><legend>TRAPS</legend><label><input type="checkbox" id="spike-trap"><b>Spike Trap · 20</b><span>30 raw, DEF applies, one use · SPIKES</span></label><label><input type="checkbox" id="dart-trap"><b>Dart Trap · 15</b><span>16 damage, ignores DEF, one use · DARTS</span></label></fieldset>
 <div class="budget-line"><span id="budgetMessage">35 gold remaining</span><i><b id="budgetFill"></b></i></div></div>
-<section class="ai-assist-card" id="aiAssistCard" aria-labelledby="aiAssistTitle">
-  <div class="section-title"><h2 id="aiAssistTitle">AI ENCOUNTER ASSIST</h2><span id="aiAssistMode">OPTIONAL</span></div>
-  <p class="panel-note">Describe the kind of dungeon you want. This never changes your account and never runs automatically — you choose whether to apply it.</p>
-  <label class="ai-brief-label"><span>DESCRIBE YOUR ENCOUNTER</span>
-    <textarea id="aiBrief" maxlength="280" rows="2" placeholder="e.g. Skeleton ambush with a few traps"></textarea>
+<section class="advisor-card" id="advisorCard" aria-labelledby="advisorTitle">
+  <div class="section-title"><h2 id="advisorTitle">ENCOUNTER ADVISOR</h2><span id="advisorMode">OPTIONAL</span></div>
+  <p class="panel-note">Ask for a calibrated adjustment to the current encounter. The game evaluates legal variations mathematically; you choose whether to apply it.</p>
+  <label class="advisor-brief-label"><span>DESCRIBE YOUR ENCOUNTER</span>
+    <textarea id="advisorBrief" maxlength="280" rows="2" placeholder="e.g. Make this harder but keep it survivable"></textarea>
   </label>
-  <label class="ai-target-label"><span>TARGET FINISHING HP (OPTIONAL)</span>
-    <select id="aiTargetHp" aria-label="AI suggestion target finishing HP">
+  <label class="advisor-target-label"><span>TARGET FINISHING HP (OPTIONAL)</span>
+    <select id="advisorTargetHp" aria-label="Encounter Advisor target finishing HP">
       <option value="">USE DEFAULT (60%)</option>
       <option value="5">5%</option><option value="10">10%</option><option value="15">15%</option><option value="20">20%</option><option value="25">25%</option><option value="30">30%</option><option value="35">35%</option><option value="40">40%</option><option value="45">45%</option><option value="50">50%</option><option value="55">55%</option><option value="60">60%</option><option value="65">65%</option><option value="70">70%</option><option value="75">75%</option><option value="80">80%</option><option value="85">85%</option><option value="90">90%</option><option value="95">95%</option>
     </select>
   </label>
-  <button type="button" class="secondary" id="aiSuggest">SUGGEST ENCOUNTER</button>
-  <div class="ai-preview" id="aiPreview" hidden>
-    <span class="ai-preview-badge" id="aiPreviewBadge">AI SUGGESTION</span>
-    <div class="ai-preview-grid">
-      <div><span>ROOM</span><strong id="aiPreviewRoom">—</strong></div>
-      <div><span>TARGET</span><strong id="aiPreviewTarget">—</strong></div>
-      <div><span>MONSTERS</span><strong id="aiPreviewMonsters">—</strong></div>
-      <div><span>TRAPS &amp; SUPPORTS</span><strong id="aiPreviewSupport">—</strong></div>
-      <div><span>BUDGET USED</span><strong id="aiPreviewBudget">—</strong></div>
-      <div><span>ESTIMATED FINISH</span><strong id="aiPreviewEstimate">—</strong></div>
+  <button type="button" class="secondary" id="advisorSuggest">SUGGEST ADJUSTMENT</button>
+  <div class="advisor-preview" id="advisorPreview" hidden>
+    <span class="advisor-preview-badge" id="advisorPreviewBadge">SUGGESTED ADJUSTMENT</span>
+    <div class="advisor-preview-grid">
+      <div><span>ROOM</span><strong id="advisorPreviewRoom">—</strong></div>
+      <div><span>TARGET</span><strong id="advisorPreviewTarget">—</strong></div>
+      <div><span>MONSTERS</span><strong id="advisorPreviewMonsters">—</strong></div>
+      <div><span>TRAPS &amp; SUPPORTS</span><strong id="advisorPreviewSupport">—</strong></div>
+      <div><span>BUDGET USED</span><strong id="advisorPreviewBudget">—</strong></div>
+      <div><span>ESTIMATED FINISH</span><strong id="advisorPreviewEstimate">—</strong></div>
     </div>
-    <p id="aiPreviewSummary"></p>
-    <div class="ai-preview-actions">
-      <button type="button" class="primary" id="aiApply">APPLY SUGGESTION</button>
-      <button type="button" id="aiTryAnother">TRY ANOTHER</button>
+    <p id="advisorPreviewSummary"></p>
+    <div class="advisor-preview-actions">
+      <button type="button" class="primary" id="advisorApply">APPLY SUGGESTION</button>
+      <button type="button" id="advisorTryAnother">TRY ANOTHER</button>
     </div>
   </div>
-  <p class="status" id="aiStatus" role="status" aria-live="polite"></p>
+  <p class="status" id="advisorStatus" role="status" aria-live="polite"></p>
 </section>
 <button type="button" class="primary run-button" id="run" disabled>RUN THE GAUNTLET <span>▶</span></button><p class="status" id="buildStatus">Preparing a calibrated setup…</p></section>
 
