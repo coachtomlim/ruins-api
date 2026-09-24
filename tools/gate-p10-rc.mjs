@@ -17,7 +17,7 @@ const steps=[
     name:'P10-focused tests',
     cmd:'node',
     args:['--test',
-      'tests/flare-p9-ai-encounter-assist.test.mjs',
+      'tests/flare-p10-deterministic-encounter-advisor.test.mjs',
       'tests/flare-p10-release-manifest.test.mjs',
       'tests/flare-p10-deploy-helper.test.mjs',
       'tests/flare-p10-release-archive.test.mjs',
@@ -37,7 +37,7 @@ spec = importlib.util.spec_from_file_location('helper', 'scripts/deploy/hostgato
 m = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(m)
 m.verify_source()
-m.ai_availability_honesty_gate()
+m.deterministic_encounter_advisor_gate()
 for path, pub in m.FROZEN_FILES:
     m.git_bytes_any_ref(path)
 for rel in m.PREVIOUS_GIT_FILES:
