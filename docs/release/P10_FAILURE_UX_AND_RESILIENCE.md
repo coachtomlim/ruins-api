@@ -3,7 +3,7 @@
 ## Failure UX (fixed 1 real defect)
 
 Audited every `catch`/error-surfacing path across `account-app.mjs`, `daily-trial-app.mjs`,
-`friend-share.mjs`, `practice-app.mjs`, and `ai-encounter-provider.mjs`.
+`friend-share.mjs`, `practice-app.mjs`, and `encounter-advisor.mjs`.
 
 **Fixed**: `account-app.mjs`'s `errorMessage()` — used by every account/purchase/equip/friend-share
 failure path — had no catch-all for an unrecognized error. Its fallback stripped one known prefix and
@@ -30,15 +30,10 @@ case and the project's own error codes.
   `document.execCommand('copy')` → `copied:false`, never throwing; its native-share path correctly
   distinguishes a user cancel (`AbortError`) from a real failure, and any real failure now routes
   through the hardened `errorMessage()` above via `openFriendShare()`'s catch block.
-- `ai-encounter-provider.mjs`'s `requestEncounterSuggestion()`/`checkAiAvailability()` already map
-  every failure mode (timeout, network error, non-200, malformed JSON, unconfigured) to typed
-  `AIProviderError` codes or a safe `{available:false}` — covered by the existing P9 test suite and
-  never throw past `runAiSuggestion()`'s own catch, which falls back to the deterministic calibrator.
 
 ## Offline / network resilience
 
-- AI Assist: unavailable/timeout/network-error all fall back to the deterministic calibrator, never a
-  blocked UI (P9/P10 §4 coverage, 50 tests).
+- Encounter Advisor: entirely local deterministic application logic; no provider/network failure mode exists.
 - Daily Trial: `waitForClaimable()`'s catch swallows a status-check failure and simply retries on the
   next poll rather than breaking the page.
 - Practice: entirely offline-capable once its two fetches (catalog.json, game.json) succeed once —
@@ -51,13 +46,13 @@ case and the project's own error codes.
 `grep`-verified presence, not yet exhaustively tested with a screen reader or automated a11y tool:
 - Hub (`index.html`): 40 `aria-live`/`aria-label`/`role` attributes present across dialogs, tabs, and
   status regions.
-- Practice / Daily Trial: 4 each — comparatively thin; the AI Assist status line (`#aiStatus`) and
+- Practice / Daily Trial: 4 each — comparatively thin; the Encounter Advisor status line (`#advisorStatus`) and
   practice result panel are not confirmed to be `aria-live` regions. **Not fixed in this pass** — flag
   for a follow-up accessibility-focused pass rather than a speculative edit here.
 - Reduced motion: `prefers-reduced-motion` is honored in 3 locations (Practice's renderer `draw()`
   call already gates animation on it, confirmed in `practice-app.mjs`).
 - Touch targets: 16 `min-height:44px`/`min-width:44px` declarations across the S8B stylesheets,
-  including the P10-added AI Assist controls (verified by the existing P9 test).
+  including the Encounter Advisor controls (verified by the existing P9 test).
 
 **This accessibility section is a static census, not a full live keyboard/contrast/screen-reader
 audit** — an exhaustive audit across every screen and interaction state was out of scope for the time
