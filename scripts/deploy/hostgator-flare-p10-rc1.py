@@ -37,14 +37,13 @@ ALLOWED = (S8B_ROOT,)
 # Independently traced from the real Hub/Practice/Daily Trial entry points via
 # scripts/release/generate-manifest.mjs (docs/release/WEB-FLARE-RC1-MANIFEST.json), filtered to the
 # flare-s8b deploy root. NOT copied from Update 006's 19-file list — this is 25 files, correctly
-# including the S9 progression views, the P9/P10 AI Encounter Assist modules, and release-identity.mjs.
+# including the S9 progression views, deterministic Encounter Advisor, and release-identity.mjs.
 GIT_FILES = [
     'public/flare-s8b/account-adapter.mjs',
     'public/flare-s8b/account-app.mjs',
     'public/flare-s8b/account-ready-view.mjs',
     'public/flare-s8b/account.css',
-    'public/flare-s8b/ai-encounter-assist.mjs',
-    'public/flare-s8b/ai-encounter-provider.mjs',
+    'public/flare-s8b/encounter-advisor.mjs',
     'public/flare-s8b/builder-progression-view.mjs',
     'public/flare-s8b/daily-login.mjs',
     'public/flare-s8b/daily-trial-app.mjs',
@@ -68,7 +67,7 @@ GIT_FILES = [
 
 # The Update 006 manifest, preserved verbatim (not derived from GIT_FILES) so the pre-update baseline
 # gate checks exactly what is actually live today (the last accepted deployment), not what this
-# helper intends to deploy. Every file P10 adds (AI Assist, S9 progression views, release-identity.mjs)
+# helper intends to deploy. Every file P10 adds (Encounter Advisor, S9 progression views, release-identity.mjs)
 # is deliberately absent here — their absence from the live baseline is what proves it predates P10.
 PREVIOUS_GIT_FILES = [
     'public/flare-s8b/index.html',
@@ -106,7 +105,7 @@ EXPECTED_VENDOR_NAMES = {'supabase.js'}
 
 # Informational only (not gated pre-deploy): the root inventory this update produces.
 EXPECTED_POST_ROOT_NAMES = EXPECTED_ROOT_NAMES | {
-    'ai-encounter-assist.mjs', 'ai-encounter-provider.mjs', 'builder-progression-view.mjs',
+    'encounter-advisor.mjs', 'builder-progression-view.mjs',
     'release-identity.mjs', 'runner-progression-view.mjs'
 }
 
@@ -354,31 +353,26 @@ def verify_source() -> None:
         git_bytes(rel)  # fails closed if any required file is missing at this exact commit
 
 
-def ai_availability_honesty_gate() -> None:
-    """Static, network-free re-confirmation of the P10 blocking requirement: the deterministic
-    fallback must never be presented as live AI. Read directly from the exact bytes this helper is
-    about to deploy (SOURCE_SHA)."""
-    assist = git_text('public/flare-s8b/ai-encounter-assist.mjs')
-    provider = git_text('public/flare-s8b/ai-encounter-provider.mjs')
+def deterministic_encounter_advisor_gate() -> None:
+    """Static, network-free proof that encounter advice is entirely deterministic and self-contained.
+    No AI provider, Edge Function, external inference API, or AI availability path may remain."""
+    advisor = git_text('public/flare-s8b/encounter-advisor.mjs')
     app = git_text('public/flare-s8b/practice-app.mjs')
+    html = git_text('public/flare-s8b/practice.html')
+    forbidden = ('ai-encounter-provider', 'suggest-encounter', 'AI_ENCOUNTER_PROVIDER_KEY',
+                 'ANTHROPIC_API_KEY', 'OPENAI_API_KEY', 'AI ASSIST', 'AI SUGGESTION')
     checks = [
-        ("finalizePlan exposes isAiGenerated as the single source of truth",
-         'isAiGenerated:!usedFallback' in assist),
-        ("a never-throwing checkAiAvailability probe exists",
-         'export async function checkAiAvailability' in provider),
-        ("Practice probes availability at bootstrap and never assumes it is available",
-         'checkAiAvailability' in app and 'aiAvailable=null' in app),
-        ("unavailable mode never calls the network-backed suggestEncounter()",
-         'AI ASSIST UNAVAILABLE' in app and 'USE CALIBRATED SUGGESTION' in app),
-        ("the preview badge is set from plan.isAiGenerated, not a static claim",
-         "plan.isAiGenerated?'AI SUGGESTION':'CALIBRATED SUGGESTION'" in app),
-        ("suggest-encounter POST requires authentication (bounded access to a paid provider call)",
-         'AUTH_REQUIRED' in git_text('supabase/functions/suggest-encounter/index.ts')),
+        ("deterministic advisor module exists", 'export function adviseEncounter' in advisor),
+        ("advisor enumerates legal encounters", 'enumerateLegalEncounters' in advisor),
+        ("advisor uses deterministic estimator", 'estimateEncounter' in advisor),
+        ("Practice calls deterministic advisor directly", 'adviseEncounter({' in app),
+        ("player UI is labelled ENCOUNTER ADVISOR", 'ENCOUNTER ADVISOR' in html),
+        ("no external-AI/provider terminology remains in runtime",
+         not any(token in advisor or token in app or token in html for token in forbidden)),
     ]
     failed = [label for label, ok in checks if not ok]
     if failed:
-        fail('AI availability honesty gate failed: ' + '; '.join(failed))
-
+        fail('deterministic Encounter Advisor gate failed: ' + '; '.join(failed))
 
 def build_config_js() -> str:
     url = os.environ.get('S8B_SUPABASE_URL', '')
@@ -515,8 +509,8 @@ def main() -> None:
         fail('usage: hostgator-flare-p10-rc1.py auth|probe|deploy')
 
     verify_source()
-    ai_availability_honesty_gate()
-    print('AI AVAILABILITY HONESTY: PASS')
+    deterministic_encounter_advisor_gate()
+    print('DETERMINISTIC ENCOUNTER ADVISOR: PASS')
     uapi_ok('Fileman', 'list_files', {'dir': 'public_html'})
     print('AUTH PASS')
 
