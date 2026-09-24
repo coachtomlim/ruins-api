@@ -7,8 +7,8 @@ import {buildPersistedFriendShareLink} from '../public/flare-s8b/friend-share.mj
 const read=path=>readFile(new URL(`../${path}`,import.meta.url),'utf8');
 const model=JSON.parse(await read('public/flare-s7/data/game.json'));
 
-test('Builder target selector exposes the bounded 40/50/60/70/80 precision set',()=>{
-  assert.deepEqual(BUILDER_TARGET_OPTIONS,[40,50,60,70,80]);
+test('Builder target selector exposes every governed 5..95 precision target',()=>{
+  assert.deepEqual(BUILDER_TARGET_OPTIONS,Array.from({length:19},(_,index)=>(index+1)*5));
 });
 
 test('Builder progression uses the governed cosmetic XP thresholds',()=>{
@@ -118,7 +118,7 @@ test('Hub includes target selection, Builder progression and persistent Challeng
   for(const id of ['builderLevel','builderXp','builderProgressionFill','builderPublished','friendShareTarget','challengeJournalList'])
     assert.match(html,new RegExp(`id="${id}"`));
   assert.match(html,/PUBLISH FRIEND CHALLENGE/);
-  for(const value of [40,50,60,70,80])assert.match(html,new RegExp(`value="${value}"`));
+  for(const value of BUILDER_TARGET_OPTIONS)assert.match(html,new RegExp(`value="${value}"`));
 });
 
 test('Builder progression does not claim friend completion tracking',async()=>{
@@ -128,4 +128,11 @@ test('Builder progression does not claim friend completion tracking',async()=>{
   ]);
   assert.doesNotMatch(html,/friend completed|completion verified|completed by friend/i);
   assert.doesNotMatch(sql,/friend_completion|challenge_complete|completion_reward/i);
+});
+
+
+test('Builder Level 5 is reachable through normal UI without hidden target values',()=>{
+  const maxUniqueDesignXp=BUILDER_TARGET_OPTIONS.length*10;
+  assert.equal(maxUniqueDesignXp,190);
+  assert.ok(maxUniqueDesignXp>=180,'the visible target range must permit Level 5 on one governed Runner tier');
 });
