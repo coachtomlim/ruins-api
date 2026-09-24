@@ -17,7 +17,7 @@
 CPANEL_API_TOKEN=... S8B_SUPABASE_URL=... S8B_SUPABASE_PUBLISHABLE_KEY=... \
   python scripts/deploy/hostgator-flare-p10-rc1.py auth
 ```
-If `AUTH PASS` (and the AI-availability-honesty static gate passes):
+If `AUTH PASS` (and the deterministic Encounter Advisor static gate passes):
 ```bash
 python scripts/deploy/hostgator-flare-p10-rc1.py probe
 ```
@@ -44,19 +44,11 @@ upload+extract `docs/release/web-flare-p10-rc1-release.zip`, hand-recreate `conf
 - Confirm the new P10 migration is applied: `20260924_p10_security_definer_search_path_hardening.sql`
   (redefines `ensure_starter_account`/`save_account_goal` with `search_path=''`; no schema change, safe
   to apply independent of the static deploy).
-- If deploying the Edge Function (only if a rotated `AI_ENCOUNTER_PROVIDER_KEY` is available — see
-  `P10_EXTERNAL_GATES.md`): `supabase functions deploy suggest-encounter`, then confirm
-  `GET .../suggest-encounter` returns `{available:true,version:"s9-ai-encounter-plan-001"}`.
+## Encounter Advisor
 
-## Edge Function / AI provider setup (optional — feature degrades gracefully if skipped)
-
-1. Set `AI_ENCOUNTER_PROVIDER_KEY` in the function's own Supabase secrets store — never in
-   `public/**`, never in a commit, never printed to a terminal.
-2. `supabase functions deploy suggest-encounter`.
-3. Confirm the GET probe reports `available:true`; confirm Practice's AI Assist panel switches from
-   "AI ASSIST UNAVAILABLE / USE CALIBRATED SUGGESTION" to live mode.
-4. If this step is skipped or fails, Practice remains fully usable in calibrated-only mode — this is
-   an accepted, honestly-labeled degraded state, not a blocker.
+No external AI/LLM provider or Edge Function deployment is required. Encounter advice executes
+entirely in the application using deterministic legal-variation search and the existing estimator.
+No provider credential is part of deployment configuration.
 
 ## Post-deployment smoke tests
 
@@ -65,8 +57,7 @@ upload+extract `docs/release/web-flare-p10-rc1-release.zip`, hand-recreate `conf
 2. Sign in with an existing test account → Hub renders LEVEL/XP, equipment, history, Builder
    progression, Challenge Journal.
 3. Daily Trial: start → settle → confirm +5 Gold / +10 Runner XP.
-4. Practice → AI Assist panel shows either a live suggestion or "AI ASSIST UNAVAILABLE / USE
-   CALIBRATED SUGGESTION" (never a false "AI SUGGESTION" claim on a fallback result) → apply → run.
+4. Practice → ENCOUNTER ADVISOR → request a deterministic adjustment → apply/edit → run.
 5. Friend Share → generate link → confirm `/m/<code>?from=<name>` loads for a signed-out visitor.
 6. Frozen routes: `/q/hiS4`, `/q/Rind`, `/g/MsJ9`, `/h/UvVY`, `/j/UvVY`, `/k/UvVY` all still load.
 
