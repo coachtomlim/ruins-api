@@ -29,6 +29,8 @@ function account(state=runnerState()){
     ],
     progressionPurchases:[],
     dailyLogin:{reward_day:'2026-09-19',claimed_today:false,current_streak_day:0,next_streak_day:1,claimable_gold:5,next_reset_at:'2026-09-20T00:00:00Z'},
+    builderProgression:{total_builder_xp:0,builder_level:1,level_threshold:0,next_level_threshold:20,xp_remaining:20,max_level:false,published_challenges:0},
+    builderChallenges:[],
     goldBalance:0
   };
 }
@@ -53,6 +55,9 @@ test('backend Runner Hub uses authoritative stats and gear without recalculation
   assert.equal(vm.equipment[1].modifierLabel,'+1 DEF');
   assert.deepEqual(vm.armor.map(row=>row.slot),['head','chest','hands','legs','feet']);
   assert.ok(vm.armor.every(row=>row.equipped===false));
+  assert.equal(vm.builderProgression.levelLabel,'BUILDER LEVEL 1');
+  assert.equal(vm.builderProgression.xpLabel,'0 / 20 BUILDER XP');
+  assert.deepEqual(vm.challengeJournal,[]);
 });
 
 test('daily login view is derived from authoritative backend status',()=>{
@@ -108,4 +113,19 @@ test('empty slot carrying an ownership identity fails closed',()=>{
 
 test('invalid authoritative stats fail closed',()=>{
   assert.throws(()=>buildAccountReadyViewFromBackend(account(runnerState({effective_stats:{hp:100,attack:'unknown',defense:1}}))),/INVALID_AUTHORITATIVE_STAT:effective_attack/);
+});
+
+
+test('Builder journal is mapped from authoritative backend rows',()=>{
+  const source=account();
+  source.builderProgression={total_builder_xp:20,builder_level:2,level_threshold:20,next_level_threshold:50,xp_remaining:30,max_level:false,published_challenges:2};
+  source.builderChallenges=[
+    {challenge_id:'c-2',runner_id:'warrior-l1',target_hp:70,invite_code:'Q80e',sender_name:'Ada',created_at:'2026-09-24T02:00:00Z'},
+    {challenge_id:'c-1',runner_id:'warrior-l1',target_hp:60,invite_code:'Qs2Z',sender_name:'Ada',created_at:'2026-09-24T01:00:00Z'}
+  ];
+  const vm=buildAccountReadyViewFromBackend(source);
+  assert.equal(vm.builderProgression.levelLabel,'BUILDER LEVEL 2');
+  assert.equal(vm.builderProgression.publishedLabel,'2 CHALLENGES PUBLISHED');
+  assert.deepEqual(vm.challengeJournal.map(row=>row.targetHp),[70,60]);
+  assert.deepEqual(vm.challengeJournal.map(row=>row.inviteCode),['Q80e','Qs2Z']);
 });
