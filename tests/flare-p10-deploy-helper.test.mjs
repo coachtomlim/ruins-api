@@ -39,7 +39,7 @@ test('the deploy helper never deploys without first passing target_baseline_gate
   assert.ok(deployIdx>0);
 });
 
-test('the deploy helper compiles cleanly and its offline static gates (source verification + AI availability honesty) pass with no network access',()=>{
+test('the deploy helper compiles cleanly and its offline static gates (source verification + deterministic Encounter Advisor authority) pass with no network access',()=>{
   execFileSync('python',['-m','py_compile','scripts/deploy/hostgator-flare-p10-rc1.py'],{cwd:repoRoot});
   const out=execFileSync('python3',['-c',`
 import importlib.util
@@ -47,14 +47,14 @@ spec = importlib.util.spec_from_file_location('helper', 'scripts/deploy/hostgato
 m = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(m)
 m.verify_source()
-m.ai_availability_honesty_gate()
+m.deterministic_encounter_advisor_gate()
 for path, pub in m.FROZEN_FILES:
     m.git_bytes_any_ref(path)
 for rel in m.PREVIOUS_GIT_FILES:
     m.previous_git_bytes(rel)
 print('OFFLINE_GATES_PASS', len(m.GIT_FILES), len(m.FROZEN_FILES))
 `],{cwd:repoRoot}).toString();
-  assert.match(out,/OFFLINE_GATES_PASS 25 34/);
+  assert.match(out,/OFFLINE_GATES_PASS 24 34/);
 });
 
 test('config.js is generated per-deployment, never sourced from git, and the builder rejects privileged credential material',async()=>{
