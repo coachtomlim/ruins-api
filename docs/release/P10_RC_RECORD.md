@@ -9,7 +9,7 @@
   (verified across repeated runs in `tests/flare-p10-release-manifest.test.mjs`)
 - **Game rules version**: 3 (`public/flare-s7/data/game.json` `.version`)
 - **Content version**: `flare-p0-v1.15-stock`
-- **AI contract version**: `s9-ai-encounter-plan-001`
+- **Encounter Advisor version**: `p10-deterministic-encounter-advisor-001`
 - **Deployment manifest version**: 1
 
 ## Commits in this release (§1–§10)
@@ -29,10 +29,7 @@
 
 ## Feature inventory (this release, on top of the accepted S8B/S9/P9 baseline)
 
-- AI Encounter Assist honesty model: live-vs-calibrated mode is probed at bootstrap and never
-  misrepresented (`isAiGenerated`, `checkAiAvailability`, unavailable-mode UI).
-- `suggest-encounter` Edge Function: bounded to authenticated callers, Content-Type-checked,
-  provider-call-timeout-bounded (504), request/response-size-bounded (413), CORS-restricted.
+- Deterministic Encounter Advisor: local legal-variation enumeration ranked by the existing deterministic estimator; no external AI/API dependency.
 - New, independent deployment lineage (`hostgator-flare-p10-rc1.py`) with a re-traced 25-file/34-frozen-
   fingerprint gate set, entirely separate from the frozen Update 006 helper.
 - Fallback release + rollback archive tooling (`scripts/release/build-release-archive.mjs`), built only
@@ -49,7 +46,6 @@
 ## Known external pending gates (see `P10_EXTERNAL_GATES.md`)
 
 - `S9 LIVE ADMIN PROOF`: status recorded in the external-gates check.
-- `AI LIVE PROVIDER PROOF`: status recorded in the external-gates check.
 - `HOSTGATOR DEPLOYMENT`: status recorded in the external-gates check.
 
 ## Test counts (as of `0642df8`)
