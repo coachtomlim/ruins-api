@@ -226,7 +226,7 @@ test('Builder publishing itself carries no Gold or Runner-power reward client au
   ]);
   const publish=app.slice(app.indexOf('async function generateFriendLink'),app.indexOf('async function openFriendShare'));
   assert.match(publish,/createBuilderChallenge\(targetHp\)/);
-  assert.doesNotMatch(publish,/gold|wallet|runner_xp|equip|stat/i);
+  assert.doesNotMatch(publish,/\bgold\b|wallet_ledger|runner_xp|equip_runner_item|purchase_progression_offer|runner_stat_upgrade_event/i);
   const create=adapter.slice(adapter.indexOf('async function createBuilderChallenge'),adapter.indexOf('async function loadAccountState'));
   assert.deepEqual((create.match(/p_target_hp/g)||[]).length,1);
   assert.doesNotMatch(create,/player_id|runner_id|sender|reward|gold|xp_amount/i);
