@@ -1,1 +1,5 @@
 node_modules/
+__pycache__/
+*.pyc
+docs/release/_test-extract/
+docs/release/_check/

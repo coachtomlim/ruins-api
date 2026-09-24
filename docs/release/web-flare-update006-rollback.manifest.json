@@ -1,0 +1,128 @@
+{
+  "label": "Update 006 rollback archive (last known live predecessor tree)",
+  "sourceSha": "523bfd7ffc46be191ce48b794708cc5af945dcda",
+  "fileCount": 20,
+  "zip": "web-flare-update006-rollback.zip",
+  "files": [
+    {
+      "path": "index.html",
+      "sha256": "3d6e2afb43ab3152e1ead63eed0eb7e5bf279ca0b93d493e617576b6544e8cbe",
+      "mime": "text/html; charset=utf-8",
+      "bytes": 11305
+    },
+    {
+      "path": "account.css",
+      "sha256": "8a9ed750353adf8a05c2e2646d193672bbf231f72a79513817146e1bc266750d",
+      "mime": "text/css; charset=utf-8",
+      "bytes": 16516
+    },
+    {
+      "path": "vendor/supabase.js",
+      "sha256": "84ee9bf45695c1dd3ba1595b6bcfb0f09672434631351ffc8ebe9140545d5ff6",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 218318
+    },
+    {
+      "path": "account-app.mjs",
+      "sha256": "3494e376a0a3991c300f5cfe0e2a1b07399eb21cd130ceb56de2b09f8bda1c62",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 17794
+    },
+    {
+      "path": "account-ready-view.mjs",
+      "sha256": "b5ac5993bf35a0a9df37ee3bdd4667ebd2e0a56be7bd4294b7c2f222788834f2",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 8979
+    },
+    {
+      "path": "daily-login.mjs",
+      "sha256": "b5e8f0cd461c996f5c4c8ba2a9180a689d017e73b70560c94f38d735abc4a25c",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 2112
+    },
+    {
+      "path": "daily-trial.mjs",
+      "sha256": "a5901ede5c8454f32dd940aff3a859463081bee7a0734e1f32767d34477fa5aa",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 8291
+    },
+    {
+      "path": "daily-trial-runner-catalog.mjs",
+      "sha256": "b8f95ffc30fcef528df9c51a1a407807cdb7fd14cbe583f7864220c76166d1cc",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 748
+    },
+    {
+      "path": "daily-trial-app.mjs",
+      "sha256": "c9b8f473f99904eeffc3c044a2002a6c78463a5cde7437742ad2d3aa86aef0a3",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 6811
+    },
+    {
+      "path": "daily-trial.html",
+      "sha256": "7e79c81f561cef0b32bf168b43f9dd6fcc750b4f9d626787bc5698149f48bec1",
+      "mime": "text/html; charset=utf-8",
+      "bytes": 2321
+    },
+    {
+      "path": "daily-trial.css",
+      "sha256": "b4a43e2b029d470f9e8f6bdfcdd2992e770149f9092f7ba139993c4e2c7e16fe",
+      "mime": "text/css; charset=utf-8",
+      "bytes": 2357
+    },
+    {
+      "path": "friend-share.mjs",
+      "sha256": "0e1273ade3f171d192a3f2e2a4f420f8ac20604bb8618f6b269490b98c300de7",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 3766
+    },
+    {
+      "path": "supabase-browser.mjs",
+      "sha256": "ce53ddfcd5597c2d5f75008c94b0c6b59c43a784f4d378fd19fccc2af3ca67f7",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 646
+    },
+    {
+      "path": "account-adapter.mjs",
+      "sha256": "214e2059ff6ee6920e69ec0c48f353b27c0b7cac01bbb549a00e87224791f4b2",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 12257
+    },
+    {
+      "path": "stat-purchase-flow.mjs",
+      "sha256": "3525090cb2b6892a3bb70cb7e2a3422d6e8701cbaaa540ba4861684b6864d09f",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 1330
+    },
+    {
+      "path": "practice-runner-snapshot.mjs",
+      "sha256": "e2066b24cada19f9f43b2f8346eb60698def2c37dbea07c88356003df2c1bf71",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 2199
+    },
+    {
+      "path": "practice-runner-catalog.mjs",
+      "sha256": "845be0304c828f8784eb91dfd3e4da3606340bbeb54fc3efe325a4bfb1e06a74",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 841
+    },
+    {
+      "path": "practice.html",
+      "sha256": "8de734002ddfd4122ff04404070c6a93a93a0e12a26885895d13e43c2b9a63fc",
+      "mime": "text/html; charset=utf-8",
+      "bytes": 7903
+    },
+    {
+      "path": "practice-app.mjs",
+      "sha256": "8754df73f63af5562f991d760e3bc91ac92b26403fc199139755b5f74f8dd8b0",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 10108
+    },
+    {
+      "path": "practice.css",
+      "sha256": "384311edc91cb06fa3a176fe778c00f7792c45c6781e06a7916d0954950c418b",
+      "mime": "text/css; charset=utf-8",
+      "bytes": 1789
+    }
+  ]
+}
