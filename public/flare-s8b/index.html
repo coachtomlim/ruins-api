@@ -97,19 +97,30 @@
 
       <section class="friend-share-card" id="friendShareCard" data-state="idle" aria-labelledby="friendShareTitle">
         <div class="friend-share-copy">
-          <span class="eyebrow">INVITE A FRIEND</span>
+          <span class="eyebrow">BUILDER PROGRESSION</span>
           <h2 id="friendShareTitle">SHARE WITH A FRIEND</h2>
-          <p id="friendShareDetail">Send a friend a dungeon challenge link. No account needed to play.</p>
+          <div class="builder-progression-head"><strong id="builderLevel">BUILDER LEVEL 1</strong><span id="builderXp">0 / 20 BUILDER XP</span></div>
+          <div class="builder-progression-bar" aria-hidden="true"><i id="builderProgressionFill" style="width:0%"></i></div>
+          <small id="builderPublished">0 CHALLENGES PUBLISHED</small>
+          <p id="friendShareDetail">Publish a precision challenge, earn cosmetic Builder XP once per unique design, and re-share it anytime.</p>
+          <label class="friend-target"><span>TARGET FINISHING HP</span><select id="friendShareTarget" aria-label="Friend challenge target HP">
+            <option value="40">40%</option><option value="50">50%</option><option value="60" selected>60%</option><option value="70">70%</option><option value="80">80%</option>
+          </select></label>
           <input type="text" id="friendShareUrl" readonly hidden aria-label="Friend challenge link">
         </div>
         <div class="friend-share-actions">
-          <button type="button" class="primary" id="friendShareGenerate">GENERATE FRIEND LINK</button>
+          <button type="button" class="primary" id="friendShareGenerate">PUBLISH FRIEND CHALLENGE</button>
           <button type="button" id="friendShareOpen" hidden>SHARE</button>
           <button type="button" id="friendShareCopy" hidden>COPY LINK</button>
           <button type="button" id="friendShareWhatsapp" hidden>WHATSAPP</button>
           <button type="button" id="friendShareTelegram" hidden>TELEGRAM</button>
         </div>
         <p class="status" id="friendShareStatus" role="status" aria-live="polite"></p>
+        <div class="challenge-journal" aria-labelledby="challengeJournalTitle">
+          <div class="section-title"><h2 id="challengeJournalTitle">CHALLENGE JOURNAL</h2><span>PUBLISHED LINKS</span></div>
+          <div id="challengeJournalList" class="challenge-journal-list"></div>
+          <p class="panel-note" id="challengeJournalEmpty">Publish a challenge to start your Builder journal.</p>
+        </div>
       </section>
 
       <article class="runner-card">
