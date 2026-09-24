@@ -177,7 +177,7 @@ export function buildAccountReadyViewFromBackend(account){
     equipment:Object.freeze(EQUIPMENT_SLOTS.map(slot=>gearBySlot[slot])),
     armor:Object.freeze(ARMOR_SLOTS.map(slot=>gearBySlot[slot])),
     progressionOffers,
-    panels:Object.freeze(['stats','equipment','armor']),
+    panels:Object.freeze(['stats','equipment','armor','history']),
     actions:Object.freeze(['BUILD YOUR CHALLENGE','UPGRADE YOUR RUNNER'])
   });
 }
