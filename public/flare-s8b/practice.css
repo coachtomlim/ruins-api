@@ -1,3 +1,4 @@
+html,body{margin:0;overflow-x:hidden}
 .practice-banner{margin:0;text-align:center;color:#8fd4c6;font-size:11px;font-weight:900;letter-spacing:.1em}
 .practice-stats-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:6px 0}
 .practice-stats-strip div{display:grid;gap:2px;text-align:center;background:#160f1d;border-radius:10px;padding:7px 4px}

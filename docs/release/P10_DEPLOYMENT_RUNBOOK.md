@@ -39,11 +39,15 @@ upload+extract `docs/release/web-flare-p10-rc1-release.zip`, hand-recreate `conf
 
 ## Supabase checks (both paths)
 
-- Confirm the two S9 migrations are applied: `20260924_s9_progression_xp_levels.sql`,
-  `20260924_s9_builder_progression_challenge_journal.sql`.
-- Confirm the new P10 migration is applied: `20260924_p10_security_definer_search_path_hardening.sql`
-  (redefines `ensure_starter_account`/`save_account_goal` with `search_path=''`; no schema change, safe
-  to apply independent of the static deploy).
+- The two S9 migrations (`20260924_s9_progression_xp_levels.sql`,
+  `20260924_s9_builder_progression_challenge_journal.sql`) and the P10 hardening migration
+  (`20260924_p10_security_definer_search_path_hardening.sql`, staging version `20260924075609`) are
+  all **applied to S8B staging** as of the PM's direct confirmation during this run — not merely
+  planned. Post-apply verification confirmed both `ensure_starter_account` and `save_account_goal`
+  now have `security definer`, `search_path=''`, `anon EXECUTE: NO`, `authenticated EXECUTE: YES`,
+  `PUBLIC EXECUTE: NO`. **Production Supabase is not claimed to have this migration** — only staging
+  was confirmed, and that confirmation was read-only (not re-verified independently by this session;
+  it was not reapplied).
 - If deploying the Edge Function (only if a rotated `AI_ENCOUNTER_PROVIDER_KEY` is available — see
   `P10_EXTERNAL_GATES.md`): `supabase functions deploy suggest-encounter`, then confirm
   `GET .../suggest-encounter` returns `{available:true,version:"s9-ai-encounter-plan-001"}`.
@@ -85,7 +89,7 @@ this release; prepared and reviewed only.
 | `20260921_s8b_daily_trial_001.sql` | Yes | No down-migration | Already applied |
 | `20260924_s9_progression_xp_levels.sql` | Yes | No down-migration | Already applied (S9) |
 | `20260924_s9_builder_progression_challenge_journal.sql` | Yes | No down-migration | Already applied (S9) |
-| `20260924_p10_security_definer_search_path_hardening.sql` | Yes (new in P10) | `create or replace` is itself reversible by re-applying the pre-P10 function bodies, but no down-migration file exists | Additive-only; changes no return type, no grant, no behavior |
+| `20260924_p10_security_definer_search_path_hardening.sql` | Yes (new in P10) | `create or replace` is itself reversible by re-applying the pre-P10 function bodies, but no down-migration file exists | **Applied to S8B staging** (version `20260924075609`); additive-only, changes no return type, no grant, no behavior |
 
 **No down-migrations exist for any of these.** Rollback of client code does not roll back the
 database. This is the same limitation already documented for the client-only rollback path.

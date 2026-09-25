@@ -1,6 +1,6 @@
 {
   "releaseId": "WEB-FLARE-RC1",
-  "generatedAt": "2026-09-24T07:44:41.134Z",
+  "generatedAt": "2026-09-25T00:51:09.903Z",
   "fileCount": 51,
   "files": [
     {
@@ -269,9 +269,9 @@
     },
     {
       "path": "public/flare-s8b/practice.css",
-      "sha256": "3e4ddc04a1e1303ce09cf5bfe03d5f018a7badfb0083d1143ae211a1b0faedce",
+      "sha256": "34b857250174f83a7efc82466926bf79208e46077372636eac48bbe7175cac44",
       "mime": "text/css; charset=utf-8",
-      "bytes": 3235
+      "bytes": 3274
     },
     {
       "path": "public/flare-s8b/practice.html",
