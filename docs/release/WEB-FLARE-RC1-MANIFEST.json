@@ -1,7 +1,7 @@
 {
   "releaseId": "WEB-FLARE-RC1",
-  "generatedAt": "2026-09-24T07:44:41.134Z",
-  "fileCount": 51,
+  "generatedAt": "2026-09-25T02:24:22.813Z",
+  "fileCount": 50,
   "files": [
     {
       "path": "public/flare-p0/data/catalog.json",
@@ -179,21 +179,9 @@
     },
     {
       "path": "public/flare-s8b/account.css",
-      "sha256": "9c87b3fef04f5752c2a80d7158bb06947a5a0c42b2c631b380027d3907f2fba8",
+      "sha256": "d4a76e4b01e02b7e7bcb7720a050a8c9af8179ae24701de30548ffb9e5efdae0",
       "mime": "text/css; charset=utf-8",
-      "bytes": 20151
-    },
-    {
-      "path": "public/flare-s8b/ai-encounter-assist.mjs",
-      "sha256": "35a6de15b046dff60040eab87809c50ea4fca16997f6ec32f1a6cf4a4bb71b5d",
-      "mime": "text/javascript; charset=utf-8",
-      "bytes": 10313
-    },
-    {
-      "path": "public/flare-s8b/ai-encounter-provider.mjs",
-      "sha256": "38da4b90f2fd6dccd8dd817ce6547bfc93d8c69ac760424ea38187f1e1142fa1",
-      "mime": "text/javascript; charset=utf-8",
-      "bytes": 4946
+      "bytes": 20152
     },
     {
       "path": "public/flare-s8b/builder-progression-view.mjs",
@@ -238,6 +226,12 @@
       "bytes": 8434
     },
     {
+      "path": "public/flare-s8b/encounter-advisor.mjs",
+      "sha256": "d11347a73aff48b9f6be1172677fef6af5ad750f092328570e9a4f3bcbd4c6b1",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 6754
+    },
+    {
       "path": "public/flare-s8b/friend-share.mjs",
       "sha256": "7306afc6ed487248f4544b08db127eae5b4e3e147e58a8a952b159572ce4aeb1",
       "mime": "text/javascript; charset=utf-8",
@@ -251,9 +245,9 @@
     },
     {
       "path": "public/flare-s8b/practice-app.mjs",
-      "sha256": "bf9831a06c2fab3901116889cebdd7112743af828af38a0c1ad059c9b6567f20",
+      "sha256": "1d15d5239ed62f2a6c9e9b318e64d27ee4ee802c27f94941bd431540bb210545",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 15230
+      "bytes": 13091
     },
     {
       "path": "public/flare-s8b/practice-runner-catalog.mjs",
@@ -269,21 +263,21 @@
     },
     {
       "path": "public/flare-s8b/practice.css",
-      "sha256": "3e4ddc04a1e1303ce09cf5bfe03d5f018a7badfb0083d1143ae211a1b0faedce",
+      "sha256": "642f76dd8bd1c31057793941b963f431824796b33f9eb507d82e51f54b0549bf",
       "mime": "text/css; charset=utf-8",
-      "bytes": 3235
+      "bytes": 3352
     },
     {
       "path": "public/flare-s8b/practice.html",
-      "sha256": "c44d5a3147c629bda77a69255eb78aaab404fb43000caaee77e2fb8b1235ee7c",
+      "sha256": "4526229479088c8a598c307d595ad140ce44c8a1deadb74bd0b27ba115a86ee5",
       "mime": "text/html; charset=utf-8",
-      "bytes": 10416
+      "bytes": 10538
     },
     {
       "path": "public/flare-s8b/release-identity.mjs",
-      "sha256": "4678116e061901f10ce33805dd9b9ce17ab36fc1c8f732592780db93fd2f5344",
+      "sha256": "b12e70af9a1a2962bcfd1bba0f5a89466a818ce307286a8c25f68d31987e8d83",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 951
+      "bytes": 933
     },
     {
       "path": "public/flare-s8b/runner-progression-view.mjs",

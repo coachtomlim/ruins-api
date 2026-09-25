@@ -63,10 +63,12 @@ available in this pass. It is recorded honestly as partial, not claimed complete
 Runtime manifest (`docs/release/WEB-FLARE-RC1-MANIFEST.json`) gives real, current byte weights:
 - `vendor/supabase.js`: 218,328 bytes (the dominant asset; third-party, unchanged by this project).
 - `account.css`: 20,031 bytes; `account-app.mjs`: 22,992 bytes — the two largest first-party files,
-  both pre-existing (not grown materially by P10; P10's own additions — `ai-encounter-assist.mjs`
-  10,313 bytes, `ai-encounter-provider.mjs` 4,946 bytes, `release-identity.mjs` well under 1KB — are
-  small relative to the existing S8B baseline).
-- Total flare-s8b runtime tree: 387,400 bytes (~378KB) across 25 files — no build/bundle step exists
-  in this project, so this is also what ships to the browser as-is.
+  both pre-existing (not grown materially by P10; P10's own addition — the deterministic
+  `encounter-advisor.mjs`, 6,612 bytes, replacing the two now-retired external-AI modules — is small
+  relative to the existing S8B baseline).
+- Total flare-s8b runtime tree: 375,004 bytes (~366KB) across 24 files — no build/bundle step exists
+  in this project, so this is also what ships to the browser as-is. This is smaller than the earlier
+  external-AI architecture's 387,400 bytes / 25 files, since the deterministic advisor never needed
+  a separate provider-boundary module.
 
 No material performance regression was found attributable to P10; no fix was needed here.

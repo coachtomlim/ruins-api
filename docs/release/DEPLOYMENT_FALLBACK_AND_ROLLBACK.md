@@ -36,9 +36,8 @@ created by hand in this fallback path (step 4 below).
    `X-Robots-Tag: noindex, nofollow` (see `HTACCESS` in the deploy helper for the exact contents if
    it needs to be recreated).
 6. Smoke-test: open `https://think-2-thrive.com/quick-dungeon/flare-s8b/` and confirm the Hub loads,
-   the release footer shows `WEB-FLARE-RC1 · <7-char sha>`, and Practice's AI Assist panel shows
-   either live suggestions or `AI ASSIST UNAVAILABLE` (never a false "AI SUGGESTION" claim on a
-   fallback result).
+   the release footer shows `WEB-FLARE-RC1 · <7-char sha>`, and Practice's ENCOUNTER ADVISOR panel
+   produces a `SUGGESTED ADJUSTMENT` deterministically (no network call, no external dependency).
 7. Re-run the frozen-route smoke checks by hand: `/q/hiS4`, `/q/Rind`, `/g/MsJ9`, `/h/UvVY`,
    `/j/UvVY`, `/k/UvVY`, `/m/UvVY?from=Tom` should all still load unchanged.
 
@@ -55,10 +54,10 @@ This has **not been executed** — it is prepared only. To roll back:
    bytes that were actually live, including any config.js drift), **or** if that backup is
    unavailable, extract `web-flare-update006-rollback.zip` into
    `public_html/quick-dungeon/flare-s8b/` the same way as the fallback deploy above (steps 2–4),
-   noting this predecessor tree has no AI Assist or S9 progression files — extra P10-only files left
-   over from the release (`ai-encounter-assist.mjs`, `ai-encounter-provider.mjs`,
-   `builder-progression-view.mjs`, `runner-progression-view.mjs`, `release-identity.mjs`) must be
-   deleted by hand, since Extract does not remove files absent from the archive.
+   noting this predecessor tree has no Encounter Advisor or S9 progression files — extra P10-only
+   files left over from the release (`encounter-advisor.mjs`, `builder-progression-view.mjs`,
+   `runner-progression-view.mjs`, `release-identity.mjs`) must be deleted by hand, since Extract does
+   not remove files absent from the archive.
 2. Rebuild `config.js` exactly as in fallback-deploy step 4 (unchanged — rollback does not change the
    Supabase project or its public config).
 3. Post-rollback verification: repeat fallback-deploy steps 6–7. Additionally confirm the Hub does

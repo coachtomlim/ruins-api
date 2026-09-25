@@ -1,7 +1,7 @@
 {
   "label": "WEB-FLARE-RC1 release archive (public_html/quick-dungeon/flare-s8b)",
-  "sourceSha": "d8a81e1e77b3859e11f85824a418216cccf00e5c",
-  "fileCount": 25,
+  "sourceSha": "0e38d19481809d735bd36f19bf894773974417ea",
+  "fileCount": 24,
   "zip": "web-flare-p10-rc1-release.zip",
   "files": [
     {
@@ -12,9 +12,9 @@
     },
     {
       "path": "account-app.mjs",
-      "sha256": "719d972c1130b1e6cde31c6e710078e8a6ba64fca158322e4e72ae630712bb78",
+      "sha256": "4d6af0c1cf08e866ef6babaa141575772556e4f95be5870b1f7e28ca5ce43aa4",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 22645
+      "bytes": 23305
     },
     {
       "path": "account-ready-view.mjs",
@@ -27,18 +27,6 @@
       "sha256": "f6d1cd4b0349aa150d3c088128a759f7a1e1a82689747147f9abdca5b35aa9d7",
       "mime": "text/css; charset=utf-8",
       "bytes": 20056
-    },
-    {
-      "path": "ai-encounter-assist.mjs",
-      "sha256": "32ee8bdf01f8fd996d5184b7f5524b9f3692c11ce7134b3c702d50cd9579edbe",
-      "mime": "text/javascript; charset=utf-8",
-      "bytes": 10127
-    },
-    {
-      "path": "ai-encounter-provider.mjs",
-      "sha256": "51f8ff67a349d8039c6c7790b61e0963b34f42221f61cc7ae22a018b04e468c2",
-      "mime": "text/javascript; charset=utf-8",
-      "bytes": 4847
     },
     {
       "path": "builder-progression-view.mjs",
@@ -83,6 +71,12 @@
       "bytes": 8291
     },
     {
+      "path": "encounter-advisor.mjs",
+      "sha256": "6d9009fb8d6df34e9e641a5935fc542adfbc61fa88c68ec49609b37284b747be",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 6612
+    },
+    {
       "path": "friend-share.mjs",
       "sha256": "c0072e07773a6b09ce9dc40e91a424b057956720a47ef8861ab04756f693250b",
       "mime": "text/javascript; charset=utf-8",
@@ -96,9 +90,9 @@
     },
     {
       "path": "practice-app.mjs",
-      "sha256": "044fc303ad3a529d1d2ed89ecaf17730d4df3e637c9296fd3ab1944aa62cb43c",
+      "sha256": "555478f98b3c4aad354226f1b3d1bbe34fccdf387df50b74cd13b1e64cd7035e",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 15003
+      "bytes": 12899
     },
     {
       "path": "practice-runner-catalog.mjs",
@@ -114,21 +108,21 @@
     },
     {
       "path": "practice.css",
-      "sha256": "84bd77a67f54adbd69adeaada56ba088d3e659c57c89c2a67d8f3f1ab51c7474",
+      "sha256": "d2acb45c8f0dedeb0150d8f128f2c783879f62553f40eb4669d7f33cd2a9959e",
       "mime": "text/css; charset=utf-8",
-      "bytes": 3189
+      "bytes": 3267
     },
     {
       "path": "practice.html",
-      "sha256": "bf7877d340de6eddee087c3d9ce2d648ffb81c291554272403a813a8b37b0642",
+      "sha256": "c696db5384651a08b9b0784f79e8489bcbcc43df13dd851dd30c381493cd0660",
       "mime": "text/html; charset=utf-8",
-      "bytes": 10369
+      "bytes": 10491
     },
     {
       "path": "release-identity.mjs",
-      "sha256": "4678116e061901f10ce33805dd9b9ce17ab36fc1c8f732592780db93fd2f5344",
+      "sha256": "369ad07d32c5c284c061a901cb5c01b53e7ed2f9ea8f3a6d5907760d73ef2b94",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 951
+      "bytes": 919
     },
     {
       "path": "runner-progression-view.mjs",

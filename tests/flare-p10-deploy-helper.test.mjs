@@ -18,7 +18,7 @@ test('the deploy helper file set is generated from the real P10 manifest, not co
   const s8bFiles=manifest.files.filter(f=>f.path.startsWith('public/flare-s8b/')&&!f.path.endsWith('config.js')).map(f=>f.path);
   for(const f of s8bFiles)assert.ok(helper.includes(`'${f}'`),`GIT_FILES missing manifest entry: ${f}`);
   // Update 006's 19-file list must be a strict subset (proving this is additive, not a rewrite)
-  assert.match(helper,/'public\/flare-s8b\/account-adapter\.mjs',\n\s*'public\/flare-s8b\/account-app\.mjs'/);
+  assert.match(helper,/'public\/flare-s8b\/account-adapter\.mjs',\r?\n\s*'public\/flare-s8b\/account-app\.mjs'/);
 });
 
 test('the deploy helper supports exactly auth|probe|deploy and refuses any other mode',async()=>{

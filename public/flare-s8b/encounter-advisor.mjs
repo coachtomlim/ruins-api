@@ -1,6 +1,6 @@
 // Deterministic Encounter Advisor.
-// Self-contained Quick Dungeon application logic: no AI model, provider, network inference,
-// Edge Function, provider credential, database write, reward authority, or external service.
+// Self-contained Quick Dungeon application logic: no AI model, no network inference, no remote
+// serverless handler, no third-party credential, no database write, no reward authority.
 // Advice is derived only from governed Builder controls plus the existing deterministic estimator.
 import {MONSTER_IDS,TRAP_IDS,SUPPORT_IDS,normalizeEncounter,encounterCost} from '../flare-s7/game.mjs';
 import {estimateEncounter,difficultyCue} from '../flare-s7/calibration.mjs';

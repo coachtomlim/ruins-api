@@ -27,7 +27,7 @@ TOKEN = os.environ.get('CPANEL_API_TOKEN', '')
 PUBLIC_BASE = os.environ.get('FLARE_PUBLIC_BASE', 'https://think-2-thrive.com').rstrip('/')
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-SOURCE_SHA = '4c3d9bfe50c21db03fe66f18725316f577e0bb8e'  # P10 §2 commit (last commit before this helper)
+SOURCE_SHA = '0e38d19481809d735bd36f19bf894773974417ea'  # last commit before this helper's final update
 PREVIOUS_SHA = '523bfd7ffc46be191ce48b794708cc5af945dcda'  # last commit actually LIVE on production (Update 006)
 SUPABASE_PROJECT_REF = 'qpgwqmduqtqidmhbuclw'
 
@@ -36,8 +36,9 @@ ALLOWED = (S8B_ROOT,)
 
 # Independently traced from the real Hub/Practice/Daily Trial entry points via
 # scripts/release/generate-manifest.mjs (docs/release/WEB-FLARE-RC1-MANIFEST.json), filtered to the
-# flare-s8b deploy root. NOT copied from Update 006's 19-file list — this is 25 files, correctly
-# including the S9 progression views, deterministic Encounter Advisor, and release-identity.mjs.
+# flare-s8b deploy root. NOT copied from Update 006's 19-file list — this is 24 files, correctly
+# including the S9 progression views, the deterministic Encounter Advisor (encounter-advisor.mjs,
+# replacing the retired ai-encounter-assist.mjs/ai-encounter-provider.mjs), and release-identity.mjs.
 GIT_FILES = [
     'public/flare-s8b/account-adapter.mjs',
     'public/flare-s8b/account-app.mjs',
@@ -477,7 +478,7 @@ def s8b_gate() -> None:
                      'daily-login.mjs', 'daily-trial.mjs', 'daily-trial-runner-catalog.mjs',
                      'daily-trial-app.mjs', 'friend-share.mjs', 'supabase-browser.mjs', 'account-adapter.mjs',
                      'stat-purchase-flow.mjs', 'practice-runner-snapshot.mjs', 'practice-runner-catalog.mjs',
-                     'practice-app.mjs', 'ai-encounter-assist.mjs', 'ai-encounter-provider.mjs',
+                     'practice-app.mjs', 'encounter-advisor.mjs',
                      'runner-progression-view.mjs', 'builder-progression-view.mjs', 'release-identity.mjs'):
         expect(base + js_file, {'text/javascript', 'application/javascript'})
     expect(base + 'practice.css', {'text/css'})
