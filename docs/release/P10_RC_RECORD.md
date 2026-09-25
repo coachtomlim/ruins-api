@@ -2,8 +2,8 @@
 
 - **Release identity**: `WEB-FLARE-RC1` (see `public/flare-s8b/release-identity.mjs`)
 - **Branch**: `work/web-flare-p10-release-candidate-001`
-- **Source HEAD (as of this record)**: `0642df8860e737aa0edd8734fcf9332d86731f6d`
-- **Origin sync**: every commit §1–§10 pushed and confirmed `local HEAD == origin HEAD` after each push
+- **Source HEAD (as of this record)**: `980f2292410656b3f67d66b0dac8ce9b086388dc`
+- **Origin sync**: every commit §1–§12 pushed and confirmed `local HEAD == origin HEAD` after each push
 - **Base**: created from the exact P9 acceptance HEAD `a8903886eb1070ad2b4fdc7f2a2a7a35fb2ed1cc`
 - **Runtime manifest**: `docs/release/WEB-FLARE-RC1-MANIFEST.json`, 51 files, deterministic
   (verified across repeated runs in `tests/flare-p10-release-manifest.test.mjs`)
@@ -12,7 +12,7 @@
 - **AI contract version**: `s9-ai-encounter-plan-001`
 - **Deployment manifest version**: 1
 
-## Commits in this release (§1–§10)
+## Commits in this release (§1–§12)
 
 | § | Commit | Summary |
 |---|--------|---------|
@@ -26,6 +26,9 @@
 | §7 | `1f9bc99` | Failure UX, resilience, performance, accessibility (1 defect fixed) |
 | §9 | `bbf8b8b` | Economy/challengeability/frozen-route regression re-proof |
 | §10 | `0642df8` | Consolidated `npm run gate:p10-rc` release gate |
+| §11 | `f923b4b` | Release documentation pack (RC record, runbook, operational checklist) |
+| §12 | `3f36816` | External gates checked once each — see `P10_EXTERNAL_GATES.md` |
+| §8 | `980f229` | Source-backed E2E rehearsal + 6-width mobile matrix (1 real defect fixed: `practice.css` mobile-overflow), completed after §§9–12 per the continuation task's own sequencing |
 
 ## Feature inventory (this release, on top of the accepted S8B/S9/P9 baseline)
 
@@ -45,6 +48,9 @@
   a regression test.
 - `npm run gate:p10-rc`: one command chaining focused tests, full suite, frozen verifier, deploy-helper
   offline gates, and manifest/archive regeneration.
+- One real mobile-layout fix: `practice.css` now resets the browser default body margin (was missing,
+  causing a genuine 4px horizontal overflow at mobile widths), found via a full source-backed 20-step
+  E2E rehearsal and 6-width mobile matrix — see `P10_E2E_AND_MOBILE_REHEARSAL.md`.
 
 ## Known external pending gates (see `P10_EXTERNAL_GATES.md`)
 
@@ -52,11 +58,13 @@
 - `AI LIVE PROVIDER PROOF`: status recorded in the external-gates check.
 - `HOSTGATOR DEPLOYMENT`: status recorded in the external-gates check.
 
-## Test counts (as of `0642df8`)
+## Test counts (as of `980f229`)
 
 - Full suite: **559/559 passing** (`npm test`)
 - Frozen web-tree verifier: **7/7 PASS** (`flare-s2` through `flare-s71`)
 - `npm run gate:p10-rc`: **PASS** end-to-end
+- Full 20-step source-backed E2E rehearsal: **20/20 PASS** (see `P10_E2E_AND_MOBILE_REHEARSAL.md`)
+- 6-width mobile overflow matrix: **PASS** (Hub + Practice + Daily Trial, 320/360/390/430/768/desktop)
 
 ## Release-manifest hash
 
