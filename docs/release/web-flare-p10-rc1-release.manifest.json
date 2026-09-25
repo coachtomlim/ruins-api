@@ -1,6 +1,6 @@
 {
   "label": "WEB-FLARE-RC1 release archive (public_html/quick-dungeon/flare-s8b)",
-  "sourceSha": "0e38d19481809d735bd36f19bf894773974417ea",
+  "sourceSha": "d341585949e33d03f33971d83a538c74c67c15ac",
   "fileCount": 24,
   "zip": "web-flare-p10-rc1-release.zip",
   "files": [
@@ -72,9 +72,9 @@
     },
     {
       "path": "encounter-advisor.mjs",
-      "sha256": "6d9009fb8d6df34e9e641a5935fc542adfbc61fa88c68ec49609b37284b747be",
+      "sha256": "f4ea3876b8aecd91299f9b1e44a31d0a75612746af87e9dbd8525953f158e44e",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 6612
+      "bytes": 6611
     },
     {
       "path": "friend-share.mjs",
@@ -108,9 +108,9 @@
     },
     {
       "path": "practice.css",
-      "sha256": "d2acb45c8f0dedeb0150d8f128f2c783879f62553f40eb4669d7f33cd2a9959e",
+      "sha256": "d51f201e2e819d37f5149a2d80fa7eb4cfa8e54a0f6d46598df1a3c628c78d24",
       "mime": "text/css; charset=utf-8",
-      "bytes": 3267
+      "bytes": 3305
     },
     {
       "path": "practice.html",

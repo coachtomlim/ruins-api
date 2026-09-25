@@ -52,6 +52,14 @@ prepared fallback path (`docs/release/web-flare-p10-rc1-release.zip` +
 this environment to HostGator's cPanel API is restored, or the deployment is run from an environment
 that can reach it.
 
+**Note**: the offline `DETERMINISTIC ENCOUNTER ADVISOR: PASS` gate quoted above was captured before a
+later reconciliation pass corrected the deploy helper's `SOURCE_SHA` (it briefly pointed at a stale
+pre-Advisor commit) and its `GIT_FILES`/live-smoke file list (it briefly still referenced the retired
+`ai-encounter-*.mjs` files). Both are fixed and re-verified via the full test suite
+(`tests/flare-p10-deploy-helper.test.mjs`, all passing) as of the final commit on this branch. The
+HostGator connectivity result itself is unaffected by that fix — connectivity is independent of
+source content — so it was not re-checked, consistent with the standing "check at most once" rule.
+
 ## Production deployment decision
 
 **No production deployment was run in this pass.** Per the explicit instruction ("Do not run
