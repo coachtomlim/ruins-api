@@ -18,6 +18,8 @@ const byId=id=>document.getElementById(id);
 const views=['signedOutView','pendingView','loadingView','readyView'];
 const runnerPanels=['stats','equipment','armor','history'];
 let adapter=null;
+let authSubscription=null;
+let recoveryMode=false;
 let activeRunnerId=null;
 let readyViewModel=null;
 let purchaseFlow=null;
@@ -85,12 +87,29 @@ function setBusy(form,busy){
 }
 
 function selectAuth(mode){
-  const create=mode==='create';
+  const create=mode==='create',signin=mode==='signin',reset=mode==='reset';
+  recoveryMode=false;
   byId('createForm').hidden=!create;
-  byId('signInForm').hidden=create;
+  byId('signInForm').hidden=!signin;
+  byId('resetRequestForm').hidden=!reset;
+  byId('recoveryForm').hidden=true;
+  byId('authTabs').hidden=false;
   byId('showCreate').setAttribute('aria-selected',String(create));
   byId('showSignIn').setAttribute('aria-selected',String(!create));
   byId('authStatus').textContent='';
+  activeRunnerId=null;
+  stopRunnerVisual();
+  showView('signedOutView');
+}
+
+function showPasswordRecovery(){
+  recoveryMode=true;
+  byId('createForm').hidden=true;
+  byId('signInForm').hidden=true;
+  byId('resetRequestForm').hidden=true;
+  byId('recoveryForm').hidden=false;
+  byId('authTabs').hidden=true;
+  byId('authStatus').textContent='Choose a new password for your account.';
   activeRunnerId=null;
   stopRunnerVisual();
   showView('signedOutView');
@@ -460,7 +479,7 @@ function renderReady(account){
 }
 
 async function restoreSession(){
-  if(!adapter)return;
+  if(!adapter||recoveryMode)return;
   const session=await adapter.getSession();
   if(!session?.user){selectAuth('create');return}
   showView('loadingView');
@@ -471,6 +490,8 @@ async function restoreSession(){
 byId('showCreate').addEventListener('click',()=>selectAuth('create'));
 byId('showSignIn').addEventListener('click',()=>selectAuth('signin'));
 byId('pendingSignIn').addEventListener('click',()=>selectAuth('signin'));
+byId('forgotPassword').addEventListener('click',()=>selectAuth('reset'));
+byId('resetBackToSignIn').addEventListener('click',()=>selectAuth('signin'));
 for(const panel of runnerPanels)byId(`${panel}Tab`).addEventListener('click',()=>selectRunnerPanel(panel));
 byId('cancelPurchase').addEventListener('click',closePurchaseConfirmation);
 byId('confirmPurchase').addEventListener('click',confirmPurchase);
@@ -503,6 +524,38 @@ byId('signInForm').addEventListener('submit',async event=>{
   }catch(error){byId('authStatus').textContent=errorMessage(error)}finally{setBusy(form,false)}
 });
 
+byId('resetRequestForm').addEventListener('submit',async event=>{
+  event.preventDefault();
+  const form=event.currentTarget,data=new FormData(form);
+  setBusy(form,true);byId('authStatus').textContent='Sending reset link…';
+  try{
+    await adapter.requestPasswordReset({email:data.get('email'),redirectTo:appRedirectUrl()});
+    form.reset();
+    byId('authStatus').textContent='If that email has an account, a password reset link has been sent.';
+  }catch(error){
+    const message=errorMessage(error);
+    byId('authStatus').textContent=/rate limit/i.test(String(error?.message||''))?'Too many reset attempts. Please wait and try again.':message;
+  }finally{setBusy(form,false)}
+});
+
+byId('recoveryForm').addEventListener('submit',async event=>{
+  event.preventDefault();
+  const form=event.currentTarget,data=new FormData(form);
+  const password=String(data.get('password')??''),confirmPassword=String(data.get('confirmPassword')??'');
+  if(password.length<8){byId('authStatus').textContent='Use at least 8 characters.';return}
+  if(password!==confirmPassword){byId('authStatus').textContent='The passwords do not match.';return}
+  setBusy(form,true);byId('authStatus').textContent='Updating password…';
+  try{
+    await adapter.updatePassword({password});
+    form.reset();
+    recoveryMode=false;
+    showView('loadingView');
+    const starter=await adapter.ensureStarterAccount();
+    renderReady(await adapter.loadAccountState({playerRunnerId:starter?.player_runner_id||null}));
+    byId('purchaseStatus').textContent='Password updated successfully.';
+  }catch(error){byId('authStatus').textContent=errorMessage(error)}finally{setBusy(form,false)}
+});
+
 byId('signOut').addEventListener('click',async()=>{
   byId('signOut').disabled=true;
   try{await adapter.signOut();selectAuth('signin')}catch(error){byId('purchaseStatus').textContent=errorMessage(error)}finally{byId('signOut').disabled=false}
@@ -523,8 +576,13 @@ byId('testYourRunner').addEventListener('click',async()=>{
 try{
   adapter=createBrowserAccountAdapter();
   purchaseFlow=createStatPurchaseFlow({purchase:payload=>adapter.purchaseProgressionOffer(payload),refresh:refreshReady});
+  authSubscription=adapter.subscribeAuthStateChange((event)=>{
+    if(event==='PASSWORD_RECOVERY')showPasswordRecovery();
+  });
   await restoreSession();
 }catch(error){
   selectAuth('create');
   byId('authStatus').textContent=errorMessage(error);
 }
+
+addEventListener('pagehide',()=>authSubscription?.unsubscribe?.(),{once:true});
