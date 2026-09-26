@@ -1,5 +1,5 @@
 export const ACCOUNT_CAPABILITIES=Object.freeze([
-  'register','signIn','signOut','getMe','getSession','ensureStarterAccount',
+  'register','signIn','signOut','requestPasswordReset','updatePassword','subscribeAuthStateChange','getMe','getSession','ensureStarterAccount',
   'loadRunnerState','loadProgressionOffers','loadProgressionPurchases','purchaseProgressionOffer',
   'loadDailyLoginStatus','claimDailyLoginBonus',
   'loadDailyTrialStatus','startDailyTrial','loadDailyTrialRun','settleDailyTrial',
@@ -66,6 +66,9 @@ export function unavailableAccountAdapter(){
     register:unavailable,
     signIn:unavailable,
     signOut:unavailable,
+    requestPasswordReset:unavailable,
+    updatePassword:unavailable,
+    subscribeAuthStateChange:()=>({unsubscribe(){}}),
     getMe:unavailable,
     getSession:unavailable,
     ensureStarterAccount:unavailable,
@@ -327,6 +330,31 @@ export function createSupabaseAccountAdapter({client}={}){
     return Object.freeze({status:'AUTHENTICATED',session:data.session,userId:data.user?.id??data.session.user.id,...bootstrapped});
   }
 
+  async function requestPasswordReset({email,redirectTo}={}){
+    const address=clean(email);
+    if(!address)throw new Error('EMAIL_REQUIRED');
+    const redirect=normalizeEmailRedirectTo(redirectTo);
+    const options=redirect?{redirectTo:redirect}:undefined;
+    resultData('requestPasswordReset',await client.auth.resetPasswordForEmail(address,options));
+    return true;
+  }
+
+  async function updatePassword({password}={}){
+    const secret=String(password??'');
+    if(secret.length<8)throw new Error('PASSWORD_MIN_8');
+    const data=resultData('updatePassword',await client.auth.updateUser({password:secret}));
+    if(!data?.user)throw new Error('PASSWORD_UPDATE_USER_REQUIRED');
+    return Object.freeze({userId:data.user.id});
+  }
+
+  function subscribeAuthStateChange(callback){
+    if(typeof callback!=='function')throw new Error('AUTH_STATE_CALLBACK_REQUIRED');
+    if(typeof client.auth.onAuthStateChange!=='function')return Object.freeze({unsubscribe(){}});
+    const data=client.auth.onAuthStateChange((event,session)=>callback(event,session));
+    const subscription=data?.data?.subscription??data?.subscription??null;
+    return Object.freeze({unsubscribe(){try{subscription?.unsubscribe?.()}catch{}}});
+  }
+
   async function signOut(){
     resultData('signOut',await client.auth.signOut({scope:'local'}));
     return true;
@@ -344,7 +372,7 @@ export function createSupabaseAccountAdapter({client}={}){
   async function claimGuestRun(){throw new Error('PRODUCT_REWARD_CLAIM_NOT_ENABLED')}
 
   return Object.freeze({
-    available:true,provider:'supabase',register,signIn,signOut,getMe,getSession,
+    available:true,provider:'supabase',register,signIn,signOut,requestPasswordReset,updatePassword,subscribeAuthStateChange,getMe,getSession,
     ensureStarterAccount,loadRunnerState,loadProgressionOffers,loadProgressionPurchases,purchaseProgressionOffer,
     loadDailyLoginStatus,claimDailyLoginBonus,
     loadDailyTrialStatus,startDailyTrial,loadDailyTrialRun,settleDailyTrial,
