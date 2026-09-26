@@ -61,6 +61,9 @@ function fixtureClient({signupSession=null,runnerState=RUNNER_STATE}={}){
     auth:{
       async signUp(payload){calls.push(['signUp',payload]);return {data:{user,session:signupSession},error:null}},
       async signInWithPassword(payload){calls.push(['signInWithPassword',payload]);return {data:{user,session},error:null}},
+      async resetPasswordForEmail(email,options){calls.push(['resetPasswordForEmail',email,options]);return {data:{},error:null}},
+      async updateUser(payload){calls.push(['updateUser',payload]);return {data:{user},error:null}},
+      onAuthStateChange(callback){calls.push(['onAuthStateChange']);return {data:{subscription:{unsubscribe(){calls.push(['unsubscribeAuth'])}}}}},
       async signOut(payload){calls.push(['signOut',payload]);return {error:null}},
       async getSession(){calls.push(['getSession']);return {data:{session},error:null}}
     },
@@ -103,7 +106,7 @@ test('unconfigured adapter is explicit and fails closed',async()=>{
 
 test('adapter contract requires authoritative Runner capability',()=>{
   assert.deepEqual(ACCOUNT_CAPABILITIES,[
-    'register','signIn','signOut','getMe','getSession','ensureStarterAccount',
+    'register','signIn','signOut','requestPasswordReset','updatePassword','subscribeAuthStateChange','getMe','getSession','ensureStarterAccount',
     'loadRunnerState','loadProgressionOffers','loadProgressionPurchases','purchaseProgressionOffer',
     'loadDailyLoginStatus','claimDailyLoginBonus',
     'loadDailyTrialStatus','startDailyTrial','loadDailyTrialRun','settleDailyTrial',
@@ -151,6 +154,44 @@ test('registration can pin email confirmation back to the current app URL',async
     ()=>adapter.register({displayName:'Ada',email:'a@example.test',password:'secret123',emailRedirectTo:'http://example.com/'}),
     /EMAIL_REDIRECT_URL_MUST_USE_HTTPS/
   );
+});
+
+test('password reset request uses Supabase recovery flow with the current app redirect',async()=>{
+  const client=fixtureClient();
+  const adapter=createSupabaseAccountAdapter({client});
+  assert.equal(await adapter.requestPasswordReset({
+    email:'a@example.test',
+    redirectTo:'https://think-2-thrive.com/quick-dungeon/flare-s8b/?ignored=1#fragment'
+  }),true);
+  assert.deepEqual(client.calls[0],[
+    'resetPasswordForEmail','a@example.test',
+    {redirectTo:'https://think-2-thrive.com/quick-dungeon/flare-s8b/'}
+  ]);
+});
+
+test('password update requires 8+ characters and uses the authenticated recovery session',async()=>{
+  const client=fixtureClient();
+  const adapter=createSupabaseAccountAdapter({client});
+  await assert.rejects(()=>adapter.updatePassword({password:'short'}),/PASSWORD_MIN_8/);
+  const result=await adapter.updatePassword({password:'new-password-123'});
+  assert.equal(result.userId,'player-a');
+  assert.deepEqual(client.calls.at(-1),['updateUser',{password:'new-password-123'}]);
+});
+
+test('auth-state subscription exposes PASSWORD_RECOVERY events without owning session policy',()=>{
+  const client=fixtureClient();
+  let seen=null;
+  client.auth.onAuthStateChange=callback=>{
+    client.calls.push(['onAuthStateChange']);
+    callback('PASSWORD_RECOVERY',client.session);
+    return {data:{subscription:{unsubscribe(){client.calls.push(['unsubscribeAuth'])}}}};
+  };
+  const adapter=createSupabaseAccountAdapter({client});
+  const subscription=adapter.subscribeAuthStateChange((event,session)=>{seen={event,session}});
+  assert.equal(seen.event,'PASSWORD_RECOVERY');
+  assert.equal(seen.session.user.id,'player-a');
+  subscription.unsubscribe();
+  assert.deepEqual(client.calls.at(-1),['unsubscribeAuth']);
 });
 
 test('authoritative Runner state is loaded through governed RPC',async()=>{
