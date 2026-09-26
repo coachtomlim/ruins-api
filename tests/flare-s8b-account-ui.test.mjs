@@ -53,6 +53,24 @@ test('static account surface is player-facing and keeps stat training governed',
   assert.doesNotMatch(html,/https:\/\/[^"']*(unpkg|jsdelivr|esm\.sh)/i);
 });
 
+test('account surface provides a complete password recovery flow',async()=>{
+  const [html,app,adapter]=await Promise.all([
+    read('public/flare-s8b/index.html'),
+    read('public/flare-s8b/account-app.mjs'),
+    read('public/flare-s8b/account-adapter.mjs')
+  ]);
+  assert.match(html,/id="forgotPassword"[^>]*>FORGOT PASSWORD\?/);
+  assert.match(html,/id="resetRequestForm"/);
+  assert.match(html,/id="recoveryForm"/);
+  assert.match(html,/SEND RESET LINK/);
+  assert.match(html,/UPDATE PASSWORD/);
+  assert.match(app,/adapter\.requestPasswordReset\(/);
+  assert.match(app,/event==='PASSWORD_RECOVERY'/);
+  assert.match(app,/adapter\.updatePassword\(/);
+  assert.match(adapter,/resetPasswordForEmail/);
+  assert.match(adapter,/updateUser\(\{password:secret\}\)/);
+});
+
 test('account UI uses authoritative Runner paths, real Hero preview, and does not expose synthetic goal or reward actions',async()=>{
   const [app,adapter,view]=await Promise.all([
     read('public/flare-s8b/account-app.mjs'),read('public/flare-s8b/account-adapter.mjs'),read('public/flare-s8b/account-ready-view.mjs')
