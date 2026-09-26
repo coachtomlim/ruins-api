@@ -37,9 +37,24 @@
         <label><span>EMAIL</span><input name="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>
         <label><span>PASSWORD</span><input name="password" type="password" autocomplete="current-password" required placeholder="Your password"></label>
         <button class="primary" type="submit">SIGN IN <span>›</span></button>
+        <button class="text-action auth-help" id="forgotPassword" type="button">FORGOT PASSWORD?</button>
+      </form>
+      <form id="resetRequestForm" class="auth-form" aria-label="Reset password" hidden>
+        <span class="eyebrow">PASSWORD RECOVERY</span>
+        <p class="auth-copy">Enter your account email. We’ll send a secure reset link.</p>
+        <label><span>EMAIL</span><input name="email" type="email" autocomplete="email" required placeholder="you@example.com"></label>
+        <button class="primary" type="submit">SEND RESET LINK <span>›</span></button>
+        <button class="text-action auth-help" id="resetBackToSignIn" type="button">BACK TO SIGN IN</button>
+      </form>
+      <form id="recoveryForm" class="auth-form" aria-label="Choose new password" hidden>
+        <span class="eyebrow">CHOOSE A NEW PASSWORD</span>
+        <p class="auth-copy">Use at least 8 characters. This replaces your old password.</p>
+        <label><span>NEW PASSWORD</span><input name="password" type="password" autocomplete="new-password" required minlength="8" placeholder="8+ characters"></label>
+        <label><span>CONFIRM PASSWORD</span><input name="confirmPassword" type="password" autocomplete="new-password" required minlength="8" placeholder="Repeat password"></label>
+        <button class="primary" type="submit">UPDATE PASSWORD <span>›</span></button>
       </form>
       <p class="status" id="authStatus" role="alert" aria-live="polite"></p>
-      <p class="policy-note">Email confirmation is required. Dungeon Runner never stores your password.</p>
+      <p class="policy-note">Email confirmation is required. Dungeon Runner never stores or reveals your password.</p>
     </section>
 
     <section class="panel pending" id="pendingView" aria-labelledby="pendingTitle" hidden>
