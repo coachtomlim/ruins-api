@@ -21,7 +21,7 @@ test('browser adapter uses injected public config and official SDK persistence',
 
 test('static account surface is player-facing and keeps stat training governed',async()=>{
   const html=await read('public/flare-s8b/index.html');
-  for(const text of ['RUNNER HUB','CREATE ACCOUNT','SIGN IN','CHECK YOUR EMAIL','YOUR RUNNER','RUNNER STATS','STATS','EQUIPMENT','ARMOR','SIGN OUT','SOLO GOLD','DAILY BONUS','DAILY TRIAL']){
+  for(const text of ['RUNNER HUB','CREATE ACCOUNT','SIGN IN','CHECK YOUR EMAIL','YOUR RUNNER','LEVEL & STATS','CURRENT STATS','EQUIPMENT','EQUIPPED GEAR','SIGN OUT','SOLO GOLD','DAILY BONUS','DAILY TRIAL']){
     assert.match(html,new RegExp(escapeRegExp(text)));
   }
   assert.match(html,/id="runnerHeroCanvas"/);
@@ -37,7 +37,6 @@ test('static account surface is player-facing and keeps stat training governed',
   assert.match(html,/id="flareLoadout"/);
   assert.match(html,/FLARE LOADOUT/);
   assert.match(html,/MAIN · OFF · ARMOR/);
-  assert.match(html,/id="armorPanel"/);
   assert.match(html,/RUNNER TRAINING/);
   assert.match(html,/PERMANENT STATS/);
   assert.match(html,/id="trainingOffers"/);
@@ -45,9 +44,7 @@ test('static account surface is player-facing and keeps stat training governed',
   assert.match(html,/id="purchaseDialog"/);
   assert.match(html,/id="confirmRemaining"/);
   const equipment=html.match(/id="equipmentPanel"[\s\S]*?<\/section>/)?.[0]||'';
-  const armor=html.match(/id="armorPanel"[\s\S]*?<\/section>/)?.[0]||'';
   assert.doesNotMatch(equipment,/purchase|buy/i);
-  assert.doesNotMatch(armor,/purchase|buy/i);
   assert.doesNotMatch(html,/>100<|>12<|>1</);
   assert.match(html,/vendor\/supabase\.js/);
   assert.doesNotMatch(html,/https:\/\/[^"']*(unpkg|jsdelivr|esm\.sh)/i);
@@ -115,6 +112,26 @@ test('mobile controls meet minimum target and config contains no credential',asy
   assert.match(config,/__FLARE_S8B_PUBLIC_CONFIG__/);
   assert.doesNotMatch(config,/sb_(?:publishable|secret)_|service_role/i);
   assert.equal(version.trim(),'@supabase/supabase-js 2.116.0');
+});
+
+test('Runner information architecture uses only Level & Stats and Equipment, with graphical gear slots',async()=>{
+  const [html,app,css]=await Promise.all([
+    read('public/flare-s8b/index.html'),
+    read('public/flare-s8b/account-app.mjs'),
+    read('public/flare-s8b/account.css')
+  ]);
+  assert.match(html,/id="statsTab"[^>]*>LEVEL &amp; STATS</);
+  assert.match(html,/id="equipmentTab"[^>]*>EQUIPMENT</);
+  assert.doesNotMatch(html,/id="armorTab"|id="historyTab"/);
+  assert.doesNotMatch(html,/BASE → CURRENT|id="baseHp"|id="baseAttack"|id="baseDefense"/);
+  assert.match(html,/CURRENT STATS/);
+  assert.match(html,/PROGRESSION HISTORY/);
+  assert.match(html,/EQUIPPED GEAR/);
+  assert.match(html,/ARMOR &amp; WEAPONS/);
+  assert.match(app,/const runnerPanels=\['stats','equipment'\]/);
+  assert.match(app,/function gearSlotIcon/);
+  assert.match(css,/\.gear-slot-visual/);
+  assert.match(css,/grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/);
 });
 
 test('purchase success acknowledgment sits above the Runner card and training offers, and Gold purpose is explained',async()=>{
