@@ -163,6 +163,17 @@ test('published challenge exposes the actual friend URL and prominent send actio
   assert.match(css,/\.friend-share-actions button\.send-friend\{[^}]*grid-column:1\/-1/);
 });
 
+test('SEND TO FRIEND falls back to copying the visible link when native share is unavailable',async()=>{
+  const app=await read('public/flare-s8b/account-app.mjs');
+  const start=app.indexOf('async function openFriendShare');
+  const end=app.indexOf('async function copyFriendShare',start);
+  const fn=app.slice(start,end);
+  assert.match(fn,/shareFriendLink/);
+  assert.match(fn,/copyFriendLink\(friendLink\.url\)/);
+  assert.match(fn,/FRIEND LINK COPIED/);
+  assert.match(fn,/friendShareUrl'\)\.select\(\)/);
+});
+
 test('Hub publishes through server authority then reconstructs the exact frozen public link',async()=>{
   const app=await read('public/flare-s8b/account-app.mjs');
   assert.match(app,/adapter\.createBuilderChallenge\(targetHp\)/);
