@@ -16,7 +16,7 @@ let friendLink=null;
 
 const byId=id=>document.getElementById(id);
 const views=['signedOutView','pendingView','loadingView','readyView'];
-const runnerPanels=['stats','equipment','armor','history'];
+const runnerPanels=['stats','equipment'];
 let adapter=null;
 let authSubscription=null;
 let recoveryMode=false;
@@ -125,14 +125,33 @@ function selectRunnerPanel(name){
 
 function renderPending(){showView('pendingView')}
 
+function gearSlotIcon(slot){
+  const wrap=document.createElement('span');
+  wrap.className='gear-slot-visual';
+  wrap.setAttribute('aria-hidden','true');
+  const icons={
+    weapon:'<svg viewBox="0 0 48 48"><path d="M33 5l10 10-20 20-7 2 2-7L38 10zM14 34l-9 9m4-14l10 10"/></svg>',
+    shield:'<svg viewBox="0 0 48 48"><path d="M24 5l15 6v11c0 10-6 17-15 21-9-4-15-11-15-21V11z"/></svg>',
+    head:'<svg viewBox="0 0 48 48"><path d="M10 27c0-12 6-20 14-20s14 8 14 20v11H10zM15 28h18M24 7v8"/></svg>',
+    chest:'<svg viewBox="0 0 48 48"><path d="M15 8l9 5 9-5 8 9-6 7v17H13V24l-6-7z"/></svg>',
+    hands:'<svg viewBox="0 0 48 48"><path d="M12 10v17l5 10h9V22l-3-12h-4v12h-3V10zM29 13v20l4 6h7V19l-3-6z"/></svg>',
+    legs:'<svg viewBox="0 0 48 48"><path d="M14 7h20l-2 15-3 20h-8l-1-17-1 17h-8l3-20z"/></svg>',
+    feet:'<svg viewBox="0 0 48 48"><path d="M12 10h10v19l-4 9H5v-7l7-5zM27 10h9v16l7 5v7H30l-3-9z"/></svg>'
+  };
+  wrap.innerHTML=icons[slot]||icons.chest;
+  return wrap;
+}
+
 function gearCell(slot){
   const cell=document.createElement('div');
   cell.className=`gear-slot${slot.equipped?' equipped':' empty'}`;
   cell.dataset.slot=slot.slot;
-  const label=document.createElement('span');label.textContent=slot.label;
+  if(slot.gfx)cell.dataset.gfx=slot.gfx;
+  const visual=gearSlotIcon(slot.slot);
+  const label=document.createElement('span');label.className='gear-slot-label';label.textContent=slot.label;
   const value=document.createElement('strong');value.textContent=slot.equipped?slot.itemName:'EMPTY';
   const modifier=document.createElement('small');modifier.textContent=slot.equipped?slot.modifierLabel:'READY FOR GEAR';
-  cell.append(label,value,modifier);
+  cell.append(visual,label,value,modifier);
   return cell;
 }
 
@@ -459,12 +478,6 @@ function renderReady(account){
   renderBuilderProgression(vm.builderProgression);
   renderChallengeJournal(vm.challengeJournal);
   byId('runnerName').textContent=vm.runner.name;
-  byId('runnerHp').textContent=String(vm.runner.stats.hp);
-  byId('runnerAttack').textContent=String(vm.runner.stats.attack);
-  byId('runnerDefense').textContent=String(vm.runner.stats.defense);
-  byId('baseHp').textContent=String(vm.runner.baseStats.hp);
-  byId('baseAttack').textContent=String(vm.runner.baseStats.attack);
-  byId('baseDefense').textContent=String(vm.runner.baseStats.defense);
   byId('effectiveHp').textContent=String(vm.runner.stats.hp);
   byId('effectiveAttack').textContent=String(vm.runner.stats.attack);
   byId('effectiveDefense').textContent=String(vm.runner.stats.defense);
@@ -472,7 +485,6 @@ function renderReady(account){
   byId('goalCard').hidden=!hasGoal;
   if(hasGoal)byId('savedGoalLabel').textContent=vm.savedGoalLabel;
   byId('flareLoadout').replaceChildren(...vm.gear.map(gearCell));
-  byId('armorGrid').replaceChildren(...vm.armor.map(gearCell));
   byId('trainingOffers').replaceChildren(...vm.progressionOffers.map(trainingOfferCell));
   renderProgression(vm.progressionSummary);
   byId('unlockList').replaceChildren(...vm.equipmentUnlocks.map(unlockRow));
