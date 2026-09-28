@@ -255,8 +255,10 @@ async function runDailyTrialAction(){
 function resetFriendShare(){
   friendLink=null;
   byId('friendShareCard').dataset.state='idle';
-  byId('friendShareUrl').hidden=true;
+  byId('friendShareResult').hidden=true;
   byId('friendShareUrl').value='';
+  byId('friendShareAnchor').href='#';
+  byId('friendShareAnchor').textContent='—';
   for(const id of ['friendShareOpen','friendShareCopy','friendShareWhatsapp','friendShareTelegram'])byId(id).hidden=true;
   byId('friendShareGenerate').hidden=false;byId('friendShareGenerate').disabled=false;byId('friendShareGenerate').textContent='PUBLISH FRIEND CHALLENGE';
   byId('friendShareStatus').textContent='';
@@ -265,8 +267,10 @@ function resetFriendShare(){
 function exposeFriendLink(built,message='Friend link ready.'){
   friendLink=built;
   byId('friendShareCard').dataset.state='ready';
-  byId('friendShareUrl').hidden=false;
+  byId('friendShareResult').hidden=false;
   byId('friendShareUrl').value=built.url;
+  byId('friendShareAnchor').href=built.url;
+  byId('friendShareAnchor').textContent=built.url;
   for(const id of ['friendShareOpen','friendShareCopy','friendShareWhatsapp','friendShareTelegram'])byId(id).hidden=false;
   byId('friendShareGenerate').hidden=false;
   byId('friendShareGenerate').disabled=false;
@@ -292,7 +296,7 @@ function challengeJournalRow(challenge){
   const row=document.createElement('article');row.className='challenge-journal-row';
   const copy=document.createElement('div');
   const target=document.createElement('strong');target.textContent=challenge.targetLabel;
-  const detail=document.createElement('small');detail.textContent=`${challenge.runnerId} · ${challenge.dateLabel}`;
+  const detail=document.createElement('small');detail.textContent=`${challenge.runnerId} · ${challenge.inviteCode} · ${challenge.dateLabel}`;
   copy.append(target,detail);
   const button=document.createElement('button');button.type='button';button.textContent='RE-SHARE';
   button.addEventListener('click',()=>loadJournalChallenge(challenge));
