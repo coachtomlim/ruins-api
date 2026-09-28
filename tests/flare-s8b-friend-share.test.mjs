@@ -143,6 +143,26 @@ test('Hub exposes SHARE WITH A FRIEND as its own social action area, separate fr
   assert.ok(dailyTrialIdx>=0&&friendIdx>dailyTrialIdx,'friend share card is a separate section after the Daily Trial card');
 });
 
+test('published challenge exposes the actual friend URL and prominent send actions',async()=>{
+  const [html,app,css]=await Promise.all([
+    read('public/flare-s8b/index.html'),
+    read('public/flare-s8b/account-app.mjs'),
+    read('public/flare-s8b/account.css')
+  ]);
+  assert.match(html,/id="friendShareResult"[^>]*hidden/);
+  assert.match(html,/id="friendShareAnchor"/);
+  assert.match(html,/id="friendShareUrl"/);
+  assert.match(html,/id="friendShareOpen"[^>]*>SEND TO FRIEND</);
+  assert.match(html,/id="friendShareCopy"[^>]*>COPY LINK</);
+  assert.match(html,/id="friendShareWhatsapp"[^>]*>WHATSAPP</);
+  assert.match(html,/id="friendShareTelegram"[^>]*>TELEGRAM</);
+  assert.match(app,/friendShareAnchor'\)\.href=built\.url/);
+  assert.match(app,/friendShareAnchor'\)\.textContent=built\.url/);
+  assert.match(app,/friendShareResult'\)\.hidden=false/);
+  assert.match(css,/\.friend-share-result\{[^}]*display:grid/);
+  assert.match(css,/\.friend-share-actions button\.send-friend\{[^}]*grid-column:1\/-1/);
+});
+
 test('Hub publishes through server authority then reconstructs the exact frozen public link',async()=>{
   const app=await read('public/flare-s8b/account-app.mjs');
   assert.match(app,/adapter\.createBuilderChallenge\(targetHp\)/);
