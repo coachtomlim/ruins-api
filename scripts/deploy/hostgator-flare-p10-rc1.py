@@ -27,7 +27,7 @@ TOKEN = os.environ.get('CPANEL_API_TOKEN', '')
 PUBLIC_BASE = os.environ.get('FLARE_PUBLIC_BASE', 'https://think-2-thrive.com').rstrip('/')
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-SOURCE_SHA = '9cd6b034ac1687380e2fc080a531df37feda939f'  # final accepted RC commit for this release
+SOURCE_SHA = '78370228f9cb5d342e134ba29f7d9aa06f413507'  # accepted password-recovery RC commit for this release
 PREVIOUS_SHA = '523bfd7ffc46be191ce48b794708cc5af945dcda'  # last commit actually LIVE on production (Update 006)
 SUPABASE_PROJECT_REF = 'qpgwqmduqtqidmhbuclw'
 

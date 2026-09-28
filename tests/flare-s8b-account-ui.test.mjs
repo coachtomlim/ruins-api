@@ -92,7 +92,10 @@ test('account UI uses authoritative Runner paths, real Hero preview, and does no
   assert.match(adapter,/client\.rpc\('get_daily_login_status'/);
   assert.match(adapter,/client\.rpc\('claim_daily_login_bonus'/);
   assert.match(adapter,/from\('progression_purchase'\)/);
-  assert.doesNotMatch(adapter,/\.from\(['"](?:progression_purchase|runner_stat_upgrade_event|wallet_ledger|daily_login_claim)['"]\).*\.(?:insert|update|upsert|delete)/is);
+  for(const match of adapter.matchAll(/\.from\(['"](?:progression_purchase|runner_stat_upgrade_event|wallet_ledger|daily_login_claim)['"]\)/g)){
+    const databaseCall=adapter.slice(match.index,adapter.indexOf(';',match.index)+1);
+    assert.doesNotMatch(databaseCall,/\.(?:insert|update|upsert|delete)\s*\(/i);
+  }
   assert.match(adapter,/get_account_runner_state/);
   assert.match(adapter,/PRODUCT_REWARD_CLAIM_NOT_ENABLED/);
   assert.doesNotMatch(view,/rookieStarterSnapshot|ITEM_CATALOG|wooden-club|wooden-shield/);

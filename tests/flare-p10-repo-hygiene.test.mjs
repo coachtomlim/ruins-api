@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {execFileSync} from 'node:child_process';
+import {readFileSync} from 'node:fs';
 
 const repoRoot=new URL('..',import.meta.url).pathname.replace(/^\/([A-Za-z]):/,'$1:');
 const trackedFiles=()=>execFileSync('git',['-C',repoRoot,'ls-files']).toString().split(/\r?\n/).filter(Boolean);
@@ -11,7 +12,7 @@ test('no __pycache__, .pyc, .env, or common scratch/proof-artifact filenames are
 });
 
 test('.gitignore excludes __pycache__ and local scratch-extract directories',()=>{
-  const gi=execFileSync('cat',[`${repoRoot}/.gitignore`]).toString();
+  const gi=readFileSync(`${repoRoot}/.gitignore`,'utf8');
   assert.match(gi,/__pycache__\//);
   assert.match(gi,/\*\.pyc/);
 });
