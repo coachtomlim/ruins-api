@@ -124,6 +124,7 @@ try{
     await page.close();
   }
   const receiver=await context.newPage();
+  await receiver.setViewportSize({width:390,height:844});
   await installRoutes(receiver);
   const receiverErrors=[];receiver.on('pageerror',error=>receiverErrors.push(error.message));
   await receiver.goto(sampleUrl,{waitUntil:'domcontentloaded'});
@@ -131,8 +132,8 @@ try{
   await receiver.waitForFunction(()=>!document.querySelector('#acceptChallenge').disabled,null,{timeout:30000});
   const invitationText=await receiver.locator('[data-screen="invitation"]').innerText();
   assert.match(invitationText,/ADA HAS CHALLENGED YOU[\s\S]*YOU ARE THE DUNGEON BUILDER[\s\S]*TARGET: 60% HP[\s\S]*TOO HARSH[\s\S]*TOO GENTLE[\s\S]*Builder reward = 0[\s\S]*CHOOSE A DUNGEON/i);
-  const invitationLayout=await receiver.locator('[data-screen="invitation"]').evaluate(node=>({height:node.scrollHeight,viewport:innerHeight,pageScroll:document.documentElement.scrollHeight}));
-  assert(invitationLayout.height<=invitationLayout.viewport,'invitation must fit viewport');
+  for(const [width,height] of [[360,800],[390,844],[430,932],[768,1024],[1280,900]]){await receiver.setViewportSize({width,height});const invitationLayout=await receiver.locator('[data-screen="invitation"]').evaluate(node=>({height:node.scrollHeight,viewport:innerHeight,pageScroll:document.documentElement.scrollHeight}));assert(invitationLayout.height<=invitationLayout.viewport,`invitation must fit ${width}x${height}`)}
+  await receiver.setViewportSize({width:390,height:844});
   assert.doesNotMatch(invitationText,/FINISHED|Estimated finish/i);
   await receiver.locator('#acceptChallenge').click();
   await receiver.locator('[data-screen="mission"]').waitFor({state:'visible'});
@@ -143,8 +144,7 @@ try{
   await receiver.waitForFunction(()=>document.querySelector('#resultReceiptStatus')?.textContent?.startsWith('RESULT SENT TO'),null,{timeout:5000});
   const resultText=await receiver.locator('[data-screen="rewards"]').innerText();
   assert.match(resultText,/CHALLENGE COMPLETE[\s\S]*TARGET 60%[\s\S]*FINISHED[\s\S]*POINTS? FROM TARGET[\s\S]*SCORE[\s\S]*RESULT SENT TO ADA[\s\S]*RUN AGAIN[\s\S]*EDIT THIS DUNGEON[\s\S]*SAVE THIS GOAL & BUILD YOUR OWN/);
-  const resultLayout=await receiver.locator('[data-screen="rewards"]').evaluate(node=>({height:node.scrollHeight,viewport:innerHeight}));
-  assert(resultLayout.height<=resultLayout.viewport,'result must fit viewport');
+  for(const [width,height] of [[360,800],[390,844],[430,932],[768,1024],[1280,900]]){await receiver.setViewportSize({width,height});const resultLayout=await receiver.locator('[data-screen="rewards"]').evaluate(node=>({height:node.scrollHeight,viewport:innerHeight}));assert(resultLayout.height<=resultLayout.viewport,`result must fit ${width}x${height}`)}
   assert.equal(receiverErrors.length,0,receiverErrors.join(' | '));
   await receiver.close();
   console.log(JSON.stringify({status:'PASS',samplePublicFriendUrl:sampleUrl,sendToFriendFallback:'PASS',challengeJournalReshare:'PASS',receiverSignedOut:'PASS',viewports:results},null,2));
