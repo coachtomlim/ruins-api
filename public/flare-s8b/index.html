@@ -144,74 +144,64 @@
       </section>
 
       <article class="runner-card">
-        <div class="runner-portrait"><canvas id="runnerHeroCanvas" aria-label="Animated Rookie Warrior with Wooden Club and Wooden Shield"></canvas><small id="runnerHeroStatus" role="status" aria-live="polite"></small></div>
+        <div class="runner-portrait"><canvas id="runnerHeroCanvas" aria-label="Animated Rookie Warrior with equipped gear"></canvas><small id="runnerHeroStatus" role="status" aria-live="polite"></small></div>
         <div class="runner-info">
           <span>YOUR RUNNER</span>
           <h2 id="runnerName">—</h2>
-          <div class="stats">
-            <b><span id="runnerHp">—</span><small>HP</small></b>
-            <b><span id="runnerAttack">—</span><small>ATK</small></b>
-            <b><span id="runnerDefense">—</span><small>DEF</small></b>
-          </div>
+          <p class="runner-summary-note">Level, stats and equipment are shown below.</p>
         </div>
-      </article>
-
-      <article class="progression-card" aria-labelledby="progressionLevel">
-        <div class="progression-head"><strong id="progressionLevel">LEVEL 1</strong><span id="progressionXp">0 / 30 XP</span></div>
-        <div class="progression-bar"><i id="progressionFill" style="width:0%"></i></div>
       </article>
 
       <button class="primary test-runner-cta" id="testYourRunner" type="button">TEST YOUR RUNNER <span>›</span></button>
       <p class="panel-note practice-note">Practice run · no rewards. Take your current Runner into a dungeon you configure.</p>
 
       <div class="runner-tabs" role="tablist" aria-label="Runner details">
-        <button class="runner-tab" id="statsTab" type="button" role="tab" aria-selected="true">STATS</button>
+        <button class="runner-tab" id="statsTab" type="button" role="tab" aria-selected="true">LEVEL &amp; STATS</button>
         <button class="runner-tab" id="equipmentTab" type="button" role="tab" aria-selected="false">EQUIPMENT</button>
-        <button class="runner-tab" id="armorTab" type="button" role="tab" aria-selected="false">ARMOR</button>
-        <button class="runner-tab" id="historyTab" type="button" role="tab" aria-selected="false">HISTORY</button>
       </div>
 
       <section class="runner-panel" id="statsPanel" role="tabpanel" aria-labelledby="statsTab">
-        <div class="section-title"><h2>RUNNER STATS</h2><span>BASE → CURRENT</span></div>
-        <div class="stat-table" aria-label="Runner stats">
-          <div><span>HP</span><small>BASE <b id="baseHp">—</b></small><strong id="effectiveHp">—</strong></div>
-          <div><span>ATK</span><small>BASE <b id="baseAttack">—</b></small><strong id="effectiveAttack">—</strong></div>
-          <div><span>DEF</span><small>BASE <b id="baseDefense">—</b></small><strong id="effectiveDefense">—</strong></div>
+        <article class="progression-card" aria-labelledby="progressionLevel">
+          <div class="progression-head"><strong id="progressionLevel">LEVEL 1</strong><span id="progressionXp">0 / 30 XP</span></div>
+          <div class="progression-bar"><i id="progressionFill" style="width:0%"></i></div>
+        </article>
+
+        <div class="section-title"><h2>CURRENT STATS</h2><span>ACTIVE IN DUNGEONS</span></div>
+        <div class="stat-table" aria-label="Current Runner stats">
+          <div><span>HP</span><strong id="effectiveHp">—</strong></div>
+          <div><span>ATK</span><strong id="effectiveAttack">—</strong></div>
+          <div><span>DEF</span><strong id="effectiveDefense">—</strong></div>
         </div>
-        <p class="panel-note">Current values include permanent training and equipped gear.</p>
+        <p class="panel-note">These are your Runner’s current combat stats. Permanent training changes them. Future buffs and passive skills will appear in Level &amp; Stats.</p>
+
         <section class="training-card" aria-labelledby="trainingTitle">
           <div class="section-title"><h2 id="trainingTitle">RUNNER TRAINING</h2><span>PERMANENT STATS</span></div>
           <p class="panel-note">Spend Gold to permanently upgrade your Runner.</p>
           <div class="training-offers" id="trainingOffers" aria-label="Active Runner training offers"></div>
         </section>
-      </section>
 
-      <section class="runner-panel" id="equipmentPanel" role="tabpanel" aria-labelledby="equipmentTab" hidden>
-        <div class="section-title"><h2>FLARE LOADOUT</h2><span>MAIN · OFF · ARMOR</span></div>
-        <div class="flare-loadout" id="flareLoadout" aria-label="Flare equipment loadout"></div>
-        <p class="panel-note">Flare uses MAIN and OFF hand slots for weapon and shield. HANDS is the glove/gauntlet armor slot.</p>
-      </section>
-
-      <section class="runner-panel" id="armorPanel" role="tabpanel" aria-labelledby="armorTab" hidden>
-        <div class="section-title"><h2>ARMOR</h2><span>5 SLOTS</span></div>
-        <div class="armor-grid" id="armorGrid"></div>
-        <p class="panel-note">Empty armor slots are ready for future gear, one piece at a time.</p>
-        <section class="unlock-card" aria-labelledby="unlockTitle">
-          <div class="section-title"><h2 id="unlockTitle">EQUIPMENT UNLOCKS</h2><span>LEVEL GATED</span></div>
-          <div class="unlock-list" id="unlockList" aria-label="Governed equipment unlocks"></div>
+        <section class="history-card" aria-labelledby="historyTitle">
+          <div class="section-title"><h2 id="historyTitle">PROGRESSION HISTORY</h2><span>RECENT FIRST</span></div>
+          <ol class="history-list" id="historyList" aria-label="Recent progression events"></ol>
         </section>
       </section>
 
-      <section class="runner-panel" id="historyPanel" role="tabpanel" aria-labelledby="historyTab" hidden>
-        <div class="section-title"><h2>PROGRESSION HISTORY</h2><span>RECENT FIRST</span></div>
-        <ol class="history-list" id="historyList" aria-label="Recent progression events"></ol>
+      <section class="runner-panel" id="equipmentPanel" role="tabpanel" aria-labelledby="equipmentTab" hidden>
+        <div class="section-title"><h2>EQUIPPED GEAR</h2><span>ARMOR &amp; WEAPONS</span></div>
+        <p class="panel-note">Your active loadout. Item bonuses shown here are already included in Current Stats.</p>
+        <div class="flare-loadout" id="flareLoadout" aria-label="Equipped armor and weapons"></div>
+
+        <section class="unlock-card" aria-labelledby="unlockTitle">
+          <div class="section-title"><h2 id="unlockTitle">AVAILABLE GEAR</h2><span>LEVEL GATED</span></div>
+          <div class="unlock-list" id="unlockList" aria-label="Available equipment"></div>
+        </section>
       </section>
 
       <section class="goal-card" id="goalCard" hidden>
         <div><span class="eyebrow">CHALLENGE GOAL</span><strong id="savedGoalLabel">No saved goal yet</strong></div>
       </section>
 
-      <p class="boundary-note">Training changes this Runner permanently. Equipment and armor changes remain inactive for now.</p>
+      <p class="boundary-note">Training changes this Runner permanently. Equipment shows the armor and weapons currently affecting the Runner.</p>
     </section>
   </main>
   <section class="purchase-dialog" id="purchaseDialog" role="dialog" aria-modal="true" aria-labelledby="purchaseDialogTitle" hidden>
