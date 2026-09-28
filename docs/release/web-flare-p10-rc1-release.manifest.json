@@ -1,38 +1,38 @@
 {
   "label": "WEB-FLARE-RC1 release archive (public_html/quick-dungeon/flare-s8b)",
-  "sourceSha": "e21a1948fbdfe34f92db9a2fbea236a47c429f51",
+  "sourceSha": "05950fd168d2bcdf3ce363428898ea582ed7b83c",
   "fileCount": 24,
   "zip": "web-flare-p10-rc1-release.zip",
   "files": [
     {
       "path": "account-adapter.mjs",
-      "sha256": "33082afa8052c8d5d182f62f0ecfbe1017528be308c6b1f688e9a59fe476d31c",
+      "sha256": "2a083c19b2230c8641e97c10604d62594c0c0648d5769c37ef5c7ff2412ca726",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 17898
+      "bytes": 18742
     },
     {
       "path": "account-app.mjs",
-      "sha256": "118936e4359cc4f8550db9f07de15c5dff400d1de5d5f3f80c58dc46117f8675",
+      "sha256": "1044a0c67232f5b1e1a8a73ae7a823c6e7e561247429e897c3fce73e3b5b1538",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 27108
+      "bytes": 31109
     },
     {
       "path": "account-ready-view.mjs",
-      "sha256": "392cc4571693e81f4fca0887f216c0d8d0cfe1891ce0c6c4ee17d9eedc9512c6",
+      "sha256": "0cce1991ad18e9db3aa2367a2cf2575b1822128c61d60499b4859a5cedf017cb",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 9892
+      "bytes": 10002
     },
     {
       "path": "account.css",
-      "sha256": "ccddde625521196f806ea7e995cc20da4b4c62d814bfb96c6cc043589463280a",
+      "sha256": "7c81f992411db5a79e03307daec921e7101fbc42347c077ce6c56869ba6304dd",
       "mime": "text/css; charset=utf-8",
-      "bytes": 21001
+      "bytes": 23539
     },
     {
       "path": "builder-progression-view.mjs",
-      "sha256": "3adae98bb139b0154220aad11684cceae11bd447653cb84c54bbe41f6f457fc2",
+      "sha256": "8bf87e7b724c2c1e508dc10f047240908681477d6799aa7cfbd67799d2b96d48",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 2335
+      "bytes": 2449
     },
     {
       "path": "daily-login.mjs",
@@ -78,15 +78,15 @@
     },
     {
       "path": "friend-share.mjs",
-      "sha256": "c0072e07773a6b09ce9dc40e91a424b057956720a47ef8861ab04756f693250b",
+      "sha256": "6cdbff8d3a026d582db8bbad2275282b668d67cf7980cef6c392f38e140ceabb",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 4743
+      "bytes": 5224
     },
     {
       "path": "index.html",
-      "sha256": "7b6e64b7ed37d46f3c9365bea22f511332fc3e6a07df6bdeeb9b6eaf55d80615",
+      "sha256": "0b7c1db2af7423a38f1d16e0ea585bb3859001eddd8650af0533c4f670ea1c45",
       "mime": "text/html; charset=utf-8",
-      "bytes": 14918
+      "bytes": 16359
     },
     {
       "path": "practice-app.mjs",

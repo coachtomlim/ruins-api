@@ -1,6 +1,6 @@
 {
   "releaseId": "WEB-FLARE-RC1",
-  "generatedAt": "2026-09-28T03:00:18.061Z",
+  "generatedAt": "2026-09-28T04:07:13.124Z",
   "fileCount": 50,
   "files": [
     {
@@ -161,33 +161,33 @@
     },
     {
       "path": "public/flare-s8b/account-adapter.mjs",
-      "sha256": "06091ee420e8d513b19366a33163526a635a629ae607c43ef06bdef8a6cb39f1",
+      "sha256": "6d3718d617783ca7bfd371fa323aad96b21ef985293fc16d7d6b2020358d63be",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 18281
+      "bytes": 19139
     },
     {
       "path": "public/flare-s8b/account-app.mjs",
-      "sha256": "8efefea1a38b2fdb7497661a1ae0e269b198dfde00a46e70c597d02953250144",
+      "sha256": "765761795d4f8756e20d58e73529462d96dc9d090ccc33e3986dc73ff519d0ad",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 27722
+      "bytes": 31760
     },
     {
       "path": "public/flare-s8b/account-ready-view.mjs",
-      "sha256": "f50d3a353faa85bb9076919436d1ca9f7636833f6510a807897d72c7a8ab7b48",
+      "sha256": "63498e67ebc1b9d1fc4c76b010dddf085a76b92c6ef3fe205296979ed6ee9641",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 10075
+      "bytes": 10186
     },
     {
       "path": "public/flare-s8b/account.css",
-      "sha256": "253929b0e057f71f1c03dc669678f54d7e23a3c81d5fdfc75592f98236320547",
+      "sha256": "b80201b3b7b9a9b30d78fffda7b93d30ac65deb2ef949d1cc8096c68e545790d",
       "mime": "text/css; charset=utf-8",
-      "bytes": 21101
+      "bytes": 23641
     },
     {
       "path": "public/flare-s8b/builder-progression-view.mjs",
-      "sha256": "98d60f9f49b7659078042a4abbc9bee93039ff1ce180264a70efd22ce8a7f2d4",
+      "sha256": "220737c18b8a83e7af9a5ff6df27de03c458a0b6bed9c569e2c959a00d06fe85",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 2380
+      "bytes": 2494
     },
     {
       "path": "public/flare-s8b/daily-login.mjs",
@@ -233,15 +233,15 @@
     },
     {
       "path": "public/flare-s8b/friend-share.mjs",
-      "sha256": "7306afc6ed487248f4544b08db127eae5b4e3e147e58a8a952b159572ce4aeb1",
+      "sha256": "e707db6605dc002154ad85b5955faa6504d2726db192a37a33195de265629a9b",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 4845
+      "bytes": 5335
     },
     {
       "path": "public/flare-s8b/index.html",
-      "sha256": "6fc8c405b3187a433e4c950c3b3c3a262900f7b6b266ca16e8356e359c6a94e5",
+      "sha256": "b03a82ebd45a030974c7e3261d5558b543b89ed2968f88bb1fc79f5e5434ce21",
       "mime": "text/html; charset=utf-8",
-      "bytes": 15140
+      "bytes": 16589
     },
     {
       "path": "public/flare-s8b/practice-app.mjs",
