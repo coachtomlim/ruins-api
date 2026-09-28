@@ -5,12 +5,16 @@ export function buildInvitationViewModel({sender='Buddy',runnerName='Hero-Runner
   const name=cleanName(sender),target=Math.max(0,Math.min(100,finite(targetHp))),level=Math.max(0,finite(runnerLevel));
   return Object.freeze({
     eyebrow:'GAME INVITATION',
-    title:'DUNGEON RUNNER',
-    challenge:`Your friend ${name} has challenged you to select a dungeon for his Hero-Runner.`,
-    timePromise:'This takes only 30 seconds. Just accept the challenge and see his Hero run!',
+    title:`${name.toUpperCase()} HAS CHALLENGED YOU`,
+    role:'YOU ARE THE DUNGEON BUILDER',
+    challenge:`Choose or tune a dungeon for ${name}'s Runner.`,
+    targetExplanation:`Get the Runner to the EXIT with about ${target}% health remaining.`,
+    targetScale:Object.freeze({harsh:`Below ${target}% = too harsh`,target:`${target}% TARGET`,gentle:`Above ${target}% = too gentle`}),
+    defeatRule:'If the Runner is defeated, Builder reward = 0',
+    precisionRule:`Closer to ${target}% = higher score + more Builder Gold.`,
     runnerLabel:`Level ${level} ${String(runnerName||'Hero-Runner')}`,
-    targetLabel:`Target ${target}% HP`,
+    targetLabel:`TARGET: ${target}% HP`,
     heroAnimation:'stance',
-    primaryAction:'ACCEPT CHALLENGE'
+    primaryAction:'CHOOSE A DUNGEON'
   });
 }

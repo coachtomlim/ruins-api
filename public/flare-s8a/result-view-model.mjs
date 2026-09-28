@@ -8,12 +8,15 @@ export function buildResultViewModel({result,score,targetHp,senderName='Buddy'}=
   const copy=rewardCopy({sender:senderName,heroGold:summary.heroGold,builderGold:summary.builderGold,cleared:summary.cleared});
   const actual=result?.maxHp>0?Math.max(0,Math.min(100,finite(result.hp)/finite(result.maxHp)*100)):0;
   const target=Math.max(0,Math.min(100,finite(targetHp)));
+  const difference=Math.abs(Math.round(actual)-Math.round(target));
   return Object.freeze({
     cleared:summary.cleared,
     outcome:copy.outcome,
     score:finite(score),
     actualHpPercent:actual,
     targetHpPercent:target,
+    differenceFromTarget:difference,
+    resultHeading:summary.cleared?'CHALLENGE COMPLETE':'HERO DID NOT CLEAR',
     heroReward:Object.freeze({label:copy.heroLabel,value:copy.heroValue,gold:summary.heroGold}),
     builderReward:Object.freeze({label:copy.builderLabel,value:copy.builderValue,sublabel:copy.builderSublabel,gold:summary.builderGold}),
     progression:Object.freeze({headline:copy.progressionHeadline,detail:copy.progressionDetail,currency:'GOLD'}),

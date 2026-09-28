@@ -108,8 +108,8 @@ test('Builder progression is cosmetic: migration never mutates Gold, Runner XP, 
 test('Browser adapter uses governed Builder RPCs and no direct Builder table writes',async()=>{
   const adapter=await read('public/flare-s8b/account-adapter.mjs');
   assert.match(adapter,/rpc\('get_builder_progression'/);
-  assert.match(adapter,/rpc\('get_builder_challenges'/);
-  assert.match(adapter,/rpc\('create_builder_challenge'/);
+  assert.match(adapter,/rpc\('get_builder_challenges_v2'/);
+  assert.match(adapter,/rpc\('create_builder_challenge_v2'/);
   assert.doesNotMatch(adapter,/from\('builder_(?:challenge|xp_event)'\)/);
 });
 

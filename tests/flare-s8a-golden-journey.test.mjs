@@ -9,8 +9,9 @@ import {buildRegistrationViewModel} from '../public/flare-s8a/registration-view-
 
 test('golden L3 60 receiver journey keeps one coherent product story',()=>{
   const invitation=buildInvitationViewModel({sender:'Tom',runnerName:'Tough Warrior',runnerLevel:3,targetHp:60});
-  assert.equal(invitation.title,'DUNGEON RUNNER');
-  assert.equal(invitation.primaryAction,'ACCEPT CHALLENGE');
+  assert.equal(invitation.title,'TOM HAS CHALLENGED YOU');
+  assert.equal(invitation.role,'YOU ARE THE DUNGEON BUILDER');
+  assert.equal(invitation.primaryAction,'CHOOSE A DUNGEON');
 
   const mission=buildMissionViewModel({targetHp:60,sender:'Tom',roomName:'Pillar Court',roomIndex:0,roomCount:6,estimatedHpPercent:60.8});
   assert.equal(mission.title,'GET THE HERO TO THE EXIT AT ~60% HP');

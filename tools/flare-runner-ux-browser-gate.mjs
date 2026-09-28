@@ -15,7 +15,8 @@ const mime=new Map([
 ]);
 
 const mockAdapter=`
-const challenge={challenge_id:'challenge-60',runner_id:'warrior-l1',target_hp:60,invite_code:'Qs2Z',sender_name:'Ada',created_at:'2026-09-28T02:00:00Z',builder_xp_awarded:10,duplicate:false};
+const challenge={challenge_id:'challenge-60',runner_id:'warrior-l1',target_hp:60,invite_code:'Qs2Z',sender_name:'Ada',public_token:'abcdefghijklmnopqrstuvwxyzABCDEFG',result_count:1,created_at:'2026-09-28T02:00:00Z',builder_xp_awarded:10,duplicate:false};
+const result={result_id:'result-1',challenge_id:'challenge-60',target_hp:60,room_id:'iron-labyrinth-01',encounter_summary:'Skeleton + Skeleton + Goblin',terminal_status:'cleared',finishing_hp_percent:56,score:92,hero_gold:24,builder_gold:20,completed_at:'2026-09-28T03:00:00Z',owner_seen_at:null};
 let published=false;
 const gear=[
  {slot:'weapon',equipped:true,ownership_id:'club-own',item_id:'wooden-club',name:'Wooden Club',modifiers:{hp:0,attack:4,defense:0},catalog_version:'s8b-1',gfx:'club'},
@@ -32,11 +33,11 @@ function account(){return {
  itemCatalog:[{item_id:'leather-hood',slot:'head',display_name:'Leather Hood',hp_modifier:0,attack_modifier:0,defense_modifier:1}],itemOwnership:[],
  progressionHistory:[{kind:'daily_trial',label:'Daily Trial · +10 XP · +5 Gold',gold_delta:5,xp_delta:10,created_at:'2026-09-28T00:00:00Z'}],
  builderProgression:{total_builder_xp:published?10:0,builder_level:1,level_threshold:0,next_level_threshold:20,xp_remaining:published?10:20,max_level:false,published_challenges:published?1:0},
- builderChallenges:published?[challenge]:[]
+ builderChallenges:published?[challenge]:[],builderChallengeResults:published?[result]:[]
 }}
 export function createBrowserAccountAdapter(){return {
  getSession:async()=>({user:{id:'player-safe-fixture'},access_token:'fixture-token'}),ensureStarterAccount:async()=>({player_runner_id:'runner-safe-fixture'}),loadAccountState:async()=>account(),
- createBuilderChallenge:async()=>{published=true;return challenge},subscribeAuthStateChange:()=>({unsubscribe(){}}),signOut:async()=>{},
+ createBuilderChallenge:async()=>{published=true;return challenge},markBuilderChallengeResultRead:async()=>({...result,owner_seen_at:new Date().toISOString()}),subscribeAuthStateChange:()=>({unsubscribe(){}}),signOut:async()=>{},
  register:async()=>({pendingConfirmation:true}),signIn:async()=>({account:account()}),requestPasswordReset:async()=>{},updatePassword:async()=>{},
  purchaseProgressionOffer:async()=>{throw Error('NOT_USED')},claimDailyLoginBonus:async()=>{throw Error('NOT_USED')},startDailyTrial:async()=>{throw Error('NOT_USED')},settleDailyTrial:async()=>{throw Error('NOT_USED')},equipRunnerItem:async()=>{throw Error('NOT_USED')}
 }}
@@ -54,6 +55,8 @@ async function installRoutes(page){
   await page.route(`${origin}/**`,async route=>{
     const url=route.request().url();
     if(url.endsWith('/quick-dungeon/flare-s8b/supabase-browser.mjs'))return route.fulfill({status:200,contentType:'text/javascript; charset=utf-8',body:mockAdapter});
+    if(url.endsWith('/quick-dungeon/flare-s8b/config.js'))return route.fulfill({status:200,contentType:'text/javascript; charset=utf-8',body:"globalThis.__FLARE_S8B_PUBLIC_CONFIG__={url:'https://fixture.supabase.co',publishableKey:'sb_publishable_fixture'}"});
+    if(url.endsWith('/quick-dungeon/flare-s8b/vendor/supabase.js'))return route.fulfill({status:200,contentType:'text/javascript; charset=utf-8',body:"globalThis.supabase={createClient(){return {rpc:async()=>({data:[{result_id:'result-1',duplicate:false}],error:null})}}}"});
     const file=localPath(url);
     if(!file)return route.fulfill({status:404,body:'not found'});
     try{return route.fulfill({status:200,contentType:mime.get(path.extname(file))||'application/octet-stream',body:await readFile(file)})}
@@ -81,9 +84,10 @@ try{
       console.error(JSON.stringify({viewport:`${width}x${height}`,errors,notFound,authStatus:await page.locator('#authStatus').innerText(),body:(await page.locator('body').innerText()).slice(0,1200)},null,2));
       throw error;
     }
-    const layout=await page.evaluate(()=>({scrollWidth:document.documentElement.scrollWidth,innerWidth,labels:[...document.querySelectorAll('.runner-tab')].map(node=>node.textContent.trim())}));
+    const layout=await page.evaluate(()=>({scrollWidth:document.documentElement.scrollWidth,innerWidth,labels:[...document.querySelectorAll('.hub-tab')].map(node=>node.childNodes[0].textContent.trim())}));
     assert(layout.scrollWidth<=layout.innerWidth,`horizontal overflow at ${width}x${height}`);
-    assert.deepEqual(layout.labels,['LEVEL & STATS','EQUIPMENT']);
+    assert.deepEqual(layout.labels,['HOME','CHALLENGES','LEVEL & STATS','EQUIPMENT']);
+    await page.locator('#statsTab').click();
     assert.match(await page.locator('#statsPanel').innerText(),/LEVEL 1[\s\S]*10 \/ 30 XP[\s\S]*CURRENT STATS[\s\S]*100[\s\S]*12[\s\S]*1[\s\S]*RUNNER TRAINING[\s\S]*PROGRESSION HISTORY/);
     assert(!/BASE → CURRENT|GEAR BONUS/.test(await page.locator('#statsPanel').innerText()));
     await page.locator('#equipmentTab').click();
@@ -92,10 +96,11 @@ try{
     assert.equal(await page.locator('#flareLoadout .gear-slot').count(),7);
     assert.equal(await page.locator('#flareLoadout .gear-slot-visual svg').count(),7);
     for(const label of ['MAIN HAND','OFF HAND','HEAD','CHEST','HANDS','LEGS','FEET'])assert(equipmentText.includes(label),`${label} missing at ${width}x${height}`);
+    await page.locator('#challengesTab').click();
     await page.locator('#friendShareGenerate').click();
     await page.locator('#friendShareResult').waitFor({state:'visible'});
     const url=await page.locator('#friendShareUrl').evaluate(node=>node.value);
-    assert.equal(url,`${origin}/m/Qs2Z?from=Ada`);
+    assert.equal(url,`${origin}/m/Qs2Z?from=Ada&c=abcdefghijklmnopqrstuvwxyzABCDEFG`);
     sampleUrl=url;
     for(const selector of ['#friendShareOpen','#friendShareCopy','#friendShareWhatsapp','#friendShareTelegram','#statsTab','#equipmentTab']){
       const box=await page.locator(selector).evaluate(node=>node.getBoundingClientRect().toJSON());
@@ -111,7 +116,11 @@ try{
     assert.equal(await page.locator('#friendShareUrl').evaluate(node=>node.value),url);
     assert.equal(errors.length,0,`console errors at ${width}x${height}: ${errors.join(' | ')}`);
     assert.equal(notFound.length,0,`route 404s at ${width}x${height}: ${notFound.join(' | ')}`);
-    results.push({viewport:`${width}x${height}`,noHorizontalOverflow:true,tabs:layout.labels,slots:7,touchTargets:true,friendUrl:url,copy:true,sendFallback:true,reshare:true,consoleErrors:0,route404s:0});
+    assert.match(await page.locator('#challengeActivityList').innerText(),/NEW CHALLENGE RESULT[\s\S]*56% HP[\s\S]*Score 92/);
+    await page.locator('#challengeActivityList button').click();
+    assert.match(await page.locator('#resultDetailDialog').innerText(),/TARGET[\s\S]*60% HP[\s\S]*FINISHED[\s\S]*56% HP[\s\S]*SCORE[\s\S]*92/);
+    await page.locator('#closeResultDetail').click();
+    results.push({viewport:`${width}x${height}`,noHorizontalOverflow:true,tabs:layout.labels,slots:7,touchTargets:true,friendUrl:url,copy:true,sendFallback:true,reshare:true,challengeActivity:true,consoleErrors:0,route404s:0});
     await page.close();
   }
   const receiver=await context.newPage();
@@ -120,7 +129,22 @@ try{
   await receiver.goto(sampleUrl,{waitUntil:'domcontentloaded'});
   await receiver.locator('#acceptChallenge').waitFor({state:'visible',timeout:30000});
   await receiver.waitForFunction(()=>!document.querySelector('#acceptChallenge').disabled,null,{timeout:30000});
-  assert.match(await receiver.locator('body').innerText(),/ADA|60%/i);
+  const invitationText=await receiver.locator('[data-screen="invitation"]').innerText();
+  assert.match(invitationText,/ADA HAS CHALLENGED YOU[\s\S]*YOU ARE THE DUNGEON BUILDER[\s\S]*TARGET: 60% HP[\s\S]*TOO HARSH[\s\S]*TOO GENTLE[\s\S]*Builder reward = 0[\s\S]*CHOOSE A DUNGEON/i);
+  const invitationLayout=await receiver.locator('[data-screen="invitation"]').evaluate(node=>({height:node.scrollHeight,viewport:innerHeight,pageScroll:document.documentElement.scrollHeight}));
+  assert(invitationLayout.height<=invitationLayout.viewport,'invitation must fit viewport');
+  assert.doesNotMatch(invitationText,/FINISHED|Estimated finish/i);
+  await receiver.locator('#acceptChallenge').click();
+  await receiver.locator('[data-screen="mission"]').waitFor({state:'visible'});
+  await receiver.locator('#useDungeon').click();
+  await receiver.locator('[data-screen="ready"]').waitFor({state:'visible'});
+  await receiver.locator('#runHero').click();
+  await receiver.locator('[data-screen="rewards"]').waitFor({state:'visible',timeout:45000});
+  await receiver.waitForFunction(()=>document.querySelector('#resultReceiptStatus')?.textContent?.startsWith('RESULT SENT TO'),null,{timeout:5000});
+  const resultText=await receiver.locator('[data-screen="rewards"]').innerText();
+  assert.match(resultText,/CHALLENGE COMPLETE[\s\S]*TARGET 60%[\s\S]*FINISHED[\s\S]*POINTS? FROM TARGET[\s\S]*SCORE[\s\S]*RESULT SENT TO ADA[\s\S]*RUN AGAIN[\s\S]*EDIT THIS DUNGEON[\s\S]*SAVE THIS GOAL & BUILD YOUR OWN/);
+  const resultLayout=await receiver.locator('[data-screen="rewards"]').evaluate(node=>({height:node.scrollHeight,viewport:innerHeight}));
+  assert(resultLayout.height<=resultLayout.viewport,'result must fit viewport');
   assert.equal(receiverErrors.length,0,receiverErrors.join(' | '));
   await receiver.close();
   console.log(JSON.stringify({status:'PASS',samplePublicFriendUrl:sampleUrl,sendToFriendFallback:'PASS',challengeJournalReshare:'PASS',receiverSignedOut:'PASS',viewports:results},null,2));

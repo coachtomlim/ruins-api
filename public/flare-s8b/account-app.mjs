@@ -17,6 +17,7 @@ let friendLink=null;
 const byId=id=>document.getElementById(id);
 const views=['signedOutView','pendingView','loadingView','readyView'];
 const runnerPanels=['stats','equipment'];
+const hubDestinations=['home','challenges','stats','equipment'];
 let adapter=null;
 let authSubscription=null;
 let recoveryMode=false;
@@ -25,6 +26,13 @@ let readyViewModel=null;
 let purchaseFlow=null;
 let actorPackPromise=null;
 let stopRunnerPreview=()=>{};
+
+function organizeHubDestinations(){
+  const nav=byId('homeTab')?.closest('.hub-navigation');if(!nav||byId('hubViewport'))return;
+  const viewport=document.createElement('div');viewport.id='hubViewport';viewport.className='hub-viewport';nav.after(viewport);
+  for(const name of hubDestinations){const panel=document.createElement('section');panel.id=`${name}Destination`;panel.className='hub-destination';panel.dataset.destination=name;panel.hidden=name!=='home';for(const node of [...document.querySelectorAll(`[data-hub-destination="${name}"]`)])panel.append(node);viewport.append(panel)}
+}
+organizeHubDestinations();
 
 function showView(id){for(const view of views)byId(view).hidden=view!==id}
 
@@ -115,13 +123,14 @@ function showPasswordRecovery(){
   showView('signedOutView');
 }
 
-function selectRunnerPanel(name){
-  if(!runnerPanels.includes(name))return;
-  for(const panel of runnerPanels){
-    byId(`${panel}Panel`).hidden=panel!==name;
-    byId(`${panel}Tab`).setAttribute('aria-selected',String(panel===name));
-  }
+function selectHubDestination(name){
+  if(!hubDestinations.includes(name))return;
+  for(const panel of document.querySelectorAll('.hub-destination'))panel.hidden=panel.dataset.destination!==name;
+  for(const node of document.querySelectorAll('[data-hub-destination]'))node.hidden=node.id==='goalCard'&&readyViewModel?.savedGoalLabel==='No saved goal yet';
+  for(const destination of hubDestinations)byId(`${destination}Tab`).setAttribute('aria-selected',String(destination===name));
+  byId('readyView').dataset.destination=name;
 }
+function selectRunnerPanel(name){selectHubDestination(name)}
 
 function renderPending(){showView('pendingView')}
 
@@ -315,7 +324,7 @@ function challengeJournalRow(challenge){
   const row=document.createElement('article');row.className='challenge-journal-row';
   const copy=document.createElement('div');
   const target=document.createElement('strong');target.textContent=challenge.targetLabel;
-  const detail=document.createElement('small');detail.textContent=`${challenge.runnerId} · ${challenge.inviteCode} · ${challenge.dateLabel}`;
+  const detail=document.createElement('small');detail.textContent=`${challenge.runnerId} · ${challenge.inviteCode} · ${challenge.dateLabel} · ${challenge.resultCount} RESULT${challenge.resultCount===1?'':'S'}`;
   copy.append(target,detail);
   const button=document.createElement('button');button.type='button';button.textContent='RE-SHARE';
   button.addEventListener('click',()=>loadJournalChallenge(challenge));
@@ -327,6 +336,30 @@ function renderChallengeJournal(rows){
   const journal=Array.isArray(rows)?rows:[];
   byId('challengeJournalList').replaceChildren(...journal.map(challengeJournalRow));
   byId('challengeJournalEmpty').hidden=journal.length>0;
+}
+
+function challengeActivityRow(result){
+  const row=document.createElement('article');row.className=`challenge-activity-row${result.owner_seen_at?'':' unread'}`;
+  const copy=document.createElement('div');
+  const title=document.createElement('strong');title.textContent=result.terminal_status==='cleared'?'NEW CHALLENGE RESULT':'HERO DID NOT CLEAR';
+  const detail=document.createElement('small');detail.textContent=result.terminal_status==='cleared'?`Your Runner finished at ${Math.round(Number(result.finishing_hp_percent))}% HP · Score ${Math.round(Number(result.score))}`:'A friend attempted your challenge, but your Runner did not clear the dungeon.';
+  copy.append(title,detail);
+  const button=document.createElement('button');button.type='button';button.textContent='VIEW RESULT';button.addEventListener('click',()=>openResultDetail(result));
+  row.append(copy,button);return row;
+}
+function renderChallengeActivity(rows){
+  const activity=Array.isArray(rows)?rows:[],unread=activity.filter(row=>!row.owner_seen_at).length;
+  byId('challengeActivityList').replaceChildren(...activity.slice(0,5).map(challengeActivityRow));
+  byId('challengeActivityEmpty').hidden=activity.length>0;
+  byId('challengeActivityCount').textContent=unread?`${unread} NEW RESULT${unread===1?'':'S'}`:'NO NEW RESULTS';
+  byId('challengeUnreadBadge').hidden=unread===0;byId('challengeUnreadBadge').textContent=unread?`${unread} NEW RESULT${unread===1?'':'S'}`:'';
+}
+async function openResultDetail(result){
+  const actual=Math.round(Number(result.finishing_hp_percent)),target=Number(result.target_hp),difference=Math.abs(actual-target);
+  const fields=[['TARGET',`${target}% HP`],['FINISHED',`${actual}% HP`],['DIFFERENCE',`${difference} points from target`],['SCORE',String(Math.round(Number(result.score)))],['STATUS',result.terminal_status==='cleared'?'CLEARED':'FAILED'],['ROOM',result.room_id],['ENCOUNTER',result.encounter_summary||'Recorded encounter'],['HERO GOLD',`${Number(result.hero_gold)||0} Gold`],['BUILDER GOLD',`${Number(result.builder_gold)||0} Gold`],['COMPLETED',new Date(result.completed_at).toLocaleString()]];
+  byId('resultDetailFields').replaceChildren(...fields.map(([label,value])=>{const div=document.createElement('div'),dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=label;dd.textContent=value;div.append(dt,dd);return div}));
+  byId('resultDetailDialog').hidden=false;
+  if(!result.owner_seen_at){await adapter.markBuilderChallengeResultRead(result.result_id);await refreshReady();selectHubDestination('challenges')}
 }
 
 async function loadJournalChallenge(challenge){
@@ -356,6 +389,7 @@ async function generateFriendLink(){
     });
     if(!friendShareUrlIsSafe(built.url))throw new Error('FRIEND_SHARE_URL_UNSAFE');
     await refreshReady();
+    selectHubDestination('challenges');
     const awarded=Number(challenge.builder_xp_awarded)||0;
     exposeFriendLink(built,challenge.duplicate===true?'Challenge already in your journal.':`CHALLENGE PUBLISHED · +${awarded} BUILDER XP`);
   }catch(error){
@@ -487,6 +521,7 @@ function renderReady(account){
   resetFriendShare();
   renderBuilderProgression(vm.builderProgression);
   renderChallengeJournal(vm.challengeJournal);
+  renderChallengeActivity(vm.challengeActivity);
   byId('runnerName').textContent=vm.runner.name;
   byId('effectiveHp').textContent=String(vm.runner.stats.hp);
   byId('effectiveAttack').textContent=String(vm.runner.stats.attack);
@@ -499,7 +534,7 @@ function renderReady(account){
   renderProgression(vm.progressionSummary);
   byId('unlockList').replaceChildren(...vm.equipmentUnlocks.map(unlockRow));
   byId('historyList').replaceChildren(...vm.history.map(historyRow));
-  selectRunnerPanel('stats');
+  selectHubDestination('home');
   showView('readyView');
   void renderRunnerVisual(vm);
 }
@@ -519,6 +554,8 @@ byId('pendingSignIn').addEventListener('click',()=>selectAuth('signin'));
 byId('forgotPassword').addEventListener('click',()=>selectAuth('reset'));
 byId('resetBackToSignIn').addEventListener('click',()=>selectAuth('signin'));
 for(const panel of runnerPanels)byId(`${panel}Tab`).addEventListener('click',()=>selectRunnerPanel(panel));
+for(const destination of ['home','challenges'])byId(`${destination}Tab`).addEventListener('click',()=>selectHubDestination(destination));
+byId('closeResultDetail').addEventListener('click',()=>{byId('resultDetailDialog').hidden=true});
 byId('cancelPurchase').addEventListener('click',closePurchaseConfirmation);
 byId('confirmPurchase').addEventListener('click',confirmPurchase);
 byId('dailyLoginClaim').addEventListener('click',claimDailyLogin);

@@ -4,7 +4,7 @@ export const ACCOUNT_CAPABILITIES=Object.freeze([
   'loadDailyLoginStatus','claimDailyLoginBonus',
   'loadDailyTrialStatus','startDailyTrial','loadDailyTrialRun','settleDailyTrial',
   'loadRunnerProgression','loadRunnerProgressionHistory','loadItemCatalog','loadItemOwnership','equipRunnerItem',
-  'loadBuilderProgression','loadBuilderChallenges','createBuilderChallenge',
+  'loadBuilderProgression','loadBuilderChallenges','createBuilderChallenge','loadBuilderChallengeResults','markBuilderChallengeResultRead',
   'loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
 ]);
 
@@ -90,6 +90,8 @@ export function unavailableAccountAdapter(){
     loadBuilderProgression:unavailable,
     loadBuilderChallenges:unavailable,
     createBuilderChallenge:unavailable,
+    loadBuilderChallengeResults:unavailable,
+    markBuilderChallengeResultRead:unavailable,
     loadAccountState:unavailable,
     loadSavedGoals:unavailable,
     saveGoal:unavailable,
@@ -253,17 +255,27 @@ export function createSupabaseAccountAdapter({client}={}){
   }
 
   async function loadBuilderChallenges(limit=20){
-    const rows=resultData('loadBuilderChallenges',await client.rpc('get_builder_challenges',{p_limit:Number(limit)||20}))||[];
+    const rows=resultData('loadBuilderChallenges',await client.rpc('get_builder_challenges_v2',{p_limit:Number(limit)||20}))||[];
     return Object.freeze(rows.map(row=>Object.freeze({...row})));
   }
 
   async function createBuilderChallenge(targetHp){
     const target=Number(targetHp);
     if(!Number.isInteger(target)||target<5||target>95||target%5!==0)throw new Error('BUILDER_TARGET_INVALID');
-    const rows=resultData('createBuilderChallenge',await client.rpc('create_builder_challenge',{p_target_hp:target}))||[];
+    const rows=resultData('createBuilderChallenge',await client.rpc('create_builder_challenge_v2',{p_target_hp:target}))||[];
     const challenge=rows[0]??null;
     if(!challenge)throw new Error('AUTHORITATIVE_BUILDER_CHALLENGE_REQUIRED');
     return Object.freeze({...challenge});
+  }
+
+  async function loadBuilderChallengeResults(limit=10){
+    const rows=resultData('loadBuilderChallengeResults',await client.rpc('get_builder_challenge_results',{p_limit:Number(limit)||10}))||[];
+    return Object.freeze(rows.map(row=>Object.freeze({...row})));
+  }
+
+  async function markBuilderChallengeResultRead(resultId){
+    const rows=resultData('markBuilderChallengeResultRead',await client.rpc('mark_builder_challenge_result_read',{p_result_id:clean(resultId)}))||[];
+    return Object.freeze({...rows[0]});
   }
 
   async function loadAccountState({playerRunnerId=null}={}){
@@ -283,6 +295,7 @@ export function createSupabaseAccountAdapter({client}={}){
     const itemOwnership=await loadItemOwnership();
     const builderProgression=await loadBuilderProgression();
     const builderChallenges=await loadBuilderChallenges();
+    const builderChallengeResults=await loadBuilderChallengeResults();
     const goldBalance=ledger.reduce((sum,row)=>sum+(Number(row?.delta_gold)||0),0);
     return Object.freeze({
       identity:Object.freeze({id:me.id,email:me.email}),
@@ -298,6 +311,7 @@ export function createSupabaseAccountAdapter({client}={}){
       itemCatalog,
       itemOwnership,
       builderProgression,
+      builderChallengeResults,
       builderChallenges,
       goldBalance
     });
@@ -377,7 +391,7 @@ export function createSupabaseAccountAdapter({client}={}){
     loadDailyLoginStatus,claimDailyLoginBonus,
     loadDailyTrialStatus,startDailyTrial,loadDailyTrialRun,settleDailyTrial,
     loadRunnerProgression,loadRunnerProgressionHistory,loadItemCatalog,loadItemOwnership,equipRunnerItem,
-    loadBuilderProgression,loadBuilderChallenges,createBuilderChallenge,
+    loadBuilderProgression,loadBuilderChallenges,createBuilderChallenge,loadBuilderChallengeResults,markBuilderChallengeResultRead,
     loadAccountState,loadSavedGoals,saveGoal,claimGuestRun
   });
 }

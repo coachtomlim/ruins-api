@@ -6,7 +6,7 @@ import {buildReceiverView} from '../public/flare-s8a/receiver-view.mjs';
 test('receiver presenter maps invitation and mission to exact mobile models',()=>{
   let s=createReceiverSession({invite:{runnerId:'warrior-l3',targetHp:60},senderName:'Tom'});
   let view=buildReceiverView({session:s,context:{runnerName:'Tough Warrior',runnerLevel:3}});
-  assert.equal(view.kind,'invitation');assert.equal(view.model.title,'DUNGEON RUNNER');
+  assert.equal(view.kind,'invitation');assert.equal(view.model.title,'TOM HAS CHALLENGED YOU');assert.equal(view.model.role,'YOU ARE THE DUNGEON BUILDER');
   s=advanceReceiver(s,'ACCEPT');
   view=buildReceiverView({session:s,context:{roomName:'Pillar Court',roomIndex:0,roomCount:6,estimatedHpPercent:60.8}});
   assert.equal(view.kind,'mission');assert.equal(view.model.title,'GET THE HERO TO THE EXIT AT ~60% HP');

@@ -53,6 +53,7 @@ function fixtureClient({signupSession=null,runnerState=RUNNER_STATE}={}){
   const progressionHistory=[];
   const builderProgression={total_builder_xp:0,builder_level:1,level_threshold:0,next_level_threshold:20,xp_remaining:20,max_level:false,published_challenges:0};
   const builderChallenges=[];
+  const builderChallengeResults=[];
   const dailyTrialStatus={trial_day:'2026-09-19',trial_version:'s8b-daily-trial-001',state:'AVAILABLE',run_id:null,room_id:'iron-labyrinth-01',room_name:'Pillar Court',rules_version:'web-flare-0.2.0',content_version:'web-flare-s7-0.1.0',runner_snapshot:null,reward_gold:5,expected_ticks:614,expected_seconds:'10.23',settle_after:null,runner_hp:null,runner_attack:null,runner_defense:null,encounter_id:'fair-goblin-skeleton-potion-001',budget_spent:65};
   const dailyTrialRun={id:'trial-run-a',player_id:user.id,trial_day:'2026-09-19',room_id:'iron-labyrinth-01'};
   const dailyLogin={reward_day:'2026-09-19',claimed_today:false,current_streak_day:0,next_streak_day:1,claimable_gold:5,next_reset_at:'2026-09-20T00:00:00Z'};
@@ -79,10 +80,12 @@ function fixtureClient({signupSession=null,runnerState=RUNNER_STATE}={}){
       if(name==='get_runner_progression')return {data:[runnerProgression],error:null};
       if(name==='get_runner_progression_history')return {data:progressionHistory,error:null};
       if(name==='get_builder_progression')return {data:[builderProgression],error:null};
-      if(name==='get_builder_challenges')return {data:builderChallenges,error:null};
-      if(name==='create_builder_challenge')return {data:[{
+      if(name==='get_builder_challenges_v2')return {data:builderChallenges,error:null};
+      if(name==='get_builder_challenge_results')return {data:builderChallengeResults,error:null};
+      if(name==='mark_builder_challenge_result_read')return {data:[{result_id:args.p_result_id,owner_seen_at:'2026-09-28T00:00:00Z'}],error:null};
+      if(name==='create_builder_challenge_v2')return {data:[{
         challenge_id:'challenge-a',runner_id:'warrior-l1',target_hp:args.p_target_hp,invite_code:'Qs2Z',
-        sender_name:'Ada',builder_xp_awarded:10,total_builder_xp:10,builder_level:1,duplicate:false,
+        sender_name:'Ada',public_token:'abcdefghijklmnopqrstuvwxyzABCDEFG',builder_xp_awarded:10,total_builder_xp:10,builder_level:1,duplicate:false,
         created_at:'2026-09-24T00:00:00Z'
       }],error:null};
       if(name==='equip_runner_item')return {data:[{player_runner_id:'runner-a',slot:args.p_slot,ownership_id:args.p_ownership_id,item_id:'leather-hood',effective_hp:100,effective_attack:12,effective_defense:2,equipped_at:'2026-09-24T00:00:00Z'}],error:null};
@@ -111,7 +114,7 @@ test('adapter contract requires authoritative Runner capability',()=>{
     'loadDailyLoginStatus','claimDailyLoginBonus',
     'loadDailyTrialStatus','startDailyTrial','loadDailyTrialRun','settleDailyTrial',
     'loadRunnerProgression','loadRunnerProgressionHistory','loadItemCatalog','loadItemOwnership','equipRunnerItem',
-    'loadBuilderProgression','loadBuilderChallenges','createBuilderChallenge',
+    'loadBuilderProgression','loadBuilderChallenges','createBuilderChallenge','loadBuilderChallengeResults','markBuilderChallengeResultRead',
     'loadAccountState','loadSavedGoals','saveGoal','claimGuestRun'
   ]);
   assert.throws(()=>validateAccountAdapter({register(){}}),/missing signIn/i);
@@ -352,12 +355,12 @@ test('Builder progression and challenge publishing use governed RPCs only',async
 
   const challenges=await adapter.loadBuilderChallenges();
   assert.deepEqual(challenges,[]);
-  assert.deepEqual(client.calls.at(-1),['rpc','get_builder_challenges',{p_limit:20}]);
+  assert.deepEqual(client.calls.at(-1),['rpc','get_builder_challenges_v2',{p_limit:20}]);
 
   const published=await adapter.createBuilderChallenge(60);
   assert.equal(published.target_hp,60);
   assert.equal(published.builder_xp_awarded,10);
-  assert.deepEqual(client.calls.at(-1),['rpc','create_builder_challenge',{p_target_hp:60}]);
+  assert.deepEqual(client.calls.at(-1),['rpc','create_builder_challenge_v2',{p_target_hp:60}]);
   assert.equal(client.calls.some(call=>['insert','update','upsert','delete'].includes(call[0])),false);
 });
 

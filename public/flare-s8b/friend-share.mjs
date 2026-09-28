@@ -36,11 +36,15 @@ export function buildPersistedFriendShareLink({baseUrl,challenge,model}={}){
   const targetHp=Number(challenge.target_hp??challenge.targetHp);
   const senderName=String(challenge.sender_name??challenge.senderName??'').trim();
   const serverCode=String(challenge.invite_code??challenge.inviteCode??'').trim();
+  const correlationToken=String(challenge.public_token??challenge.publicToken??'').trim();
   const built=buildChallengeInvite({baseUrl,sender:senderName,runnerId,targetHp,model});
   if(built.code!==serverCode)throw new Error('BUILDER_CHALLENGE_CODE_MISMATCH');
+  const url=new URL(built.url);
+  if(correlationToken)url.searchParams.set('c',correlationToken);
   return Object.freeze({
     challengeId:String(challenge.challenge_id??challenge.challengeId??''),
-    url:built.url,code:built.code,runnerId,targetHp,senderName,share:built.share
+    publicToken:correlationToken,url:url.href,code:built.code,runnerId,targetHp,senderName,
+    share:Object.freeze({...built.share,url:url.href})
   });
 }
 
@@ -54,6 +58,11 @@ export function friendShareUrlIsSafe(url){
   const text=String(url||'');
   if(!text)return false;
   return !PRIVATE_URL_PATTERNS.some(pattern=>pattern.test(text));
+}
+
+export function publicChallengeTokenFromLocation(locationLike=globalThis.location){
+  const token=new URLSearchParams(String(locationLike?.search||'')).get('c')||'';
+  return /^[A-Za-z0-9_-]{32,128}$/.test(token)?token:'';
 }
 
 export async function shareFriendLink({url,title,text,navigator:nav=globalThis.navigator}={}){

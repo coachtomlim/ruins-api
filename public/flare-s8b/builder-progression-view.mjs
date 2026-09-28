@@ -31,13 +31,13 @@ export function challengeJournalRows(rows=[]){
   if(!Array.isArray(rows))throw new Error('AUTHORITATIVE_BUILDER_CHALLENGES_REQUIRED');
   return Object.freeze(rows.map(raw=>{
     const challengeId=clean(raw?.challenge_id),runnerId=clean(raw?.runner_id),inviteCode=clean(raw?.invite_code);
-    const senderName=clean(raw?.sender_name),createdAt=clean(raw?.created_at),targetHp=Number(raw?.target_hp);
+    const senderName=clean(raw?.sender_name),createdAt=clean(raw?.created_at),targetHp=Number(raw?.target_hp),publicToken=clean(raw?.public_token),resultCount=int(raw?.result_count??0,'RESULT_COUNT');
     if(!challengeId||!runnerId||!/^[A-Za-z0-9_-]{4}$/.test(inviteCode)||!senderName||!createdAt)
       throw new Error('INVALID_BUILDER_CHALLENGE_ROW');
     if(!Number.isInteger(targetHp)||targetHp<5||targetHp>95||targetHp%5!==0)
       throw new Error('INVALID_BUILDER_CHALLENGE_TARGET');
     return Object.freeze({
-      challengeId,runnerId,inviteCode,senderName,targetHp,createdAt,
+      challengeId,runnerId,inviteCode,senderName,targetHp,publicToken,resultCount,createdAt,
       targetLabel:`TARGET ${targetHp}% HP`,
       dateLabel:new Date(createdAt).toLocaleDateString(undefined,{month:'short',day:'numeric'})
     });

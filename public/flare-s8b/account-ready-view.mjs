@@ -164,6 +164,7 @@ export function buildAccountReadyViewFromBackend(account){
     history,
     builderProgression,
     challengeJournal,
+    challengeActivity:Object.freeze((account.builderChallengeResults??[]).map(row=>Object.freeze({...row}))),
     runner:Object.freeze({
       id:runnerState.playerRunnerId,
       templateId:runnerState.runnerTemplateId,

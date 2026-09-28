@@ -77,14 +77,21 @@
         <button class="text-action" id="signOut" type="button">SIGN OUT</button>
       </div>
 
-      <div class="identity-row">
+      <nav class="hub-navigation" role="tablist" aria-label="Runner Hub destinations">
+        <button id="homeTab" class="hub-tab" role="tab" aria-selected="true" type="button">HOME</button>
+        <button id="challengesTab" class="hub-tab" role="tab" aria-selected="false" type="button">CHALLENGES <span id="challengeUnreadBadge" hidden></span></button>
+        <button id="statsTab" class="hub-tab" role="tab" aria-selected="false" type="button">LEVEL &amp; STATS</button>
+        <button id="equipmentTab" class="hub-tab" role="tab" aria-selected="false" type="button">EQUIPMENT</button>
+      </nav>
+
+      <div class="identity-row" data-hub-destination="home">
         <div><span>PLAYER</span><strong id="displayName">—</strong><small id="accountEmail">—</small></div>
         <div class="gold"><span>GOLD</span><strong id="goldBalance">0</strong></div>
       </div>
 
-      <p class="status purchase-status" id="purchaseStatus" role="status" aria-live="polite"></p>
+      <p class="status purchase-status" id="purchaseStatus" data-hub-destination="home" role="status" aria-live="polite"></p>
 
-      <section class="earn-gold-card" aria-labelledby="earnGoldTitle">
+      <section class="earn-gold-card" data-hub-destination="home" aria-labelledby="earnGoldTitle">
         <div class="daily-bonus">
           <img class="flare-gold-loot" src="https://raw.githubusercontent.com/flareteam/flare-game/2ef474f5f5f368628bc526f9e56f936dac743e49/mods/fantasycore/images/loot/coins5.png" alt="" aria-hidden="true">
           <div class="daily-bonus-copy">
@@ -110,7 +117,7 @@
         <p class="status economy-status" id="dailyTrialStatus" role="status" aria-live="polite"></p>
       </section>
 
-      <section class="friend-share-card" id="friendShareCard" data-state="idle" aria-labelledby="friendShareTitle">
+      <section class="friend-share-card" id="friendShareCard" data-hub-destination="challenges" data-state="idle" aria-labelledby="friendShareTitle">
         <div class="friend-share-copy">
           <span class="eyebrow">BUILDER PROGRESSION</span>
           <h2 id="friendShareTitle">SHARE WITH A FRIEND</h2>
@@ -141,9 +148,14 @@
           <div id="challengeJournalList" class="challenge-journal-list"></div>
           <p class="panel-note" id="challengeJournalEmpty">Publish a challenge to start your Builder journal.</p>
         </div>
+        <div class="challenge-activity" aria-labelledby="challengeActivityTitle">
+          <div class="section-title"><h2 id="challengeActivityTitle">CHALLENGE ACTIVITY</h2><span id="challengeActivityCount">NO NEW RESULTS</span></div>
+          <div id="challengeActivityList" class="challenge-activity-list"></div>
+          <p class="panel-note" id="challengeActivityEmpty">Completed friend runs will appear here.</p>
+        </div>
       </section>
 
-      <article class="runner-card">
+      <article class="runner-card" data-hub-destination="home">
         <div class="runner-portrait"><canvas id="runnerHeroCanvas" aria-label="Animated Rookie Warrior with equipped gear"></canvas><small id="runnerHeroStatus" role="status" aria-live="polite"></small></div>
         <div class="runner-info">
           <span>YOUR RUNNER</span>
@@ -152,15 +164,10 @@
         </div>
       </article>
 
-      <button class="primary test-runner-cta" id="testYourRunner" type="button">TEST YOUR RUNNER <span>›</span></button>
-      <p class="panel-note practice-note">Practice run · no rewards. Take your current Runner into a dungeon you configure.</p>
+      <button class="primary test-runner-cta" data-hub-destination="home" id="testYourRunner" type="button">TEST YOUR RUNNER <span>›</span></button>
+      <p class="panel-note practice-note" data-hub-destination="home">Practice run · no rewards. Take your current Runner into a dungeon you configure.</p>
 
-      <div class="runner-tabs" role="tablist" aria-label="Runner details">
-        <button class="runner-tab" id="statsTab" type="button" role="tab" aria-selected="true">LEVEL &amp; STATS</button>
-        <button class="runner-tab" id="equipmentTab" type="button" role="tab" aria-selected="false">EQUIPMENT</button>
-      </div>
-
-      <section class="runner-panel" id="statsPanel" role="tabpanel" aria-labelledby="statsTab">
+      <section class="runner-panel" id="statsPanel" data-hub-destination="stats" role="tabpanel" aria-labelledby="statsTab" hidden>
         <article class="progression-card" aria-labelledby="progressionLevel">
           <div class="progression-head"><strong id="progressionLevel">LEVEL 1</strong><span id="progressionXp">0 / 30 XP</span></div>
           <div class="progression-bar"><i id="progressionFill" style="width:0%"></i></div>
@@ -186,7 +193,7 @@
         </section>
       </section>
 
-      <section class="runner-panel" id="equipmentPanel" role="tabpanel" aria-labelledby="equipmentTab" hidden>
+      <section class="runner-panel" id="equipmentPanel" data-hub-destination="equipment" role="tabpanel" aria-labelledby="equipmentTab" hidden>
         <div class="section-title"><h2>EQUIPPED GEAR</h2><span>ARMOR &amp; WEAPONS</span></div>
         <p class="panel-note">Your active loadout. Item bonuses shown here are already included in Current Stats.</p>
         <div class="flare-loadout" id="flareLoadout" aria-label="Equipped armor and weapons"></div>
@@ -197,11 +204,11 @@
         </section>
       </section>
 
-      <section class="goal-card" id="goalCard" hidden>
+      <section class="goal-card" id="goalCard" data-hub-destination="home" hidden>
         <div><span class="eyebrow">CHALLENGE GOAL</span><strong id="savedGoalLabel">No saved goal yet</strong></div>
       </section>
 
-      <p class="boundary-note">Training changes this Runner permanently. Equipment shows the armor and weapons currently affecting the Runner.</p>
+      <p class="boundary-note" data-hub-destination="home">Training changes this Runner permanently. Equipment shows the armor and weapons currently affecting the Runner.</p>
     </section>
   </main>
   <section class="purchase-dialog" id="purchaseDialog" role="dialog" aria-modal="true" aria-labelledby="purchaseDialogTitle" hidden>
@@ -214,6 +221,7 @@
       <div class="purchase-buttons"><button class="secondary" id="cancelPurchase" type="button">CANCEL</button><button class="primary" id="confirmPurchase" type="button">CONFIRM PURCHASE</button></div>
     </div>
   </section>
+  <section class="purchase-dialog" id="resultDetailDialog" role="dialog" aria-modal="true" aria-labelledby="resultDetailTitle" hidden><div class="purchase-sheet result-detail-sheet"><span class="eyebrow">CHALLENGE ACTIVITY</span><h2 id="resultDetailTitle">CHALLENGE RESULT</h2><dl id="resultDetailFields"></dl><button class="primary" id="closeResultDetail" type="button">DONE</button></div></section>
   <footer class="release-footer"><span id="releaseIdentityBadge"></span></footer>
   <script src="config.js"></script>
   <script src="vendor/supabase.js"></script>

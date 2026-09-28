@@ -77,6 +77,17 @@ buildArchive({
   zipName:'web-flare-p10-rc1-release.zip'
 });
 
+// Complete FRIEND_CHALLENGE_FEEDBACK_NAV_001 package. Unlike the legacy single-root P10 archive,
+// this keeps paths below public/ because the bounded slice changes both the Hub and /m receiver
+// runtime closure. Deployment remains separately authorized; this command only packages bytes.
+buildArchive({
+  label:'FRIEND_CHALLENGE_FEEDBACK_NAV_001 complete multi-root release archive',
+  sha:P10_SHA,
+  files:runtimeManifest.files.map(f=>f.path),
+  deployRootPrefix:'public/',
+  zipName:'web-flare-friend-feedback-nav-001-release.zip'
+});
+
 // --- Rollback archive: the last known LIVE predecessor tree (Update 006) ---
 const PREVIOUS_SHA='523bfd7ffc46be191ce48b794708cc5af945dcda';
 const previousFiles=[
