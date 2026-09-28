@@ -176,13 +176,14 @@ test('no direct browser write to runner_xp_event or runner_loadout is granted',a
 
 // ---------------- Client wiring ----------------
 
-test('Hub renders LEVEL/XP progression, an equipment-unlock list and a HISTORY tab',async()=>{
+test('Hub renders LEVEL/XP progression, an equipment-unlock list and history inside LEVEL & STATS',async()=>{
   const html=await read('public/flare-s8b/index.html');
   assert.match(html,/id="progressionLevel"/);
   assert.match(html,/id="progressionXp"/);
   assert.match(html,/id="progressionFill"/);
   assert.match(html,/id="unlockList"/);
-  assert.match(html,/id="historyTab"[^>]*>HISTORY/);
+  assert.match(html,/id="statsTab"[^>]*>LEVEL &amp; STATS/);
+  assert.doesNotMatch(html,/id="historyTab"[^>]*>HISTORY/);
   assert.match(html,/id="historyList"/);
 });
 

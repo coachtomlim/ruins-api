@@ -21,7 +21,7 @@ test('browser adapter uses injected public config and official SDK persistence',
 
 test('static account surface is player-facing and keeps stat training governed',async()=>{
   const html=await read('public/flare-s8b/index.html');
-  for(const text of ['RUNNER HUB','CREATE ACCOUNT','SIGN IN','CHECK YOUR EMAIL','YOUR RUNNER','LEVEL & STATS','CURRENT STATS','EQUIPMENT','EQUIPPED GEAR','SIGN OUT','SOLO GOLD','DAILY BONUS','DAILY TRIAL']){
+  for(const text of ['RUNNER HUB','CREATE ACCOUNT','SIGN IN','CHECK YOUR EMAIL','YOUR RUNNER','LEVEL &amp; STATS','CURRENT STATS','EQUIPMENT','EQUIPPED GEAR','SIGN OUT','SOLO GOLD','DAILY BONUS','DAILY TRIAL']){
     assert.match(html,new RegExp(escapeRegExp(text)));
   }
   assert.match(html,/id="runnerHeroCanvas"/);
@@ -29,14 +29,14 @@ test('static account surface is player-facing and keeps stat training governed',
   assert.match(html,/id="dailyLoginStreak"/);
   assert.match(html,/id="dailyLoginStatus"/);
   assert.match(html,/flareteam\/flare-game\/2ef474f5f5f368628bc526f9e56f936dac743e49\/mods\/fantasycore\/images\/loot\/coins5\.png/);
-  assert.match(html,/Animated Rookie Warrior with Wooden Club and Wooden Shield/);
+  assert.match(html,/Animated Rookie Warrior with equipped gear/);
   assert.doesNotMatch(html,/ACCOUNT FOUNDATION|AUTHORITATIVE STATS|SAVE TOM · L3 · 60%/);
   assert.match(html,/Confirm your email address, then sign in to continue\./);
   assert.match(html,/id="statsPanel"/);
   assert.match(html,/id="equipmentPanel"/);
   assert.match(html,/id="flareLoadout"/);
-  assert.match(html,/FLARE LOADOUT/);
-  assert.match(html,/MAIN · OFF · ARMOR/);
+  assert.match(html,/EQUIPPED GEAR/);
+  assert.match(html,/ARMOR &amp; WEAPONS/);
   assert.match(html,/RUNNER TRAINING/);
   assert.match(html,/PERMANENT STATS/);
   assert.match(html,/id="trainingOffers"/);
