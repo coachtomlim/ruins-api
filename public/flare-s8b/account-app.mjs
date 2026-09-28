@@ -368,9 +368,19 @@ async function openFriendShare(){
   if(!friendLink)return;
   try{
     const result=await shareFriendLink({url:friendLink.url,title:friendLink.share.title,text:friendLink.share.text});
-    if(result.method==='native'&&result.shared)byId('friendShareStatus').textContent='Shared.';
-    else if(result.cancelled)byId('friendShareStatus').textContent='Link is ready to copy or share anytime.';
-    else byId('friendShareStatus').textContent='Sharing is not available on this device. Use Copy Link instead.';
+    if(result.method==='native'&&result.shared){
+      byId('friendShareStatus').textContent='Shared.';
+      return;
+    }
+    if(result.cancelled){
+      byId('friendShareStatus').textContent='Share cancelled. Your friend link is still ready below.';
+      return;
+    }
+    const copied=await copyFriendLink(friendLink.url);
+    byId('friendShareStatus').textContent=copied.copied
+      ?'FRIEND LINK COPIED · paste it into WhatsApp, email or any message.'
+      :'Your friend link is ready below. Copy it and send it in any message.';
+    if(!copied.copied){byId('friendShareUrl').focus();byId('friendShareUrl').select()}
   }catch(error){
     byId('friendShareStatus').textContent=errorMessage(error);
   }
