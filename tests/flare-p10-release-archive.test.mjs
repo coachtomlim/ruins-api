@@ -47,10 +47,12 @@ test('release archive contains no real secret material (only known guard-regex r
   }
 });
 
-test('config.js is never present in either archive (it is generated per-deployment, never repo-tracked)',async()=>{
+test('config.js is never present in any release/rollback archive (it is deployment-generated)',async()=>{
   const rel=JSON.parse(await read('docs/release/web-flare-p10-rc1-release.manifest.json'));
+  const friend=JSON.parse(await read('docs/release/web-flare-friend-feedback-nav-001-release.manifest.json'));
   const roll=JSON.parse(await read('docs/release/web-flare-update006-rollback.manifest.json'));
   assert.ok(!rel.files.some(f=>f.path.endsWith('config.js')));
+  assert.ok(!friend.files.some(f=>f.path.endsWith('config.js')));
   assert.ok(!roll.files.some(f=>f.path.endsWith('config.js')));
 });
 
@@ -95,4 +97,12 @@ test('friend-feedback archive contains the paths declared by its manifest',()=>{
   }finally{
     execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-Command',`Remove-Item -Recurse -Force '${outDir}'`]);
   }
+});
+
+
+test('release builder refuses worktree/runtime-manifest drift from the selected source SHA',async()=>{
+  const src=await read('scripts/release/build-release-archive.mjs');
+  assert.match(src,/Runtime manifest differs from committed source/);
+  assert.match(src,/gitShow\(P10_SHA,entry\.path\)/);
+  assert.match(src,/committedHash!==entry\.sha256/);
 });
