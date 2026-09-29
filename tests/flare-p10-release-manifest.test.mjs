@@ -75,6 +75,7 @@ test('manifest generator maps site-absolute Quick Dungeon paths back into public
   assert.match(src,/clean\.startsWith\('\/quick-dungeon\/'\)/);
   assert.match(src,/return 'public\/'\+clean\.slice\('\/quick-dungeon\/'\.length\)/);
   assert.match(src,/public\/flare-s8a\/challenge\.html/);
-  assert.match(src,/\bfetch\(/);
+  assert.match(src,/const fetches=/);
+  assert.match(src,/while\(\(m=fetches\.exec\(src\)\)\)/);
   assert.match(src,/local\s*:/);
 });
