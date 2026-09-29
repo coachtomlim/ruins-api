@@ -12,6 +12,7 @@ const read=p=>readFile(path.join(repoRoot,p),'utf8');
 test('release and rollback archives + manifests exist',()=>{
   for(const f of [
     'docs/release/web-flare-p10-rc1-release.zip','docs/release/web-flare-p10-rc1-release.manifest.json',
+    'docs/release/web-flare-friend-feedback-nav-001-release.zip','docs/release/web-flare-friend-feedback-nav-001-release.manifest.json',
     'docs/release/web-flare-update006-rollback.zip','docs/release/web-flare-update006-rollback.manifest.json'
   ])assert.ok(existsSync(path.join(repoRoot,f)),`missing ${f}`);
 });
@@ -58,4 +59,32 @@ test('the fallback/rollback documentation exists and states the real database-mi
   assert.match(doc,/Back up first/);
   assert.match(doc,/Database migrations are not rolled back/);
   assert.match(doc,/has not been executed end-to-end against production/);
+});
+
+
+test('friend-feedback multi-root archive matches the complete runtime manifest and current source commit',async()=>{
+  const archiveManifest=JSON.parse(await read('docs/release/web-flare-friend-feedback-nav-001-release.manifest.json'));
+  const runtimeManifest=JSON.parse(await read('docs/release/WEB-FLARE-RC1-MANIFEST.json'));
+  const head=execFileSync('git',['-C',repoRoot,'rev-parse','HEAD']).toString().trim();
+  assert.equal(archiveManifest.fileCount,runtimeManifest.fileCount);
+  assert.equal(archiveManifest.sourceSha,head);
+  assert.equal(archiveManifest.files.length,runtimeManifest.files.length);
+  assert.ok(archiveManifest.files.some(f=>f.path==='flare-s8a/challenge.html'));
+  assert.ok(archiveManifest.files.some(f=>f.path==='flare-s8a/result-receipt.mjs'));
+  assert.ok(archiveManifest.files.some(f=>f.path==='flare-s8a/result-view-model.mjs'));
+  assert.ok(!archiveManifest.files.some(f=>f.path.endsWith('config.js')));
+});
+
+test('friend-feedback archive contains the paths declared by its manifest',()=>{
+  const outDir=path.join(repoRoot,'docs/release/_friend-test-extract');
+  execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-Command',
+    `Expand-Archive -Path '${path.join(repoRoot,'docs/release/web-flare-friend-feedback-nav-001-release.zip')}' -DestinationPath '${outDir}' -Force`]);
+  try{
+    const manifest=JSON.parse(execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-Command',
+      `Get-Content -Raw '${path.join(repoRoot,'docs/release/web-flare-friend-feedback-nav-001-release.manifest.json')}'`
+    ]).toString());
+    for(const entry of manifest.files)assert.ok(existsSync(path.join(outDir,entry.path)),`archive missing ${entry.path}`);
+  }finally{
+    execFileSync('powershell.exe',['-NoProfile','-NonInteractive','-Command',`Remove-Item -Recurse -Force '${outDir}'`]);
+  }
 });
