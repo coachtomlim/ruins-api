@@ -54,3 +54,27 @@ test('the manifest excludes the older Update 006 HostGator helper and its frozen
   const manifest=JSON.parse(await read('docs/release/WEB-FLARE-RC1-MANIFEST.json'));
   assert.ok(!manifest.files.some(f=>f.path.includes('hostgator-flare-s8b-update')));
 });
+
+
+test('runtime manifest includes the S8A friend receiver as a first-class release root and closure',async()=>{
+  const manifest=JSON.parse(await read('docs/release/WEB-FLARE-RC1-MANIFEST.json'));
+  assert.ok(Array.isArray(manifest.entryPoints));
+  assert.ok(manifest.entryPoints.includes('public/flare-s8a/challenge.html'));
+  for(const required of [
+    'public/flare-s8a/challenge.html',
+    'public/flare-s8a/challenge.mjs',
+    'public/flare-s8a/invitation-view-model.mjs',
+    'public/flare-s8a/result-receipt.mjs',
+    'public/flare-s8a/result-view-model.mjs',
+    'public/flare-s8a/style.css'
+  ])assert.ok(manifest.files.some(f=>f.path===required),`missing S8A receiver dependency: ${required}`);
+});
+
+test('manifest generator maps site-absolute Quick Dungeon paths back into public runtime paths',async()=>{
+  const src=await read('scripts/release/generate-manifest.mjs');
+  assert.match(src,/clean\.startsWith\('\/quick-dungeon\/'\)/);
+  assert.match(src,/return 'public\/'\+clean\.slice\('\/quick-dungeon\/'\.length\)/);
+  assert.match(src,/public\/flare-s8a\/challenge\.html/);
+  assert.match(src,/\bfetch\\\(/);
+  assert.match(src,/local\\s\*:/);
+});
