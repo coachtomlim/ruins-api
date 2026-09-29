@@ -105,7 +105,7 @@ test('migration isolates feedback from economy and hardens SECURITY DEFINER func
 
 test('migration gives every future challenge an opaque public token and permits journal result counts',async()=>{
   const sql=await read('supabase/migrations/20260928_friend_challenge_feedback_nav.sql');
-  assert.match(sql,/alter column public_token set default rtrim\(translate\(encode\(gen_random_bytes\(24\),'base64'\),'\+\/','-_'\),'='\)/);
+  assert.match(sql,/alter column public_token set default rtrim\(translate\(encode\(extensions\.gen_random_bytes\(24\),'base64'\),'\+\/','-_'\),'='\)/);
   assert.match(sql,/get_builder_challenges_v2[\s\S]*language sql stable security definer set search_path=''/);
   assert.match(sql,/revoke all on table public\.builder_challenge_result from anon,authenticated/);
   assert.match(sql,/grant execute on function public\.get_builder_challenges_v2\(integer\) to authenticated/);
