@@ -4,9 +4,9 @@
 
 alter table public.builder_challenge add column if not exists public_token text;
 update public.builder_challenge
-set public_token = rtrim(translate(encode(gen_random_bytes(24),'base64'),'+/','-_'),'=')
+set public_token = rtrim(translate(encode(extensions.gen_random_bytes(24),'base64'),'+/','-_'),'=')
 where public_token is null;
-alter table public.builder_challenge alter column public_token set default rtrim(translate(encode(gen_random_bytes(24),'base64'),'+/','-_'),'=');
+alter table public.builder_challenge alter column public_token set default rtrim(translate(encode(extensions.gen_random_bytes(24),'base64'),'+/','-_'),'=');
 alter table public.builder_challenge alter column public_token set not null;
 alter table public.builder_challenge drop constraint if exists builder_challenge_public_token_format;
 alter table public.builder_challenge add constraint builder_challenge_public_token_format
