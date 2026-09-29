@@ -62,13 +62,21 @@ test('the fallback/rollback documentation exists and states the real database-mi
 });
 
 
-test('friend-feedback multi-root archive matches the complete runtime manifest and current source commit',async()=>{
+test('friend-feedback multi-root archive matches the complete runtime manifest and its committed source tree',async()=>{
   const archiveManifest=JSON.parse(await read('docs/release/web-flare-friend-feedback-nav-001-release.manifest.json'));
   const runtimeManifest=JSON.parse(await read('docs/release/WEB-FLARE-RC1-MANIFEST.json'));
-  const head=execFileSync('git',['-C',repoRoot,'rev-parse','HEAD']).toString().trim();
+  assert.match(archiveManifest.sourceSha,/^[0-9a-f]{40}$/);
+  execFileSync('git',['-C',repoRoot,'merge-base','--is-ancestor',archiveManifest.sourceSha,'HEAD']);
   assert.equal(archiveManifest.fileCount,runtimeManifest.fileCount);
-  assert.equal(archiveManifest.sourceSha,head);
   assert.equal(archiveManifest.files.length,runtimeManifest.files.length);
+  for(const entry of runtimeManifest.files){
+    const source=execFileSync('git',['-C',repoRoot,'show',`${archiveManifest.sourceSha}:${entry.path}`]);
+    const sourceHash=createHash('sha256').update(source).digest('hex');
+    assert.equal(sourceHash,entry.sha256,`runtime manifest does not match sourceSha for ${entry.path}`);
+    const archived=archiveManifest.files.find(f=>f.path===entry.path.replace(/^public\//,''));
+    assert.ok(archived,`archive manifest missing ${entry.path}`);
+    assert.equal(archived.sha256,entry.sha256,`archive manifest hash mismatch for ${entry.path}`);
+  }
   assert.ok(archiveManifest.files.some(f=>f.path==='flare-s8a/challenge.html'));
   assert.ok(archiveManifest.files.some(f=>f.path==='flare-s8a/result-receipt.mjs'));
   assert.ok(archiveManifest.files.some(f=>f.path==='flare-s8a/result-view-model.mjs'));
