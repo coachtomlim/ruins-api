@@ -29,10 +29,11 @@ function canonicalRuntimeBytes(buffer,ext){
 }
 
 const ENTRY_POINTS=Object.freeze([
+  'public/flare-s8a/index.html',
+  'public/flare-s8a/challenge.html',
   'public/flare-s8b/index.html',
   'public/flare-s8b/practice.html',
-  'public/flare-s8b/daily-trial.html',
-  'public/flare-s8a/challenge.html'
+  'public/flare-s8b/daily-trial.html'
 ]);
 
 const seen=new Set();

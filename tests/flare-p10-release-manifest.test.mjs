@@ -70,6 +70,30 @@ test('runtime manifest includes the S8A friend receiver as a first-class release
   ])assert.ok(manifest.files.some(f=>f.path===required),`missing S8A receiver dependency: ${required}`);
 });
 
+test('runtime manifest includes the S8A Builder as a first-class release root and complete startup closure',async()=>{
+  const manifest=JSON.parse(await read('docs/release/WEB-FLARE-RC1-MANIFEST.json'));
+  assert.ok(manifest.entryPoints.includes('public/flare-s8a/index.html'));
+  assert.ok(manifest.entryPoints.includes('public/flare-s8a/challenge.html'));
+  const listed=new Set(manifest.files.map(f=>f.path));
+  for(const required of [
+    'public/flare-s8a/index.html',
+    'public/flare-s8a/builder.mjs',
+    'public/flare-s8a/starter-runner-adapter.mjs',
+    'public/flare-s8a/actors.mjs',
+    'public/flare-s8a/builder-invite.mjs',
+    'public/flare-s71/game.mjs',
+    'public/flare-s71/hero-preview.mjs',
+    'public/flare-p0/data/catalog.json',
+    'public/flare-s7/data/game.json'
+  ])assert.ok(listed.has(required),`missing S8A Builder dependency: ${required}`);
+  // The entry point's direct module and stylesheet links must all survive release tracing.
+  const html=await read('public/flare-s8a/index.html');
+  for(const spec of [...html.matchAll(/(?:src|href)=["']([^"']+)["']/g)].map(m=>m[1]).filter(s=>!s.startsWith('http')&&!s.startsWith('#'))){
+    const resolved=`public/flare-s8a/${spec}`.replace(/\/[^/]+\/\.\.\//g,'/');
+    assert.ok(listed.has(resolved),`Builder static dependency missing: ${resolved}`);
+  }
+});
+
 test('manifest generator maps site-absolute Quick Dungeon paths back into public runtime paths',async()=>{
   const src=await read('scripts/release/generate-manifest.mjs');
   assert.match(src,/clean\.startsWith\('\/quick-dungeon\/'\)/);

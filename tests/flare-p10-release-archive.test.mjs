@@ -80,6 +80,9 @@ test('friend-feedback multi-root archive matches the complete runtime manifest a
     assert.equal(archived.sha256,entry.sha256,`archive manifest hash mismatch for ${entry.path}`);
   }
   assert.ok(archiveManifest.files.some(f=>f.path==='flare-s8a/challenge.html'));
+  assert.ok(archiveManifest.files.some(f=>f.path==='flare-s8a/index.html'));
+  assert.ok(archiveManifest.files.some(f=>f.path==='flare-s8a/builder.mjs'));
+  assert.ok(archiveManifest.files.some(f=>f.path==='flare-s8a/starter-runner-adapter.mjs'));
   assert.ok(archiveManifest.files.some(f=>f.path==='flare-s8a/result-receipt.mjs'));
   assert.ok(archiveManifest.files.some(f=>f.path==='flare-s8a/result-view-model.mjs'));
   assert.ok(!archiveManifest.files.some(f=>f.path.endsWith('config.js')));
