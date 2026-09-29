@@ -6,6 +6,7 @@ alter table public.builder_challenge add column if not exists public_token text;
 update public.builder_challenge
 set public_token = rtrim(translate(encode(gen_random_bytes(24),'base64'),'+/','-_'),'=')
 where public_token is null;
+alter table public.builder_challenge alter column public_token set default rtrim(translate(encode(gen_random_bytes(24),'base64'),'+/','-_'),'=');
 alter table public.builder_challenge alter column public_token set not null;
 alter table public.builder_challenge drop constraint if exists builder_challenge_public_token_format;
 alter table public.builder_challenge add constraint builder_challenge_public_token_format
@@ -53,8 +54,8 @@ grant execute on function public.create_builder_challenge_v2(integer) to authent
 
 create or replace function public.get_builder_challenges_v2(p_limit integer default 20)
 returns table (challenge_id uuid,runner_id text,target_hp integer,invite_code text,sender_name text,public_token text,result_count bigint,created_at timestamptz)
-language sql stable security invoker set search_path=''
-as $$
+language sql stable security definer set search_path=''
+as $
   select c.id,c.runner_id,c.target_hp,c.invite_code,c.sender_name,c.public_token,count(r.id),c.created_at
   from public.builder_challenge c left join public.builder_challenge_result r on r.challenge_id=c.id
   where c.owner_player_id=auth.uid()
