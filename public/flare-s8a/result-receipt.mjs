@@ -1,7 +1,7 @@
 const clean=value=>String(value??'').trim();
 const boundedInt=(value,min,max,label)=>{const n=Number(value);if(!Number.isInteger(n)||n<min||n>max)throw new Error(`INVALID_${label}`);return n};
 
-export function buildResultReceipt({publicToken,roomId,encounter,rulesVersion,result,score,heroGold,builderGold,inputHash}={}){
+export function buildResultReceipt({publicToken,roomId,encounter,rulesVersion,result,heroGold}={}){
   const token=clean(publicToken);
   if(!/^[A-Za-z0-9_-]{32,128}$/.test(token))throw new Error('PUBLIC_CHALLENGE_TOKEN_REQUIRED');
   const status=clean(result?.status);
@@ -10,9 +10,7 @@ export function buildResultReceipt({publicToken,roomId,encounter,rulesVersion,re
   return Object.freeze({
     p_public_token:token,p_room_id:clean(roomId).slice(0,64),p_encounter:structuredClone(encounter||{}),
     p_rules_version:clean(rulesVersion||'s8a-1').slice(0,64),p_terminal_status:status,
-    p_finishing_hp:finishingHp,p_max_hp:maxHp,p_score:boundedInt(Math.round(Number(score)),0,100,'SCORE'),
-    p_hero_gold:boundedInt(heroGold,0,100000,'HERO_GOLD'),p_builder_gold:boundedInt(builderGold,0,100000,'BUILDER_GOLD'),
-    p_input_hash:clean(inputHash).slice(0,128)
+    p_finishing_hp:finishingHp,p_max_hp:maxHp,p_hero_gold:boundedInt(heroGold,0,30,'HERO_GOLD')
   });
 }
 
