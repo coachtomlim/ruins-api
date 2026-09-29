@@ -34,7 +34,7 @@ test('the runtime manifest generator produces a deterministic, non-empty, indepe
   assert.ok(!manifest.files.some(f=>f.path.endsWith('config.js')));
   // every listed sha256 must match the actual file on disk right now (no stale/hand-edited entries)
   for(const entry of manifest.files){
-    const buf=await readFile(new URL(`../${entry.path}`,import.meta.url));
+    const buf=execFileSync('git',['show',`HEAD:${entry.path}`]);
     const actual=createHash('sha256').update(buf).digest('hex');
     assert.equal(actual,entry.sha256,`stale sha256 for ${entry.path} — rerun scripts/release/generate-manifest.mjs`);
   }

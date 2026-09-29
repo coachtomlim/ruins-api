@@ -20,6 +20,14 @@ const MIME_BY_EXT={
   '.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.txt':'text/plain; charset=utf-8'
 };
 
+function canonicalRuntimeBytes(buffer,ext){
+  // Git stores these text runtime assets with LF. Normalizing the Windows checkout's CRLF
+  // representation keeps manifest hashes aligned with the committed bytes used by the archive,
+  // while still exposing any substantive uncommitted source change to the archive's drift guard.
+  if(['.html','.mjs','.js','.css','.json','.txt'].includes(ext))return Buffer.from(buffer.toString('utf8').replace(/\r\n/g,'\n'),'utf8');
+  return buffer;
+}
+
 const ENTRY_POINTS=Object.freeze([
   'public/flare-s8b/index.html',
   'public/flare-s8b/practice.html',
@@ -90,8 +98,8 @@ seen.delete('public/flare-s8b/config.js');
 
 const files=[...seen].sort().map(rel=>{
   const abs=path.join(root,rel);
-  const buf=readFileSync(abs);
   const ext=path.extname(rel).toLowerCase();
+  const buf=canonicalRuntimeBytes(readFileSync(abs),ext);
   return {
     path:rel,
     sha256:createHash('sha256').update(buf).digest('hex'),
