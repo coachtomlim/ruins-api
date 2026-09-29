@@ -1,6 +1,6 @@
 {
   "releaseId": "WEB-FLARE-RC1",
-  "generatedAt": "2026-09-29T07:55:11.866Z",
+  "generatedAt": "2026-09-29T12:14:49.962Z",
   "entryPoints": [
     "public/flare-s8a/index.html",
     "public/flare-s8a/challenge.html",
@@ -252,15 +252,15 @@
     },
     {
       "path": "public/flare-s8a/challenge.html",
-      "sha256": "f6d90dd323afd18a44f5d63c4ef94f6b7e836556d13efda5b56fb9c72e6845ef",
+      "sha256": "cbca47054dd5a70e9be91719d20c1bfb5de99c76cb3ac095f4ef6460e3d73d91",
       "mime": "text/html; charset=utf-8",
-      "bytes": 6141
+      "bytes": 6162
     },
     {
       "path": "public/flare-s8a/challenge.mjs",
-      "sha256": "31df205c98e365fc3f3cd47338b8aab52547e7aca197390ed6ccbcc93799693d",
+      "sha256": "0bd9c5a5072b744dbe9b5dae3a26c5fb31afeb83d2e89a971f6f640d26dc09e8",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 12410
+      "bytes": 12965
     },
     {
       "path": "public/flare-s8a/customize-panels.mjs",
