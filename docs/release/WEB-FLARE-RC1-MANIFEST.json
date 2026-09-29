@@ -1,6 +1,6 @@
 {
   "releaseId": "WEB-FLARE-RC1",
-  "generatedAt": "2026-09-29T07:01:57.676Z",
+  "generatedAt": "2026-09-29T07:03:00.002Z",
   "entryPoints": [
     "public/flare-s8b/index.html",
     "public/flare-s8b/practice.html",
