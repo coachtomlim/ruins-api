@@ -1,7 +1,7 @@
 {
   "label": "FRIEND_CHALLENGE_FEEDBACK_NAV_001 complete multi-root release archive",
-  "sourceSha": "02067eaa6ea9c2105e6c46d0986783dad5e053c5",
-  "fileCount": 100,
+  "sourceSha": "b522a09ab33f5fb6c91154bbd6237174e277f957",
+  "fileCount": 103,
   "zip": "web-flare-friend-feedback-nav-001-release.zip",
   "files": [
     {
@@ -221,6 +221,12 @@
       "bytes": 609
     },
     {
+      "path": "flare-s8a/builder.mjs",
+      "sha256": "c872ef1a3dbdae65eb6c0c4f1f397d24ae1acdc88e929c3dee63f9a64710ba57",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 3024
+    },
+    {
       "path": "flare-s8a/camera-controller.mjs",
       "sha256": "f35417fc079f2c161067e238083dc20a920744bc4ec83e01670ab1e9bbcc5b79",
       "mime": "text/javascript; charset=utf-8",
@@ -273,6 +279,12 @@
       "sha256": "97c680aff8c979684f58b2da625aedc6bca2eaa3c83cc034b14eaedc280b8b2a",
       "mime": "text/javascript; charset=utf-8",
       "bytes": 788
+    },
+    {
+      "path": "flare-s8a/index.html",
+      "sha256": "bced3922451baf51a98c73d92b026b3acdb77a9341f3b6cec59b9158139677e7",
+      "mime": "text/html; charset=utf-8",
+      "bytes": 1820
     },
     {
       "path": "flare-s8a/invitation-view-model.mjs",
@@ -423,6 +435,12 @@
       "sha256": "5e295c15d9cc1c3fe9ea56e6968376e16bd8d03ba39bd9a3a2dc9c05c1f447c1",
       "mime": "text/javascript; charset=utf-8",
       "bytes": 1166
+    },
+    {
+      "path": "flare-s8a/starter-runner-adapter.mjs",
+      "sha256": "d4d6c464a5871b0a528346cb933c7d563879e6abc78f65d4197a7d9112991240",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 1329
     },
     {
       "path": "flare-s8a/stock-equipment-visuals.mjs",

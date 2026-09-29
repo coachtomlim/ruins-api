@@ -1,6 +1,6 @@
 {
   "releaseId": "WEB-FLARE-RC1",
-  "generatedAt": "2026-09-29T07:53:54.372Z",
+  "generatedAt": "2026-09-29T07:55:11.866Z",
   "entryPoints": [
     "public/flare-s8a/index.html",
     "public/flare-s8a/challenge.html",
