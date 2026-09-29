@@ -62,12 +62,19 @@ function buildArchive({label,sha,files,deployRootPrefix,zipName}){
   return {zipPath,manifestPath,manifest};
 }
 
-// --- Fallback release archive: exact P10 flare-s8b runtime tree ---
-// Regenerate the manifest first so this archive always reflects the current worktree, not a stale copy.
+// --- Fallback release archive: exact committed runtime tree ---
+const P10_SHA=process.env.P10_RELEASE_SHA||execFileSync('git',['-C',root,'rev-parse','HEAD']).toString().trim();
+// Regenerate the dependency closure from the worktree, then prove every listed byte is identical to
+// the committed source tree selected for packaging. This prevents a dirty worktree from producing a
+// manifest whose dependency set/hashes disagree with the git-show bytes written into the archive.
 execFileSync('node',[path.join(__dirname,'generate-manifest.mjs')],{cwd:root});
 const runtimeManifest=JSON.parse(readFileSync(path.join(root,'docs/release/WEB-FLARE-RC1-MANIFEST.json'),'utf8'));
+for(const entry of runtimeManifest.files){
+  const committed=gitShow(P10_SHA,entry.path);
+  const committedHash=createHash('sha256').update(committed).digest('hex');
+  if(committedHash!==entry.sha256)throw new Error(`Runtime manifest differs from committed source ${P10_SHA}: ${entry.path}`);
+}
 const releaseFiles=runtimeManifest.files.filter(f=>f.path.startsWith('public/flare-s8b/')).map(f=>f.path);
-const P10_SHA=process.env.P10_RELEASE_SHA||execFileSync('git',['-C',root,'rev-parse','HEAD']).toString().trim();
 
 buildArchive({
   label:'WEB-FLARE-RC1 release archive (public_html/quick-dungeon/flare-s8b)',
