@@ -103,23 +103,23 @@ begin
   where c.public_token=p_public_token;
   if not found then raise exception 'UNKNOWN_CHALLENGE_TOKEN'; end if;
 
-  if p_room_id not in (
+  if p_room_id is null or p_room_id not in (
        'iron-labyrinth-01','iron-labyrinth-03','iron-labyrinth-07',
        'iron-labyrinth-08','iron-labyrinth-15','iron-labyrinth-18'
      )
      or p_rules_version is distinct from 's8a-1'
-     or p_terminal_status not in ('cleared','dead','blocked','timeout')
+     or p_terminal_status is null or p_terminal_status not in ('cleared','dead','blocked','timeout')
      or p_finishing_hp is null or p_finishing_hp<0
      or p_max_hp is null or p_max_hp<1 or p_finishing_hp>p_max_hp
      or p_hero_gold is null or p_hero_gold<0
-     or jsonb_typeof(p_encounter)<>'object' then
+     or jsonb_typeof(p_encounter) is distinct from 'object' then
     raise exception 'RESULT_RECEIPT_INVALID';
   end if;
 
   if (p_encounter - array['enemyTypes','trapTypes','supportTypes']) <> '{}'::jsonb
-     or jsonb_typeof(p_encounter->'enemyTypes')<>'array'
-     or jsonb_typeof(p_encounter->'trapTypes')<>'array'
-     or jsonb_typeof(p_encounter->'supportTypes')<>'array' then
+     or jsonb_typeof(p_encounter->'enemyTypes') is distinct from 'array'
+     or jsonb_typeof(p_encounter->'trapTypes') is distinct from 'array'
+     or jsonb_typeof(p_encounter->'supportTypes') is distinct from 'array' then
     raise exception 'RESULT_ENCOUNTER_INVALID';
   end if;
 
@@ -144,7 +144,7 @@ begin
   into v_traps
   from jsonb_array_elements_text(p_encounter->'trapTypes');
   if exists(select 1 from unnest(v_traps) x where x not in ('spike-trap','dart-trap'))
-     or cardinality(v_traps) <> (select count(distinct value) from unnest(v_traps) value) then
+     or cardinality(v_traps) <> (select count(distinct x) from unnest(v_traps) as u(x)) then
     raise exception 'RESULT_ENCOUNTER_INVALID';
   end if;
 
@@ -152,7 +152,7 @@ begin
   into v_supports
   from jsonb_array_elements_text(p_encounter->'supportTypes');
   if exists(select 1 from unnest(v_supports) x where x not in ('small-potion','battle-tonic','iron-tonic'))
-     or cardinality(v_supports) <> (select count(distinct value) from unnest(v_supports) value) then
+     or cardinality(v_supports) <> (select count(distinct x) from unnest(v_supports) as u(x)) then
     raise exception 'RESULT_ENCOUNTER_INVALID';
   end if;
 
