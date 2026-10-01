@@ -9,6 +9,7 @@ import {buildPersistedFriendShareLink,friendShareUrlIsSafe,shareFriendLink,copyF
 import {releaseIdentityLabel} from './release-identity.mjs';
 
 const PRACTICE_SNAPSHOT_KEY='s8bPracticeSnapshot';
+const FRIEND_GOAL_CLAIM_KEY='s8aFriendGoalClaim';
 {const badge=document.getElementById('releaseIdentityBadge');if(badge)badge.textContent=releaseIdentityLabel()}
 let s7ModelPromise=null;
 const loadS7Model=()=>s7ModelPromise??=fetch(new URL('../flare-s7/data/game.json',import.meta.url),{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('S7 game model unavailable');return r.json()});
@@ -507,6 +508,24 @@ async function confirmPurchase(){
   }
 }
 
+async function claimPendingFriendGoal(){
+  let raw=null;
+  try{raw=sessionStorage.getItem(FRIEND_GOAL_CLAIM_KEY)}catch{return}
+  if(!raw)return;
+  try{sessionStorage.removeItem(FRIEND_GOAL_CLAIM_KEY)}catch{}
+  let goal=null;
+  try{goal=JSON.parse(raw)}catch{return}
+  const senderName=String(goal?.senderName||''),runnerId=String(goal?.runnerId||''),targetHp=Number(goal?.targetHp);
+  if(!senderName||!runnerId||!Number.isFinite(targetHp))return;
+  try{
+    await adapter.saveGoal({senderName,runnerId,targetHp});
+    await refreshReady();
+    byId('purchaseStatus').textContent="Your friend's goal has been saved.";
+  }catch(error){
+    console.error(error);
+  }
+}
+
 function renderReady(account){
   byId('dailyLoginStatus').textContent='';
   byId('dailyTrialStatus').textContent='';
@@ -537,6 +556,7 @@ function renderReady(account){
   selectHubDestination('home');
   showView('readyView');
   void renderRunnerVisual(vm);
+  void claimPendingFriendGoal();
 }
 
 async function restoreSession(){

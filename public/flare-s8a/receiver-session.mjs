@@ -48,6 +48,7 @@ export function advanceReceiver(session,event,payload={}){
     case 'EDIT_DUNGEON':requireRoom(session);return patch(session,{journey:transitionJourney(session.journey,'EDIT_DUNGEON')});
     case 'SAVE_GOAL':return patch(session,{journey:transitionJourney(session.journey,'SAVE_GOAL')});
     case 'BACK_TO_REWARDS':return patch(session,{journey:transitionJourney(session.journey,'BACK_TO_REWARDS')});
+    case 'BACK':return patch(session,{journey:transitionJourney(session.journey,'BACK')});
     default:throw new Error(`Unknown receiver event: ${event}`);
   }
 }

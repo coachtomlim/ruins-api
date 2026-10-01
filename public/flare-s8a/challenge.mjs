@@ -5,6 +5,7 @@ import {calibrateEncounter,estimateEncounter} from '../flare-s71/calibration.mjs
 import {startComposedHeroStance} from '../flare-s71/hero-preview.mjs';
 import {decodeInviteCode,inviteCodeFromLocation,inviteSender} from './flow.mjs';
 import {createReceiverSession,selectDungeon,setEncounter,advanceReceiver} from './receiver-session.mjs';
+import {canTransition} from './journey.mjs';
 import {buildReceiverView} from './receiver-view.mjs';
 import {buildCustomizationCatalog} from './catalog-view-model.mjs';
 import {buildRoomCarousel} from './room-carousel.mjs';
@@ -18,12 +19,14 @@ function requiredElement(id){const el=$(id);if(!el)throw new Error(`S8A_DOM_CONT
 const REWARDS_DOM_CONTRACT=['heading-rewards','resultTarget','resultFinished','resultDifference','resultScore','heroRewardLabel','heroRewardGold','builderRewardGold','resultReceiptStatus','retryResultReceipt'];
 let model,baseCatalog,catalog,invite,runner,session,calibrated,roomIndex=0,activePanel='monsters',runtimeStart=null,lastReceiptPayload=null;
 const publicToken=publicChallengeTokenFromLocation(location);
+const FRIEND_GOAL_CLAIM_KEY='s8aFriendGoalClaim';
+function accountServiceAvailable(){const config=globalThis.__FLARE_S8B_PUBLIC_CONFIG__,sdk=globalThis.supabase;return Boolean(config?.url&&config?.publishableKey&&typeof sdk?.createClient==='function');}
 const selectedSpec=()=>specs[roomIndex],selectedRoom=()=>rooms.get(selectedSpec().id);
 const encounter=()=>({enemyTypes:[...document.querySelectorAll('[data-enemy-slot]')].map(x=>x.value),trapTypes:TRAP_IDS.filter(id=>document.querySelector(`[data-choice="${id}"]`)?.checked),supportTypes:SUPPORT_IDS.filter(id=>document.querySelector(`[data-choice="${id}"]`)?.checked)});
 const usedBudget=e=>encounterCost(catalog,e);
 const labels=(ids,kind)=>ids.filter(id=>id!=='none').map(id=>kind==='monster'?catalog.enemies[id]?.name:model.items?.[id]?.name||model.items?.[id]?.label||id);
-function context(){const e=encounter(),estimate=estimateEncounter({catalog,model,runnerId:invite.runnerId,runner,encounter:e});return{runnerName:runner.name,runnerLevel:runner.level,roomName:selectedSpec().name,roomIndex,roomCount:specs.length,estimatedHpPercent:estimate.estimatedHpPercent,usedBudget:usedBudget(e),totalBudget:model.budget||100,activePanel,monsters:labels(e.enemyTypes,'monster'),traps:labels(e.trapTypes,'item'),supports:labels(e.supportTypes,'item')};}
-function show(){const view=buildReceiverView({session,context:context()});for(const root of document.querySelectorAll('[data-screen]'))root.hidden=root.dataset.screen!==view.shell.state;requestAnimationFrame(()=>$(view.shell.headingId)?.focus());renderCurrent(view);}
+function context(){const e=encounter(),estimate=estimateEncounter({catalog,model,runnerId:invite.runnerId,runner,encounter:e});return{runnerName:runner.name,runnerLevel:runner.level,roomName:selectedSpec().name,roomIndex,roomCount:specs.length,estimatedHpPercent:estimate.estimatedHpPercent,usedBudget:usedBudget(e),totalBudget:model.budget||100,activePanel,monsters:labels(e.enemyTypes,'monster'),traps:labels(e.trapTypes,'item'),supports:labels(e.supportTypes,'item'),accountServiceAvailable:accountServiceAvailable()};}
+function show(){const view=buildReceiverView({session,context:context()});for(const root of document.querySelectorAll('[data-screen]'))root.hidden=root.dataset.screen!==view.shell.state;requestAnimationFrame(()=>$(view.shell.headingId)?.focus());renderCurrent(view);$('receiverNav').hidden=view.kind==='runtime';$('navBack').hidden=!canTransition(session.journey,'BACK');}
 function renderCurrent(view){
   const m=view.model;
   if(view.kind==='invitation'){$('senderName').textContent=session.senderName;$('senderHeading').textContent=session.senderName.toUpperCase();$('inviteRunner').textContent=`Level ${runner.level} ${runner.name}`;$('inviteTarget').textContent=`TARGET: ${invite.targetHp}% HP`;$('targetMission').textContent=`Get the Runner to the EXIT with about ${invite.targetHp}% health remaining.`;$('targetMarker').textContent=`${invite.targetHp}% TARGET`;$('targetRules').textContent=`Above ${invite.targetHp}% = too gentle · Below ${invite.targetHp}% = too harsh`;}
@@ -32,7 +35,7 @@ function renderCurrent(view){
   else if(view.kind==='ready'){$('readyTarget').textContent=m.title;$('readySummary').textContent=`${m.roomName} · ${m.budget.primary} · ${m.targetFit.label}`;$('runHero').disabled=!m.canRun;}
   else if(view.kind==='runtime'){$('cameraToggle').textContent=m.cameraAction||'OVERVIEW';$('pauseToggle').textContent=m.pauseAction;}
   else if(view.kind==='rewards'){for(const id of REWARDS_DOM_CONTRACT)requiredElement(id);requiredElement('heading-rewards').textContent=m.resultHeading;requiredElement('resultTarget').textContent=`TARGET ${Math.round(m.targetHpPercent)}%`;requiredElement('resultFinished').textContent=`FINISHED ${Math.round(m.actualHpPercent)}%`;requiredElement('resultDifference').textContent=`${m.differenceFromTarget} POINT${m.differenceFromTarget===1?'':'S'} FROM TARGET`;requiredElement('resultScore').textContent=`SCORE ${Math.round(m.score)}`;requiredElement('heroRewardLabel').textContent=m.heroReward.label;requiredElement('heroRewardGold').textContent=m.heroReward.value;requiredElement('builderRewardGold').textContent=m.builderReward.value;}
-  else if(view.kind==='registration'){$('registrationGoal').textContent=m.carriedGoal;$('registrationRewardPreview').textContent=`${m.previewBuilderGold} Builder Gold · ${m.previewHeroGold} Hero Gold`;$('registrationNotSaved').textContent=m.notSaved;$('createAccount').disabled=!m.accountAction.enabled;}
+  else if(view.kind==='registration'){$('registrationGoal').textContent=m.carriedGoal;$('registrationRewardPreview').textContent=`This run earned ${m.previewBuilderGold} Builder Gold · ${m.previewHeroGold} Hero Gold (not saved to an account yet).`;$('registrationNotSaved').textContent=m.notSaved;$('createAccount').disabled=!m.accountAction.enabled;$('accountActionStatus').textContent=m.accountAction.enabled?'Continue to create your account or sign in.':m.accountAction.note;}
 }
 function chooseSessionRoom(){session=selectDungeon(session,selectedSpec().id);session=setEncounter(session,encounter());}
 function renderRoom(){const carousel=buildRoomCarousel({rooms:specs,index:roomIndex});$('roomName').textContent=carousel.current.name;$('roomCounter').textContent=carousel.counter;if(selectedRoom())drawPreview($('roomPreview'),selectedRoom().map,selectedRoom().tiles);}
@@ -49,6 +52,8 @@ $('previousRoom').addEventListener('click',()=>moveRoom(-1));$('nextRoom').addEv
 $('useDungeon').addEventListener('click',()=>transition('USE_DUNGEON'));$('openCustomize').addEventListener('click',()=>transition('CUSTOMIZE'));
 $('finishCustomize').addEventListener('click',()=>transition('DONE'));$('editDungeon').addEventListener('click',()=>transition('CUSTOMIZE'));
 $('editThisDungeon').addEventListener('click',()=>transition('EDIT_DUNGEON'));$('saveGoalBuildOwn').addEventListener('click',()=>transition('SAVE_GOAL'));$('backToRewards').addEventListener('click',()=>transition('BACK_TO_REWARDS'));
+$('navBack').addEventListener('click',()=>transition('BACK'));
+$('createAccount').addEventListener('click',()=>{if($('createAccount').disabled)return;try{sessionStorage.setItem(FRIEND_GOAL_CLAIM_KEY,JSON.stringify({senderName:session.senderName,runnerId:invite.runnerId,targetHp:invite.targetHp}));}catch(error){console.error(error);}location.href='/quick-dungeon/flare-s8b/';});
 $('resetSuggested').addEventListener('click',()=>{applyEncounter(calibrated.encounter);session=setEncounter(session,encounter());show();});
 for(const tab of document.querySelectorAll('[data-custom-tab]'))tab.addEventListener('click',()=>{activePanel=tab.dataset.customTab;show();});
 $('runHero').addEventListener('click',()=>runtimeStart?.());

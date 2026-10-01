@@ -41,7 +41,8 @@ test('registration copy explains future persistence and runner progression witho
   const r=registrationCopy({targetHp:60,sender:'Tom'});
   assert.equal(r.title,'CREATE YOUR DUNGEON RUNNER ACCOUNT');
   assert.match(r.body,/save this goal/i);
-  assert.match(r.body,/upgrade your Runner/i);
+  assert.doesNotMatch(r.body,/keep your Gold/i);
+  assert.doesNotMatch(r.body,/store your game assets/i);
   assert.match(r.progression,/stats, equipment and armor/i);
   assert.match(r.carriedGoal,/60% HP/);
   assert.match(r.notSaved,/Nothing has been saved yet/);

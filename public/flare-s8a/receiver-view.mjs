@@ -24,7 +24,7 @@ export function buildReceiverView({session,context={}}={}){
       model=buildResultViewModel({result:session.lastResult,score:session.score,targetHp:invite.targetHp,senderName:sender});break;
     case JOURNEY_STATES.REGISTRATION:{
       const handoff=context.registrationHandoff||buildRegistrationHandoff({senderName:sender,runnerId:invite.runnerId,runnerName:context.runnerName,runnerLevel:context.runnerLevel,targetHp:invite.targetHp,score:session.score,heroGold:session.reward?.heroGold,builderGold:session.reward?.builderGold,roomId:session.roomId,encounter:session.encounter,result:session.lastResult});
-      model=buildRegistrationViewModel(handoff);break;
+      model=buildRegistrationViewModel(handoff,{accountServiceAvailable:context.accountServiceAvailable});break;
     }
     default:throw new Error(`Unsupported receiver journey: ${session.journey}`);
   }

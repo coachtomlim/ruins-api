@@ -30,7 +30,7 @@ export function registrationCopy({targetHp,sender='Buddy'}={}){
   const target=clampTarget(targetHp),name=cleanName(sender);
   return Object.freeze({
     title:'CREATE YOUR DUNGEON RUNNER ACCOUNT',
-    body:'Create an account to save this goal, keep your Gold, upgrade your Runner and store your game assets.',
+    body:'Create an account to save this goal and start your own Dungeon Runner.',
     progression:'Use Gold for Runner stats, equipment and armor.',
     carriedGoal:`Save ${name}'s target: finish near ${target}% HP.`,
     notSaved:'Nothing has been saved yet.'

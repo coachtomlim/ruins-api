@@ -4,9 +4,9 @@ import {JOURNEY_STATES,journeyTransitions,canTransition,transitionJourney} from 
 
 const expected={
   invitation:{ACCEPT:'mission'},
-  mission:{USE_DUNGEON:'ready',CUSTOMIZE:'customize'},
-  ready:{CUSTOMIZE:'customize',RUN:'runtime'},
-  customize:{DONE:'ready',RUN:'runtime'},
+  mission:{USE_DUNGEON:'ready',CUSTOMIZE:'customize',BACK:'invitation'},
+  ready:{CUSTOMIZE:'customize',RUN:'runtime',BACK:'mission'},
+  customize:{DONE:'ready',RUN:'runtime',BACK:'ready'},
   runtime:{COMPLETE:'rewards'},
   rewards:{RUN_AGAIN:'runtime',EDIT_DUNGEON:'customize',SAVE_GOAL:'registration'},
   registration:{BACK_TO_REWARDS:'rewards'}

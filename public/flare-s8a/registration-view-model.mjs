@@ -1,7 +1,7 @@
 import {registrationCopy} from './mission-copy.mjs';
 import {registrationActionState} from './registration-action-state.mjs';
 
-export function buildRegistrationViewModel(handoff={}){
+export function buildRegistrationViewModel(handoff={},{accountServiceAvailable=false}={}){
   const sender=handoff?.senderName||'Buddy';
   const target=Number(handoff?.goal?.targetHp)||0;
   const runner=handoff?.runner||{};
@@ -17,7 +17,7 @@ export function buildRegistrationViewModel(handoff={}){
     previewBuilderGold:Number(reward.builderGold)||0,
     previewHeroGold:Number(reward.heroGold)||0,
     persisted:false,
-    accountAction:registrationActionState({accountServiceAvailable:false}),
+    accountAction:registrationActionState({accountServiceAvailable:Boolean(accountServiceAvailable)}),
     actions:Object.freeze(['CREATE ACCOUNT','BACK TO REWARDS'])
   });
 }
