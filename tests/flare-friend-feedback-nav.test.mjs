@@ -23,32 +23,44 @@ test('historical link remains valid without correlation token',()=>{
   assert.equal(new URL(link.url).searchParams.has('c'),false);
 });
 
-test('receipt sends only raw run facts and excludes server-derived values',async()=>{
+const attemptToken='attempt-token-0123456789abcdef';
+
+test('receipt sends only raw run facts plus the opaque attempt identity, excluding server-derived values',async()=>{
   const payload=buildResultReceipt({
     publicToken:token,
     roomId:'iron-labyrinth-01',
     encounter:{enemyTypes:['goblin','skeleton','none'],trapTypes:[],supportTypes:['small-potion']},
     rulesVersion:'s8a-1',
     result:{status:'cleared',hp:56,maxHp:100},
-    heroGold:15
+    heroGold:15,
+    attemptToken
   });
   const calls=[],client={async rpc(name,args){calls.push([name,args]);return {data:[{result_id:'result-a',duplicate:false}],error:null}}};
   assert.equal((await submitResultReceipt({client,payload})).result_id,'result-a');
-  assert.equal(calls[0][0],'submit_builder_challenge_result');
+  assert.equal(calls[0][0],'submit_builder_challenge_result_v2');
   assert.deepEqual(Object.keys(payload).sort(),[
-    'p_encounter','p_finishing_hp','p_hero_gold','p_max_hp','p_public_token','p_room_id','p_rules_version','p_terminal_status'
+    'p_attempt_token','p_encounter','p_finishing_hp','p_hero_gold','p_max_hp','p_public_token','p_room_id','p_rules_version','p_terminal_status'
   ]);
+  assert.equal(payload.p_attempt_token,attemptToken);
   assert.equal('p_score' in payload,false);
   assert.equal('p_builder_gold' in payload,false);
   assert.equal('p_input_hash' in payload,false);
   assert.equal(Object.keys(payload).some(key=>['wallet','xp','equipment','owner_player_id'].some(term=>key.includes(term))),false);
 });
 
+test('a missing attempt token is rejected before any network call',()=>{
+  assert.throws(()=>buildResultReceipt({
+    publicToken:token,roomId:'iron-labyrinth-01',
+    encounter:{enemyTypes:['goblin','none','none'],trapTypes:[],supportTypes:[]},
+    rulesVersion:'s8a-1',result:{status:'cleared',hp:60,maxHp:100},heroGold:10
+  }),/ATTEMPT_TOKEN_REQUIRED/);
+});
+
 test('client Hero Gold telemetry uses the bounded non-settling ceiling',()=>{
   assert.throws(()=>buildResultReceipt({
     publicToken:token,roomId:'iron-labyrinth-01',
     encounter:{enemyTypes:['goblin','none','none'],trapTypes:[],supportTypes:[]},
-    rulesVersion:'s8a-1',result:{status:'cleared',hp:60,maxHp:100},heroGold:31
+    rulesVersion:'s8a-1',result:{status:'cleared',hp:60,maxHp:100},heroGold:31,attemptToken
   }),/INVALID_HERO_GOLD/);
 });
 

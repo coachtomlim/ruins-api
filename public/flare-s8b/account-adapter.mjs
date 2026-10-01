@@ -269,7 +269,7 @@ export function createSupabaseAccountAdapter({client}={}){
   }
 
   async function loadBuilderChallengeResults(limit=10){
-    const rows=resultData('loadBuilderChallengeResults',await client.rpc('get_builder_challenge_results',{p_limit:Number(limit)||10}))||[];
+    const rows=resultData('loadBuilderChallengeResults',await client.rpc('get_builder_challenge_results_v2',{p_limit:Number(limit)||10}))||[];
     return Object.freeze(rows.map(row=>Object.freeze({...row})));
   }
 

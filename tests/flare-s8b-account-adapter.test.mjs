@@ -81,7 +81,7 @@ function fixtureClient({signupSession=null,runnerState=RUNNER_STATE}={}){
       if(name==='get_runner_progression_history')return {data:progressionHistory,error:null};
       if(name==='get_builder_progression')return {data:[builderProgression],error:null};
       if(name==='get_builder_challenges_v2')return {data:builderChallenges,error:null};
-      if(name==='get_builder_challenge_results')return {data:builderChallengeResults,error:null};
+      if(name==='get_builder_challenge_results_v2')return {data:builderChallengeResults,error:null};
       if(name==='mark_builder_challenge_result_read')return {data:[{result_id:args.p_result_id,owner_seen_at:'2026-09-28T00:00:00Z'}],error:null};
       if(name==='create_builder_challenge_v2')return {data:[{
         challenge_id:'challenge-a',runner_id:'warrior-l1',target_hp:args.p_target_hp,invite_code:'Qs2Z',
