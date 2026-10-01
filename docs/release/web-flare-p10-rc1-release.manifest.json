@@ -1,14 +1,14 @@
 {
   "label": "WEB-FLARE-RC1 release archive (public_html/quick-dungeon/flare-s8b)",
-  "sourceSha": "62f51df33326b13fc93e0154f66996475dab17b9",
+  "sourceSha": "3840ef89c080ffe7b428fb61679474d05209f913",
   "fileCount": 24,
   "zip": "web-flare-p10-rc1-release.zip",
   "files": [
     {
       "path": "account-adapter.mjs",
-      "sha256": "2a083c19b2230c8641e97c10604d62594c0c0648d5769c37ef5c7ff2412ca726",
+      "sha256": "3a64596ff6118b3dd2e14de56b18b0801150e38a84a8ed4ca5d534a91d230dec",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 18742
+      "bytes": 18745
     },
     {
       "path": "account-app.mjs",

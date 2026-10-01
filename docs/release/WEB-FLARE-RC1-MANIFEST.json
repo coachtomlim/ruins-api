@@ -1,6 +1,6 @@
 {
   "releaseId": "WEB-FLARE-RC1",
-  "generatedAt": "2026-10-01T09:30:17.493Z",
+  "generatedAt": "2026-10-01T09:48:08.127Z",
   "entryPoints": [
     "public/flare-s8a/index.html",
     "public/flare-s8a/challenge.html",
@@ -8,7 +8,7 @@
     "public/flare-s8b/practice.html",
     "public/flare-s8b/daily-trial.html"
   ],
-  "fileCount": 103,
+  "fileCount": 104,
   "files": [
     {
       "path": "public/flare-p0/data/catalog.json",
@@ -215,6 +215,12 @@
       "bytes": 3706
     },
     {
+      "path": "public/flare-s8a/attempt-token.mjs",
+      "sha256": "f602d1311fbc2ccd2d5a000e10e8dc15cd5fcbe40768bb5d7c3b302db181587a",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 766
+    },
+    {
       "path": "public/flare-s8a/budget-view-model.mjs",
       "sha256": "799678f5f959c362cebab9c4ef43d5dd4c4a5b6d8d48331c7d86c036e6dd2ecb",
       "mime": "text/javascript; charset=utf-8",
@@ -258,9 +264,9 @@
     },
     {
       "path": "public/flare-s8a/challenge.mjs",
-      "sha256": "050193e3033faf70ade0e9f97a12df32f9c0fa44cb4147b98bc222c7dcb4ba8a",
+      "sha256": "f0f7d203162a0561ddeb5c895fd00b379404d1dff2f2068fab4c086e5c72c492",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 13979
+      "bytes": 14176
     },
     {
       "path": "public/flare-s8a/customize-panels.mjs",
@@ -366,9 +372,9 @@
     },
     {
       "path": "public/flare-s8a/result-receipt.mjs",
-      "sha256": "b7d1748f2cf3b98ede05183cac7b1100c772ab4ef41ae056bfeb998e875fc1bf",
+      "sha256": "93f29447e09115a7eed80ada946cebf2663c1d568e29ad518bb0d509050c38b7",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 1440
+      "bytes": 1614
     },
     {
       "path": "public/flare-s8a/result-view-model.mjs",
@@ -486,9 +492,9 @@
     },
     {
       "path": "public/flare-s8b/account-adapter.mjs",
-      "sha256": "2a083c19b2230c8641e97c10604d62594c0c0648d5769c37ef5c7ff2412ca726",
+      "sha256": "3a64596ff6118b3dd2e14de56b18b0801150e38a84a8ed4ca5d534a91d230dec",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 19139
+      "bytes": 19142
     },
     {
       "path": "public/flare-s8b/account-app.mjs",
