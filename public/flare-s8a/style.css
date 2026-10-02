@@ -31,6 +31,16 @@
 .card-icon--empty svg{stroke:#ffffff66;stroke-dasharray:3 3}
 .card-icon--badge svg{fill:var(--badge-color,#df8999);stroke:none}
 .guard-group{display:grid;gap:4px}
+.selector-navigation,.selector-action{display:none}
+@media(max-width:540px){
+  .custom-body,.custom-body>div,.guard-group{min-width:0}
+  .paged-card-row{display:grid;grid-template-columns:minmax(0,1fr);overflow:visible;padding:0;min-width:0}
+  .paged-card-row .card{display:none;min-width:0;width:100%;overflow-wrap:anywhere}
+  .paged-card-row .card.is-current-page{display:grid}
+  .selector-navigation{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px;align-items:center;text-align:center}
+  .selector-navigation button,.selector-action{min-height:44px}
+  .selector-action{display:block;width:100%}
+}
 .guard-group>strong{font-size:11px;letter-spacing:.05em;color:#e9c46b}
 .ready-selections{display:flex;flex-wrap:wrap;gap:6px}
 .ready-selections .chip{font-size:11px;padding:4px 9px;border-radius:999px;background:#160b19;border:1px solid #895795}

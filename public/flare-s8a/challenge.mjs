@@ -21,6 +21,8 @@ import {buildRunnerInspectorViewModel} from './runner-inspector-view-model.mjs';
 import {gearSlotIcon} from './gear-slot-icon.mjs';
 import {monsterCardIcon,emptySlotCardIcon,encounterItemBadge,encounterItemEffectLabel} from './card-icons.mjs';
 import {buildDungeonPresets} from './dungeon-presets.mjs';
+import {installPagedSelector} from './paged-selector.mjs';
+const refreshSelectors=[];
 
 const $=id=>document.getElementById(id),specs=Object.values(S7_ROOMS),rooms=new Map();
 function requiredElement(id){const el=$(id);if(!el)throw new Error(`S8A_DOM_CONTRACT_MISSING:${id}`);return el;}
@@ -42,7 +44,7 @@ const encounter=()=>({enemyTypes:[0,1,2].map(i=>document.querySelector(`input[na
 const usedBudget=e=>encounterCost(catalog,e);
 const labels=(ids,kind)=>ids.filter(id=>id!=='none').map(id=>kind==='monster'?catalog.enemies[id]?.name:model.items?.[id]?.name||model.items?.[id]?.label||id);
 function context(){const e=encounter(),estimate=estimateEncounter({catalog,model,runnerId:invite.runnerId,runner,encounter:e});return{runnerName:runner.name,runnerLevel:runner.level,roomName:selectedSpec().name,roomIndex,roomCount:specs.length,estimatedHpPercent:estimate.estimatedHpPercent,usedBudget:usedBudget(e),totalBudget:model.budget||100,activePanel,monsters:labels(e.enemyTypes,'monster'),traps:labels(e.trapTypes,'item'),supports:labels(e.supportTypes,'item'),accountServiceAvailable:accountServiceAvailable()};}
-function show(){const view=buildReceiverView({session,context:context()});for(const root of document.querySelectorAll('[data-screen]'))root.hidden=root.dataset.screen!==view.shell.state;requestAnimationFrame(()=>$(view.shell.headingId)?.focus());renderCurrent(view);$('receiverNav').hidden=view.kind==='runtime';$('navBack').hidden=!canTransition(session.journey,'BACK');}
+function show(){for(const refresh of refreshSelectors)refresh();const view=buildReceiverView({session,context:context()});for(const root of document.querySelectorAll('[data-screen]'))root.hidden=root.dataset.screen!==view.shell.state;requestAnimationFrame(()=>$(view.shell.headingId)?.focus());renderCurrent(view);$('receiverNav').hidden=view.kind==='runtime';$('navBack').hidden=!canTransition(session.journey,'BACK');}
 function renderGaugeMarker(id,percent){const el=$(id);if(!el)return;el.style.left=`${Math.max(4,Math.min(96,Number(percent)||0))}%`;}
 function renderCurrent(view){
   const m=view.model;
@@ -88,13 +90,13 @@ function renderControls(){
     const row=document.createElement('div');row.className='card-row';
     row.append(monsterCard({name:`guard-${i}`,value:'none',label:'EMPTY',cost:0,summary:'No monster',icon:emptySlotCardIcon()}));
     for(const item of vm.monsters)row.append(monsterCard({name:`guard-${i}`,value:item.id,label:item.label,cost:item.cost,summary:item.summary,icon:monsterCardIcon()}));
-    group.append(row);monsterPanel.append(group);
+    group.append(row);monsterPanel.append(group);refreshSelectors.push(installPagedSelector(row,`monster for guard ${i+1}`));
   }
   for(const kind of ['traps','supports']){
     const panel=document.querySelector(`[data-custom-panel="${kind}"]`);panel.replaceChildren();
     const row=document.createElement('div');row.className='card-row';
     for(const item of vm[kind])row.append(itemCard(item));
-    panel.append(row);
+    panel.append(row);refreshSelectors.push(installPagedSelector(row,kind==='traps'?'trap':'support'));
   }
   for(const control of document.querySelectorAll('[name^="guard-"],[data-choice]'))control.addEventListener('change',()=>{session=setEncounter(session,encounter());show();});
 }
