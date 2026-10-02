@@ -6,7 +6,7 @@
 --
 -- Run as the authenticated test player who owns the challenge you publish (via the SQL editor
 -- with an impersonated/authenticated session, or via the app itself for steps 1-2 and psql/SQL
--- editor as service_role for the read-only inspection steps). Each numbered block corresponds to
+-- editor with elevated/admin access for the read-only inspection steps). Each numbered block corresponds to
 -- one item in the FRIEND FEEDBACK 002B1 task's Part F list. Replace <PUBLIC_TOKEN>,
 -- <CHALLENGE_ID>, <ATTEMPT_A>, <ATTEMPT_B>, <ATTEMPT_C> with real values as you go.
 --
