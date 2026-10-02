@@ -34,4 +34,20 @@
 .guard-group>strong{font-size:11px;letter-spacing:.05em;color:#e9c46b}
 .ready-selections{display:flex;flex-wrap:wrap;gap:6px}
 .ready-selections .chip{font-size:11px;padding:4px 9px;border-radius:999px;background:#160b19;border:1px solid #895795}
+.runner-context{font-size:12px;color:#9be3d5;background:#16302c;border-radius:10px;padding:6px 10px}
+.mission-secondary-copy{font-size:11px;color:#ffffff99}
+.preset-grid{display:grid;gap:8px;min-height:0;overflow-y:auto}
+.preset-card{display:grid;gap:4px;text-align:left;padding:10px 12px;border:1px solid #895795;border-radius:14px;background:#241328;cursor:pointer;position:relative}
+.preset-card:has(:checked){border-color:#e9c46b;background:#3a2142;box-shadow:0 0 0 2px #e9c46b inset}
+.preset-card:focus-within{outline:2px solid #fff;outline-offset:2px}
+.preset-card-head{display:flex;justify-content:space-between;align-items:center;gap:6px}
+.preset-card-label{font-weight:800;letter-spacing:.04em;font-size:13px}
+.preset-card .recommended-badge{display:none;font-size:9px;font-weight:800;color:#241328;background:#e9c46b;padding:2px 7px;border-radius:999px}
+.preset-card.is-recommended .recommended-badge{display:inline-block}
+.preset-card .card-selected-mark{display:none;font-size:9px;font-weight:800;color:#241328;background:#e9c46b;padding:1px 6px;border-radius:999px;justify-self:start}
+.preset-card:has(:checked) .card-selected-mark{display:inline-block}
+.preset-card-estimate{font-size:14px;font-weight:800;color:#9be3d5}
+.preset-card-interpretation{font-size:11px;color:#ffffffcc}
+.preset-card-room{font-size:10px;color:#ffffff88}
+.preset-card-contents{font-size:10px;color:#ffffffaa}
 @media(max-height:820px){.runner-summary canvas,#inviteHeroCanvas{height:150px}.room-stage canvas{height:120px}.panel-main{gap:7px}.panel-main{font-size:14px}.panel-main h1{font-size:24px}}@media(max-height:700px){.invitation-main #inviteHeroCanvas{height:100px}.target-card{gap:3px;padding:7px}.target-card small{font-size:10px}.result-main{gap:5px}.reward-grid article{padding:7px}.result-actions{gap:5px}}
