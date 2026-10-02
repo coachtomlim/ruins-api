@@ -1,7 +1,7 @@
 {
   "label": "FRIEND_CHALLENGE_FEEDBACK_NAV_001 complete multi-root release archive",
-  "sourceSha": "c09e5bd64c82374df5cfb477bb5d2c58005f32c8",
-  "fileCount": 110,
+  "sourceSha": "2469997d49ebb856050c3f3851fcf34e583960bd",
+  "fileCount": 111,
   "zip": "web-flare-friend-feedback-nav-001-release.zip",
   "files": [
     {
@@ -258,15 +258,15 @@
     },
     {
       "path": "flare-s8a/challenge.html",
-      "sha256": "1cc4e6f40f7fddd783c488928db1d99d4d49220321bbee5350a17dd039e3311e",
+      "sha256": "11e8089c3babc56ff7aa52b5f1b2e9f2077217fdb19765bc559315ab7fa7b256",
       "mime": "text/html; charset=utf-8",
-      "bytes": 8466
+      "bytes": 8563
     },
     {
       "path": "flare-s8a/challenge.mjs",
-      "sha256": "4b8a2dc842ed358268ba65c8e80313dd9f4153b8aeceb1b1e2b5add78e60620a",
+      "sha256": "d914b826f8cfe3d756840b440c6f063296b5d72d96e2a118fa2288dcdd94290d",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 21578
+      "bytes": 24407
     },
     {
       "path": "flare-s8a/customize-panels.mjs",
@@ -279,6 +279,12 @@
       "sha256": "af6b164fd01929e49c4aacc83f39c9ffdc098799c6b9987e6cd935c92ad06e4c",
       "mime": "text/javascript; charset=utf-8",
       "bytes": 964
+    },
+    {
+      "path": "flare-s8a/dungeon-presets.mjs",
+      "sha256": "0861139b04504f9273b643802a69e108705354baae0c6b9db94ede33b01dfcb1",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 5347
     },
     {
       "path": "flare-s8a/estimate-gauge-view-model.mjs",
@@ -486,9 +492,9 @@
     },
     {
       "path": "flare-s8a/style.css",
-      "sha256": "56c245aa76f725a18727f0c8682afc6705252f36a0ec4a6039d4b842195693c3",
+      "sha256": "7edb11e097c405c5e98d1510e32ddee32f94afa3c245e74278425a4163a370e3",
       "mime": "text/css; charset=utf-8",
-      "bytes": 8514
+      "bytes": 9913
     },
     {
       "path": "flare-s8a/swipe.mjs",

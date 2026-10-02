@@ -1,6 +1,6 @@
 {
   "releaseId": "WEB-FLARE-RC1",
-  "generatedAt": "2026-10-02T03:26:50.232Z",
+  "generatedAt": "2026-10-02T10:28:09.561Z",
   "entryPoints": [
     "public/flare-s8a/index.html",
     "public/flare-s8a/challenge.html",
@@ -8,7 +8,7 @@
     "public/flare-s8b/practice.html",
     "public/flare-s8b/daily-trial.html"
   ],
-  "fileCount": 110,
+  "fileCount": 111,
   "files": [
     {
       "path": "public/flare-p0/data/catalog.json",
@@ -264,15 +264,15 @@
     },
     {
       "path": "public/flare-s8a/challenge.html",
-      "sha256": "1cc4e6f40f7fddd783c488928db1d99d4d49220321bbee5350a17dd039e3311e",
+      "sha256": "11e8089c3babc56ff7aa52b5f1b2e9f2077217fdb19765bc559315ab7fa7b256",
       "mime": "text/html; charset=utf-8",
-      "bytes": 8481
+      "bytes": 8578
     },
     {
       "path": "public/flare-s8a/challenge.mjs",
-      "sha256": "4b8a2dc842ed358268ba65c8e80313dd9f4153b8aeceb1b1e2b5add78e60620a",
+      "sha256": "d914b826f8cfe3d756840b440c6f063296b5d72d96e2a118fa2288dcdd94290d",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 21726
+      "bytes": 24587
     },
     {
       "path": "public/flare-s8a/customize-panels.mjs",
@@ -285,6 +285,12 @@
       "sha256": "af6b164fd01929e49c4aacc83f39c9ffdc098799c6b9987e6cd935c92ad06e4c",
       "mime": "text/javascript; charset=utf-8",
       "bytes": 983
+    },
+    {
+      "path": "public/flare-s8a/dungeon-presets.mjs",
+      "sha256": "0861139b04504f9273b643802a69e108705354baae0c6b9db94ede33b01dfcb1",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 5347
     },
     {
       "path": "public/flare-s8a/estimate-gauge-view-model.mjs",
@@ -492,9 +498,9 @@
     },
     {
       "path": "public/flare-s8a/style.css",
-      "sha256": "56c245aa76f725a18727f0c8682afc6705252f36a0ec4a6039d4b842195693c3",
+      "sha256": "7edb11e097c405c5e98d1510e32ddee32f94afa3c245e74278425a4163a370e3",
       "mime": "text/css; charset=utf-8",
-      "bytes": 8551
+      "bytes": 9966
     },
     {
       "path": "public/flare-s8a/swipe.mjs",
