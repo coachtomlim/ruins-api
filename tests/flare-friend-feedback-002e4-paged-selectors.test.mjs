@@ -2,6 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {pageIndex,installPagedSelector} from '../public/flare-s8a/paged-selector.mjs';
+import {applyRunnerModel,runnerSummary,encounterCost} from '../public/flare-s71/game.mjs';
+import {estimateEncounter} from '../public/flare-s71/calibration.mjs';
+import {buildCustomizationCatalog} from '../public/flare-s8a/catalog-view-model.mjs';
 
 class Element{
   children=[];listeners={};attributes={};checked=false;textContent='';
@@ -30,6 +33,20 @@ for(const [kind,count] of [['trap',2],['support',3],['monster for guard 1',5]])t
   }finally{globalThis.document=old}
 });
 test('wrap arithmetic handles first/last pages and empty lists',()=>{assert.equal(pageIndex(0,-1,3),2);assert.equal(pageIndex(2,1,3),0);assert.equal(pageIndex(0,1,0),0)});
+for(const kind of ['traps','supports'])test(`${kind}: actual catalog selection/removal immediately updates governed budget and estimate`,()=>{
+  const model=JSON.parse(readFileSync('public/flare-s7/data/game.json','utf8'));
+  const catalog=applyRunnerModel(JSON.parse(readFileSync('public/flare-p0/data/catalog.json','utf8')),model,'warrior-l1'),runner=runnerSummary(model,'warrior-l1',catalog);
+  const vm=buildCustomizationCatalog({model,catalog,runnerId:'warrior-l1',runner});
+  const old=globalThis.document;globalThis.document={createElement:tag=>Object.assign(new Element(),{tag})};
+  try{
+    const parent=new Element(),row=new Element();parent.append(row);
+    for(const item of vm[kind]){const card=new Element();card.append(Object.assign(new Element(),{tag:'input',type:'checkbox',value:item.id}),Object.assign(new Element(),{tag:'strong',textContent:item.label}));row.append(card)}
+    const state=()=>({enemyTypes:['goblin','skeleton','none'],trapTypes:kind==='traps'?row.children.filter(c=>c.querySelector('input').checked).map(c=>c.querySelector('input').value):[],supportTypes:kind==='supports'?row.children.filter(c=>c.querySelector('input').checked).map(c=>c.querySelector('input').value):[]});
+    const calculate=()=>({budget:encounterCost(catalog,state()),estimate:estimateEncounter({catalog,model,runnerId:'warrior-l1',runner,encounter:state()}).estimatedHpPercent});
+    let displayed=calculate();row.addEventListener('change',()=>{displayed=calculate()});installPagedSelector(row,kind==='traps'?'trap':'support');
+    const baseline=calculate();for(const card of row.children){const action=card.children.at(-1);action.click();assert(displayed.budget>baseline.budget);assert.notEqual(displayed.estimate,baseline.estimate);action.click();assert.deepEqual(displayed,baseline)}
+  }finally{globalThis.document=old}
+});
 test('mobile paging is width-scoped and retains desktop cards and existing calculation authority',()=>{
   const css=readFileSync('public/flare-s8a/style.css','utf8'),source=readFileSync('public/flare-s8a/challenge.mjs','utf8');
   assert.match(css,/@media\(max-width:540px\)/);assert.match(css,/\.paged-card-row\{[^}]*overflow:visible/);assert.match(css,/\.paged-card-row \.card\.is-current-page\{display:grid/);assert.match(css,/\.selector-navigation button,\.selector-action\{min-height:44px/);
