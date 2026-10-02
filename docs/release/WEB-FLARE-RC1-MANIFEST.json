@@ -1,6 +1,6 @@
 {
   "releaseId": "WEB-FLARE-RC1",
-  "generatedAt": "2026-10-02T02:27:53.642Z",
+  "generatedAt": "2026-10-02T03:02:09.482Z",
   "entryPoints": [
     "public/flare-s8a/index.html",
     "public/flare-s8a/challenge.html",
@@ -8,7 +8,7 @@
     "public/flare-s8b/practice.html",
     "public/flare-s8b/daily-trial.html"
   ],
-  "fileCount": 104,
+  "fileCount": 107,
   "files": [
     {
       "path": "public/flare-p0/data/catalog.json",
@@ -258,15 +258,15 @@
     },
     {
       "path": "public/flare-s8a/challenge.html",
-      "sha256": "f9ca0ec33e5896cd6ae0c01a814e2959e31e8876f063c12ccfc78bc4bfae120f",
+      "sha256": "699d83bca7eaa221fb618c2cdb8da4749a2d46c10d0db88cb02fd641128987ec",
       "mime": "text/html; charset=utf-8",
-      "bytes": 6603
+      "bytes": 7230
     },
     {
       "path": "public/flare-s8a/challenge.mjs",
-      "sha256": "f0f7d203162a0561ddeb5c895fd00b379404d1dff2f2068fab4c086e5c72c492",
+      "sha256": "eaca675bc7f6af5a9e9344491d463ff9516b7bdb6e8683fb64031324868958d3",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 14176
+      "bytes": 17043
     },
     {
       "path": "public/flare-s8a/customize-panels.mjs",
@@ -279,6 +279,12 @@
       "sha256": "af6b164fd01929e49c4aacc83f39c9ffdc098799c6b9987e6cd935c92ad06e4c",
       "mime": "text/javascript; charset=utf-8",
       "bytes": 983
+    },
+    {
+      "path": "public/flare-s8a/estimate-gauge-view-model.mjs",
+      "sha256": "4a869eead63db3b4199a87aceffba0bb82c6957d2cb35567b91f49322d1ff706",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 1246
     },
     {
       "path": "public/flare-s8a/flow.mjs",
@@ -407,6 +413,12 @@
       "bytes": 547
     },
     {
+      "path": "public/flare-s8a/runner-authority.mjs",
+      "sha256": "b506be35517eb5cb25ec1f200598ddd8fb71ac41ccb16f5b01e9a2f0f4bc6552",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 1533
+    },
+    {
       "path": "public/flare-s8a/runner-progression.mjs",
       "sha256": "3abda72e776f0ee5169ec9a3d36099a4c1db6f73a0bbbc262ed9c302efa144d9",
       "mime": "text/javascript; charset=utf-8",
@@ -462,9 +474,9 @@
     },
     {
       "path": "public/flare-s8a/style.css",
-      "sha256": "555f9b3cc69fd00b5c38e26c5249a21d5dfd7617bb6e42dbb80a6249982b5af3",
+      "sha256": "96da937596f0b8f7405c6b48d62d2e4ff16c8107bdf01fd3a76c05552faa42f2",
       "mime": "text/css; charset=utf-8",
-      "bytes": 4765
+      "bytes": 5435
     },
     {
       "path": "public/flare-s8a/swipe.mjs",
@@ -603,6 +615,12 @@
       "sha256": "c696db5384651a08b9b0784f79e8489bcbcc43df13dd851dd30c381493cd0660",
       "mime": "text/html; charset=utf-8",
       "bytes": 10538
+    },
+    {
+      "path": "public/flare-s8b/public-challenge-snapshot.mjs",
+      "sha256": "b2b4c162b697e2ff4d1a5913f7993f67d254ff44793391f6ca17b452bd79f615",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 1133
     },
     {
       "path": "public/flare-s8b/release-identity.mjs",

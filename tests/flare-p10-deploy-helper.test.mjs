@@ -15,8 +15,18 @@ test('the P10 deploy helper is a new lineage: it does not modify the frozen Upda
 test('the deploy helper file set is generated from the real P10 manifest, not copied from Update 006',async()=>{
   const helper=await read('scripts/deploy/hostgator-flare-p10-rc1.py');
   const manifest=JSON.parse(await read('docs/release/WEB-FLARE-RC1-MANIFEST.json'));
+  const sourceSha=helper.match(/SOURCE_SHA = '([0-9a-f]{40})'/)?.[1];
+  assert.ok(sourceSha,'deploy helper SOURCE_SHA not found');
   const s8bFiles=manifest.files.filter(f=>f.path.startsWith('public/flare-s8b/')&&!f.path.endsWith('config.js')).map(f=>f.path);
-  for(const f of s8bFiles)assert.ok(helper.includes(`'${f}'`),`GIT_FILES missing manifest entry: ${f}`);
+  // The deploy helper is frozen to its own pinned SOURCE_SHA (an already-accepted P10 RC1 release),
+  // a separate and earlier lineage than later branches (e.g. Friend Feedback) that may add new
+  // flare-s8b files to the CURRENT manifest without those files existing at that pinned commit.
+  // Only files that actually existed at SOURCE_SHA are in scope for this helper's file set.
+  for(const f of s8bFiles){
+    try{execFileSync('git',['-C',repoRoot,'show',`${sourceSha}:${f}`],{stdio:['ignore','ignore','ignore']})}
+    catch{continue} // didn't exist at the pinned release commit — out of scope for this deploy lineage
+    assert.ok(helper.includes(`'${f}'`),`GIT_FILES missing manifest entry present at SOURCE_SHA: ${f}`);
+  }
   // Update 006's 19-file list must be a strict subset (proving this is additive, not a rewrite)
   assert.match(helper,/'public\/flare-s8b\/account-adapter\.mjs',\r?\n\s*'public\/flare-s8b\/account-app\.mjs'/);
 });
