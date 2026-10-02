@@ -1,7 +1,7 @@
 {
   "label": "FRIEND_CHALLENGE_FEEDBACK_NAV_001 complete multi-root release archive",
-  "sourceSha": "20236a8135d00604244b69b2921b9e5df5670258",
-  "fileCount": 107,
+  "sourceSha": "c09e5bd64c82374df5cfb477bb5d2c58005f32c8",
+  "fileCount": 110,
   "zip": "web-flare-friend-feedback-nav-001-release.zip",
   "files": [
     {
@@ -245,6 +245,12 @@
       "bytes": 661
     },
     {
+      "path": "flare-s8a/card-icons.mjs",
+      "sha256": "66a6d24bd6ee5cef73220278c1a75c32eeff9bde5fd3af2555eda390689e7c20",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 2927
+    },
+    {
       "path": "flare-s8a/catalog-view-model.mjs",
       "sha256": "4fca48b8e36313f6bfb580c4408f1694febfed77162334e96eb7c3ffad97db3b",
       "mime": "text/javascript; charset=utf-8",
@@ -252,15 +258,15 @@
     },
     {
       "path": "flare-s8a/challenge.html",
-      "sha256": "699d83bca7eaa221fb618c2cdb8da4749a2d46c10d0db88cb02fd641128987ec",
+      "sha256": "1cc4e6f40f7fddd783c488928db1d99d4d49220321bbee5350a17dd039e3311e",
       "mime": "text/html; charset=utf-8",
-      "bytes": 7216
+      "bytes": 8466
     },
     {
       "path": "flare-s8a/challenge.mjs",
-      "sha256": "eaca675bc7f6af5a9e9344491d463ff9516b7bdb6e8683fb64031324868958d3",
+      "sha256": "4b8a2dc842ed358268ba65c8e80313dd9f4153b8aeceb1b1e2b5add78e60620a",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 16966
+      "bytes": 21578
     },
     {
       "path": "flare-s8a/customize-panels.mjs",
@@ -285,6 +291,12 @@
       "sha256": "851dceb7bca7c9b151c3f6484d37bdb0e1511a5e7241d2a80d2e08ab83d99775",
       "mime": "text/javascript; charset=utf-8",
       "bytes": 2608
+    },
+    {
+      "path": "flare-s8a/gear-slot-icon.mjs",
+      "sha256": "8aeb1c7045ff66b399b33e3cb6510ebee5205077a3641dc8f3993720c9c49cd4",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 1366
     },
     {
       "path": "flare-s8a/goal.mjs",
@@ -413,6 +425,12 @@
       "bytes": 1533
     },
     {
+      "path": "flare-s8a/runner-inspector-view-model.mjs",
+      "sha256": "8fdeed1dd684c13d8d747738300c3f6029702836e4c93a7dfe8fcfd352cf9b92",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 2473
+    },
+    {
       "path": "flare-s8a/runner-progression.mjs",
       "sha256": "3abda72e776f0ee5169ec9a3d36099a4c1db6f73a0bbbc262ed9c302efa144d9",
       "mime": "text/javascript; charset=utf-8",
@@ -468,9 +486,9 @@
     },
     {
       "path": "flare-s8a/style.css",
-      "sha256": "96da937596f0b8f7405c6b48d62d2e4ff16c8107bdf01fd3a76c05552faa42f2",
+      "sha256": "56c245aa76f725a18727f0c8682afc6705252f36a0ec4a6039d4b842195693c3",
       "mime": "text/css; charset=utf-8",
-      "bytes": 5432
+      "bytes": 8514
     },
     {
       "path": "flare-s8a/swipe.mjs",
