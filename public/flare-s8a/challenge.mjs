@@ -17,6 +17,9 @@ import {createAttemptToken} from './attempt-token.mjs';
 import {fetchPublicChallengeSnapshot} from '../flare-s8b/public-challenge-snapshot.mjs';
 import {resolveRunnerAuthority} from './runner-authority.mjs';
 import {buildEstimateGaugeViewModel} from './estimate-gauge-view-model.mjs';
+import {buildRunnerInspectorViewModel} from './runner-inspector-view-model.mjs';
+import {gearSlotIcon} from './gear-slot-icon.mjs';
+import {monsterCardIcon,emptySlotCardIcon,encounterItemBadge,encounterItemEffectLabel} from './card-icons.mjs';
 
 const $=id=>document.getElementById(id),specs=Object.values(S7_ROOMS),rooms=new Map();
 function requiredElement(id){const el=$(id);if(!el)throw new Error(`S8A_DOM_CONTRACT_MISSING:${id}`);return el;}
@@ -34,7 +37,7 @@ async function fetchCorrelatedSnapshot(){
   return result?.runnerSnapshot||null;
 }
 const selectedSpec=()=>specs[roomIndex],selectedRoom=()=>rooms.get(selectedSpec().id);
-const encounter=()=>({enemyTypes:[...document.querySelectorAll('[data-enemy-slot]')].map(x=>x.value),trapTypes:TRAP_IDS.filter(id=>document.querySelector(`[data-choice="${id}"]`)?.checked),supportTypes:SUPPORT_IDS.filter(id=>document.querySelector(`[data-choice="${id}"]`)?.checked)});
+const encounter=()=>({enemyTypes:[0,1,2].map(i=>document.querySelector(`input[name="guard-${i}"]:checked`)?.value||'none'),trapTypes:TRAP_IDS.filter(id=>document.querySelector(`[data-choice="${id}"]`)?.checked),supportTypes:SUPPORT_IDS.filter(id=>document.querySelector(`[data-choice="${id}"]`)?.checked)});
 const usedBudget=e=>encounterCost(catalog,e);
 const labels=(ids,kind)=>ids.filter(id=>id!=='none').map(id=>kind==='monster'?catalog.enemies[id]?.name:model.items?.[id]?.name||model.items?.[id]?.label||id);
 function context(){const e=encounter(),estimate=estimateEncounter({catalog,model,runnerId:invite.runnerId,runner,encounter:e});return{runnerName:runner.name,runnerLevel:runner.level,roomName:selectedSpec().name,roomIndex,roomCount:specs.length,estimatedHpPercent:estimate.estimatedHpPercent,usedBudget:usedBudget(e),totalBudget:model.budget||100,activePanel,monsters:labels(e.enemyTypes,'monster'),traps:labels(e.trapTypes,'item'),supports:labels(e.supportTypes,'item'),accountServiceAvailable:accountServiceAvailable()};}
@@ -45,7 +48,7 @@ function renderCurrent(view){
   if(view.kind==='invitation'){$('senderName').textContent=session.senderName;$('senderHeading').textContent=session.senderName.toUpperCase();$('inviteRunner').textContent=`Level ${runner.level} ${runner.name}`;$('inviteTarget').textContent=`TARGET: ${invite.targetHp}% HP`;$('targetMission').textContent=`Get the Runner to the EXIT with about ${invite.targetHp}% health remaining.`;const inviteGauge=buildEstimateGaugeViewModel({targetHp:invite.targetHp});$('inviteGaugeTarget').textContent=`TARGET ${inviteGauge.targetPercent}%`;renderGaugeMarker('inviteGaugeTarget',inviteGauge.targetPercent);$('targetRules').textContent=`Above ${invite.targetHp}% = too gentle · Below ${invite.targetHp}% = too harsh`;}
   else if(view.kind==='mission'){$('missionTarget').textContent=`~${invite.targetHp}% HP`;$('missionRewardCue').textContent=m.rewardCue;$('targetFitCue').textContent=`${m.targetFit.label} · ${m.targetFit.note}`;renderRoom();}
   else if(view.kind==='customize'){$('dungeonBudget').textContent=m.budget.primary;$('dungeonBudget').dataset.legal=String(m.budget.legal);$('finishCustomize').disabled=!m.canFinish;renderTabs();const gauge=buildEstimateGaugeViewModel({targetHp:invite.targetHp,estimatedHpPercent:estimateEncounter({catalog,model,runnerId:invite.runnerId,runner,encounter:encounter()}).estimatedHpPercent});$('customizeGaugeTarget').textContent=`TARGET ${gauge.targetPercent}%`;renderGaugeMarker('customizeGaugeTarget',gauge.targetPercent);$('customizeGaugeEstimate').hidden=!gauge.hasEstimate;if(gauge.hasEstimate)renderGaugeMarker('customizeGaugeEstimate',gauge.estimatePercent);$('customizeGaugeEstimateLabel').textContent=gauge.hasEstimate?`ESTIMATED FINISH ${gauge.estimateLabel}`:'';$('customizeGaugeGuidance').textContent=gauge.guidance;}
-  else if(view.kind==='ready'){$('readyTarget').textContent=m.title;$('readySummary').textContent=`${m.roomName} · ${m.budget.primary} · ${m.targetFit.label}`;$('runHero').disabled=!m.canRun;}
+  else if(view.kind==='ready'){$('readyTarget').textContent=m.title;$('readySummary').textContent=`${m.roomName} · ${m.budget.primary} · ${m.targetFit.label}`;$('runHero').disabled=!m.canRun;const readyGauge=buildEstimateGaugeViewModel({targetHp:invite.targetHp,estimatedHpPercent:estimateEncounter({catalog,model,runnerId:invite.runnerId,runner,encounter:encounter()}).estimatedHpPercent});$('readyGaugeTarget').textContent=`TARGET ${readyGauge.targetPercent}%`;renderGaugeMarker('readyGaugeTarget',readyGauge.targetPercent);$('readyGaugeEstimate').hidden=!readyGauge.hasEstimate;if(readyGauge.hasEstimate)renderGaugeMarker('readyGaugeEstimate',readyGauge.estimatePercent);$('readyGaugeEstimateLabel').textContent=readyGauge.hasEstimate?`ESTIMATED FINISH ${readyGauge.estimateLabel}`:'';renderReadySelections();}
   else if(view.kind==='runtime'){$('cameraToggle').textContent=m.cameraAction||'OVERVIEW';$('pauseToggle').textContent=m.pauseAction;}
   else if(view.kind==='rewards'){for(const id of REWARDS_DOM_CONTRACT)requiredElement(id);requiredElement('heading-rewards').textContent=m.resultHeading;requiredElement('resultTarget').textContent=`TARGET ${Math.round(m.targetHpPercent)}%`;requiredElement('resultFinished').textContent=`FINISHED ${Math.round(m.actualHpPercent)}%`;requiredElement('resultDifference').textContent=`${m.differenceFromTarget} POINT${m.differenceFromTarget===1?'':'S'} FROM TARGET`;requiredElement('resultScore').textContent=`SCORE ${Math.round(m.score)}`;requiredElement('heroRewardLabel').textContent=m.heroReward.label;requiredElement('heroRewardGold').textContent=m.heroReward.value;requiredElement('builderRewardGold').textContent=m.builderReward.value;}
   else if(view.kind==='registration'){$('registrationGoal').textContent=m.carriedGoal;$('registrationRewardPreview').textContent=`This run earned ${m.previewBuilderGold} Builder Gold · ${m.previewHeroGold} Hero Gold (not saved to an account yet).`;$('registrationNotSaved').textContent=m.notSaved;$('createAccount').disabled=!m.accountAction.enabled;$('accountActionStatus').textContent=m.accountAction.enabled?'Continue to create your account or sign in.':m.accountAction.note;}
@@ -53,9 +56,73 @@ function renderCurrent(view){
 function chooseSessionRoom(){session=selectDungeon(session,selectedSpec().id);session=setEncounter(session,encounter());}
 function renderRoom(){const carousel=buildRoomCarousel({rooms:specs,index:roomIndex});$('roomName').textContent=carousel.current.name;$('roomCounter').textContent=carousel.counter;if(selectedRoom())drawPreview($('roomPreview'),selectedRoom().map,selectedRoom().tiles);}
 function moveRoom(delta){roomIndex=(roomIndex+delta+specs.length)%specs.length;calibrated=calibrateEncounter({catalog,model,runnerId:invite.runnerId,runner,targetHp:invite.targetHp});applyEncounter(calibrated.encounter);if(session?.journey==='mission')show();}
-function renderControls(){const vm=buildCustomizationCatalog({model,catalog,runnerId:invite.runnerId,runner}),monsterPanel=document.querySelector('[data-custom-panel="monsters"]');monsterPanel.replaceChildren();for(let i=0;i<3;i++){const label=document.createElement('label');label.textContent=`Guard ${i+1}`;const select=document.createElement('select');select.dataset.enemySlot=String(i);select.append(new Option('Empty · 0','none'));for(const item of vm.monsters)select.append(new Option(`${item.label} · ${item.cost}`,item.id));label.append(select);monsterPanel.append(label);}for(const kind of ['traps','supports']){const panel=document.querySelector(`[data-custom-panel="${kind}"]`);panel.replaceChildren();for(const item of vm[kind]){const label=document.createElement('label');const box=document.createElement('input');box.type='checkbox';box.dataset.choice=item.id;label.append(box,document.createTextNode(`${item.label} · ${item.cost} — ${item.summary}`));panel.append(label);}}for(const control of document.querySelectorAll('[data-enemy-slot],[data-choice]'))control.addEventListener('change',()=>{session=setEncounter(session,encounter());show();});}
-function applyEncounter(e){[...document.querySelectorAll('[data-enemy-slot]')].forEach((x,i)=>x.value=e.enemyTypes[i]||'none');const selected=[...(e.trapTypes||[]),...(e.supportTypes||[])];for(const id of [...TRAP_IDS,...SUPPORT_IDS]){const box=document.querySelector(`[data-choice="${id}"]`);if(box)box.checked=selected.includes(id);}}
+function monsterCard({name,value,label,cost,summary,icon}){
+  const card=document.createElement('label');card.className='card';
+  const input=document.createElement('input');input.type='radio';input.name=name;input.value=value;input.className='visually-hidden';
+  card.append(input,icon,document.createTextNode(''));
+  const strong=document.createElement('strong');strong.textContent=label;
+  const costLine=document.createElement('small');costLine.textContent=cost!=null?`${cost} BUDGET`:'';
+  const summaryLine=document.createElement('small');summaryLine.textContent=summary||'';
+  const mark=document.createElement('span');mark.className='card-selected-mark';mark.textContent='SELECTED';
+  card.append(strong,costLine,summaryLine,mark);
+  return card;
+}
+function itemCard(item){
+  const card=document.createElement('label');card.className='card';
+  const input=document.createElement('input');input.type='checkbox';input.dataset.choice=item.id;input.className='visually-hidden';
+  const icon=encounterItemBadge(item.id);
+  const strong=document.createElement('strong');strong.textContent=item.label;
+  const costLine=document.createElement('small');costLine.textContent=`${item.cost} BUDGET`;
+  const effectLine=document.createElement('small');effectLine.textContent=encounterItemEffectLabel(item.id)||item.summary||'';
+  const mark=document.createElement('span');mark.className='card-selected-mark';mark.textContent='SELECTED';
+  card.append(input,icon,strong,costLine,effectLine,mark);
+  return card;
+}
+function renderControls(){
+  const vm=buildCustomizationCatalog({model,catalog,runnerId:invite.runnerId,runner}),monsterPanel=document.querySelector('[data-custom-panel="monsters"]');
+  monsterPanel.replaceChildren();
+  for(let i=0;i<3;i++){
+    const group=document.createElement('div');group.className='guard-group';
+    const title=document.createElement('strong');title.textContent=`GUARD ${i+1}`;group.append(title);
+    const row=document.createElement('div');row.className='card-row';
+    row.append(monsterCard({name:`guard-${i}`,value:'none',label:'EMPTY',cost:0,summary:'No monster',icon:emptySlotCardIcon()}));
+    for(const item of vm.monsters)row.append(monsterCard({name:`guard-${i}`,value:item.id,label:item.label,cost:item.cost,summary:item.summary,icon:monsterCardIcon()}));
+    group.append(row);monsterPanel.append(group);
+  }
+  for(const kind of ['traps','supports']){
+    const panel=document.querySelector(`[data-custom-panel="${kind}"]`);panel.replaceChildren();
+    const row=document.createElement('div');row.className='card-row';
+    for(const item of vm[kind])row.append(itemCard(item));
+    panel.append(row);
+  }
+  for(const control of document.querySelectorAll('[name^="guard-"],[data-choice]'))control.addEventListener('change',()=>{session=setEncounter(session,encounter());show();});
+}
+function applyEncounter(e){
+  for(let i=0;i<3;i++){const value=e.enemyTypes[i]||'none';const radio=document.querySelector(`input[name="guard-${i}"][value="${value}"]`)||document.querySelector(`input[name="guard-${i}"][value="none"]`);if(radio)radio.checked=true;}
+  const selected=[...(e.trapTypes||[]),...(e.supportTypes||[])];
+  for(const id of [...TRAP_IDS,...SUPPORT_IDS]){const box=document.querySelector(`[data-choice="${id}"]`);if(box)box.checked=selected.includes(id);}
+}
 function renderTabs(){for(const tab of document.querySelectorAll('[data-custom-tab]')){const on=tab.dataset.customTab===activePanel;tab.setAttribute('aria-selected',String(on));document.querySelector(`[data-custom-panel="${tab.dataset.customTab}"]`).hidden=!on;}}
+function renderReadySelections(){
+  const e=encounter(),wrap=$('readySelections');wrap.replaceChildren();
+  const names=[...labels(e.enemyTypes,'monster'),...labels(e.trapTypes,'item'),...labels(e.supportTypes,'item')];
+  if(!names.length){const chip=document.createElement('span');chip.className='chip';chip.textContent='No monsters, traps or support selected';wrap.append(chip);return}
+  for(const name of names){const chip=document.createElement('span');chip.className='chip';chip.textContent=name;wrap.append(chip);}
+}
+function renderRunnerInspector(){
+  const vm=buildRunnerInspectorViewModel({displayName:runner.name,hp:runner.hp,attack:runner.attack,defense:runner.defense,authoritySource:runnerAuthority?.source,snapshotEquipment:runnerAuthority?.equipment});
+  $('inspectorHp').textContent=vm.hp;$('inspectorAttack').textContent=vm.attack;$('inspectorDefense').textContent=vm.defense;
+  const list=$('inspectorEquipment');list.replaceChildren();
+  for(const slot of vm.equipment){
+    const row=document.createElement('div');row.className=`gear-row${slot.empty?' empty':''}`;
+    const icon=gearSlotIcon(slot.slot);
+    const name=document.createElement('strong');name.textContent=slot.itemName;
+    const mod=document.createElement('small');mod.textContent=slot.modifierLabel;
+    row.append(icon,name,mod);list.append(row);
+  }
+}
+function openRunnerInspector(){renderRunnerInspector();$('runnerInspector').hidden=false;$('closeRunnerInspector').focus();}
+function closeRunnerInspector(){$('runnerInspector').hidden=true;$('viewRunner').focus();}
 function transition(event){try{if(['USE_DUNGEON','CUSTOMIZE'].includes(event))chooseSessionRoom();if(event==='DONE')session=setEncounter(session,encounter());session=advanceReceiver(session,event);show();}catch(error){$('loadStatus').textContent=error.message;}}
 function receiptClient(){const config=globalThis.__FLARE_S8B_PUBLIC_CONFIG__,sdk=globalThis.supabase;if(!publicToken||!config?.url||!config?.publishableKey||typeof sdk?.createClient!=='function')return null;return sdk.createClient(config.url,config.publishableKey,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}})}
 async function sendResultReceipt(){const status=requiredElement('resultReceiptStatus'),retry=requiredElement('retryResultReceipt');if(!publicToken){status.textContent='Legacy challenge · result stays on this device.';retry.hidden=true;return}status.textContent='Sending result…';retry.hidden=true;try{const client=receiptClient();if(!client)throw new Error('RESULT_SERVICE_UNAVAILABLE');const row=await submitResultReceipt({client,payload:lastReceiptPayload});status.textContent=`RESULT SENT TO ${session.senderName.toUpperCase()}`;status.dataset.resultId=row.result_id;retry.hidden=true}catch(error){console.error(error);status.textContent='Result not sent yet. Your result is safe — retry when connected.';retry.hidden=false}}
@@ -66,6 +133,10 @@ $('useDungeon').addEventListener('click',()=>transition('USE_DUNGEON'));$('openC
 $('finishCustomize').addEventListener('click',()=>transition('DONE'));$('editDungeon').addEventListener('click',()=>transition('CUSTOMIZE'));
 $('editThisDungeon').addEventListener('click',()=>transition('EDIT_DUNGEON'));$('saveGoalBuildOwn').addEventListener('click',()=>transition('SAVE_GOAL'));$('backToRewards').addEventListener('click',()=>transition('BACK_TO_REWARDS'));
 $('navBack').addEventListener('click',()=>transition('BACK'));
+$('viewRunner').addEventListener('click',openRunnerInspector);
+$('closeRunnerInspector').addEventListener('click',closeRunnerInspector);
+$('runnerInspector').addEventListener('click',e=>{if(e.target===$('runnerInspector'))closeRunnerInspector();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('runnerInspector').hidden)closeRunnerInspector();});
 $('createAccount').addEventListener('click',()=>{if($('createAccount').disabled)return;try{sessionStorage.setItem(FRIEND_GOAL_CLAIM_KEY,JSON.stringify({senderName:session.senderName,runnerId:invite.runnerId,targetHp:invite.targetHp}));}catch(error){console.error(error);}location.href='/quick-dungeon/flare-s8b/';});
 $('resetSuggested').addEventListener('click',()=>{applyEncounter(calibrated.encounter);session=setEncounter(session,encounter());show();});
 for(const tab of document.querySelectorAll('[data-custom-tab]'))tab.addEventListener('click',()=>{activePanel=tab.dataset.customTab;show();});
