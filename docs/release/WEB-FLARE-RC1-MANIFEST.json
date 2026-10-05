@@ -1,6 +1,6 @@
 {
   "releaseId": "WEB-FLARE-RC1",
-  "generatedAt": "2026-10-02T11:37:30.739Z",
+  "generatedAt": "2026-10-05T13:48:15.806Z",
   "entryPoints": [
     "public/flare-s8a/index.html",
     "public/flare-s8a/challenge.html",
@@ -218,7 +218,7 @@
       "path": "public/flare-s8a/attempt-token.mjs",
       "sha256": "f602d1311fbc2ccd2d5a000e10e8dc15cd5fcbe40768bb5d7c3b302db181587a",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 780
+      "bytes": 766
     },
     {
       "path": "public/flare-s8a/budget-view-model.mjs",
@@ -254,7 +254,7 @@
       "path": "public/flare-s8a/card-icons.mjs",
       "sha256": "66a6d24bd6ee5cef73220278c1a75c32eeff9bde5fd3af2555eda390689e7c20",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 2978
+      "bytes": 2927
     },
     {
       "path": "public/flare-s8a/catalog-view-model.mjs",
@@ -264,15 +264,15 @@
     },
     {
       "path": "public/flare-s8a/challenge.html",
-      "sha256": "11e8089c3babc56ff7aa52b5f1b2e9f2077217fdb19765bc559315ab7fa7b256",
+      "sha256": "231f18cc00195d15208a7f5246f58c30546c6fd1427272c386ea057449512dd9",
       "mime": "text/html; charset=utf-8",
-      "bytes": 8578
+      "bytes": 8582
     },
     {
       "path": "public/flare-s8a/challenge.mjs",
-      "sha256": "03fdf268fe7d1e7420dd67784345b853cdea0f2abe5ebd3c1bf01d14178dda70",
+      "sha256": "f5877bfe9a71362a3c29f5f9337634639ea30f361433fe135434b4132d8df3e7",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 24880
+      "bytes": 26656
     },
     {
       "path": "public/flare-s8a/customize-panels.mjs",
@@ -290,13 +290,13 @@
       "path": "public/flare-s8a/dungeon-presets.mjs",
       "sha256": "0861139b04504f9273b643802a69e108705354baae0c6b9db94ede33b01dfcb1",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 5432
+      "bytes": 5347
     },
     {
       "path": "public/flare-s8a/estimate-gauge-view-model.mjs",
       "sha256": "4a869eead63db3b4199a87aceffba0bb82c6957d2cb35567b91f49322d1ff706",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 1273
+      "bytes": 1246
     },
     {
       "path": "public/flare-s8a/flow.mjs",
@@ -308,7 +308,7 @@
       "path": "public/flare-s8a/gear-slot-icon.mjs",
       "sha256": "8aeb1c7045ff66b399b33e3cb6510ebee5205077a3641dc8f3993720c9c49cd4",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 1387
+      "bytes": 1366
     },
     {
       "path": "public/flare-s8a/goal.mjs",
@@ -350,7 +350,7 @@
       "path": "public/flare-s8a/paged-selector.mjs",
       "sha256": "72772371630baf6448137ecadb768b2e336704bd42d97fc0bc4741e7c4497cf6",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 1893
+      "bytes": 1925
     },
     {
       "path": "public/flare-s8a/panel-shell.css",
@@ -440,13 +440,13 @@
       "path": "public/flare-s8a/runner-authority.mjs",
       "sha256": "b506be35517eb5cb25ec1f200598ddd8fb71ac41ccb16f5b01e9a2f0f4bc6552",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 1559
+      "bytes": 1533
     },
     {
       "path": "public/flare-s8a/runner-inspector-view-model.mjs",
       "sha256": "8fdeed1dd684c13d8d747738300c3f6029702836e4c93a7dfe8fcfd352cf9b92",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 2520
+      "bytes": 2473
     },
     {
       "path": "public/flare-s8a/runner-progression.mjs",
@@ -504,9 +504,9 @@
     },
     {
       "path": "public/flare-s8a/style.css",
-      "sha256": "bfb4584a224690a11c883c5a58c5f1720b0ace8e98a812ccde8c1ab93b3d3823",
+      "sha256": "5f8e1b13823b7e9cdc2327f4851bfe52deed3c57eb0f84ee0854986e8e2a83bc",
       "mime": "text/css; charset=utf-8",
-      "bytes": 10604
+      "bytes": 11262
     },
     {
       "path": "public/flare-s8a/swipe.mjs",
@@ -540,9 +540,9 @@
     },
     {
       "path": "public/flare-s8b/account-app.mjs",
-      "sha256": "b3a489953bfb8d123de0d33ca880230daf3293ec0b18346d6a4b12e7650192c6",
+      "sha256": "9d89236bc11b12da819d0ea11a062f0b66b38b5ecf0509d78e3c0147070dd431",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 32530
+      "bytes": 32647
     },
     {
       "path": "public/flare-s8b/account-ready-view.mjs",
@@ -552,9 +552,9 @@
     },
     {
       "path": "public/flare-s8b/account.css",
-      "sha256": "7c81f992411db5a79e03307daec921e7101fbc42347c077ce6c56869ba6304dd",
+      "sha256": "660603d87d87a50b6642cac01398e235eed4f2d1881498eed9dd8d8f49cc3c30",
       "mime": "text/css; charset=utf-8",
-      "bytes": 23641
+      "bytes": 23921
     },
     {
       "path": "public/flare-s8b/builder-progression-view.mjs",
@@ -612,9 +612,9 @@
     },
     {
       "path": "public/flare-s8b/index.html",
-      "sha256": "0b7c1db2af7423a38f1d16e0ea585bb3859001eddd8650af0533c4f670ea1c45",
+      "sha256": "8301fa6fe2a7925a1a105dbbabffc4c38ffbf4f197df3268d67e284fffed96bd",
       "mime": "text/html; charset=utf-8",
-      "bytes": 16589
+      "bytes": 16885
     },
     {
       "path": "public/flare-s8b/practice-app.mjs",
@@ -650,7 +650,7 @@
       "path": "public/flare-s8b/public-challenge-snapshot.mjs",
       "sha256": "b2b4c162b697e2ff4d1a5913f7993f67d254ff44793391f6ca17b452bd79f615",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 1153
+      "bytes": 1133
     },
     {
       "path": "public/flare-s8b/release-identity.mjs",
