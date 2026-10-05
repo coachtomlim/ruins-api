@@ -6,10 +6,10 @@ const read=p=>readFile(new URL(`../${p}`,import.meta.url),'utf8');
 
 // --- MISSION SCREEN: exactly 3 choices, difficulty primary, room secondary ---
 
-test('mission screen shows a preset grid and no longer exposes the 6-room carousel as the primary surface',async()=>{
+test('mission screen shows a single-dungeon chooser and no longer exposes the 6-room carousel as the primary surface',async()=>{
   const html=await read('public/flare-s8a/challenge.html');
   const mission=html.slice(html.indexOf('data-screen="mission"'),html.indexOf('data-screen="customize"'));
-  assert.match(mission,/id="dungeonPresets" class="preset-grid"/);
+  assert.match(mission,/id="dungeonPresets" class="dungeon-chooser"/);
   assert.match(mission,/class="mission-secondary" hidden/);
 });
 
@@ -20,22 +20,38 @@ test('room-stage/prev/next controls still exist (ids preserved) but are demoted 
   assert.match(html,/id="roomPreview"/);
 });
 
-test('exactly 3 presets are rendered per boot, built from buildDungeonPresets, not a 4th/5th tier',async()=>{
+test('exactly 3 presets are addressable by the chooser (presetIndex cycles mod 3), not a 4th/5th tier',async()=>{
   const mjs=await read('public/flare-s8a/challenge.mjs');
-  assert.match(mjs,/for\(const preset of \[dungeonPresets\.tooEasy,dungeonPresets\.justRight,dungeonPresets\.brutal\]\)wrap\.append\(presetCard\(preset\)\)/);
+  assert.match(mjs,/const presetList=\(\)=>\[dungeonPresets\.tooEasy,dungeonPresets\.justRight,dungeonPresets\.brutal\];/);
+  assert.match(mjs,/presetIndex=\(presetIndex-1\+3\)%3/);
+  assert.match(mjs,/presetIndex=\(presetIndex\+1\)%3/);
 });
 
-test('JUST RIGHT is pre-selected/recommended by default, not locking out the other two',async()=>{
+test('JUST RIGHT is the default displayed/applied preset (index 1), not locking out the other two',async()=>{
   const mjs=await read('public/flare-s8a/challenge.mjs');
-  assert.match(mjs,/recommendedInput\.checked=true;applyPreset\(dungeonPresets\.justRight\)/);
-  assert.match(mjs,/name='dungeon-preset'/);
+  assert.match(mjs,/let presetIndex=1; \/\/ 0=too easy, 1=just right \(default\), 2=brutal/);
+  assert.match(mjs,/\$\('presetRecommended'\)\.hidden=!preset\.recommended/);
 });
 
-test('each preset card shows difficulty label, estimated finish, room, and preset contents — not room-appearance-first',async()=>{
+test('the chooser shows difficulty label, estimated finish, room, and preset contents — not room-appearance-first — plus explicit RECOMMENDED and position indicator',async()=>{
   const mjs=await read('public/flare-s8a/challenge.mjs');
-  assert.match(mjs,/estimate\.textContent=`ESTIMATED FINISH ~\$\{Math\.round\(preset\.estimatedHpPercent\)\}% HP`/);
-  assert.match(mjs,/roomLine\.textContent=`ROOM: \$\{roomSpec\?\.name\|\|preset\.roomId\}`/);
-  assert.match(mjs,/contents\.textContent=names\.length\?names\.join\(' · '\):/);
+  assert.match(mjs,/\$\('presetEstimate'\)\.textContent=`ESTIMATED FINISH ~\$\{Math\.round\(preset\.estimatedHpPercent\)\}% HP`/);
+  assert.match(mjs,/\$\('presetRoomName'\)\.textContent=roomSpec\?\.name\|\|preset\.roomId/);
+  assert.match(mjs,/\$\('presetContents'\)\.textContent=names\.length\?names\.join\(' · '\):/);
+  assert.match(mjs,/\$\('presetPosition'\)\.textContent=`\$\{presetIndex\+1\} \/ 3`/);
+});
+
+test('the dungeon preview uses the real governed room renderer (drawPreview), not an invented thumbnail',async()=>{
+  const mjs=await read('public/flare-s8a/challenge.mjs');
+  assert.match(mjs,/if\(roomData\)drawPreview\(\$\('presetPreview'\),roomData\.map,roomData\.tiles\)/);
+});
+
+test('explicit LEFT/RIGHT controls exist with accessible labels, no reliance on swipe/scroll',async()=>{
+  const mjs=await read('public/flare-s8a/challenge.mjs');
+  assert.match(mjs,/prev\.setAttribute\('aria-label','Previous dungeon'\)/);
+  assert.match(mjs,/next\.setAttribute\('aria-label','Next dungeon'\)/);
+  assert.match(mjs,/prev\.addEventListener\('click',\(\)=>\{presetIndex=\(presetIndex-1\+3\)%3;applyCurrentPreset\(\);show\(\);\}\)/);
+  assert.match(mjs,/next\.addEventListener\('click',\(\)=>\{presetIndex=\(presetIndex\+1\)%3;applyCurrentPreset\(\);show\(\);\}\)/);
 });
 
 test('generic reward-cue copy is demoted to a secondary Gold line, not the primary mission rationale',async()=>{
@@ -57,12 +73,11 @@ test('no HARDCORE/IMPOSSIBLE tier is rendered in the mission screen markup or sc
 
 // --- SELECTION APPLIES THE ACTUAL PRESET ENCOUNTER ---
 
-test('selecting a preset card applies its room and encounter via the existing applyEncounter/renderRoom pipeline',async()=>{
+test('navigating to a preset applies its room and encounter via the existing applyEncounter pipeline (browsing the chooser IS selecting, per Part 1 — there is no separate commit step in the mockup)',async()=>{
   const mjs=await read('public/flare-s8a/challenge.mjs');
   assert.match(mjs,/function applyPreset\(preset\)\{/);
   assert.match(mjs,/applyEncounter\(preset\.encounter\);/);
-  assert.match(mjs,/renderRoom\(\);/);
-  assert.match(mjs,/input\.addEventListener\('change',\(\)=>\{applyPreset\(preset\);session=setEncounter\(session,encounter\(\)\);show\(\);\}\)/);
+  assert.match(mjs,/function applyCurrentPreset\(\)\{applyPreset\(presetList\(\)\[presetIndex\]\);session=setEncounter\(session,encounter\(\)\);\}/);
 });
 
 test('USE THIS DUNGEON still goes through the existing chooseSessionRoom/transition pipeline, now acting on the applied preset state',async()=>{

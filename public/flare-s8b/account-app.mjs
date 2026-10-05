@@ -644,7 +644,7 @@ byId('signOut').addEventListener('click',async()=>{
   try{await adapter.signOut();selectAuth('signin')}catch(error){byId('purchaseStatus').textContent=errorMessage(error)}finally{byId('signOut').disabled=false}
 });
 
-byId('testYourRunner').addEventListener('click',async()=>{
+async function goToDungeonBuilder(){
   try{
     let accessToken=null;
     try{const session=await adapter?.getSession();accessToken=session?.access_token||null}catch{accessToken=null}
@@ -654,7 +654,9 @@ byId('testYourRunner').addEventListener('click',async()=>{
   }catch(error){
     byId('purchaseStatus').textContent=errorMessage(error);
   }
-});
+}
+byId('buildDungeonCta').addEventListener('click',goToDungeonBuilder);
+byId('testYourRunner').addEventListener('click',goToDungeonBuilder);
 
 try{
   adapter=createBrowserAccountAdapter();

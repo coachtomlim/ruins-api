@@ -60,4 +60,14 @@
 .preset-card-interpretation{font-size:11px;color:#ffffffcc}
 .preset-card-room{font-size:10px;color:#ffffff88}
 .preset-card-contents{font-size:10px;color:#ffffffaa}
+.dungeon-chooser{display:grid;gap:8px;min-height:0}
+.chooser-nav{display:grid;grid-template-columns:44px 1fr 44px;gap:8px;align-items:center}
+.chooser-nav button{min-height:44px;font-size:18px}
+.chooser-preview{width:100%;height:150px;border-radius:14px;border:1px solid #895795;background:#160b19}
+.chooser-info{display:grid;gap:4px;text-align:center}
+.chooser-room-name{font-size:16px}
+.chooser-difficulty{display:flex;justify-content:center;align-items:center;gap:8px}
+.chooser-target{font-size:11px;color:#ffffffbb}
+.chooser-position{font-size:10px;color:#ffffff88;letter-spacing:.05em}
+@media(max-height:820px){.chooser-preview{height:110px}}
 @media(max-height:820px){.runner-summary canvas,#inviteHeroCanvas{height:150px}.room-stage canvas{height:120px}.panel-main{gap:7px}.panel-main{font-size:14px}.panel-main h1{font-size:24px}}@media(max-height:700px){.invitation-main #inviteHeroCanvas{height:100px}.target-card{gap:3px;padding:7px}.target-card small{font-size:10px}.result-main{gap:5px}.reward-grid article{padding:7px}.result-actions{gap:5px}}

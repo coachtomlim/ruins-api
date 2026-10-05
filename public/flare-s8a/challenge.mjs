@@ -49,7 +49,7 @@ function renderGaugeMarker(id,percent){const el=$(id);if(!el)return;el.style.lef
 function renderCurrent(view){
   const m=view.model;
   if(view.kind==='invitation'){$('senderName').textContent=session.senderName;$('senderHeading').textContent=session.senderName.toUpperCase();$('inviteRunner').textContent=`Level ${runner.level} ${runner.name}`;$('inviteTarget').textContent=`TARGET: ${invite.targetHp}% HP`;$('targetMission').textContent=`Get the Runner to the EXIT with about ${invite.targetHp}% health remaining.`;const inviteGauge=buildEstimateGaugeViewModel({targetHp:invite.targetHp});$('inviteGaugeTarget').textContent=`TARGET ${inviteGauge.targetPercent}%`;renderGaugeMarker('inviteGaugeTarget',inviteGauge.targetPercent);$('targetRules').textContent=`Above ${invite.targetHp}% = too gentle · Below ${invite.targetHp}% = too harsh`;}
-  else if(view.kind==='mission'){$('missionTarget').textContent=`~${invite.targetHp}% HP`;$('missionRewardCue').textContent='Closer to target earns more Builder Gold.';$('targetFitCue').textContent=`${m.targetFit.label} · ${m.targetFit.note}`;$('missionRunnerContext').textContent=`${session.senderName}'s Runner has ${runner.hp} HP, ${runner.attack} ATK and ${runner.defense} DEF.`;renderRoom();}
+  else if(view.kind==='mission'){$('missionTarget').textContent=`~${invite.targetHp}% HP`;$('missionRewardCue').textContent='Closer to target earns more Builder Gold.';$('targetFitCue').textContent=`${m.targetFit.label} · ${m.targetFit.note}`;$('missionRunnerContext').textContent=`${session.senderName}'s Runner has ${runner.hp} HP, ${runner.attack} ATK and ${runner.defense} DEF.`;renderDungeonChooserFrame();renderRoom();}
   else if(view.kind==='customize'){$('dungeonBudget').textContent=m.budget.primary;$('dungeonBudget').dataset.legal=String(m.budget.legal);$('finishCustomize').disabled=!m.canFinish;renderTabs();const gauge=buildEstimateGaugeViewModel({targetHp:invite.targetHp,estimatedHpPercent:estimateEncounter({catalog,model,runnerId:invite.runnerId,runner,encounter:encounter()}).estimatedHpPercent});$('customizeGaugeTarget').textContent=`TARGET ${gauge.targetPercent}%`;renderGaugeMarker('customizeGaugeTarget',gauge.targetPercent);$('customizeGaugeEstimate').hidden=!gauge.hasEstimate;if(gauge.hasEstimate)renderGaugeMarker('customizeGaugeEstimate',gauge.estimatePercent);$('customizeGaugeEstimateLabel').textContent=gauge.hasEstimate?`ESTIMATED FINISH ${gauge.estimateLabel}`:'';$('customizeGaugeGuidance').textContent=gauge.guidance;}
   else if(view.kind==='ready'){$('readyTarget').textContent=m.title;$('readySummary').textContent=`${m.roomName} · ${m.budget.primary} · ${m.targetFit.label}`;$('runHero').disabled=!m.canRun;const readyGauge=buildEstimateGaugeViewModel({targetHp:invite.targetHp,estimatedHpPercent:estimateEncounter({catalog,model,runnerId:invite.runnerId,runner,encounter:encounter()}).estimatedHpPercent});$('readyGaugeTarget').textContent=`TARGET ${readyGauge.targetPercent}%`;renderGaugeMarker('readyGaugeTarget',readyGauge.targetPercent);$('readyGaugeEstimate').hidden=!readyGauge.hasEstimate;if(readyGauge.hasEstimate)renderGaugeMarker('readyGaugeEstimate',readyGauge.estimatePercent);$('readyGaugeEstimateLabel').textContent=readyGauge.hasEstimate?`ESTIMATED FINISH ${readyGauge.estimateLabel}`:'';renderReadySelections();}
   else if(view.kind==='runtime'){$('cameraToggle').textContent=m.cameraAction||'OVERVIEW';$('pauseToggle').textContent=m.pauseAction;}
@@ -106,36 +106,56 @@ function applyEncounter(e){
   for(const id of [...TRAP_IDS,...SUPPORT_IDS]){const box=document.querySelector(`[data-choice="${id}"]`);if(box)box.checked=selected.includes(id);}
 }
 function renderTabs(){for(const tab of document.querySelectorAll('[data-custom-tab]')){const on=tab.dataset.customTab===activePanel;tab.setAttribute('aria-selected',String(on));document.querySelector(`[data-custom-panel="${tab.dataset.customTab}"]`).hidden=!on;}}
+let presetIndex=1; // 0=too easy, 1=just right (default), 2=brutal
+const presetList=()=>[dungeonPresets.tooEasy,dungeonPresets.justRight,dungeonPresets.brutal];
 function applyPreset(preset){
   const index=specs.findIndex(s=>s.id===preset.roomId);
   if(index>=0)roomIndex=index;
   applyEncounter(preset.encounter);
-  renderRoom();
 }
-function presetCard(preset){
-  const card=document.createElement('label');card.className=`preset-card${preset.recommended?' is-recommended':''}`;
-  const input=document.createElement('input');input.type='radio';input.name='dungeon-preset';input.value=preset.kind;input.className='visually-hidden';
-  input.addEventListener('change',()=>{applyPreset(preset);session=setEncounter(session,encounter());show();});
-  const head=document.createElement('div');head.className='preset-card-head';
-  const label=document.createElement('span');label.className='preset-card-label';label.textContent=preset.label;
-  const recBadge=document.createElement('span');recBadge.className='recommended-badge';recBadge.textContent='RECOMMENDED';
-  head.append(label,recBadge);
-  const mark=document.createElement('span');mark.className='card-selected-mark';mark.textContent='SELECTED';
-  const estimate=document.createElement('div');estimate.className='preset-card-estimate';estimate.textContent=`ESTIMATED FINISH ~${Math.round(preset.estimatedHpPercent)}% HP`;
-  const interpretation=document.createElement('div');interpretation.className='preset-card-interpretation';interpretation.textContent=preset.interpretation;
-  const roomSpec=specs.find(s=>s.id===preset.roomId);
-  const roomLine=document.createElement('div');roomLine.className='preset-card-room';roomLine.textContent=`ROOM: ${roomSpec?.name||preset.roomId}`;
-  const contents=document.createElement('div');contents.className='preset-card-contents';
-  const names=[...labels(preset.encounter.enemyTypes,'monster'),...labels(preset.encounter.trapTypes,'item'),...labels(preset.encounter.supportTypes,'item')];
-  contents.textContent=names.length?names.join(' · '):'No monsters, traps or support';
-  card.append(input,head,mark,estimate,interpretation,roomLine,contents);
-  return card;
-}
-function renderDungeonPresets(){
+function applyCurrentPreset(){applyPreset(presetList()[presetIndex]);session=setEncounter(session,encounter());}
+// Single-dungeon chooser (002E5 Part 1): exactly one real dungeon preview visible at a time, with
+// explicit LEFT/RIGHT navigation across the 3 presets — browsing a preset IS selecting it (there is
+// no separate commit step, matching the original room carousel's own long-standing behavior), unlike
+// the 002E4 paged monster/trap/support editor where paging through OPTIONS must never auto-toggle a
+// SELECTION. Those are different interactions and this file keeps them distinct on purpose.
+function renderDungeonChooser(){
   const wrap=$('dungeonPresets');wrap.replaceChildren();
-  for(const preset of [dungeonPresets.tooEasy,dungeonPresets.justRight,dungeonPresets.brutal])wrap.append(presetCard(preset));
-  const recommendedInput=wrap.querySelector('input[value="just-right"]');
-  if(recommendedInput){recommendedInput.checked=true;applyPreset(dungeonPresets.justRight);}
+  const nav=document.createElement('div');nav.className='chooser-nav';
+  const prev=document.createElement('button');prev.type='button';prev.id='presetPrev';prev.textContent='‹';prev.setAttribute('aria-label','Previous dungeon');
+  const canvas=document.createElement('canvas');canvas.id='presetPreview';canvas.className='chooser-preview';
+  const next=document.createElement('button');next.type='button';next.id='presetNext';next.textContent='›';next.setAttribute('aria-label','Next dungeon');
+  nav.append(prev,canvas,next);
+  const info=document.createElement('div');info.className='chooser-info';
+  const roomName=document.createElement('strong');roomName.id='presetRoomName';roomName.className='chooser-room-name';
+  const diffRow=document.createElement('div');diffRow.className='chooser-difficulty';
+  const label=document.createElement('span');label.id='presetLabel';label.className='preset-card-label';
+  const recBadge=document.createElement('span');recBadge.id='presetRecommended';recBadge.className='recommended-badge';recBadge.textContent='RECOMMENDED';recBadge.hidden=true;
+  diffRow.append(label,recBadge);
+  const targetLine=document.createElement('div');targetLine.id='presetTarget';targetLine.className='chooser-target';
+  const estimate=document.createElement('div');estimate.id='presetEstimate';estimate.className='preset-card-estimate';
+  const interpretation=document.createElement('div');interpretation.id='presetInterpretation';interpretation.className='preset-card-interpretation';
+  const contents=document.createElement('div');contents.id='presetContents';contents.className='preset-card-contents';
+  const position=document.createElement('span');position.id='presetPosition';position.className='chooser-position';position.setAttribute('aria-live','polite');
+  info.append(roomName,diffRow,targetLine,estimate,interpretation,contents,position);
+  wrap.append(nav,info);
+  prev.addEventListener('click',()=>{presetIndex=(presetIndex-1+3)%3;applyCurrentPreset();show();});
+  next.addEventListener('click',()=>{presetIndex=(presetIndex+1)%3;applyCurrentPreset();show();});
+  applyCurrentPreset();
+}
+function renderDungeonChooserFrame(){
+  const preset=presetList()[presetIndex];
+  const roomSpec=specs.find(s=>s.id===preset.roomId),roomData=roomSpec&&rooms.get(roomSpec.id);
+  if(roomData)drawPreview($('presetPreview'),roomData.map,roomData.tiles);
+  $('presetRoomName').textContent=roomSpec?.name||preset.roomId;
+  $('presetLabel').textContent=preset.label;
+  $('presetRecommended').hidden=!preset.recommended;
+  $('presetTarget').textContent=`TARGET ${Math.round(preset.targetHp)}%`;
+  $('presetEstimate').textContent=`ESTIMATED FINISH ~${Math.round(preset.estimatedHpPercent)}% HP`;
+  $('presetInterpretation').textContent=preset.interpretation;
+  const names=[...labels(preset.encounter.enemyTypes,'monster'),...labels(preset.encounter.trapTypes,'item'),...labels(preset.encounter.supportTypes,'item')];
+  $('presetContents').textContent=names.length?names.join(' · '):'No monsters, traps or support';
+  $('presetPosition').textContent=`${presetIndex+1} / 3`;
 }
 function renderReadySelections(){
   const e=encounter(),wrap=$('readySelections');wrap.replaceChildren();
@@ -178,5 +198,5 @@ $('runHero').addEventListener('click',()=>runtimeStart?.());
 let pointer=null;$('roomStage').addEventListener('pointerdown',e=>pointer={x:e.clientX,y:e.clientY});$('roomStage').addEventListener('pointerup',e=>{const direction=pointer&&roomSwipeDirection({startX:pointer.x,startY:pointer.y,endX:e.clientX,endY:e.clientY});pointer=null;if(direction)moveRoom(direction);});
 window.__s8aReceiver={get session(){return session;},get encounter(){return encounter();},get roomId(){return selectedSpec().id;},get room(){return selectedRoom();},get runnerAuthority(){return runnerAuthority;},setRuntimeStart(fn){runtimeStart=fn;},startRuntime(){chooseSessionRoom();currentAttemptToken=createAttemptToken();session=advanceReceiver(session,'RUN');show();},completeRuntime(result,score){session=advanceReceiver(session,'COMPLETE',{result,score});if(publicToken){lastReceiptPayload=buildResultReceipt({publicToken,roomId:session.roomId,encounter:session.encounter,rulesVersion:'s8a-1',result,heroGold:session.reward?.heroGold,attemptToken:currentAttemptToken})}try{show();}catch(error){console.error(error);}finally{void sendResultReceipt();}},replayRuntime(){currentAttemptToken=createAttemptToken();session=advanceReceiver(session,'RUN_AGAIN');show();},runFailed(message){session={...session,journey:'ready'};show();$('readySummary').textContent=`Run could not start: ${message}`;},show};
 installRuntime(window.__s8aReceiver);
-async function bootReceiver(){try{const [base,game,heroPack,correlatedSnapshot]=await Promise.all([fetch('/quick-dungeon/flare-p0/data/catalog.json').then(r=>r.ok?r.json():Promise.reject(Error('Catalogue unavailable'))),fetch('/quick-dungeon/flare-s7/data/game.json').then(r=>r.ok?r.json():Promise.reject(Error('Game model unavailable'))),loadS3ActorPack(),fetchCorrelatedSnapshot()]);baseCatalog=base;model=game;const code=inviteCodeFromLocation(location);invite=code?decodeInviteCode(code,model):new URLSearchParams(location.search).get('demo')==='1'?{runnerId:model.defaultRunner,targetHp:model.defaultTargetHp}:null;if(!invite)throw Error('Challenge invitation is missing or invalid');catalog=applyRunnerModel(baseCatalog,model,invite.runnerId);runnerAuthority=resolveRunnerAuthority({snapshot:correlatedSnapshot,templateMaxHp:catalog.heroes.warrior.maxHp,templateAttack:catalog.heroes.warrior.damage,templateDefense:catalog.heroes.warrior.armor});if(runnerAuthority.source==='snapshot'){catalog.heroes.warrior.maxHp=runnerAuthority.maxHp;catalog.heroes.warrior.damage=runnerAuthority.attack;catalog.heroes.warrior.armor=runnerAuthority.defense;}runner=runnerSummary(model,invite.runnerId,catalog);session=createReceiverSession({invite,senderName:inviteSender(location.search)});renderControls();calibrated=calibrateEncounter({catalog,model,runnerId:invite.runnerId,runner,targetHp:invite.targetHp});applyEncounter(calibrated.encounter);session=setEncounter(session,encounter());dungeonPresets=buildDungeonPresets({catalog,model,runnerId:invite.runnerId,runner,targetHp:invite.targetHp,budget:model.budget,roomIds:specs.map(s=>s.id)});renderDungeonPresets();startComposedHeroStance($('inviteHeroCanvas'),heroPack);await Promise.all(specs.map(async spec=>rooms.set(spec.id,await loadS7StockRoom(spec.id))));$('acceptChallenge').disabled=false;$('loadStatus').textContent='Your Hero-Runner is ready.';show();window.__s8aData={model,catalog,invite,runner,rooms,specs,runnerAuthority,dungeonPresets};}catch(error){console.error(error);if(error?.message==='SNAPSHOT_SERVICE_UNAVAILABLE'||/snapshot/i.test(String(error?.message))){$('heading-invitation').textContent='COULD NOT LOAD THIS RUNNER';$('loadStatus').innerHTML='';const status=document.createElement('span');status.textContent="We couldn't load your friend's Runner data. ";const retry=document.createElement('button');retry.type='button';retry.className='nav-link';retry.textContent='RETRY';retry.addEventListener('click',()=>location.reload());$('loadStatus').append(status,retry);return}$('heading-invitation').textContent='THIS CHALLENGE CANNOT OPEN';$('loadStatus').textContent=error.message;}}
+async function bootReceiver(){try{const [base,game,heroPack,correlatedSnapshot]=await Promise.all([fetch('/quick-dungeon/flare-p0/data/catalog.json').then(r=>r.ok?r.json():Promise.reject(Error('Catalogue unavailable'))),fetch('/quick-dungeon/flare-s7/data/game.json').then(r=>r.ok?r.json():Promise.reject(Error('Game model unavailable'))),loadS3ActorPack(),fetchCorrelatedSnapshot()]);baseCatalog=base;model=game;const code=inviteCodeFromLocation(location);invite=code?decodeInviteCode(code,model):new URLSearchParams(location.search).get('demo')==='1'?{runnerId:model.defaultRunner,targetHp:model.defaultTargetHp}:null;if(!invite)throw Error('Challenge invitation is missing or invalid');catalog=applyRunnerModel(baseCatalog,model,invite.runnerId);runnerAuthority=resolveRunnerAuthority({snapshot:correlatedSnapshot,templateMaxHp:catalog.heroes.warrior.maxHp,templateAttack:catalog.heroes.warrior.damage,templateDefense:catalog.heroes.warrior.armor});if(runnerAuthority.source==='snapshot'){catalog.heroes.warrior.maxHp=runnerAuthority.maxHp;catalog.heroes.warrior.damage=runnerAuthority.attack;catalog.heroes.warrior.armor=runnerAuthority.defense;}runner=runnerSummary(model,invite.runnerId,catalog);session=createReceiverSession({invite,senderName:inviteSender(location.search)});renderControls();calibrated=calibrateEncounter({catalog,model,runnerId:invite.runnerId,runner,targetHp:invite.targetHp});applyEncounter(calibrated.encounter);session=setEncounter(session,encounter());dungeonPresets=buildDungeonPresets({catalog,model,runnerId:invite.runnerId,runner,targetHp:invite.targetHp,budget:model.budget,roomIds:specs.map(s=>s.id)});renderDungeonChooser();startComposedHeroStance($('inviteHeroCanvas'),heroPack);await Promise.all(specs.map(async spec=>rooms.set(spec.id,await loadS7StockRoom(spec.id))));$('acceptChallenge').disabled=false;$('loadStatus').textContent='Your Hero-Runner is ready.';show();window.__s8aData={model,catalog,invite,runner,rooms,specs,runnerAuthority,dungeonPresets};}catch(error){console.error(error);if(error?.message==='SNAPSHOT_SERVICE_UNAVAILABLE'||/snapshot/i.test(String(error?.message))){$('heading-invitation').textContent='COULD NOT LOAD THIS RUNNER';$('loadStatus').innerHTML='';const status=document.createElement('span');status.textContent="We couldn't load your friend's Runner data. ";const retry=document.createElement('button');retry.type='button';retry.className='nav-link';retry.textContent='RETRY';retry.addEventListener('click',()=>location.reload());$('loadStatus').append(status,retry);return}$('heading-invitation').textContent='THIS CHALLENGE CANNOT OPEN';$('loadStatus').textContent=error.message;}}
 void bootReceiver();

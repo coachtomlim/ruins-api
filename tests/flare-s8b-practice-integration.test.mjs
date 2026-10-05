@@ -4,17 +4,22 @@ import {readFile} from 'node:fs/promises';
 
 const read=path=>readFile(new URL(`../${path}`,import.meta.url),'utf8');
 
-test('Hub exposes a prominent TEST YOUR RUNNER practice CTA',async()=>{
+test('Hub exposes BUILD A DUNGEON as the primary CTA and TEST DUNGEON as a demoted secondary CTA, both reusing the same build surface',async()=>{
   const html=await read('public/flare-s8b/index.html');
-  assert.match(html,/id="testYourRunner"[^>]*>TEST YOUR RUNNER/);
-  assert.match(html,/PRACTICE RUN.*NO REWARDS|Practice run.*no rewards/i);
+  assert.match(html,/id="buildDungeonCta"[^>]*class="primary[^"]*"[^>]*>BUILD A DUNGEON|class="primary[^"]*"[^>]*id="buildDungeonCta"[^>]*>BUILD A DUNGEON/);
+  assert.match(html,/Choose a dungeon, add monsters, traps and support, then test or share it\./);
+  assert.match(html,/id="testYourRunner"[^>]*class="secondary[^"]*"[^>]*>TEST DUNGEON|class="secondary[^"]*"[^>]*id="testYourRunner"[^>]*>TEST DUNGEON/);
+  assert.match(html,/Run your current Runner through this build\. Test runs do not earn rewards\./);
 });
 
-test('Hub CTA builds an immutable practice snapshot and navigates to the practice surface, without touching reward paths',async()=>{
+test('Both the BUILD A DUNGEON and TEST DUNGEON CTAs build an immutable practice snapshot and navigate to the same build/test surface, without touching reward paths — no duplicate builder engine',async()=>{
   const app=await read('public/flare-s8b/account-app.mjs');
+  assert.match(app,/async function goToDungeonBuilder\(\)\{/);
   assert.match(app,/createPracticeRunnerSnapshot\(readyViewModel,\{accessToken\}\)/);
   assert.match(app,/sessionStorage\.setItem\(PRACTICE_SNAPSHOT_KEY/);
   assert.match(app,/location\.href=['"]practice\.html['"]/);
+  assert.match(app,/byId\('buildDungeonCta'\)\.addEventListener\('click',goToDungeonBuilder\)/);
+  assert.match(app,/byId\('testYourRunner'\)\.addEventListener\('click',goToDungeonBuilder\)/);
   assert.doesNotMatch(app,/claim_proof_builder_reward|claimGuestRun|purchase_progression_offer\(.*practice/i);
 });
 
