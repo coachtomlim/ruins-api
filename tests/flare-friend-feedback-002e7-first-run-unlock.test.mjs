@@ -120,10 +120,13 @@ test('action copy is SAVE CHANGES, not the repetitive DONE/OPTIONAL wording',asy
 
 // --- RESULT ---
 
-test('the unlock message (LEVEL UP! / DUNGEON BUILDER TOOLS UNLOCKED) only renders on the rewards screen after a completion, and only for the unlocking run',async()=>{
+test('the unlock message (FIRST RUN COMPLETE! / DUNGEON BUILDER TOOLS UNLOCKED) only renders on the rewards screen after a completion, and only for the unlocking run',async()=>{
   const [html,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge.mjs')]);
   assert.match(html,/id="unlockMoment" class="unlock-moment" hidden/);
-  assert.match(html,/id="unlockLevelUp">LEVEL UP!/);
+  // 002E7A: "LEVEL UP!" wrongly implied a persisted Runner/Builder level increment, which this
+  // session-only unlock never performs — corrected to copy that doesn't claim a real progression event.
+  assert.match(html,/id="unlockLevelUp">FIRST RUN COMPLETE!/);
+  assert.doesNotMatch(html,/id="unlockLevelUp">LEVEL UP!/);
   assert.match(html,/id="unlockFinal">DUNGEON BUILDER TOOLS UNLOCKED/);
   assert.match(mjs,/function renderUnlockMoment\(\)\{/);
   assert.match(mjs,/el\.hidden=!justUnlocked;/);
