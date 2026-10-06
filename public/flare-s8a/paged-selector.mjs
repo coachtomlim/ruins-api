@@ -5,7 +5,8 @@ export function installPagedSelector(row,kind){
   row.classList.add('paged-card-row');
   const nav=document.createElement('div');nav.className='selector-navigation';
   const previous=document.createElement('button'),next=document.createElement('button'),position=document.createElement('span');
-  for(const [button,label,text,delta] of [[previous,`Previous ${kind}`,'LEFT',-1],[next,`Next ${kind}`,'RIGHT',1]]){
+  previous.className='selector-nav-btn';next.className='selector-nav-btn';position.className='selector-position';
+  for(const [button,label,text,delta] of [[previous,`Previous ${kind}`,'‹',-1],[next,`Next ${kind}`,'›',1]]){
     button.type='button';button.textContent=text;button.setAttribute('aria-label',label);
     button.addEventListener('click',()=>{index=pageIndex(index,delta,cards.length);render();});
   }
@@ -15,16 +16,28 @@ export function installPagedSelector(row,kind){
     action.type='button';action.className='selector-action';
     action.addEventListener('click',event=>{
       event.preventDefault();event.stopPropagation();
-      input.checked=input.type==='radio'?true:!input.checked;
-      input.dispatchEvent(new Event('change',{bubbles:true}));
+      let changed=input;
+      if(input.type==='checkbox'){
+        input.checked=!input.checked;
+      }else if(input.checked&&input.value!=='none'){
+        // REMOVE on an already-selected monster slot — safely falls back to the group's own
+        // EMPTY/none radio rather than leaving the slot in an invalid/unset state.
+        const emptyInput=row.querySelector(`input[name="${input.name}"][value="none"]`);
+        if(emptyInput){emptyInput.checked=true;changed=emptyInput;}
+      }else{
+        input.checked=true;
+      }
+      changed.dispatchEvent(new Event('change',{bubbles:true}));
     });card.append(action);return action;
   });
   function render(){
     cards.forEach((card,i)=>{
       card.classList.toggle('is-current-page',i===index);
       const input=card.querySelector('input');
-      actions[i].textContent=input.checked?(input.type==='checkbox'?'REMOVE':'SELECTED'):'SELECT';
-      actions[i].setAttribute('aria-label',`${actions[i].textContent} ${card.querySelector('strong').textContent}`);
+      const label=input.checked?(input.type==='checkbox'?'REMOVE':(input.value==='none'?'SELECTED':'REMOVE')):'SELECT';
+      actions[i].textContent=label;
+      actions[i].classList.toggle('is-remove',label==='REMOVE');
+      actions[i].setAttribute('aria-label',`${label} ${card.querySelector('strong').textContent}`);
     });position.textContent=`${index+1} / ${cards.length}`;
   }
   row.parentElement.append(nav);row.addEventListener('change',render);render();

@@ -28,8 +28,33 @@ for(const [kind,count] of [['trap',2],['support',3],['monster for guard 1',5]])t
     assert(row.children[0].classList.values.has('is-current-page'));nav.children[0].click();assert(row.children[count-1].classList.values.has('is-current-page'));
     assert.equal(changes,0);assert(row.children.every(card=>!card.querySelector('input').checked));
     const card=row.children[count-1],action=card.children.at(-1);action.click();assert(card.querySelector('input').checked);assert.equal(changes,1);
-    refresh();assert.equal(action.textContent,kind.startsWith('monster')?'SELECTED':'REMOVE');
+    // 002E7 Part K: a selected monster slot now shows REMOVE too (not a duplicate "SELECTED"
+    // badge) — clicking REMOVE on a real guard row falls back to that row's own EMPTY/none card,
+    // asserted below in a dedicated test since this synthetic harness has no EMPTY card of its own.
+    refresh();assert.equal(action.textContent,'REMOVE');
     if(!kind.startsWith('monster')){action.click();assert(!card.querySelector('input').checked);assert.equal(changes,2);assert.equal(action.textContent,'SELECT')}
+  }finally{globalThis.document=old}
+});
+test('002E7 Part K: REMOVE on a selected monster guard slot safely falls back to that guard\'s own EMPTY/none card, never leaving the group unset',()=>{
+  const old=globalThis.document;globalThis.document={createElement:tag=>Object.assign(new Element(),{tag})};
+  try{
+    const parent=new Element(),row=new Element();parent.append(row);
+    const emptyInput=Object.assign(new Element(),{tag:'input',type:'radio',name:'guard-0',value:'none',checked:true});
+    const emptyCard=new Element();emptyCard.append(emptyInput,Object.assign(new Element(),{tag:'strong',textContent:'EMPTY'}));row.append(emptyCard);
+    const goblinInput=Object.assign(new Element(),{tag:'input',type:'radio',name:'guard-0',value:'goblin'});
+    const goblinCard=new Element();goblinCard.append(goblinInput,Object.assign(new Element(),{tag:'strong',textContent:'Goblin'}));row.append(goblinCard);
+    row.querySelector=selector=>row.children.flatMap(c=>c.children).find(node=>{
+      if(node.tag!=='input')return false;
+      const m=/input\[name="([^"]+)"\]\[value="([^"]+)"\]/.exec(selector);
+      return m?node.attributes.name===m[1]&&node.attributes.value===m[2]:false;
+    });
+    emptyInput.attributes.name='guard-0';emptyInput.attributes.value='none';goblinInput.attributes.name='guard-0';goblinInput.attributes.value='goblin';
+    let changes=0;row.addEventListener('change',()=>changes++);installPagedSelector(row,'monster for guard 1');
+    const goblinAction=goblinCard.children.at(-1);goblinAction.click();
+    assert.equal(goblinInput.checked,true);assert.equal(changes,1);
+    goblinAction.click();
+    assert.equal(emptyInput.checked,true,'REMOVE must select the EMPTY/none card for this guard, never leave the slot unset');
+    assert.equal(changes,2);
   }finally{globalThis.document=old}
 });
 test('wrap arithmetic handles first/last pages and empty lists',()=>{assert.equal(pageIndex(0,-1,3),2);assert.equal(pageIndex(2,1,3),0);assert.equal(pageIndex(0,1,0),0)});
@@ -49,7 +74,10 @@ for(const kind of ['traps','supports'])test(`${kind}: actual catalog selection/r
 });
 test('mobile paging is width-scoped and retains desktop cards and existing calculation authority',()=>{
   const css=readFileSync('public/flare-s8a/style.css','utf8'),source=readFileSync('public/flare-s8a/challenge.mjs','utf8');
-  assert.match(css,/@media\(max-width:540px\)/);assert.match(css,/\.paged-card-row\{[^}]*overflow:visible/);assert.match(css,/\.paged-card-row \.card\.is-current-page\{display:grid/);assert.match(css,/\.selector-navigation button,\.selector-action\{min-height:44px/);
+  assert.match(css,/@media\(max-width:540px\)/);assert.match(css,/\.paged-card-row\{[^}]*overflow:visible/);assert.match(css,/\.paged-card-row \.card\.is-current-page\{display:grid/);
+  // 002E7 Part L: nav buttons are now compact round [‹]/[›] controls (not full-width 44px bars),
+  // but touch targets stay practical (min 40px) and the SELECT/REMOVE action is still full-width.
+  assert.match(css,/\.selector-nav-btn\{min-height:40px;min-width:40px/);assert.match(css,/\.selector-action\{display:block;width:100%;min-height:40px\}/);
   assert.match(source,/control.addEventListener\('change',\(\)=>\{session=setEncounter\(session,encounter\(\)\);show\(\);\}\)/);
   assert.match(source,/estimatedHpPercent:estimateEncounter/);assert.match(source,/usedBudget:e|usedBudget\(e\)/);
   assert.match(source,/installPagedSelector\(row,kind==='traps'\?'trap':'support'\)/);

@@ -60,8 +60,12 @@ test('invitation and customize screens each have a real gauge with a fixed targe
   assert.match(html,/id="inviteGaugeTarget"/);
   assert.match(html,/id="customizeGaugeTarget"/);
   assert.match(html,/id="customizeGaugeEstimate"/);
-  assert.match(html,/id="customizeGaugeEstimateLabel"/);
-  assert.match(html,/id="customizeGaugeGuidance"/);
+  // 002E7 Part H: the gauge's text readout moved into the one-glance outcome summary
+  // (TARGET / ESTIMATED FINISH / interpretation) above it, and the gauge itself is visually
+  // de-emphasized (gauge--minor) rather than carrying its own estimate label/guidance text.
+  assert.match(html,/id="outcomeTarget"/);
+  assert.match(html,/id="outcomeEstimate"/);
+  assert.match(html,/id="outcomeInterpretation"/);
 });
 
 test('customize screen gauge updates on monster/trap/support change via the existing renderControls change listener',async()=>{

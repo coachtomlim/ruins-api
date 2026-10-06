@@ -104,11 +104,14 @@ test('monster slots are radio-style cards (one selection per guard), not bare <s
   assert.doesNotMatch(mjs,/document\.createElement\('select'\)/);
 });
 
-test('trap/support cards are checkbox-backed labels with a visible, non-color-only selected indicator',async()=>{
+test('trap/support cards are checkbox-backed labels with a visible, non-color-only selected indicator (border/background treatment, not a duplicate badge — 002E7 Part K)',async()=>{
   const [mjs,css]=await Promise.all([read('public/flare-s8a/challenge.mjs'),read('public/flare-s8a/style.css')]);
   assert.match(mjs,/input\.type='checkbox';input\.dataset\.choice=item\.id/);
-  assert.match(css,/card-selected-mark/);
-  assert.match(mjs,/mark\.textContent='SELECTED'/);
+  assert.match(css,/\.card:has\(:checked\)\{border-color:/);
+  assert.match(css,/\.card\.is-selected\{border-color:/);
+  // the old always-present "SELECTED" text badge is gone — the paged-selector's own
+  // SELECT/REMOVE action button is now the single selected-state treatment (see 002E4 test file).
+  assert.doesNotMatch(mjs,/card-selected-mark/);
 });
 
 test('every card shows an icon, name, budget cost and short effect',async()=>{
