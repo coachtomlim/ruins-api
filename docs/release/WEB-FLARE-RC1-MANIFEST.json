@@ -1,6 +1,6 @@
 {
   "releaseId": "WEB-FLARE-RC1",
-  "generatedAt": "2026-10-06T02:36:45.209Z",
+  "generatedAt": "2026-10-06T02:55:16.234Z",
   "entryPoints": [
     "public/flare-s8a/index.html",
     "public/flare-s8a/challenge.html",
@@ -264,9 +264,9 @@
     },
     {
       "path": "public/flare-s8a/challenge.html",
-      "sha256": "cb2bc83941f89b6d56416b072d047ae1bcd7114b8f6f30bd00046faf58f5e4dc",
+      "sha256": "37382d97a96255941cd5384baf5a20099072095649d2c4336c14bd51e3d70835",
       "mime": "text/html; charset=utf-8",
-      "bytes": 10016
+      "bytes": 10026
     },
     {
       "path": "public/flare-s8a/challenge.mjs",
