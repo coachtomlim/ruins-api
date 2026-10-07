@@ -1,6 +1,6 @@
 {
   "releaseId": "WEB-FLARE-RC1",
-  "generatedAt": "2026-10-06T02:55:16.234Z",
+  "generatedAt": "2026-10-07T11:25:52.472Z",
   "entryPoints": [
     "public/flare-s8a/index.html",
     "public/flare-s8a/challenge.html",
@@ -264,15 +264,15 @@
     },
     {
       "path": "public/flare-s8a/challenge.html",
-      "sha256": "37382d97a96255941cd5384baf5a20099072095649d2c4336c14bd51e3d70835",
+      "sha256": "adb05ffc34425b0de0bab7d81a2754aaf53f7d2ce6f6fa95c0f174ccbc079bbc",
       "mime": "text/html; charset=utf-8",
-      "bytes": 10026
+      "bytes": 10512
     },
     {
       "path": "public/flare-s8a/challenge.mjs",
-      "sha256": "a7ee08ddfa06b5cd89c51579fa7fe6d2a023871053fc031ae654d73084b8af07",
+      "sha256": "47dda8a527f22c13ef6c0546ae5454f4ea2cbc850531e8c7b39bd03757a80622",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 29492
+      "bytes": 32191
     },
     {
       "path": "public/flare-s8a/customize-panels.mjs",
@@ -504,9 +504,9 @@
     },
     {
       "path": "public/flare-s8a/style.css",
-      "sha256": "778597c1455d2152fc5a0404ef255e5c4ea8ba071d0a3b84c0d976a6f9f934da",
+      "sha256": "f33cc8745d8e2ba06cb017c73d65c96398eb3ed73c8a65099deea3f405ea6922",
       "mime": "text/css; charset=utf-8",
-      "bytes": 16048
+      "bytes": 18116
     },
     {
       "path": "public/flare-s8a/swipe.mjs",
