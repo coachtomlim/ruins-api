@@ -32,20 +32,14 @@ test('all 3 presets (TOO EASY / JUST RIGHT / BRUTAL) and USE THIS DUNGEON remain
   assert.match(mjs,/const presetList=\(\)=>\[dungeonPresets\.tooEasy,dungeonPresets\.justRight,dungeonPresets\.brutal\];/);
 });
 
-test('first run completion unlocks customization exactly once and persists for the rest of this session/tab',async()=>{
+test('first run completion unlocks customization exactly once and persists for the rest of this session/tab (002E8: also arms the full-screen ceremony flag)',async()=>{
   const mjs=await read('public/flare-s8a/challenge.mjs');
   const completeStart=mjs.indexOf('completeRuntime(result,score){');
   const complete=mjs.slice(completeStart,mjs.indexOf('replayRuntime('));
-  assert.match(complete,/if\(!customizationUnlocked\)\{customizationUnlocked=true;justUnlocked=true;try\{sessionStorage\.setItem\(CUSTOMIZATION_UNLOCK_KEY,'1'\);\}catch\{\}\}else\{justUnlocked=false;\}/);
+  assert.match(complete,/if\(!customizationUnlocked\)\{customizationUnlocked=true;justUnlocked=true;unlockCeremonyShown=false;try\{sessionStorage\.setItem\(CUSTOMIZATION_UNLOCK_KEY,'1'\);\}catch\{\}\}else\{justUnlocked=false;\}/);
 });
 
-test('reduced-motion users get the final unlocked state immediately/minimally, never a long blocking animation',async()=>{
-  const css=await read('public/flare-s8a/style.css');
-  assert.match(css,/@media\(prefers-reduced-motion:reduce\)\{\.unlock-moment \*\{transition:none!important\}\}/);
-  // staggered reveal totals well under the task's own ~1-1.5s ceiling
-  assert.match(css,/transition-delay:\.81s/);
-  assert.doesNotMatch(css,/transition-delay:\s*[2-9]s|transition-delay:\s*1\.[6-9]/);
-});
+test('(see tests/flare-friend-feedback-002e8-fullscreen-unlock.test.mjs for the full-screen ceremony, phased lock animation, reduced-motion and direct tool handoff coverage)',()=>{assert.ok(true)});
 
 test('normal UI entry points into customization (mission CUSTOMIZE, ready EDIT DUNGEON, rewards CUSTOMIZE THIS DUNGEON) all render through the one gated customize branch — no bypass path',async()=>{
   const mjs=await read('public/flare-s8a/challenge.mjs');
@@ -120,16 +114,12 @@ test('action copy is SAVE CHANGES, not the repetitive DONE/OPTIONAL wording',asy
 
 // --- RESULT ---
 
-test('the unlock message (FIRST RUN COMPLETE! / DUNGEON BUILDER TOOLS UNLOCKED) only renders on the rewards screen after a completion, and only for the unlocking run',async()=>{
+test('002E8: the old inline unlock card is gone; only a compact, non-repeating status remains on the rewards screen itself',async()=>{
   const [html,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge.mjs')]);
-  assert.match(html,/id="unlockMoment" class="unlock-moment" hidden/);
-  // 002E7A: "LEVEL UP!" wrongly implied a persisted Runner/Builder level increment, which this
-  // session-only unlock never performs — corrected to copy that doesn't claim a real progression event.
-  assert.match(html,/id="unlockLevelUp">FIRST RUN COMPLETE!/);
-  assert.doesNotMatch(html,/id="unlockLevelUp">LEVEL UP!/);
-  assert.match(html,/id="unlockFinal">DUNGEON BUILDER TOOLS UNLOCKED/);
-  assert.match(mjs,/function renderUnlockMoment\(\)\{/);
-  assert.match(mjs,/el\.hidden=!justUnlocked;/);
+  assert.doesNotMatch(html,/id="unlockMoment"/);
+  assert.doesNotMatch(mjs,/function renderUnlockMoment\(\)\{/);
+  assert.match(html,/id="unlockedStatus" class="unlocked-status" hidden>BUILDER TOOLS UNLOCKED/);
+  assert.match(mjs,/\$\('unlockedStatus'\)\.hidden=!customizationUnlocked;/);
 });
 
 test('CUSTOMIZE THIS DUNGEON is the primary post-result action; RUN AGAIN remains available; account CTA is present but not required to view the unlock',async()=>{
