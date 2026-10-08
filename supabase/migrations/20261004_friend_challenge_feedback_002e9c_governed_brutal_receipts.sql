@@ -189,7 +189,7 @@ begin
   v_budget:=v_budget + coalesce((select sum(15) from unnest(v_supports)),0);
   if v_budget>100 and not v_governed then raise exception 'RESULT_ENCOUNTER_BUDGET_EXCEEDED'; end if;
 
-  if p_hero_gold>v_hero_gold_max or p_hero_gold>case when v_governed then 39 else 31 end then
+  if p_hero_gold>v_hero_gold_max or p_hero_gold>(case when v_governed then 39 else 31 end) then
     raise exception 'RESULT_HERO_GOLD_INVALID';
   end if;
 
