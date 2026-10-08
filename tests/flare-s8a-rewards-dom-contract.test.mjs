@@ -49,7 +49,7 @@ test('completeRuntime prepares the correlated receipt payload before attempting 
   assert.notEqual(start, -1, 'completeRuntime not found');
   const end = mjs.indexOf('},replayRuntime', start);
   const body = mjs.slice(start, end);
-  const payloadIdx = body.indexOf('lastReceiptPayload=buildResultReceipt');
+  const payloadIdx = body.indexOf('lastReceiptPayload=plan.payload');
   const showIdx = body.indexOf('show()');
   const finallyIdx = body.indexOf('finally');
   const sendIdx = body.indexOf('sendResultReceipt()');
