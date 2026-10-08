@@ -46,10 +46,11 @@ export function extendCatalogWithLevel2(catalog,model){
 }
 
 // The result-receipt RPC (submit_builder_challenge_result_v2) validates enemy slots against a fixed
-// server-side list. Supabase is out of scope for 002E9, so encounters containing anything outside
-// that list cannot be delivered to the friend yet; the client reports that truthfully instead of
-// attempting a submission the server is certain to reject.
-export const RECEIPT_SERVER_ENEMY_IDS=Object.freeze(['goblin','skeleton','goblin-elite','antlion']);
+// server-side list. 002E9A (migration 20261003, applied and proven on S8B staging) added zombie and
+// skeleton-archer. This list must stay identical to that server list: encounters containing anything
+// outside it are not submitted, and the client reports that truthfully instead of attempting a call
+// the server is certain to reject.
+export const RECEIPT_SERVER_ENEMY_IDS=Object.freeze(['goblin','skeleton','goblin-elite','antlion','zombie','skeleton-archer']);
 export function receiptSupportsEncounter(encounter){
   const enemies=(encounter?.enemyTypes||[]).filter(id=>id&&id!=='none');
   return enemies.every(id=>RECEIPT_SERVER_ENEMY_IDS.includes(id));

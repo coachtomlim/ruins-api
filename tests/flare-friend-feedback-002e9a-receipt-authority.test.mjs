@@ -160,6 +160,9 @@ test('no new Builder progression tables or durable-level persistence are introdu
   assert.doesNotMatch(sql,/builder_progression|builder_level|create table/i);
 });
 
-test('client list is widened only AFTER staging proves the server (Stage B); until then the 002E9 guard stands',()=>{
-  assert.deepEqual([...RECEIPT_SERVER_ENEMY_IDS].sort(),['antlion','goblin','goblin-elite','skeleton']);
+test('Stage B: the client supported-ID guard equals the server allow-list exactly, and the client Gold bound equals the server ceiling',async()=>{
+  assert.deepEqual([...RECEIPT_SERVER_ENEMY_IDS],parse().allowed);
+  const rr=await read('public/flare-s8a/result-receipt.mjs');
+  assert.match(rr,/boundedInt\(heroGold,0,31,'HERO_GOLD'\)/);
+  assert.equal(parse().ceiling,31);
 });

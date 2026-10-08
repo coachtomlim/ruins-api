@@ -97,20 +97,23 @@ test('traps unlocked at Level 2 (Spike, Dart) keep their existing economics',()=
   assert.deepEqual([model.items['dart-trap'].damage,model.items['dart-trap'].cost,model.items['dart-trap'].armorPiercing],[16,15,true]);
 });
 
-test('a legal Level 2 budget can reach 31 hero Gold, one over the 30 Gold receipt ceiling',()=>{
-  // Two Level 2 monsters + a Skeleton is exactly 100 budget and 31 Gold — over the receipt cap, so the
-  // client must never hand that payload to buildResultReceipt (completeRuntime clamps/guards it).
+test('a legal Level 2 budget can reach 31 hero Gold, the governed receipt ceiling (002E9A)',()=>{
+  // Two Level 2 monsters + a Skeleton is exactly 100 budget and 31 Gold — the governed receipt
+  // maximum since 002E9A raised the server and client bound from 30 to 31.
   const {catalog}=setup(),e={enemyTypes:['zombie','zombie','skeleton'],supportTypes:[],trapTypes:[]};
   assert.equal(encounterCost(catalog,e),100);
   const gold=e.enemyTypes.reduce((n,id)=>n+catalog.enemies[id].gold,0);
   assert.equal(gold,31);
 });
 
-test('result receipt: Level 2 monsters are not server-supported, so the client reports that instead of submitting',()=>{
+test('result receipt: Level 2 monsters are server-supported since 002E9A; unknown ids still are not',()=>{
   assert.equal(receiptSupportsEncounter({enemyTypes:['goblin','skeleton','none']}),true);
   assert.equal(receiptSupportsEncounter({enemyTypes:['goblin-elite','antlion','none']}),true);
-  assert.equal(receiptSupportsEncounter({enemyTypes:['zombie','none','none']}),false);
-  assert.equal(receiptSupportsEncounter({enemyTypes:['goblin','skeleton-archer','none']}),false);
+  assert.equal(receiptSupportsEncounter({enemyTypes:['zombie','none','none']}),true);
+  assert.equal(receiptSupportsEncounter({enemyTypes:['goblin','skeleton-archer','none']}),true);
+  assert.equal(receiptSupportsEncounter({enemyTypes:['dragon','none','none']}),false);
+  assert.equal(receiptSupportsEncounter({enemyTypes:['Zombie','none','none']}),false);
+  assert.equal(buildResultReceipt({publicToken:'a'.repeat(40),roomId:'iron-labyrinth-07',encounter:{enemyTypes:['zombie','zombie','skeleton']},result:{status:'cleared',hp:50,maxHp:100},heroGold:31,attemptToken:'b'.repeat(20)}).p_hero_gold,31);
   // payload shape for a supported encounter is unchanged
   const p=buildResultReceipt({publicToken:'a'.repeat(40),roomId:'iron-labyrinth-01',encounter:{enemyTypes:['goblin']},result:{status:'cleared',hp:50,maxHp:100},heroGold:6,attemptToken:'b'.repeat(20)});
   assert.equal(p.p_hero_gold,6);

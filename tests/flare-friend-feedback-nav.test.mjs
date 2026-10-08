@@ -60,8 +60,14 @@ test('client Hero Gold telemetry uses the bounded non-settling ceiling',()=>{
   assert.throws(()=>buildResultReceipt({
     publicToken:token,roomId:'iron-labyrinth-01',
     encounter:{enemyTypes:['goblin','none','none'],trapTypes:[],supportTypes:[]},
-    rulesVersion:'s8a-1',result:{status:'cleared',hp:60,maxHp:100},heroGold:31,attemptToken
+    rulesVersion:'s8a-1',result:{status:'cleared',hp:60,maxHp:100},heroGold:32,attemptToken
   }),/INVALID_HERO_GOLD/);
+  // 002E9A: 31 is the governed maximum (Zombie + Zombie + Skeleton) and is accepted
+  assert.equal(buildResultReceipt({
+    publicToken:token,roomId:'iron-labyrinth-01',
+    encounter:{enemyTypes:['zombie','zombie','skeleton'],trapTypes:[],supportTypes:[]},
+    rulesVersion:'s8a-1',result:{status:'cleared',hp:60,maxHp:100},heroGold:31,attemptToken
+  }).p_hero_gold,31);
 });
 
 test('result comparison preserves distinct rewards and failure clarity',()=>{

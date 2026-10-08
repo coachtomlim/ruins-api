@@ -161,14 +161,16 @@ test('receipt plan: Level 1 encounters build the unchanged result payload (attem
   assert.deepEqual(plan.payload.p_encounter.enemyTypes,['goblin','skeleton','none']);
 });
 
-test('receipt plan: Level 2 monsters are reported as unsupported by the result service, never silently submitted',()=>{
-  const plan=planFor({enemyTypes:['zombie','skeleton-archer','none'],trapTypes:[],supportTypes:[]});
+test('receipt plan: Level 2 monsters now submit normally (002E9A); genuinely unsupported ids are still blocked, never silently submitted',()=>{
+  const l2=planFor({enemyTypes:['zombie','skeleton-archer','none'],trapTypes:[],supportTypes:[]},{heroGold:22});
+  assert.equal(l2.block,null);assert.equal(l2.payload.p_hero_gold,22);assert.deepEqual(l2.payload.p_encounter.enemyTypes,['zombie','skeleton-archer','none']);
+  const plan=planFor({enemyTypes:['dragon','none','none'],trapTypes:[],supportTypes:[]});
   assert.equal(plan.payload,null);assert.equal(plan.block,'UNSUPPORTED_ENCOUNTER');
   assert.match(receiptBlockMessage(plan.block,'Makidon'),/Makidon can't receive Level 2 monster runs yet/);
 });
 
-test('receipt plan never throws: an invalid payload (31 Gold, bad token) becomes an explicit block',()=>{
-  const bad=planFor({enemyTypes:['goblin','none','none']},{heroGold:31});
+test('receipt plan never throws: an invalid payload (32 Gold, bad token) becomes an explicit block',()=>{
+  const bad=planFor({enemyTypes:['goblin','none','none']},{heroGold:32});
   assert.equal(bad.payload,null);assert.equal(bad.block,'PAYLOAD_INVALID');assert.ok(bad.error);
   assert.doesNotThrow(()=>planFor({enemyTypes:['goblin']},{attemptToken:'x'}));
   assert.equal(planFor({enemyTypes:['goblin']},{attemptToken:'x'}).block,'PAYLOAD_INVALID');
