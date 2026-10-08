@@ -1,6 +1,6 @@
 {
   "releaseId": "WEB-FLARE-RC1",
-  "generatedAt": "2026-10-08T11:50:15.656Z",
+  "generatedAt": "2026-10-08T14:04:11.348Z",
   "entryPoints": [
     "public/flare-s8a/index.html",
     "public/flare-s8a/challenge.html",
@@ -8,7 +8,7 @@
     "public/flare-s8b/practice.html",
     "public/flare-s8b/daily-trial.html"
   ],
-  "fileCount": 120,
+  "fileCount": 127,
   "files": [
     {
       "path": "public/flare-p0/data/catalog.json",
@@ -215,6 +215,42 @@
       "bytes": 3706
     },
     {
+      "path": "public/flare-s8a/assets/loot/broken-gallery.png",
+      "sha256": "c1763c3342f60a0950507332df7dc503207a6cf1eed0d62d008b4e9093db8037",
+      "mime": "application/octet-stream",
+      "bytes": 24087
+    },
+    {
+      "path": "public/flare-s8a/assets/loot/dart.png",
+      "sha256": "c28faeae55cc515793c506963bfcdff5b12c5e4b9f0fcce681ad9d94e8793404",
+      "mime": "application/octet-stream",
+      "bytes": 2885
+    },
+    {
+      "path": "public/flare-s8a/assets/loot/goblin.png",
+      "sha256": "3d3238b396520eb79c56e2dab3586e1d41ee773cee30691dd630f3b0a3868998",
+      "mime": "application/octet-stream",
+      "bytes": 11885
+    },
+    {
+      "path": "public/flare-s8a/assets/loot/skeleton-archer.png",
+      "sha256": "385a7b04a7b742f51a856e26ad776fbf4b65a6b9cf9a93e6ccf8a90caabf3974",
+      "mime": "application/octet-stream",
+      "bytes": 30582
+    },
+    {
+      "path": "public/flare-s8a/assets/loot/spike.png",
+      "sha256": "ad8c46d539569bfd01006ffb446c418bf9b932ac8153e924bbc0db4f0747e6d8",
+      "mime": "application/octet-stream",
+      "bytes": 56657
+    },
+    {
+      "path": "public/flare-s8a/assets/loot/zombie.png",
+      "sha256": "f19f3cb1879effe084e8918395729b5dabb9120455689ab7c4c0a665fbf1281e",
+      "mime": "application/octet-stream",
+      "bytes": 16307
+    },
+    {
       "path": "public/flare-s8a/assets/tactics-coins.png",
       "sha256": "1c7c8db80a0f1aec759c6c7a0a83841a2b7c716fe53c9a8fa33dace56b370498",
       "mime": "application/octet-stream",
@@ -276,15 +312,15 @@
     },
     {
       "path": "public/flare-s8a/challenge.html",
-      "sha256": "99bdf982dacb5a583e2691102dd7adbbbe20ea3117f59232ed38e4a1a7020d77",
+      "sha256": "0ce457aa9f84678bb16abce579a04fbd7d6b2deaccc9d8ee5a69e70f894aa10e",
       "mime": "text/html; charset=utf-8",
-      "bytes": 9716
+      "bytes": 9885
     },
     {
       "path": "public/flare-s8a/challenge.mjs",
-      "sha256": "85e9cee7c7aa0cc168a845293b8059588670b17b638f3321e2f1c6f72c156d38",
+      "sha256": "5c8757e5b8080ffd92ece1587ab133ee0598d16f23a2cdc82bd76bbe986739a1",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 34612
+      "bytes": 35653
     },
     {
       "path": "public/flare-s8a/customize-panels.mjs",
@@ -297,12 +333,6 @@
       "sha256": "af6b164fd01929e49c4aacc83f39c9ffdc098799c6b9987e6cd935c92ad06e4c",
       "mime": "text/javascript; charset=utf-8",
       "bytes": 983
-    },
-    {
-      "path": "public/flare-s8a/dungeon-presets.mjs",
-      "sha256": "c727b837836805a17655edd888188af7ef7bc44ff480e6658c07d8ac636d3cba",
-      "mime": "text/javascript; charset=utf-8",
-      "bytes": 5439
     },
     {
       "path": "public/flare-s8a/estimate-gauge-view-model.mjs",
@@ -335,6 +365,12 @@
       "bytes": 802
     },
     {
+      "path": "public/flare-s8a/governed-encounter.mjs",
+      "sha256": "3c78c0a4faf253ff198c684df6361bd72e6b914f0371246606a3abb9447c6c84",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 9857
+    },
+    {
       "path": "public/flare-s8a/index.html",
       "sha256": "bced3922451baf51a98c73d92b026b3acdb77a9341f3b6cec59b9158139677e7",
       "mime": "text/html; charset=utf-8",
@@ -360,9 +396,15 @@
     },
     {
       "path": "public/flare-s8a/level2-content.mjs",
-      "sha256": "1cb335b8c46fc77dc2f22eb02468affaf54c3f077b1804bc9a7d715eb0db0197",
+      "sha256": "82c2e319cd45078c84fc6f0ce72d04b6bca10b1065e6cdd625b7f139244c3f57",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 3730
+      "bytes": 4165
+    },
+    {
+      "path": "public/flare-s8a/loot-assets.mjs",
+      "sha256": "23776a37ddea3f83da341f9f347ea9e80dcb09a6ca0ed45a82381a0a8faaa7d5",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 1226
     },
     {
       "path": "public/flare-s8a/mission-copy.mjs",
@@ -396,9 +438,9 @@
     },
     {
       "path": "public/flare-s8a/receipt-plan.mjs",
-      "sha256": "dce88d31f4c3c987cf4db832999313b3abf68b029e3bc3959f813a0085b2c457",
+      "sha256": "5a7c8a5db1be6ca5fd5a0bea283f283ebdd0956ac57b403f78e7fb5d3f615dd6",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 1270
+      "bytes": 1276
     },
     {
       "path": "public/flare-s8a/receiver-session.mjs",
@@ -438,7 +480,7 @@
     },
     {
       "path": "public/flare-s8a/result-receipt.mjs",
-      "sha256": "7ec97afe9bf4f474703cc5ab822b7088ab7e9799699a4ed11d44c200b9cf97cb",
+      "sha256": "b0087ae7cd679a051fee225e21921383123a6b17b976529f807e8aed1dcf79f7",
       "mime": "text/javascript; charset=utf-8",
       "bytes": 1614
     },
@@ -450,15 +492,15 @@
     },
     {
       "path": "public/flare-s8a/reward-journey-view.mjs",
-      "sha256": "5105be61e1b263e929eb4e2ae9b587bb83837f496ad3e9f49e95bfd7e602a5ca",
+      "sha256": "1a196934372152a35caf3cbf12245ff46ebb3aaf560abe069cfe18bf427025d8",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 8796
+      "bytes": 10562
     },
     {
       "path": "public/flare-s8a/reward-journey.mjs",
-      "sha256": "2797f8fa706f7bef6d853393e5e2269be4d329e2035743dcfc91cf8256277bed",
+      "sha256": "d1b58c2477aae727d98e6b0d22a459925be11874b11caf0af1754396a34f886b",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 4546
+      "bytes": 6949
     },
     {
       "path": "public/flare-s8a/reward-teaser.mjs",
@@ -504,9 +546,9 @@
     },
     {
       "path": "public/flare-s8a/runtime-controller.mjs",
-      "sha256": "239ce5f62b02d62a1f02e57f77d1ef2a159ca4f96a8ef23baff91b08deaa9550",
+      "sha256": "efb2eac323be1916d075995dd0dd09dfc46897db5446beba36e78366cc42f16b",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 3832
+      "bytes": 3775
     },
     {
       "path": "public/flare-s8a/runtime-hud-view-model.mjs",
@@ -552,9 +594,9 @@
     },
     {
       "path": "public/flare-s8a/style.css",
-      "sha256": "2ff398008b6e61f98c0c12644fa3aa9e0b0b4a95ff3f93586c8e7a4a9978b605",
+      "sha256": "d49f686392d92e85c2366f1e967b7c8a1ff8ee105b1b3ab9b2543b6fe8299b45",
       "mime": "text/css; charset=utf-8",
-      "bytes": 22193
+      "bytes": 26340
     },
     {
       "path": "public/flare-s8a/swipe.mjs",
