@@ -12,7 +12,7 @@ export function buildResultReceipt({publicToken,roomId,encounter,rulesVersion,re
   return Object.freeze({
     p_public_token:token,p_room_id:clean(roomId).slice(0,64),p_encounter:structuredClone(encounter||{}),
     p_rules_version:clean(rulesVersion||'s8a-1').slice(0,64),p_terminal_status:status,
-    p_finishing_hp:finishingHp,p_max_hp:maxHp,p_hero_gold:boundedInt(heroGold,0,31,'HERO_GOLD'),
+    p_finishing_hp:finishingHp,p_max_hp:maxHp,p_hero_gold:boundedInt(heroGold,0,39,'HERO_GOLD'),
     p_attempt_token:attempt
   });
 }

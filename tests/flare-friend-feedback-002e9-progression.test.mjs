@@ -115,7 +115,7 @@ test('the receiver wires Builder Level into dungeon visibility, controls and the
   assert.match(mjs,/const visibleSpecs=\(\)=>contentForLevel\(builderLevel\)\.dungeons\.map\(id=>S7_ROOMS\[id\]\);/);
   assert.match(mjs,/function applyBuilderLevel\(level\)\{/);
   assert.match(mjs,/function renderDungeonCards\(\)\{/);
-  assert.match(mjs,/roomIds:specs\.map\(s=>s\.id\)/);
+  assert.match(mjs,/dungeonPresets=buildLevel1Presets\(\{catalog,model,runnerId:invite\.runnerId,runner,targetHp:invite\.targetHp\}\);/);
   for(const tab of ['monsters','traps','supports','dungeons'])assert.match(html,new RegExp(`data-custom-tab="${tab}"`));
   assert.match(html,/data-custom-tab="supports">SUPPORT</);
   assert.doesNotMatch(html,/>SUPPORTS</);

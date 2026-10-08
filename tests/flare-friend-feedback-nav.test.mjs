@@ -60,7 +60,7 @@ test('client Hero Gold telemetry uses the bounded non-settling ceiling',()=>{
   assert.throws(()=>buildResultReceipt({
     publicToken:token,roomId:'iron-labyrinth-01',
     encounter:{enemyTypes:['goblin','none','none'],trapTypes:[],supportTypes:[]},
-    rulesVersion:'s8a-1',result:{status:'cleared',hp:60,maxHp:100},heroGold:32,attemptToken
+    rulesVersion:'s8a-1',result:{status:'cleared',hp:60,maxHp:100},heroGold:40,attemptToken
   }),/INVALID_HERO_GOLD/);
   // 002E9A: 31 is the governed maximum (Zombie + Zombie + Skeleton) and is accepted
   assert.equal(buildResultReceipt({

@@ -1,11 +1,13 @@
-// 002E9 — DOM renderer for the post-run reward journey (replaces the 002E8 lock/unlock ceremony; there
-// is exactly one unlock experience). Pure content lives in reward-journey.mjs; art/room drawing and
-// every navigation side effect are injected by challenge.mjs so this file owns presentation only.
+// 002E9 / 002E9C — DOM renderer for the post-run reward journey (the one and only unlock presentation).
+// Pure content lives in reward-journey.mjs, packaged thumbnails in loot-assets.mjs, and every navigation side
+// effect (customize / account / guest) is injected by challenge.mjs so this file owns presentation only.
+import {JOURNEY_STAGE_BY_SCENE} from './reward-journey.mjs';
+import {LOOT_ASSETS,CATEGORY_ASSET} from './loot-assets.mjs';
 const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n;};
 const CONFETTI_COLORS=['#f2c45d','#75dbc9','#e27379','#ffffff','#bb83d0'];
 
-export function createRewardJourney({root,coinSrc,drawArt,drawDungeon,startHero,reducedMotion=()=>false,onTry,onCustomize,onCreateAccount,onGuest}={}){
-  let journey=null,index=0,timers=[],stopHero=null,muted=false,audio=null,open=false;
+export function createRewardJourney({root,coinSrc,startHero,reducedMotion=()=>false,onCustomize,onCreateAccount,onGuest}={}){
+  let journey=null,index=0,timers=[],stopHero=null,muted=false,audio=null,open=false,lootIndex={monsters:0,traps:0};
   const later=(fn,ms)=>{timers.push(setTimeout(fn,ms));};
   function clear(){for(const t of timers)clearTimeout(t);timers=[];if(stopHero){try{stopHero()}catch{}stopHero=null;}}
 
@@ -21,9 +23,9 @@ export function createRewardJourney({root,coinSrc,drawArt,drawDungeon,startHero,
       }
     }catch{}
   }
-  function confetti(layer){
+  function confetti(layer,count=52){
     if(reducedMotion())return;
-    for(let i=0;i<52;i++){
+    for(let i=0;i<count;i++){
       const piece=el('i','j-confetti');piece.style.left=`${Math.random()*100}%`;piece.style.background=CONFETTI_COLORS[i%CONFETTI_COLORS.length];
       piece.style.setProperty('--dx',`${(Math.random()-.5)*220}px`);piece.style.setProperty('--rot',`${Math.random()*800-400}deg`);piece.style.animationDelay=`${Math.random()*.18}s`;layer.append(piece);
     }
@@ -31,16 +33,30 @@ export function createRewardJourney({root,coinSrc,drawArt,drawDungeon,startHero,
   const button=(cls,text,handler)=>{const b=el('button',cls,text);b.type='button';b.addEventListener('click',handler);return b;};
   const next=()=>go(index+1);
   function go(i){index=Math.max(0,Math.min(journey.scenes.length-1,i));render();}
+  const goId=id=>{const i=journey.scenes.findIndex(x=>x.id===id);if(i>=0)go(i);};
 
   function chrome(){
     const bar=el('div','j-bar');
     const dots=el('div','j-dots');dots.setAttribute('aria-hidden','true');
-    journey.scenes.forEach((_,i)=>dots.append(el('span',`j-dot${i===index?' is-current':i<index?' is-done':''}`)));
+    const stage=JOURNEY_STAGE_BY_SCENE[journey.scenes[index].id]??0;
+    for(let i=0;i<=6;i++)dots.append(el('span',`j-dot${i===stage?' is-current':i<stage?' is-done':''}`));
     const sound=button('j-sound',muted?'SOUND OFF':'SOUND ON',()=>{muted=!muted;sound.textContent=muted?'SOUND OFF':'SOUND ON';sound.setAttribute('aria-pressed',String(!muted));});
     sound.setAttribute('aria-pressed',String(!muted));
     bar.append(dots,sound);return bar;
   }
 
+  const backButton=s=>button('j-back',s.back,()=>goId('gizmos'));
+  // Browse-only carousel: LEFT / RIGHT arrows and a counter. No sliders, no horizontal scroll, no editing.
+  function lootBrowser(s,box,kind){
+    box.classList.add('is-scroll');
+    const items=s.items,n=items.length;let i=lootIndex[kind]%Math.max(1,n);
+    const nav=el('div','j-arrows'),left=button('j-arrow','‹',()=>{lootIndex[kind]=(i+n-1)%n;render();}),right=button('j-arrow','›',()=>{lootIndex[kind]=(i+1)%n;render();});
+    left.setAttribute('aria-label',`Previous ${kind==='traps'?'trap':'monster'}`);right.setAttribute('aria-label',`Next ${kind==='traps'?'trap':'monster'}`);
+    const it=items[i],card=el('div',`j-loot-card${kind==='traps'?' is-trap':''}`),img=el('img');img.src=LOOT_ASSETS[it.asset];img.alt=`${it.name} - Flare art`;img.decoding='async';
+    card.append(img,el('strong','',it.name),el('p','',it.copy),el('div','j-counter',`${i+1} / ${n}`));
+    nav.append(left,card,right);
+    box.append(backButton(s),el('p','j-eyebrow',s.eyebrow),el('h2','j-big',s.title),nav,button('j-next',s.next,()=>goId(s.nextScene)));
+  }
   const scenes={
     success(s,box){
       const layer=el('div','j-burst');layer.setAttribute('aria-hidden','true');if(s.celebrate)confetti(layer);box.append(layer);
@@ -72,33 +88,40 @@ export function createRewardJourney({root,coinSrc,drawArt,drawDungeon,startHero,
       box.append(el('p','j-eyebrow',s.eyebrow),badge,lines,el('p','j-sub',s.support),el('p','j-note',s.sessionNote),button('j-next',s.next,next));
       chime();
     },
+    // New Gizmos overview (V12): four equally-weighted, selectable category cards. Titles and counts sit on
+    // fixed grid rows so they align across all four cards. The CTA starts the loot review; it never edits.
     gizmos(s,box){
       box.classList.add('is-scroll');
-      const grid=el('div','j-tools'),detail=el('div','j-detail');let activeKey=s.categories[0].key;
-      const showCategory=(cat,btn)=>{
-        activeKey=cat.key;for(const b of grid.children)b.classList.toggle('is-active',b===btn);
-        detail.replaceChildren(el('p','j-eyebrow',cat.detailLabel),el('h3','',cat.label));
-        if(!cat.items.length){detail.append(el('div','j-empty',cat.emptyCopy));return;}
-        const row=el('div',`j-assets${cat.key==='dungeons'?' is-dungeon':''}`);
-        for(const item of cat.items){
-          const card=el('div',item.kind==='dungeon'?'j-asset-plain':'j-asset');
-          if(item.kind==='dungeon'){const c=el('canvas','j-dungeon');c.setAttribute('aria-label',`${item.name} — actual Flare room preview`);card.append(c);requestAnimationFrame(()=>drawDungeon?.(c,item.id));}
-          else{const c=el('canvas','j-art');c.setAttribute('aria-label',`${item.name} — actual Flare art`);card.append(c);drawArt?.(c,item.art,{width:176,height:156});}
-          card.append(el('b','',item.name));row.append(card);
-        }
-        detail.append(row);
-      };
+      const grid=el('div','j-category-grid');
       for(const cat of s.categories){
-        const b=el('button','j-tool');b.type='button';b.dataset.tool=cat.key;b.setAttribute('aria-pressed','false');
-        const art=el('canvas','j-category-art');art.setAttribute('aria-hidden','true');
-        b.append(art,el('strong','',cat.label),el('small','',cat.copy));
-        b.addEventListener('click',()=>{showCategory(cat,b);for(const x of grid.children)x.setAttribute('aria-pressed',String(x===b));});
+        const b=el('button',`j-cat${cat.key==='supports'?' is-support':''}`);b.type='button';b.dataset.tool=cat.key;
+        const art=el('div','j-cat-art');
+        const asset=CATEGORY_ASSET[cat.key];
+        if(asset){const im=el('img');im.src=LOOT_ASSETS[asset];im.alt='';im.decoding='async';art.append(im);}else{const icon=el('div','support-icon');icon.setAttribute('aria-hidden','true');art.append(icon);}
+        b.append(art,el('strong','',cat.label),el('small',cat.items.length?'':'is-none',cat.count));
+        b.addEventListener('click',()=>goId(cat.scene));
         grid.append(b);
-        if(cat.key==='dungeons'){requestAnimationFrame(()=>drawDungeon?.(art,s.categories.find(c=>c.key==='dungeons').items[0]?.id,{category:true}));}
-        else drawArt?.(art,cat.key==='monsters'?'goblin':cat.key==='traps'?'spike-trap':'small-potion',{width:144,height:112});
       }
-      box.append(el('p','j-eyebrow',s.eyebrow),el('h2','j-big j-kit-title',s.title),grid,detail,button('j-next',s.try,()=>onTry?.(activeKey)),button('j-ghost',s.next,next));
-      showCategory(s.categories[0],grid.children[0]);grid.children[0].setAttribute('aria-pressed','true');
+      box.append(el('p','j-eyebrow',s.eyebrow),el('h2','j-big j-kit-title',s.title),grid,button('j-next',s.try,()=>goId(s.next)));
+    },
+    'loot-monsters'(s,box){lootBrowser(s,box,'monsters');},
+    'loot-traps'(s,box){lootBrowser(s,box,'traps');},
+    'loot-support'(s,s2){
+      const box=s2;box.classList.add('is-scroll');
+      const card=el('div','j-final-box j-support-box');const icon=el('div','support-icon');icon.setAttribute('aria-hidden','true');card.append(icon,el('p','j-support-copy',s.body));
+      box.append(backButton(s),el('p','j-eyebrow',s.eyebrow),el('h2','j-big',s.title),card,button('j-next',s.next,()=>goId(s.nextScene)));
+    },
+    'loot-dungeon'(s,box){
+      box.classList.add('is-scroll');
+      const layer=el('div','j-burst');layer.setAttribute('aria-hidden','true');confetti(layer,36);box.append(layer);
+      const img=el('img','j-dungeon-img');img.src=LOOT_ASSETS[s.item?.asset||'broken-gallery'];img.alt=`${s.title} — real Flare room preview`;
+      box.append(backButton(s),el('div','j-new-badge',s.badge),el('h2','j-big',s.title),img,el('p','j-sub',s.subtitle),button('j-next',s.next,()=>goId(s.nextScene)));
+      chime();
+    },
+    'loot-complete'(s,box){
+      box.classList.add('is-scroll');
+      const card=el('div','j-final-box');card.append(el('strong','',s.headline),el('p','',s.body));
+      box.append(el('p','j-eyebrow',s.eyebrow),el('h2','j-big',s.title),card,button('j-next',s.next,next));
     },
     momentum(s,box){
       box.classList.add('is-scroll');

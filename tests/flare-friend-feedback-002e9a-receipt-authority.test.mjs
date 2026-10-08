@@ -163,6 +163,8 @@ test('no new Builder progression tables or durable-level persistence are introdu
 test('Stage B: the client supported-ID guard equals the server allow-list exactly, and the client Gold bound equals the server ceiling',async()=>{
   assert.deepEqual([...RECEIPT_SERVER_ENEMY_IDS],parse().allowed);
   const rr=await read('public/flare-s8a/result-receipt.mjs');
-  assert.match(rr,/boundedInt\(heroGold,0,31,'HERO_GOLD'\)/);
+  // 002E9C: the client bound is the governed maximum (39, the five-monster Level 1 BRUTAL); the server derives
+  // the real per-encounter ceiling (31 for every ordinary encounter), so the client bound is never the authority.
+  assert.match(rr,/boundedInt\(heroGold,0,39,'HERO_GOLD'\)/);
   assert.equal(parse().ceiling,31);
 });

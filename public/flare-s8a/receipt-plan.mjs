@@ -12,7 +12,7 @@ export function planResultReceipt({publicToken,roomId,encounter,rulesVersion='s8
 }
 
 export function receiptBlockMessage(block,senderName='your friend'){
-  if(block==='UNSUPPORTED_ENCOUNTER')return `Result kept on this device · ${senderName} can't receive Level 2 monster runs yet.`;
+  if(block==='UNSUPPORTED_ENCOUNTER')return `Result kept on this device · ${senderName} can't receive this run yet.`;
   if(block==='PAYLOAD_INVALID')return 'Result kept on this device · it could not be prepared for sending.';
   return '';
 }

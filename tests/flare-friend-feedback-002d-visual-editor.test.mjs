@@ -127,7 +127,7 @@ test('budget enforcement is unchanged: DONE stays disabled over the legal budget
 
 test('selecting a card dispatches the existing change-driven estimate/budget pipeline, no new state path',async()=>{
   const mjs=await read('public/flare-s8a/challenge.mjs');
-  assert.match(mjs,/for\(const control of document\.querySelectorAll\('\[name\^="guard-"\],\[data-choice\]'\)\)control\.addEventListener\('change',\(\)=>\{session=setEncounter\(session,encounter\(\)\);show\(\);\}\)/);
+  assert.match(mjs,/for\(const control of document\.querySelectorAll\('\[name\^="guard-"\],\[data-choice\]'\)\)control\.addEventListener\('change',\(\)=>\{activePreset=null;session=setEncounter\(session,encounter\(\)\);show\(\);\}\)/);
 });
 
 // --- GAUGE (regression from 002C, still wired through the new editor) ---
@@ -141,18 +141,20 @@ test('gauge stays visible and live while the card editor is open',async()=>{
 
 // --- READY SUMMARY (Part H) ---
 
-test('Ready screen shows room, target, live estimate gauge, budget and a visual list of selections',async()=>{
+test('Ready screen (002E9C V12) shows a static target/estimate display and a minimal summary; no selection chips or budget',async()=>{
   const [html,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge.mjs')]);
   assert.match(html,/id="readyGaugeTarget"/);
   assert.match(html,/id="readyGaugeEstimate"/);
-  assert.match(html,/id="readySelections" class="ready-selections"/);
-  assert.match(mjs,/function renderReadySelections\(\)/);
-  assert.match(mjs,/renderReadySelections\(\);\}/);
+  assert.match(html,/id="readyDungeon"/);
+  assert.doesNotMatch(html,/readySelections|ready-selections/);
+  assert.match(mjs,/function renderReady\(m\)\{/);
+  assert.doesNotMatch(mjs,/renderReadySelections/);
 });
 
-test('Ready screen selections reuse the existing labels() helper (room/catalog authority), not invented text',async()=>{
+test('Ready summary is dungeon + difficulty, monster count and Builder Level (no guard positions, no build budget)',async()=>{
   const mjs=await read('public/flare-s8a/challenge.mjs');
-  assert.match(mjs,/const names=\[\.\.\.labels\(e\.enemyTypes,'monster'\),\.\.\.labels\(e\.trapTypes,'item'\),\.\.\.labels\(e\.supportTypes,'item'\)\];/);
+  assert.match(mjs,/\$\('readyDungeon'\)\.textContent=`\$\{selectedSpec\(\)\.name\} · \$\{activePreset\?activePreset\.label:'CUSTOM'\}`;/);
+  assert.match(mjs,/\$\('readySummary'\)\.textContent=`\$\{count\} monster\$\{count===1\?'':'s'\} · Level \$\{builderLevel\}`;/);
 });
 
 // --- REPLAY / ACTIVITY REGRESSION ---

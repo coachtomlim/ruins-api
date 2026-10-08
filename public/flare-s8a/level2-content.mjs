@@ -51,7 +51,11 @@ export function extendCatalogWithLevel2(catalog,model){
 // outside it are not submitted, and the client reports that truthfully instead of attempting a call
 // the server is certain to reject.
 export const RECEIPT_SERVER_ENEMY_IDS=Object.freeze(['goblin','skeleton','goblin-elite','antlion','zombie','skeleton-archer']);
-export function receiptSupportsEncounter(encounter){
+// 002E9C: the governed Level 1 BRUTAL preset has FIVE monsters. The result service only accepts more than
+// three after the 002E9C migration (20261004) is applied and proven on staging by PM; until then the client
+// holds that receipt back honestly. After PM proof, set RECEIPT_SERVER_MAX_ENEMIES to 5 (one line).
+export const RECEIPT_SERVER_MAX_ENEMIES=3;
+export function receiptSupportsEncounter(encounter,{maxEnemies=RECEIPT_SERVER_MAX_ENEMIES}={}){
   const enemies=(encounter?.enemyTypes||[]).filter(id=>id&&id!=='none');
-  return enemies.every(id=>RECEIPT_SERVER_ENEMY_IDS.includes(id));
+  return enemies.length<=maxEnemies&&enemies.every(id=>RECEIPT_SERVER_ENEMY_IDS.includes(id));
 }

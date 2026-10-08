@@ -22,14 +22,14 @@ test('room-stage/prev/next controls still exist (ids preserved) but are demoted 
 
 test('exactly 3 presets are addressable by the chooser (presetIndex cycles mod 3), not a 4th/5th tier',async()=>{
   const mjs=await read('public/flare-s8a/challenge.mjs');
-  assert.match(mjs,/const presetList=\(\)=>\[dungeonPresets\.tooEasy,dungeonPresets\.justRight,dungeonPresets\.brutal\];/);
+  assert.match(mjs,/const presetList=\(\)=>dungeonPresets;/);
   assert.match(mjs,/presetIndex=\(presetIndex-1\+3\)%3/);
   assert.match(mjs,/presetIndex=\(presetIndex\+1\)%3/);
 });
 
-test('JUST RIGHT is the default displayed/applied preset (index 1), not locking out the other two',async()=>{
+test('JUST NICE is the default displayed/applied preset (index 1), not locking out the other two',async()=>{
   const mjs=await read('public/flare-s8a/challenge.mjs');
-  assert.match(mjs,/let presetIndex=1; \/\/ 0=too easy, 1=just right \(default\), 2=brutal/);
+  assert.match(mjs,/let presetIndex=1; \/\/ 0=EASY, 1=JUST NICE \(default\), 2=BRUTAL/);
   assert.match(mjs,/\$\('presetRecommended'\)\.hidden=!preset\.recommended/);
 });
 
@@ -37,7 +37,7 @@ test('the chooser shows difficulty label, estimated finish, room, and preset con
   const mjs=await read('public/flare-s8a/challenge.mjs');
   assert.match(mjs,/\$\('presetEstimate'\)\.textContent=`ESTIMATED FINISH ~\$\{Math\.round\(preset\.estimatedHpPercent\)\}% HP`/);
   assert.match(mjs,/\$\('presetRoomName'\)\.textContent=roomSpec\?\.name\|\|preset\.roomId/);
-  assert.match(mjs,/\$\('presetContents'\)\.textContent=names\.length\?names\.join\(' · '\):/);
+  assert.match(mjs,/\$\('presetContents'\)\.textContent=describeMix\(labels\(preset\.encounter\.enemyTypes,'monster'\)\)\.join\(' · '\)/);
   assert.match(mjs,/\$\('presetPosition'\)\.textContent=`\$\{presetIndex\+1\} \/ 3`/);
 });
 
@@ -102,19 +102,19 @@ test('snapshot-authoritative Runner stats are computed before presets, so preset
   const bootStart=mjs.indexOf('async function bootReceiver');
   const boot=mjs.slice(bootStart,mjs.indexOf('void bootReceiver();'));
   const runnerIdx=boot.indexOf('runner=runnerSummary(model,invite.runnerId,catalog)');
-  const presetsIdx=boot.indexOf('dungeonPresets=buildDungeonPresets');
+  const presetsIdx=boot.indexOf('dungeonPresets=buildLevel1Presets');
   assert.ok(runnerIdx>0&&presetsIdx>runnerIdx,'presets must be built from the authority-resolved runner, after it exists');
 });
 
 test('legacy (non-correlated) links still generate 3 presets from the template Runner, same pipeline',async()=>{
   const mjs=await read('public/flare-s8a/challenge.mjs');
-  // buildDungeonPresets is called unconditionally in bootReceiver regardless of publicToken/snapshot
+  // buildLevel1Presets is called unconditionally in bootReceiver regardless of publicToken/snapshot
   // source — legacy links get presets from template runner stats, correlated links from snapshot
   // stats (already applied to catalog.heroes.warrior earlier in the same function).
   const bootStart=mjs.indexOf('async function bootReceiver');
   const boot=mjs.slice(bootStart,mjs.indexOf('void bootReceiver();'));
-  assert.equal((boot.match(/buildDungeonPresets/g)||[]).length,1);
-  assert.doesNotMatch(boot,/if\(publicToken\)[^;]*buildDungeonPresets/);
+  assert.equal((boot.match(/buildLevel1Presets/g)||[]).length,1);
+  assert.doesNotMatch(boot,/if\(publicToken\)[^;]*buildLevel1Presets/);
 });
 
 test('the visual dungeon editor (monster/trap/support cards) is untouched by this change',async()=>{

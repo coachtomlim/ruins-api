@@ -13,8 +13,8 @@ const nameOf=id=>names[id]||id;
 const clearedResult=(over={})=>({status:'cleared',hp:56,maxHp:100,gold:24,...over});
 const journeyFor=({result=clearedResult(),score=88,targetHp=50,senderName='Makidon'}={})=>buildRewardJourney({result:buildResultViewModel({result,score,targetHp,senderName}),senderName,level:2,nameOf});
 
-test('the journey is exactly SUCCESS, PERFORMANCE, YOU GAINED, YOUR FRIEND GAINED, ACHIEVEMENT, NEW GIZMOS, KEEP PROGRESSING in that order',()=>{
-  assert.deepEqual(JOURNEY_SCENE_IDS,['success','performance','reward','friend','achievement','gizmos','momentum']);
+test('the journey is SUCCESS, PERFORMANCE, YOU GAINED, YOUR FRIEND GAINED, ACHIEVEMENT, NEW GIZMOS, the loot review, then KEEP PROGRESSING in that order',()=>{
+  assert.deepEqual(JOURNEY_SCENE_IDS,['success','performance','reward','friend','achievement','gizmos','loot-monsters','loot-traps','loot-support','loot-dungeon','loot-complete','momentum']);
   assert.deepEqual(journeyFor().scenes.map(s=>s.id),[...JOURNEY_SCENE_IDS]);
 });
 
@@ -60,22 +60,21 @@ test('ACHIEVEMENT: Level 2 hexagon, YOU / LEVELED / UP! on three lines, session-
   assert.match(a.sessionNote,/this session/i);
 });
 
-test('NEW GIZMOS: stable four-category shell with exactly the Level 2 content',()=>{
+test('NEW GIZMOS overview: stable four-category shell, counts, selectable cards, loot content for Level 2 only',()=>{
   const g=journeyFor().scenes[5];
   assert.equal(g.title,'Your kit just got bigger!');assert.equal(g.try,'Check out your new gizmos');
-  assert.deepEqual(g.categories.map(c=>c.label),['MONSTERS','TRAPS','SUPPORT','DUNGEONS']);
+  assert.deepEqual(g.categories.map(c=>[c.label,c.count]),[['MONSTERS','2 new'],['TRAPS','2 new'],['SUPPORT','no new item'],['DUNGEONS','1 new']]);
   assert.deepEqual(g.categories[0].items.map(i=>i.name),['Zombie','Skeleton Archer']);
   assert.deepEqual(g.categories[1].items.map(i=>i.name),['Spike Trap','Dart Trap']);
   assert.deepEqual(g.categories[2].items,[]);
   assert.equal(g.categories[2].emptyCopy,'No new Support unlocked at Level 2.');
   assert.deepEqual(g.categories[3].items.map(i=>i.name),['Broken Gallery']);
-  assert.equal(g.categories[3].items[0].kind,'dungeon');
-  assert.deepEqual(g.categories.map(c=>c.copy),['Choose what guards each room.','Add hazards to change the challenge.','Helpful items can unlock at other levels.','Choose the arena for your challenge.']);
-  assert.ok(g.categories.every(c=>c.detailLabel==='NEW AT LEVEL 2'));
+  assert.deepEqual(g.categories.map(c=>c.scene),['loot-monsters','loot-traps','loot-support','loot-dungeon']);
 });
 
 test('KEEP PROGRESSING: account framing never claims Level 2 or Gold are saved',()=>{
-  const m=journeyFor().scenes[6];
+  const m=journeyFor().scenes[11];
+  assert.equal(m.id,'momentum');
   assert.equal(m.title,'READY TO BUILD YOUR OWN?');
   assert.deepEqual([m.customize,m.create,m.guest],['CUSTOMIZE THIS DUNGEON','CREATE ACCOUNT','CONTINUE AS GUEST']);
   assert.match(m.truthNote,/this session only/i);
@@ -109,25 +108,25 @@ test('real Flare art, not emoji: monsters, traps, health potion and the Broken G
   for(const src of files)assert.doesNotMatch(src,/[👾⚠🧪🏰]/u);
 });
 
-test('the Broken Gallery preview is the real Flare room on a transparent canvas (no extra inner box)',async()=>{
-  const [art,mjs,css]=await Promise.all([read('public/flare-s8a/flare-art.mjs'),read('public/flare-s8a/challenge.mjs'),read('public/flare-s8a/style.css')]);
-  assert.match(art,/export function drawRoomPreviewTransparent\(/);
-  assert.doesNotMatch(art.slice(art.indexOf('export function drawRoomPreviewTransparent')),/fillRect/);
-  assert.match(mjs,/drawRoomPreviewTransparent\(canvas,room\.map,room\.tiles\)/);
-  assert.match(css,/\.j-dungeon\{[^}]*background:transparent/);
+test('the Broken Gallery reveal uses the packaged real Flare room preview (no remote dependency, no inner box)',async()=>{
+  const [assets,css]=await Promise.all([read('public/flare-s8a/loot-assets.mjs'),read('public/flare-s8a/style.css')]);
+  assert.match(assets,/'broken-gallery':new URL\('\.\/assets\/loot\/broken-gallery\.png',import\.meta\.url\)\.href/);
+  assert.match(css,/\.j-dungeon-img\{[^}]*object-fit:contain/);
 });
 
-test('selected category and option states reverse the background strongly (gold fill, dark text)',async()=>{
+test('editor option cards still reverse the selected background strongly (gold fill, dark text)',async()=>{
   const css=await read('public/flare-s8a/style.css');
-  assert.match(css,/\.j-tool\.is-active\{border-color:#f6d77d;background:linear-gradient\(#f4cd70,#dda02b\);color:#1b101c/);
+  assert.match(css,/\.card:has\(:checked\)\{border-color:#f6d77d;background:linear-gradient\(#f4cd70,#dda02b\);color:#1b101c/);
 });
 
-test('Check out your new gizmos opens the REAL customization flow (EDIT_DUNGEON on the chosen tab), not a sandbox',async()=>{
+test('Check out your new gizmos starts the in-journey LOOT REVIEW; it does not open EDIT DUNGEON (002E9C)',async()=>{
   const [mjs,view]=await Promise.all([read('public/flare-s8a/challenge.mjs'),read('public/flare-s8a/reward-journey-view.mjs')]);
+  assert.match(view,/button\('j-next',s\.try,\(\)=>goId\(s\.next\)\)/);
+  assert.doesNotMatch(view,/onTry/);
+  assert.doesNotMatch(mjs,/onTry/);
+  // the explicit, separate handoff into the REAL customization flow is the final scene's CUSTOMIZE THIS DUNGEON
+  assert.match(mjs,/onCustomize:\(\)=>openUnlockedTool\('monsters'\)/);
   assert.match(mjs,/function openUnlockedTool\(panel\)\{activePanel=panel;journeyView\.dismiss\(\);transition\('EDIT_DUNGEON'\);\}/);
-  assert.match(mjs,/onTry:panel=>openUnlockedTool\(panel\)/);
-  assert.match(view,/button\('j-next',s\.try,\(\)=>onTry\?\.\(activeKey\)\)/);
-  assert.doesNotMatch((mjs+view).replace(/\/\/.*$/gm,''),/sandbox|playground|concept dungeon/i);
 });
 
 test('account conversion hands off through the existing SAVE_GOAL transition; guest simply dismisses',async()=>{
@@ -145,7 +144,7 @@ test('result variables feeding the journey come from buildResultViewModel (targe
 test('reduced motion: journey content is shown immediately and animation/confetti are skipped',async()=>{
   const [css,view]=await Promise.all([read('public/flare-s8a/style.css'),read('public/flare-s8a/reward-journey-view.mjs')]);
   assert.match(css,/@media\(prefers-reduced-motion:reduce\)\{\.journey-overlay \*\{animation:none!important;transition:none!important\}/);
-  assert.match(view,/if\(reducedMotion\(\)\)return;\s*for\(let i=0;i<52;i\+\+\)/);
+  assert.match(view,/if\(reducedMotion\(\)\)return;\s*for\(let i=0;i<count;i\+\+\)/);
 });
 
 // --- receipt hardening ---
@@ -166,11 +165,11 @@ test('receipt plan: Level 2 monsters now submit normally (002E9A); genuinely uns
   assert.equal(l2.block,null);assert.equal(l2.payload.p_hero_gold,22);assert.deepEqual(l2.payload.p_encounter.enemyTypes,['zombie','skeleton-archer','none']);
   const plan=planFor({enemyTypes:['dragon','none','none'],trapTypes:[],supportTypes:[]});
   assert.equal(plan.payload,null);assert.equal(plan.block,'UNSUPPORTED_ENCOUNTER');
-  assert.match(receiptBlockMessage(plan.block,'Makidon'),/Makidon can't receive Level 2 monster runs yet/);
+  assert.match(receiptBlockMessage(plan.block,'Makidon'),/Makidon can't receive this run yet/);
 });
 
-test('receipt plan never throws: an invalid payload (32 Gold, bad token) becomes an explicit block',()=>{
-  const bad=planFor({enemyTypes:['goblin','none','none']},{heroGold:32});
+test('receipt plan never throws: an invalid payload (40 Gold, bad token) becomes an explicit block',()=>{
+  const bad=planFor({enemyTypes:['goblin','none','none']},{heroGold:40});
   assert.equal(bad.payload,null);assert.equal(bad.block,'PAYLOAD_INVALID');assert.ok(bad.error);
   assert.doesNotThrow(()=>planFor({enemyTypes:['goblin']},{attemptToken:'x'}));
   assert.equal(planFor({enemyTypes:['goblin']},{attemptToken:'x'}).block,'PAYLOAD_INVALID');

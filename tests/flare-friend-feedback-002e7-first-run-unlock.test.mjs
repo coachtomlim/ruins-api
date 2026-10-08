@@ -26,11 +26,11 @@ test('a desirable locked teaser (not a bare hidden element) is shown in place of
   for(const tool of ['MONSTERS','TRAPS','SUPPORT','DUNGEONS'])assert.match(customizeSection,new RegExp(`<li>${tool}</li>`));
 });
 
-test('all 3 presets (TOO EASY / JUST RIGHT / BRUTAL) and USE THIS DUNGEON remain usable before any run, unaffected by the lock',async()=>{
+test('all 3 presets (EASY / JUST NICE / BRUTAL) and USE THIS DUNGEON remain usable before any run, unaffected by the lock',async()=>{
   const html=await read('public/flare-s8a/challenge.html'),mjs=await read('public/flare-s8a/challenge.mjs');
   assert.match(html,/id="dungeonPresets" class="dungeon-chooser"/);
   assert.match(html,/id="useDungeon" class="primary">USE THIS DUNGEON/);
-  assert.match(mjs,/const presetList=\(\)=>\[dungeonPresets\.tooEasy,dungeonPresets\.justRight,dungeonPresets\.brutal\];/);
+  assert.match(mjs,/const presetList=\(\)=>dungeonPresets;/);
 });
 
 test('first run completion grants Builder Level 2 exactly once for this session (002E9: also arms the reward journey)',async()=>{
@@ -163,10 +163,11 @@ test('Runner Inspector, HOME/BACK and account handoff remain untouched by this c
   assert.match(mjs,/FRIEND_GOAL_CLAIM_KEY/);
 });
 
-test('Ready screen (room/target/gauge/budget/selections) markup is untouched by this change',async()=>{
+test('Ready screen keeps RUN THE HERO / EDIT DUNGEON and now hosts the V12 static gauge (002E9C)',async()=>{
   const html=await read('public/flare-s8a/challenge.html');
   const readySection=html.slice(html.indexOf('data-screen="ready"'),html.indexOf('data-screen="runtime"'));
   assert.match(readySection,/id="runHero" class="primary">RUN THE HERO/);
   assert.match(readySection,/id="editDungeon">EDIT DUNGEON/);
-  assert.match(readySection,/id="readySelections" class="ready-selections"/);
+  assert.doesNotMatch(readySection,/readySelections/);
+  assert.match(readySection,/id="readyGauge"/);
 });
