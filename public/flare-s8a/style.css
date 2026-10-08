@@ -106,15 +106,12 @@
 .custom-tabs button{border-color:#895795;background:#241328;color:#ffffffcc}
 .custom-tabs button[aria-selected="true"]{background:linear-gradient(#f0c56a,#c98a1f);color:#241328;border-color:#8a5a12;font-weight:900;box-shadow:0 1px 0 #ffe9b3 inset}
 
-/* 002E8: a compact, non-repeating status once the ceremony has been seen (Part F) — the full
-   unlock experience itself lives entirely in #unlockOverlay below, never inline here again. */
-.unlocked-status{text-align:center;font-size:11px;font-weight:900;letter-spacing:.08em;color:#9be3d5;background:#173833;border-radius:999px;padding:6px 12px;justify-self:center}
 
 .account-cta{display:grid;gap:3px;text-align:center}
 .account-cta-note{color:#ffffff99;font-size:10px}
 
 /* 002E9: the post-run reward journey — one full-screen modal that owns the viewport (it supersedes the
-   002E8 lock/unlock ceremony). Visual language follows the owner-approved V7 prototype. */
+   the retired lock/unlock ceremony). Visual language follows the owner-approved V7 prototype. */
 .journey-overlay{position:fixed;inset:0;z-index:30;display:flex;flex-direction:column;background:radial-gradient(circle at top,#6b3478 0,#35163f 50%,#150b19 100%);color:#fff;padding:var(--dr-safe-top) 18px var(--dr-safe-bottom)}
 .j-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:34px}
 .j-dots{display:flex;gap:6px}

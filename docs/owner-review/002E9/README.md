@@ -30,6 +30,6 @@ http://127.0.0.1:4178/quick-dungeon/flare-s8a/challenge.html?demo=1&from=Makidon
 | 05-level-2-achievement | 5 — Level 2 hexagon, YOU / LEVELED / UP! |
 | 06..09 | 6 — NEW GIZMOS: Monsters (Zombie, Skeleton Archer), Traps (Spike, Dart), Support (no new Support at Level 2), Dungeons (Broken Gallery) |
 | 10-keep-progressing | 7 — account framing, session-only truth note |
-| 13-customization-dungeons-tab | TRY OUT NEW GIZMOS → real EDIT DUNGEON, DUNGEONS tab incl. Broken Gallery |
+| 13-customization-dungeons-tab | Check out your new gizmos → real EDIT DUNGEON, DUNGEONS tab incl. Broken Gallery |
 | 14-customization-zombie-selected | Real editor, Zombie selected (reversed-background selected state) |
 | 15-run-broken-gallery-zombie | A real run in Broken Gallery against a Zombie |

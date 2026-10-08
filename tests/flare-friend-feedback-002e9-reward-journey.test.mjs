@@ -62,7 +62,7 @@ test('ACHIEVEMENT: Level 2 hexagon, YOU / LEVELED / UP! on three lines, session-
 
 test('NEW GIZMOS: stable four-category shell with exactly the Level 2 content',()=>{
   const g=journeyFor().scenes[5];
-  assert.equal(g.title,'Your kit just got bigger!');assert.equal(g.try,'TRY OUT NEW GIZMOS');
+  assert.equal(g.title,'Your kit just got bigger!');assert.equal(g.try,'Check out your new gizmos');
   assert.deepEqual(g.categories.map(c=>c.label),['MONSTERS','TRAPS','SUPPORT','DUNGEONS']);
   assert.deepEqual(g.categories[0].items.map(i=>i.name),['Zombie','Skeleton Archer']);
   assert.deepEqual(g.categories[1].items.map(i=>i.name),['Spike Trap','Dart Trap']);
@@ -122,7 +122,7 @@ test('selected category and option states reverse the background strongly (gold 
   assert.match(css,/\.j-tool\.is-active\{border-color:#f6d77d;background:linear-gradient\(#f4cd70,#dda02b\);color:#1b101c/);
 });
 
-test('TRY OUT NEW GIZMOS opens the REAL customization flow (EDIT_DUNGEON on the chosen tab), not a sandbox',async()=>{
+test('Check out your new gizmos opens the REAL customization flow (EDIT_DUNGEON on the chosen tab), not a sandbox',async()=>{
   const [mjs,view]=await Promise.all([read('public/flare-s8a/challenge.mjs'),read('public/flare-s8a/reward-journey-view.mjs')]);
   assert.match(mjs,/function openUnlockedTool\(panel\)\{activePanel=panel;journeyView\.dismiss\(\);transition\('EDIT_DUNGEON'\);\}/);
   assert.match(mjs,/onTry:panel=>openUnlockedTool\(panel\)/);

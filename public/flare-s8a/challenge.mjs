@@ -236,8 +236,8 @@ function renderDungeonChooserFrame(){
   $('presetPosition').textContent=`${presetIndex+1} / 3`;
 }
 // 002E9: the post-run reward journey (SUCCESS -> PERFORMANCE -> YOU GAINED -> YOUR FRIEND GAINED ->
-// LEVEL 2 -> NEW GIZMOS -> keep progressing) is the ONE first-run unlock experience; it supersedes the
-// 002E8 lock/unlock ceremony. It is a full-screen modal above the rewards state: the result, receipt
+// LEVEL 2 -> NEW GIZMOS -> keep progressing) is the ONLY unlock presentation; nothing inline on the
+// rewards screen repeats it. It is a full-screen modal above the rewards state: the result, receipt
 // and reward DOM beneath it is rendered first and is untouched, so dismissing it never navigates.
 let heroActorPack=null,journeyShown=false;
 const dungeonName=id=>S7_ROOMS[id]?.name||id;
@@ -258,7 +258,6 @@ const journeyView=createRewardJourney({
 });
 function openUnlockedTool(panel){activePanel=panel;journeyView.dismiss();transition('EDIT_DUNGEON');}
 function renderRewardJourney(m){
-  $('unlockedStatus').hidden=builderLevel<2;$('unlockedStatus').textContent=`BUILDER LEVEL ${builderLevel} · THIS SESSION`;
   if(!justUnlocked||journeyShown)return;
   journeyShown=true;
   try{journeyView.start(buildRewardJourney({result:m,senderName:session.senderName,level:builderLevel,nameOf:journeyNameOf}));}

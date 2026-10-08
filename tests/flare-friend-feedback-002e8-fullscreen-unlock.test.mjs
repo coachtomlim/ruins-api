@@ -39,10 +39,11 @@ test('receipt submission is wired independently of the overlay — completeRunti
   assert.match(complete,/finally\{void sendResultReceipt\(\);\}/);
 });
 
-test('the rewards screen shows only a compact session-level status, never the journey content again',async()=>{
-  const [html,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge.mjs')]);
-  assert.match(html,/id="unlockedStatus" class="unlocked-status" hidden>BUILDER LEVEL 2 · THIS SESSION/);
-  assert.match(mjs,/\$\('unlockedStatus'\)\.hidden=builderLevel<2;/);
+test('the rewards screen shows no unlock status at all (002E9B retired the inline cyan status)',async()=>{
+  const [html,mjs,css]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge.mjs'),read('public/flare-s8a/style.css')]);
+  assert.doesNotMatch(html,/unlockedStatus|unlocked-status/);
+  assert.doesNotMatch(mjs,/unlockedStatus/);
+  assert.doesNotMatch(css,/unlocked-status/);
   assert.match(mjs,/if\(!justUnlocked\|\|journeyShown\)return;\s*journeyShown=true;/);
 });
 
