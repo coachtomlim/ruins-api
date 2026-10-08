@@ -85,10 +85,11 @@ test('KEEP PROGRESSING: account framing never claims Level 2 or Gold are saved',
 
 test('the reward journey rejects a missing result instead of inventing numbers',()=>{assert.throws(()=>buildRewardJourney({}),/requires a result/)});
 
-test('Tactics coin: approved transparent RGBA PNG ships and is rendered as a bare transparent image',async()=>{
+test('Tactics coin: transparent RGBA PNG derived from the approved asset ships and is rendered as a bare transparent image',async()=>{
   const bytes=await readFile(new URL('../public/flare-s8a/assets/tactics-coins.png',import.meta.url));
   assert.equal(bytes.subarray(1,4).toString(),'PNG');
-  assert.equal(bytes.readUInt32BE(16),1448);assert.equal(bytes.readUInt32BE(20),1086);
+  assert.equal(bytes.readUInt32BE(16),640);assert.equal(bytes.readUInt32BE(20),480,'derived from the approved 1448x1086 original, same aspect ratio');
+  assert.ok(bytes.length<1_000_000,'kept under the release tooling 1 MB git-show buffer');
   assert.equal(bytes[25],6,'colour type 6 = RGBA, i.e. a real alpha channel');
   const [css,view]=await Promise.all([read('public/flare-s8a/style.css'),read('public/flare-s8a/reward-journey-view.mjs')]);
   assert.match(css,/\.j-coin\{[^}]*background:transparent/);
