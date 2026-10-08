@@ -119,12 +119,11 @@ test('the unlock ceremony only runs once per first completion and does not repla
   assert.match(mjs,/function runUnlockSequence\(\)\{\s*unlockCeremonyShown=true;/);
 });
 
-test('session-based unlock authority (sessionStorage key, same-tab persistence) is unchanged from 002E7',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
-  assert.match(mjs,/const CUSTOMIZATION_UNLOCK_KEY='s8aCustomizationUnlocked'/);
-  assert.match(mjs,/sessionStorage\.getItem\(CUSTOMIZATION_UNLOCK_KEY\)==='1'/);
-  assert.match(mjs,/sessionStorage\.setItem\(CUSTOMIZATION_UNLOCK_KEY,'1'\)/);
-  assert.doesNotMatch(mjs,/localStorage|indexedDB|document\.cookie/);
+test('session-based unlock authority (sessionStorage, same-tab persistence) still holds under the 002E9 Builder Level model',async()=>{
+  const [mjs,level]=await Promise.all([read('public/flare-s8a/challenge.mjs'),read('public/flare-s8a/builder-level.mjs')]);
+  assert.match(mjs,/sessionStorage/);
+  assert.match(level,/storage\.setItem\(BUILDER_LEVEL_KEY,'2'\)/);
+  assert.doesNotMatch(mjs+level,/localStorage|indexedDB|document\.cookie/);
 });
 
 // --- G: ACCOUNT MOTIVATION, unchanged ---

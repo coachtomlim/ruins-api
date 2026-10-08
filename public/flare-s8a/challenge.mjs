@@ -1,7 +1,7 @@
 import {loadS3ActorPack} from './actors.mjs';
 import {S7_ROOMS,loadS7StockRoom,drawPreview} from '../flare-s71/rooms.mjs';
 import {applyRunnerModel,runnerSummary,encounterCost,TRAP_IDS,SUPPORT_IDS} from '../flare-s71/game.mjs';
-import {calibrateEncounter,estimateEncounter} from '../flare-s71/calibration.mjs';
+import {calibrateEncounter,estimateEncounter,presetById} from '../flare-s71/calibration.mjs';
 import {startComposedHeroStance} from '../flare-s71/hero-preview.mjs';
 import {decodeInviteCode,inviteCodeFromLocation,inviteSender} from './flow.mjs';
 import {createReceiverSession,selectDungeon,setEncounter,advanceReceiver} from './receiver-session.mjs';
@@ -20,27 +20,26 @@ import {buildEstimateGaugeViewModel} from './estimate-gauge-view-model.mjs';
 import {buildRunnerInspectorViewModel} from './runner-inspector-view-model.mjs';
 import {gearSlotIcon} from './gear-slot-icon.mjs';
 import {monsterCardIcon,emptySlotCardIcon,encounterItemBadge,encounterItemEffectLabel} from './card-icons.mjs';
-import {buildDungeonPresets} from './dungeon-presets.mjs';
+import {buildDungeonPresets,GOVERNED_PRESET_IDS} from './dungeon-presets.mjs';
 import {installPagedSelector} from './paged-selector.mjs';
 import {targetFitCue} from './target-fit.mjs';
 import {extendModelWithLevel2,extendCatalogWithLevel2} from './level2-content.mjs';
+import {readBuilderLevel,grantFirstRunLevel,clampBuilderLevel,customizationUnlockedAt,contentForLevel,editorContentIds,BROKEN_GALLERY_ID} from './builder-level.mjs';
 const refreshSelectors=[];
 
-// 002E7 Part F: BUILDER progression (not Runner progression) — the smallest safe current-session
-// state. Stored in sessionStorage so it survives a reload of THIS tab during THIS browser session
-// (matching the existing PRACTICE_SNAPSHOT_KEY/attempt-token pattern elsewhere in this file), but
-// it is not written to any account or Supabase table, so: a new tab/device starts locked again,
-// and signing in/creating an account does not carry this flag anywhere — it is purely a client-side
-// guest-session unlock. Making it permanent would require a real persisted column (e.g. on the
-// account or a builder-progression row) plus a server read on load, which this task intentionally
-// does not add.
-const CUSTOMIZATION_UNLOCK_KEY='s8aCustomizationUnlocked';
-let customizationUnlocked=false;
-try{customizationUnlocked=sessionStorage.getItem(CUSTOMIZATION_UNLOCK_KEY)==='1';}catch{customizationUnlocked=false;}
+// 002E9: BUILDER progression (not Runner progression). The first completed run grants Builder Level 2
+// for the CURRENT browser session only (see builder-level.mjs): sessionStorage keeps it across a
+// reload of this tab, but nothing is written to an account or Supabase, so a fresh tab/device/session
+// starts at Level 1 again and no durable Level 2 is ever claimed.
+const SESSION_STORE=(()=>{try{return sessionStorage}catch{return null}})();
+let builderLevel=readBuilderLevel(SESSION_STORE);
+let customizationUnlocked=customizationUnlockedAt(builderLevel);
 let justUnlocked=false;
 function prefersReducedMotion(){try{return window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch{return false;}}
 
-const $=id=>document.getElementById(id),specs=Object.values(S7_ROOMS),rooms=new Map();
+const $=id=>document.getElementById(id),allSpecs=Object.values(S7_ROOMS),rooms=new Map();
+const visibleSpecs=()=>contentForLevel(builderLevel).dungeons.map(id=>S7_ROOMS[id]);
+let specs=visibleSpecs();
 function requiredElement(id){const el=$(id);if(!el)throw new Error(`S8A_DOM_CONTRACT_MISSING:${id}`);return el;}
 const REWARDS_DOM_CONTRACT=['heading-rewards','resultTarget','resultFinished','resultDifference','resultScore','heroRewardLabel','heroRewardGold','builderRewardGold','resultReceiptStatus','retryResultReceipt'];
 let model,baseCatalog,catalog,invite,runner,session,calibrated,roomIndex=0,activePanel='monsters',runtimeStart=null,lastReceiptPayload=null,currentAttemptToken=null,runnerAuthority=null,dungeonPresets=null;
@@ -79,7 +78,7 @@ function renderCurrent(view){
   else if(view.kind==='customize'){
     $('customizeLocked').hidden=customizationUnlocked;$('customizeEditor').hidden=!customizationUnlocked;$('customizeActions').hidden=!customizationUnlocked;
     if(!customizationUnlocked)return;
-    $('dungeonBudget').textContent=m.budget.primary;$('dungeonBudget').dataset.legal=String(m.budget.legal);$('finishCustomize').disabled=!m.canFinish;renderTabs();
+    $('dungeonBudget').textContent=m.budget.primary;$('dungeonBudget').dataset.legal=String(m.budget.legal);$('finishCustomize').disabled=!m.canFinish;renderTabs();if(activePanel==='dungeons')drawDungeonCards();
     const estimatedHpPercent=estimateEncounter({catalog,model,runnerId:invite.runnerId,runner,encounter:encounter()}).estimatedHpPercent;
     const gauge=buildEstimateGaugeViewModel({targetHp:invite.targetHp,estimatedHpPercent});
     $('customizeGaugeTarget').textContent=`TARGET ${gauge.targetPercent}%`;renderGaugeMarker('customizeGaugeTarget',gauge.targetPercent);$('customizeGaugeEstimate').hidden=!gauge.hasEstimate;if(gauge.hasEstimate)renderGaugeMarker('customizeGaugeEstimate',gauge.estimatePercent);
@@ -119,7 +118,9 @@ function itemCard(item){
   return card;
 }
 function renderControls(){
-  const vm=buildCustomizationCatalog({model,catalog,runnerId:invite.runnerId,runner}),monsterPanel=document.querySelector('[data-custom-panel="monsters"]');
+  refreshSelectors.length=0;
+  const access=editorContentIds(builderLevel,GOVERNED_PRESET_IDS.map(presetById));
+  const vm=buildCustomizationCatalog({model,catalog,runnerId:invite.runnerId,runner,access}),monsterPanel=document.querySelector('[data-custom-panel="monsters"]');
   monsterPanel.replaceChildren();
   for(let i=0;i<3;i++){
     const group=document.createElement('div');group.className='guard-group';
@@ -136,6 +137,41 @@ function renderControls(){
     panel.append(row);refreshSelectors.push(installPagedSelector(row,kind==='traps'?'trap':'support'));
   }
   for(const control of document.querySelectorAll('[name^="guard-"],[data-choice]'))control.addEventListener('change',()=>{session=setEncounter(session,encounter());show();});
+  renderDungeonCards();
+}
+// DUNGEONS tab (002E9): one card per dungeon the current Builder Level can use; selecting a card
+// changes the real session room, so Broken Gallery is playable the moment Level 2 is reached.
+function renderDungeonCards(){
+  const panel=document.querySelector('[data-custom-panel="dungeons"]');panel.replaceChildren();
+  const grid=document.createElement('div');grid.className='dungeon-grid';
+  for(const spec of specs){
+    const card=document.createElement('label');card.className='card dungeon-card';
+    const input=document.createElement('input');input.type='radio';input.name='dungeon';input.value=spec.id;input.className='visually-hidden';
+    input.checked=spec.id===selectedSpec()?.id;
+    const canvas=document.createElement('canvas');canvas.id=`dungeonCard-${spec.id}`;canvas.className='dungeon-card-preview';canvas.setAttribute('aria-label',`${spec.name} dungeon preview`);
+    const name=document.createElement('strong');name.textContent=spec.name;
+    card.append(input,canvas,name);
+    if(spec.id===BROKEN_GALLERY_ID){const tag=document.createElement('small');tag.className='card-effect';tag.textContent='NEW AT LEVEL 2';card.append(tag);}
+    input.addEventListener('change',()=>{roomIndex=specs.findIndex(x=>x.id===spec.id);session=selectDungeon(session,spec.id);show();});
+    grid.append(card);
+  }
+  panel.append(grid);
+}
+function drawDungeonCards(){
+  for(const spec of specs){
+    const input=document.querySelector(`input[name="dungeon"][value="${spec.id}"]`),room=rooms.get(spec.id),canvas=$(`dungeonCard-${spec.id}`);
+    if(input)input.checked=spec.id===selectedSpec()?.id;
+    if(room&&canvas)drawPreview(canvas,room.map,room.tiles);
+  }
+}
+// Applies a Builder Level to the live UI: which dungeons are selectable and which controls exist.
+// The current encounter is read back first and re-applied after the controls are rebuilt, so
+// levelling up never changes the player's selection.
+function applyBuilderLevel(level){
+  builderLevel=clampBuilderLevel(level);customizationUnlocked=customizationUnlockedAt(builderLevel);
+  const keepRoomId=selectedSpec()?.id,keep=encounter();
+  specs=visibleSpecs();roomIndex=Math.max(0,specs.findIndex(s=>s.id===keepRoomId));
+  renderControls();applyEncounter(keep);session=setEncounter(session,encounter());
 }
 function applyEncounter(e){
   for(let i=0;i<3;i++){const value=e.enemyTypes[i]||'none';const radio=document.querySelector(`input[name="guard-${i}"][value="${value}"]`)||document.querySelector(`input[name="guard-${i}"][value="none"]`);if(radio)radio.checked=true;}
@@ -277,9 +313,9 @@ buildUnlockToolCards();
 for(const tab of document.querySelectorAll('[data-custom-tab]'))tab.addEventListener('click',()=>{activePanel=tab.dataset.customTab;show();});
 $('runHero').addEventListener('click',()=>runtimeStart?.());
 let pointer=null;$('roomStage').addEventListener('pointerdown',e=>pointer={x:e.clientX,y:e.clientY});$('roomStage').addEventListener('pointerup',e=>{const direction=pointer&&roomSwipeDirection({startX:pointer.x,startY:pointer.y,endX:e.clientX,endY:e.clientY});pointer=null;if(direction)moveRoom(direction);});
-window.__s8aReceiver={get session(){return session;},get encounter(){return encounter();},get roomId(){return selectedSpec().id;},get room(){return selectedRoom();},get runnerAuthority(){return runnerAuthority;},get customizationUnlocked(){return customizationUnlocked;},get justUnlocked(){return justUnlocked;},setRuntimeStart(fn){runtimeStart=fn;},startRuntime(){chooseSessionRoom();currentAttemptToken=createAttemptToken();session=advanceReceiver(session,'RUN');show();},completeRuntime(result,score){session=advanceReceiver(session,'COMPLETE',{result,score});if(publicToken){lastReceiptPayload=buildResultReceipt({publicToken,roomId:session.roomId,encounter:session.encounter,rulesVersion:'s8a-1',result,heroGold:session.reward?.heroGold,attemptToken:currentAttemptToken})}
-      if(!customizationUnlocked){customizationUnlocked=true;justUnlocked=true;unlockCeremonyShown=false;try{sessionStorage.setItem(CUSTOMIZATION_UNLOCK_KEY,'1');}catch{}}else{justUnlocked=false;}
+window.__s8aReceiver={get session(){return session;},get encounter(){return encounter();},get roomId(){return selectedSpec().id;},get room(){return selectedRoom();},get runnerAuthority(){return runnerAuthority;},get customizationUnlocked(){return customizationUnlocked;},get builderLevel(){return builderLevel;},get justUnlocked(){return justUnlocked;},setRuntimeStart(fn){runtimeStart=fn;},startRuntime(){chooseSessionRoom();currentAttemptToken=createAttemptToken();session=advanceReceiver(session,'RUN');show();},completeRuntime(result,score){session=advanceReceiver(session,'COMPLETE',{result,score});if(publicToken){lastReceiptPayload=buildResultReceipt({publicToken,roomId:session.roomId,encounter:session.encounter,rulesVersion:'s8a-1',result,heroGold:session.reward?.heroGold,attemptToken:currentAttemptToken})}
+      const grant=grantFirstRunLevel(SESSION_STORE,builderLevel);justUnlocked=grant.leveledUp;if(grant.leveledUp){unlockCeremonyShown=false;try{applyBuilderLevel(grant.level);}catch(error){console.error(error);}}
       try{show();}catch(error){console.error(error);}finally{void sendResultReceipt();}},replayRuntime(){currentAttemptToken=createAttemptToken();session=advanceReceiver(session,'RUN_AGAIN');show();},runFailed(message){session={...session,journey:'ready'};show();$('readySummary').textContent=`Run could not start: ${message}`;},show};
 installRuntime(window.__s8aReceiver);
-async function bootReceiver(){try{const [base,game,heroPack,correlatedSnapshot]=await Promise.all([fetch('/quick-dungeon/flare-p0/data/catalog.json').then(r=>r.ok?r.json():Promise.reject(Error('Catalogue unavailable'))),fetch('/quick-dungeon/flare-s7/data/game.json').then(r=>r.ok?r.json():Promise.reject(Error('Game model unavailable'))),loadS3ActorPack(),fetchCorrelatedSnapshot()]);baseCatalog=base;model=extendModelWithLevel2(game);const code=inviteCodeFromLocation(location);invite=code?decodeInviteCode(code,model):new URLSearchParams(location.search).get('demo')==='1'?{runnerId:model.defaultRunner,targetHp:model.defaultTargetHp}:null;if(!invite)throw Error('Challenge invitation is missing or invalid');catalog=extendCatalogWithLevel2(applyRunnerModel(baseCatalog,model,invite.runnerId),model);runnerAuthority=resolveRunnerAuthority({snapshot:correlatedSnapshot,templateMaxHp:catalog.heroes.warrior.maxHp,templateAttack:catalog.heroes.warrior.damage,templateDefense:catalog.heroes.warrior.armor});if(runnerAuthority.source==='snapshot'){catalog.heroes.warrior.maxHp=runnerAuthority.maxHp;catalog.heroes.warrior.damage=runnerAuthority.attack;catalog.heroes.warrior.armor=runnerAuthority.defense;}runner=runnerSummary(model,invite.runnerId,catalog);session=createReceiverSession({invite,senderName:inviteSender(location.search)});renderControls();calibrated=calibrateEncounter({catalog,model,runnerId:invite.runnerId,runner,targetHp:invite.targetHp});applyEncounter(calibrated.encounter);session=setEncounter(session,encounter());dungeonPresets=buildDungeonPresets({catalog,model,runnerId:invite.runnerId,runner,targetHp:invite.targetHp,budget:model.budget,roomIds:specs.map(s=>s.id)});renderDungeonChooser();startComposedHeroStance($('inviteHeroCanvas'),heroPack);await Promise.all(specs.map(async spec=>rooms.set(spec.id,await loadS7StockRoom(spec.id))));$('acceptChallenge').disabled=false;$('loadStatus').textContent='Your Hero-Runner is ready.';show();window.__s8aData={model,catalog,invite,runner,rooms,specs,runnerAuthority,dungeonPresets};}catch(error){console.error(error);if(error?.message==='SNAPSHOT_SERVICE_UNAVAILABLE'||/snapshot/i.test(String(error?.message))){$('heading-invitation').textContent='COULD NOT LOAD THIS RUNNER';$('loadStatus').innerHTML='';const status=document.createElement('span');status.textContent="We couldn't load your friend's Runner data. ";const retry=document.createElement('button');retry.type='button';retry.className='nav-link';retry.textContent='RETRY';retry.addEventListener('click',()=>location.reload());$('loadStatus').append(status,retry);return}$('heading-invitation').textContent='THIS CHALLENGE CANNOT OPEN';$('loadStatus').textContent=error.message;}}
+async function bootReceiver(){try{const [base,game,heroPack,correlatedSnapshot]=await Promise.all([fetch('/quick-dungeon/flare-p0/data/catalog.json').then(r=>r.ok?r.json():Promise.reject(Error('Catalogue unavailable'))),fetch('/quick-dungeon/flare-s7/data/game.json').then(r=>r.ok?r.json():Promise.reject(Error('Game model unavailable'))),loadS3ActorPack(),fetchCorrelatedSnapshot()]);baseCatalog=base;model=extendModelWithLevel2(game);const code=inviteCodeFromLocation(location);invite=code?decodeInviteCode(code,model):new URLSearchParams(location.search).get('demo')==='1'?{runnerId:model.defaultRunner,targetHp:model.defaultTargetHp}:null;if(!invite)throw Error('Challenge invitation is missing or invalid');catalog=extendCatalogWithLevel2(applyRunnerModel(baseCatalog,model,invite.runnerId),model);runnerAuthority=resolveRunnerAuthority({snapshot:correlatedSnapshot,templateMaxHp:catalog.heroes.warrior.maxHp,templateAttack:catalog.heroes.warrior.damage,templateDefense:catalog.heroes.warrior.armor});if(runnerAuthority.source==='snapshot'){catalog.heroes.warrior.maxHp=runnerAuthority.maxHp;catalog.heroes.warrior.damage=runnerAuthority.attack;catalog.heroes.warrior.armor=runnerAuthority.defense;}runner=runnerSummary(model,invite.runnerId,catalog);session=createReceiverSession({invite,senderName:inviteSender(location.search)});renderControls();calibrated=calibrateEncounter({catalog,model,runnerId:invite.runnerId,runner,targetHp:invite.targetHp});applyEncounter(calibrated.encounter);session=setEncounter(session,encounter());dungeonPresets=buildDungeonPresets({catalog,model,runnerId:invite.runnerId,runner,targetHp:invite.targetHp,budget:model.budget,roomIds:specs.map(s=>s.id)});renderDungeonChooser();startComposedHeroStance($('inviteHeroCanvas'),heroPack);await Promise.all(allSpecs.map(async spec=>rooms.set(spec.id,await loadS7StockRoom(spec.id))));$('acceptChallenge').disabled=false;$('loadStatus').textContent='Your Hero-Runner is ready.';show();window.__s8aData={model,catalog,invite,runner,rooms,specs:allSpecs,runnerAuthority,dungeonPresets};}catch(error){console.error(error);if(error?.message==='SNAPSHOT_SERVICE_UNAVAILABLE'||/snapshot/i.test(String(error?.message))){$('heading-invitation').textContent='COULD NOT LOAD THIS RUNNER';$('loadStatus').innerHTML='';const status=document.createElement('span');status.textContent="We couldn't load your friend's Runner data. ";const retry=document.createElement('button');retry.type='button';retry.className='nav-link';retry.textContent='RETRY';retry.addEventListener('click',()=>location.reload());$('loadStatus').append(status,retry);return}$('heading-invitation').textContent='THIS CHALLENGE CANNOT OPEN';$('loadStatus').textContent=error.message;}}
 void bootReceiver();

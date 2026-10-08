@@ -7,12 +7,13 @@ const read=p=>readFile(new URL(`../${p}`,import.meta.url),'utf8');
 
 // --- FIRST-RUN GATE ---
 
-test('customization is locked by default and the lock is tracked via a current-session flag, not a new permanent store',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
-  assert.match(mjs,/const CUSTOMIZATION_UNLOCK_KEY='s8aCustomizationUnlocked'/);
-  assert.match(mjs,/let customizationUnlocked=false;/);
-  assert.match(mjs,/sessionStorage\.getItem\(CUSTOMIZATION_UNLOCK_KEY\)==='1'/);
-  assert.doesNotMatch(mjs,/localStorage|indexedDB|document\.cookie/);
+test('customization is locked by default and the lock is tracked via a current-session level, not a new permanent store (002E9: Builder Level in sessionStorage)',async()=>{
+  const [mjs,level]=await Promise.all([read('public/flare-s8a/challenge.mjs'),read('public/flare-s8a/builder-level.mjs')]);
+  assert.match(mjs,/let builderLevel=readBuilderLevel\(SESSION_STORE\);/);
+  assert.match(mjs,/let customizationUnlocked=customizationUnlockedAt\(builderLevel\);/);
+  assert.match(level,/export const BUILDER_LEVEL_KEY='s8aBuilderLevel'/);
+  assert.match(level,/export const LEGACY_UNLOCK_KEY='s8aCustomizationUnlocked'/);
+  assert.doesNotMatch(mjs+level,/localStorage|indexedDB|document\.cookie/);
 });
 
 test('a desirable locked teaser (not a bare hidden element) is shown in place of the editor when locked',async()=>{
@@ -22,7 +23,7 @@ test('a desirable locked teaser (not a bare hidden element) is shown in place of
   assert.match(customizeSection,/CUSTOM DUNGEON TOOLS/);
   assert.match(customizeSection,/LOCKED/);
   assert.match(customizeSection,/Complete your first run to unlock/);
-  for(const tool of ['MONSTERS','TRAPS','SUPPORTS'])assert.match(customizeSection,new RegExp(`<li>${tool}</li>`));
+  for(const tool of ['MONSTERS','TRAPS','SUPPORT','DUNGEONS'])assert.match(customizeSection,new RegExp(`<li>${tool}</li>`));
 });
 
 test('all 3 presets (TOO EASY / JUST RIGHT / BRUTAL) and USE THIS DUNGEON remain usable before any run, unaffected by the lock',async()=>{
@@ -32,11 +33,12 @@ test('all 3 presets (TOO EASY / JUST RIGHT / BRUTAL) and USE THIS DUNGEON remain
   assert.match(mjs,/const presetList=\(\)=>\[dungeonPresets\.tooEasy,dungeonPresets\.justRight,dungeonPresets\.brutal\];/);
 });
 
-test('first run completion unlocks customization exactly once and persists for the rest of this session/tab (002E8: also arms the full-screen ceremony flag)',async()=>{
+test('first run completion grants Builder Level 2 exactly once for this session (002E9: also arms the reward journey)',async()=>{
   const mjs=await read('public/flare-s8a/challenge.mjs');
   const completeStart=mjs.indexOf('completeRuntime(result,score){');
   const complete=mjs.slice(completeStart,mjs.indexOf('replayRuntime('));
-  assert.match(complete,/if\(!customizationUnlocked\)\{customizationUnlocked=true;justUnlocked=true;unlockCeremonyShown=false;try\{sessionStorage\.setItem\(CUSTOMIZATION_UNLOCK_KEY,'1'\);\}catch\{\}\}else\{justUnlocked=false;\}/);
+  assert.match(complete,/const grant=grantFirstRunLevel\(SESSION_STORE,builderLevel\);justUnlocked=grant\.leveledUp;/);
+  assert.match(complete,/applyBuilderLevel\(grant\.level\)/);
 });
 
 test('(see tests/flare-friend-feedback-002e8-fullscreen-unlock.test.mjs for the full-screen ceremony, phased lock animation, reduced-motion and direct tool handoff coverage)',()=>{assert.ok(true)});

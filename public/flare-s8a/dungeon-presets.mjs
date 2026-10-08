@@ -6,7 +6,7 @@ import {estimateEncounter} from '../flare-s71/calibration.mjs';
 // the existing deterministic estimateEncounter(). No new monster/trap/support combinations are
 // invented here; HARDCORE/IMPOSSIBLE are deliberately not surfaced yet (Part I), but every preset
 // still carries a stable `kind` so a future tier can be added without reshaping this contract.
-const GOVERNED_PRESET_IDS=['soft','light','balanced','firm','hard','brutal'];
+export const GOVERNED_PRESET_IDS=['soft','light','balanced','firm','hard','brutal'];
 
 function interpretation(kind,estimatedHpPercent,targetHp){
   const estimate=Math.round(estimatedHpPercent),target=Math.round(targetHp);
