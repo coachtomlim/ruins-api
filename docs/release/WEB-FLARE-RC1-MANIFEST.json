@@ -1,6 +1,6 @@
 {
   "releaseId": "WEB-FLARE-RC1",
-  "generatedAt": "2026-10-08T06:12:15.030Z",
+  "generatedAt": "2026-10-08T06:12:51.464Z",
   "entryPoints": [
     "public/flare-s8a/index.html",
     "public/flare-s8a/challenge.html",
@@ -216,9 +216,9 @@
     },
     {
       "path": "public/flare-s8a/assets/tactics-coins.png",
-      "sha256": "956b91a775068761389dcb31e33f345a9bb4e8d4522fbf9b8985739501660907",
+      "sha256": "1c7c8db80a0f1aec759c6c7a0a83841a2b7c716fe53c9a8fa33dace56b370498",
       "mime": "application/octet-stream",
-      "bytes": 1508282
+      "bytes": 429198
     },
     {
       "path": "public/flare-s8a/attempt-token.mjs",
