@@ -1,6 +1,6 @@
 {
   "label": "FRIEND_CHALLENGE_FEEDBACK_NAV_001 complete multi-root release archive",
-  "sourceSha": "01b8f48c7a6d960fe9f37723b39a6a750f005603",
+  "sourceSha": "5dc048748bbc598ea708cfeb36874bc9be643e16",
   "fileCount": 120,
   "zip": "web-flare-friend-feedback-nav-001-release.zip",
   "files": [
@@ -270,15 +270,15 @@
     },
     {
       "path": "flare-s8a/challenge.html",
-      "sha256": "5df0ff3ccfe5019023555272f71232c55da8b337e171aa47971fa1b8ba4966d5",
+      "sha256": "99bdf982dacb5a583e2691102dd7adbbbe20ea3117f59232ed38e4a1a7020d77",
       "mime": "text/html; charset=utf-8",
-      "bytes": 9787
+      "bytes": 9697
     },
     {
       "path": "flare-s8a/challenge.mjs",
-      "sha256": "4648f01a99a96f82815a613b4785c5ef025b98fa45de7a75274b4665b694eae3",
+      "sha256": "85e9cee7c7aa0cc168a845293b8059588670b17b638f3321e2f1c6f72c156d38",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 34428
+      "bytes": 34299
     },
     {
       "path": "flare-s8a/customize-panels.mjs",
@@ -450,9 +450,9 @@
     },
     {
       "path": "flare-s8a/reward-journey.mjs",
-      "sha256": "115d6166e75b996b9d6c16bafcbf6180a91c6664195092078e04ee60b4aafc4d",
+      "sha256": "2797f8fa706f7bef6d853393e5e2269be4d329e2035743dcfc91cf8256277bed",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 4485
+      "bytes": 4492
     },
     {
       "path": "flare-s8a/reward-teaser.mjs",
@@ -546,9 +546,9 @@
     },
     {
       "path": "flare-s8a/style.css",
-      "sha256": "f5c7f93f974f753cb4098ca27b24fdbcc22e1f753c4a429bb4c40e6c99e16377",
+      "sha256": "2ff398008b6e61f98c0c12644fa3aa9e0b0b4a95ff3f93586c8e7a4a9978b605",
       "mime": "text/css; charset=utf-8",
-      "bytes": 22363
+      "bytes": 21999
     },
     {
       "path": "flare-s8a/swipe.mjs",
