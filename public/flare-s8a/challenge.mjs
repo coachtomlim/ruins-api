@@ -11,7 +11,7 @@ import {buildCustomizationCatalog} from './catalog-view-model.mjs';
 import {buildRoomCarousel} from './room-carousel.mjs';
 import {roomSwipeDirection} from './swipe.mjs';
 import {installRuntime} from './runtime-controller.mjs';
-import {buildResultReceipt,submitResultReceipt} from './result-receipt.mjs';
+import {submitResultReceipt} from './result-receipt.mjs';
 import {publicChallengeTokenFromLocation} from '../flare-s8b/friend-share.mjs';
 import {createAttemptToken} from './attempt-token.mjs';
 import {fetchPublicChallengeSnapshot} from '../flare-s8b/public-challenge-snapshot.mjs';
@@ -19,11 +19,15 @@ import {resolveRunnerAuthority} from './runner-authority.mjs';
 import {buildEstimateGaugeViewModel} from './estimate-gauge-view-model.mjs';
 import {buildRunnerInspectorViewModel} from './runner-inspector-view-model.mjs';
 import {gearSlotIcon} from './gear-slot-icon.mjs';
-import {monsterCardIcon,emptySlotCardIcon,encounterItemBadge,encounterItemEffectLabel} from './card-icons.mjs';
+import {monsterCardIcon,emptySlotCardIcon,encounterItemBadge,encounterItemEffectLabel,flareArtIcon} from './card-icons.mjs';
 import {buildDungeonPresets,GOVERNED_PRESET_IDS} from './dungeon-presets.mjs';
 import {installPagedSelector} from './paged-selector.mjs';
 import {targetFitCue} from './target-fit.mjs';
 import {extendModelWithLevel2,extendCatalogWithLevel2} from './level2-content.mjs';
+import {createRewardJourney} from './reward-journey-view.mjs';
+import {buildRewardJourney} from './reward-journey.mjs';
+import {drawFlareArt,drawRoomPreviewTransparent} from './flare-art.mjs';
+import {planResultReceipt,receiptBlockMessage} from './receipt-plan.mjs';
 import {readBuilderLevel,grantFirstRunLevel,clampBuilderLevel,customizationUnlockedAt,contentForLevel,editorContentIds,BROKEN_GALLERY_ID} from './builder-level.mjs';
 const refreshSelectors=[];
 
@@ -42,7 +46,7 @@ const visibleSpecs=()=>contentForLevel(builderLevel).dungeons.map(id=>S7_ROOMS[i
 let specs=visibleSpecs();
 function requiredElement(id){const el=$(id);if(!el)throw new Error(`S8A_DOM_CONTRACT_MISSING:${id}`);return el;}
 const REWARDS_DOM_CONTRACT=['heading-rewards','resultTarget','resultFinished','resultDifference','resultScore','heroRewardLabel','heroRewardGold','builderRewardGold','resultReceiptStatus','retryResultReceipt'];
-let model,baseCatalog,catalog,invite,runner,session,calibrated,roomIndex=0,activePanel='monsters',runtimeStart=null,lastReceiptPayload=null,currentAttemptToken=null,runnerAuthority=null,dungeonPresets=null;
+let model,baseCatalog,catalog,invite,runner,session,calibrated,roomIndex=0,activePanel='monsters',runtimeStart=null,lastReceiptPayload=null,receiptBlock=null,currentAttemptToken=null,runnerAuthority=null,dungeonPresets=null;
 const publicToken=publicChallengeTokenFromLocation(location);
 const FRIEND_GOAL_CLAIM_KEY='s8aFriendGoalClaim';
 function accountServiceAvailable(){const config=globalThis.__FLARE_S8B_PUBLIC_CONFIG__,sdk=globalThis.supabase;return Boolean(config?.url&&config?.publishableKey&&typeof sdk?.createClient==='function');}
@@ -88,7 +92,7 @@ function renderCurrent(view){
   }
   else if(view.kind==='ready'){$('readyTarget').textContent=m.title;$('readySummary').textContent=`${m.roomName} · ${m.budget.primary} · ${m.targetFit.label}`;$('runHero').disabled=!m.canRun;const readyGauge=buildEstimateGaugeViewModel({targetHp:invite.targetHp,estimatedHpPercent:estimateEncounter({catalog,model,runnerId:invite.runnerId,runner,encounter:encounter()}).estimatedHpPercent});$('readyGaugeTarget').textContent=`TARGET ${readyGauge.targetPercent}%`;renderGaugeMarker('readyGaugeTarget',readyGauge.targetPercent);$('readyGaugeEstimate').hidden=!readyGauge.hasEstimate;if(readyGauge.hasEstimate)renderGaugeMarker('readyGaugeEstimate',readyGauge.estimatePercent);$('readyGaugeEstimateLabel').textContent=readyGauge.hasEstimate?`ESTIMATED FINISH ${readyGauge.estimateLabel}`:'';renderReadySelections();}
   else if(view.kind==='runtime'){$('cameraToggle').textContent=m.cameraAction||'OVERVIEW';$('pauseToggle').textContent=m.pauseAction;}
-  else if(view.kind==='rewards'){for(const id of REWARDS_DOM_CONTRACT)requiredElement(id);requiredElement('heading-rewards').textContent=m.resultHeading;requiredElement('resultTarget').textContent=`TARGET ${Math.round(m.targetHpPercent)}%`;requiredElement('resultFinished').textContent=`FINISHED ${Math.round(m.actualHpPercent)}%`;requiredElement('resultDifference').textContent=`${m.differenceFromTarget} POINT${m.differenceFromTarget===1?'':'S'} FROM TARGET`;requiredElement('resultScore').textContent=`SCORE ${Math.round(m.score)}`;requiredElement('heroRewardLabel').textContent=m.heroReward.label;requiredElement('heroRewardGold').textContent=m.heroReward.value;requiredElement('builderRewardGold').textContent=m.builderReward.value;renderUnlockOverlay();}
+  else if(view.kind==='rewards'){for(const id of REWARDS_DOM_CONTRACT)requiredElement(id);requiredElement('heading-rewards').textContent=m.resultHeading;requiredElement('resultTarget').textContent=`TARGET ${Math.round(m.targetHpPercent)}%`;requiredElement('resultFinished').textContent=`FINISHED ${Math.round(m.actualHpPercent)}%`;requiredElement('resultDifference').textContent=`${m.differenceFromTarget} POINT${m.differenceFromTarget===1?'':'S'} FROM TARGET`;requiredElement('resultScore').textContent=`SCORE ${Math.round(m.score)}`;requiredElement('heroRewardLabel').textContent=m.heroReward.label;requiredElement('heroRewardGold').textContent=m.heroReward.value;requiredElement('builderRewardGold').textContent=m.builderReward.value;renderRewardJourney(m);}
   else if(view.kind==='registration'){$('registrationGoal').textContent=m.carriedGoal;$('registrationRewardPreview').textContent=`This run earned ${m.previewBuilderGold} Builder Gold · ${m.previewHeroGold} Hero Gold (not saved to an account yet).`;$('registrationNotSaved').textContent=m.notSaved;$('createAccount').disabled=!m.accountAction.enabled;$('accountActionStatus').textContent=m.accountAction.enabled?'Continue to create your account or sign in.':m.accountAction.note;}
 }
 function chooseSessionRoom(){session=selectDungeon(session,selectedSpec().id);session=setEncounter(session,encounter());}
@@ -108,7 +112,7 @@ function monsterCard({name,value,label,cost,summary,icon}){
 function itemCard(item){
   const card=document.createElement('label');card.className='card';
   const input=document.createElement('input');input.type='checkbox';input.dataset.choice=item.id;input.className='visually-hidden';
-  const icon=encounterItemBadge(item.id);
+  const icon=flareArtIcon(item.id)||encounterItemBadge(item.id);
   const body=document.createElement('div');body.className='card-body';
   const strong=document.createElement('strong');strong.textContent=item.label;
   const costLine=document.createElement('small');costLine.className='card-cost';costLine.textContent=`${item.cost} BUDGET`;
@@ -127,7 +131,7 @@ function renderControls(){
     const title=document.createElement('strong');title.textContent=`GUARD ${i+1}`;group.append(title);
     const row=document.createElement('div');row.className='card-row';
     row.append(monsterCard({name:`guard-${i}`,value:'none',label:'EMPTY',cost:0,summary:'No monster',icon:emptySlotCardIcon()}));
-    for(const item of vm.monsters)row.append(monsterCard({name:`guard-${i}`,value:item.id,label:item.label,cost:item.cost,summary:item.summary,icon:monsterCardIcon()}));
+    for(const item of vm.monsters)row.append(monsterCard({name:`guard-${i}`,value:item.id,label:item.label,cost:item.cost,summary:item.summary,icon:flareArtIcon(item.id)||monsterCardIcon()}));
     group.append(row);monsterPanel.append(group);refreshSelectors.push(installPagedSelector(row,`monster for guard ${i+1}`));
   }
   for(const kind of ['traps','supports']){
@@ -177,6 +181,7 @@ function applyEncounter(e){
   for(let i=0;i<3;i++){const value=e.enemyTypes[i]||'none';const radio=document.querySelector(`input[name="guard-${i}"][value="${value}"]`)||document.querySelector(`input[name="guard-${i}"][value="none"]`);if(radio)radio.checked=true;}
   const selected=[...(e.trapTypes||[]),...(e.supportTypes||[])];
   for(const id of [...TRAP_IDS,...SUPPORT_IDS]){const box=document.querySelector(`[data-choice="${id}"]`);if(box)box.checked=selected.includes(id);}
+  for(const refresh of refreshSelectors)refresh.syncToSelection?.();
 }
 function renderTabs(){for(const tab of document.querySelectorAll('[data-custom-tab]')){const on=tab.dataset.customTab===activePanel;tab.setAttribute('aria-selected',String(on));document.querySelector(`[data-custom-panel="${tab.dataset.customTab}"]`).hidden=!on;}}
 let presetIndex=1; // 0=too easy, 1=just right (default), 2=brutal
@@ -230,47 +235,34 @@ function renderDungeonChooserFrame(){
   $('presetContents').textContent=names.length?names.join(' · '):'No monsters, traps or support';
   $('presetPosition').textContent=`${presetIndex+1} / 3`;
 }
-// 002E8: the first-run unlock is a full-screen moment (modal overlay above the rewards state),
-// not an inline rewards card — it must completely own the viewport while it plays. The underlying
-// result/receipt/reward DOM is untouched and already rendered beneath it (renderCurrent's rewards
-// branch runs first), so CONTINUE TO RESULTS is just dismissing the overlay, never a navigation.
-const UNLOCK_TOOLS=Object.freeze([
-  {panel:'monsters',label:'MONSTERS',copy:'Choose what guards each room.',icon:()=>monsterCardIcon()},
-  {panel:'traps',label:'TRAPS',copy:'Add hazards to change the challenge.',icon:()=>encounterItemBadge('spike-trap')},
-  {panel:'supports',label:'SUPPORTS',copy:'Help the Runner survive.',icon:()=>encounterItemBadge('small-potion')}
-]);
-function buildUnlockToolCards(){
-  const wrap=$('unlockToolCards');wrap.replaceChildren();
-  for(const tool of UNLOCK_TOOLS){
-    const card=document.createElement('button');card.type='button';card.className='unlock-tool-card';card.dataset.tool=tool.panel;
-    const strong=document.createElement('strong');strong.textContent=tool.label;
-    const small=document.createElement('small');small.textContent=tool.copy;
-    card.append(tool.icon(),strong,small);
-    card.addEventListener('click',()=>openUnlockedTool(tool.panel));
-    wrap.append(card);
-  }
-}
-// Direct tool handoff (Part J): sets the target tab, dismisses the overlay, and moves into the
-// SAME customize journey state through the existing EDIT_DUNGEON transition — no parallel editor
-// state machine, no second implementation of tab rendering.
-function openUnlockedTool(panel){activePanel=panel;dismissUnlockOverlay();transition('EDIT_DUNGEON');}
-let unlockTimers=[],unlockCeremonyShown=false;
-function clearUnlockTimers(){for(const t of unlockTimers)clearTimeout(t);unlockTimers=[];}
-function dismissUnlockOverlay(){clearUnlockTimers();$('unlockOverlay').hidden=true;$('unlockOverlay').classList.remove('phase-success','phase-locked','phase-unlocking','phase-revealed');}
-function runUnlockSequence(){
-  unlockCeremonyShown=true;
-  const el=$('unlockOverlay');
-  clearUnlockTimers();el.classList.remove('phase-success','phase-locked','phase-unlocking','phase-revealed');
-  el.hidden=false;
-  if(prefersReducedMotion()){el.classList.add('phase-success','phase-locked','phase-unlocking','phase-revealed');return;}
-  el.classList.add('phase-success');
-  unlockTimers.push(setTimeout(()=>el.classList.add('phase-locked'),500));
-  unlockTimers.push(setTimeout(()=>el.classList.add('phase-unlocking'),1000));
-  unlockTimers.push(setTimeout(()=>el.classList.add('phase-revealed'),1700));
-}
-function renderUnlockOverlay(){
-  $('unlockedStatus').hidden=!customizationUnlocked;
-  if(justUnlocked&&!unlockCeremonyShown)runUnlockSequence();
+// 002E9: the post-run reward journey (SUCCESS -> PERFORMANCE -> YOU GAINED -> YOUR FRIEND GAINED ->
+// LEVEL 2 -> NEW GIZMOS -> keep progressing) is the ONE first-run unlock experience; it supersedes the
+// 002E8 lock/unlock ceremony. It is a full-screen modal above the rewards state: the result, receipt
+// and reward DOM beneath it is rendered first and is untouched, so dismissing it never navigates.
+let heroActorPack=null,journeyShown=false;
+const dungeonName=id=>S7_ROOMS[id]?.name||id;
+const journeyNameOf=(id,key)=>key==='dungeons'?dungeonName(id):(model.monsters?.[id]?.name||model.items?.[id]?.name||id);
+const journeyView=createRewardJourney({
+  root:$('rewardJourney'),
+  coinSrc:new URL('./assets/tactics-coins.png',import.meta.url).href,
+  drawArt:(canvas,key,options)=>drawFlareArt(canvas,key,options),
+  drawDungeon:(canvas,roomId)=>{const room=rooms.get(roomId||BROKEN_GALLERY_ID);if(room)drawRoomPreviewTransparent(canvas,room.map,room.tiles);},
+  startHero:canvas=>startComposedHeroStance(canvas,heroActorPack),
+  reducedMotion:prefersReducedMotion,
+  // Direct handoff into the REAL customization flow (the existing rewards -> customize transition and
+  // the shared `activePanel`), never a parallel sandbox.
+  onTry:panel=>openUnlockedTool(panel),
+  onCustomize:()=>openUnlockedTool('monsters'),
+  onCreateAccount:()=>{journeyView.dismiss();transition('SAVE_GOAL');},
+  onGuest:()=>journeyView.dismiss()
+});
+function openUnlockedTool(panel){activePanel=panel;journeyView.dismiss();transition('EDIT_DUNGEON');}
+function renderRewardJourney(m){
+  $('unlockedStatus').hidden=builderLevel<2;$('unlockedStatus').textContent=`BUILDER LEVEL ${builderLevel} · THIS SESSION`;
+  if(!justUnlocked||journeyShown)return;
+  journeyShown=true;
+  try{journeyView.start(buildRewardJourney({result:m,senderName:session.senderName,level:builderLevel,nameOf:journeyNameOf}));}
+  catch(error){console.error(error);journeyView.dismiss();}
 }
 function renderReadySelections(){
   const e=encounter(),wrap=$('readySelections');wrap.replaceChildren();
@@ -294,7 +286,7 @@ function openRunnerInspector(){renderRunnerInspector();$('runnerInspector').hidd
 function closeRunnerInspector(){$('runnerInspector').hidden=true;$('viewRunner').focus();}
 function transition(event){try{if(['USE_DUNGEON','CUSTOMIZE'].includes(event))chooseSessionRoom();if(event==='DONE')session=setEncounter(session,encounter());session=advanceReceiver(session,event);show();}catch(error){$('loadStatus').textContent=error.message;}}
 function receiptClient(){const config=globalThis.__FLARE_S8B_PUBLIC_CONFIG__,sdk=globalThis.supabase;if(!publicToken||!config?.url||!config?.publishableKey||typeof sdk?.createClient!=='function')return null;return sdk.createClient(config.url,config.publishableKey,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}})}
-async function sendResultReceipt(){const status=requiredElement('resultReceiptStatus'),retry=requiredElement('retryResultReceipt');if(!publicToken){status.textContent='Legacy challenge · result stays on this device.';retry.hidden=true;return}status.textContent='Sending result…';retry.hidden=true;try{const client=receiptClient();if(!client)throw new Error('RESULT_SERVICE_UNAVAILABLE');const row=await submitResultReceipt({client,payload:lastReceiptPayload});status.textContent=`RESULT SENT TO ${session.senderName.toUpperCase()}`;status.dataset.resultId=row.result_id;retry.hidden=true}catch(error){console.error(error);status.textContent='Result not sent yet. Your result is safe — retry when connected.';retry.hidden=false}}
+async function sendResultReceipt(){const status=requiredElement('resultReceiptStatus'),retry=requiredElement('retryResultReceipt');if(!publicToken){status.textContent='Legacy challenge · result stays on this device.';retry.hidden=true;return}if(receiptBlock||!lastReceiptPayload){status.textContent=receiptBlockMessage(receiptBlock||'PAYLOAD_INVALID',session.senderName);retry.hidden=true;return}status.textContent='Sending result…';retry.hidden=true;try{const client=receiptClient();if(!client)throw new Error('RESULT_SERVICE_UNAVAILABLE');const row=await submitResultReceipt({client,payload:lastReceiptPayload});status.textContent=`RESULT SENT TO ${session.senderName.toUpperCase()}`;status.dataset.resultId=row.result_id;retry.hidden=true}catch(error){console.error(error);status.textContent='Result not sent yet. Your result is safe — retry when connected.';retry.hidden=false}}
 $('retryResultReceipt').addEventListener('click',sendResultReceipt);
 $('acceptChallenge').addEventListener('click',()=>transition('ACCEPT'));
 $('previousRoom').addEventListener('click',()=>moveRoom(-1));$('nextRoom').addEventListener('click',()=>moveRoom(1));
@@ -308,14 +300,15 @@ $('runnerInspector').addEventListener('click',e=>{if(e.target===$('runnerInspect
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('runnerInspector').hidden)closeRunnerInspector();});
 $('createAccount').addEventListener('click',()=>{if($('createAccount').disabled)return;try{sessionStorage.setItem(FRIEND_GOAL_CLAIM_KEY,JSON.stringify({senderName:session.senderName,runnerId:invite.runnerId,targetHp:invite.targetHp}));}catch(error){console.error(error);}location.href='/quick-dungeon/flare-s8b/';});
 $('resetSuggested').addEventListener('click',()=>{applyEncounter(calibrated.encounter);session=setEncounter(session,encounter());show();});
-$('continueToResults').addEventListener('click',dismissUnlockOverlay);
-buildUnlockToolCards();
 for(const tab of document.querySelectorAll('[data-custom-tab]'))tab.addEventListener('click',()=>{activePanel=tab.dataset.customTab;show();});
 $('runHero').addEventListener('click',()=>runtimeStart?.());
 let pointer=null;$('roomStage').addEventListener('pointerdown',e=>pointer={x:e.clientX,y:e.clientY});$('roomStage').addEventListener('pointerup',e=>{const direction=pointer&&roomSwipeDirection({startX:pointer.x,startY:pointer.y,endX:e.clientX,endY:e.clientY});pointer=null;if(direction)moveRoom(direction);});
-window.__s8aReceiver={get session(){return session;},get encounter(){return encounter();},get roomId(){return selectedSpec().id;},get room(){return selectedRoom();},get runnerAuthority(){return runnerAuthority;},get customizationUnlocked(){return customizationUnlocked;},get builderLevel(){return builderLevel;},get justUnlocked(){return justUnlocked;},setRuntimeStart(fn){runtimeStart=fn;},startRuntime(){chooseSessionRoom();currentAttemptToken=createAttemptToken();session=advanceReceiver(session,'RUN');show();},completeRuntime(result,score){session=advanceReceiver(session,'COMPLETE',{result,score});if(publicToken){lastReceiptPayload=buildResultReceipt({publicToken,roomId:session.roomId,encounter:session.encounter,rulesVersion:'s8a-1',result,heroGold:session.reward?.heroGold,attemptToken:currentAttemptToken})}
-      const grant=grantFirstRunLevel(SESSION_STORE,builderLevel);justUnlocked=grant.leveledUp;if(grant.leveledUp){unlockCeremonyShown=false;try{applyBuilderLevel(grant.level);}catch(error){console.error(error);}}
+window.__s8aReceiver={get session(){return session;},get encounter(){return encounter();},get roomId(){return selectedSpec().id;},get room(){return selectedRoom();},get runnerAuthority(){return runnerAuthority;},get customizationUnlocked(){return customizationUnlocked;},get builderLevel(){return builderLevel;},get justUnlocked(){return justUnlocked;},setRuntimeStart(fn){runtimeStart=fn;},startRuntime(){chooseSessionRoom();currentAttemptToken=createAttemptToken();session=advanceReceiver(session,'RUN');show();},completeRuntime(result,score){session=advanceReceiver(session,'COMPLETE',{result,score});// Plan the receipt BEFORE any presentation work and never let a payload problem escape (an
+      // exception here used to abort completion): see receipt-plan.mjs.
+      const plan=planResultReceipt({publicToken,roomId:session.roomId,encounter:session.encounter,rulesVersion:'s8a-1',result,heroGold:session.reward?.heroGold,attemptToken:currentAttemptToken});
+      lastReceiptPayload=plan.payload;receiptBlock=plan.block;if(plan.error)console.error(plan.error);
+      const grant=grantFirstRunLevel(SESSION_STORE,builderLevel);justUnlocked=grant.leveledUp;if(grant.leveledUp){journeyShown=false;try{applyBuilderLevel(grant.level);}catch(error){console.error(error);}}
       try{show();}catch(error){console.error(error);}finally{void sendResultReceipt();}},replayRuntime(){currentAttemptToken=createAttemptToken();session=advanceReceiver(session,'RUN_AGAIN');show();},runFailed(message){session={...session,journey:'ready'};show();$('readySummary').textContent=`Run could not start: ${message}`;},show};
 installRuntime(window.__s8aReceiver);
-async function bootReceiver(){try{const [base,game,heroPack,correlatedSnapshot]=await Promise.all([fetch('/quick-dungeon/flare-p0/data/catalog.json').then(r=>r.ok?r.json():Promise.reject(Error('Catalogue unavailable'))),fetch('/quick-dungeon/flare-s7/data/game.json').then(r=>r.ok?r.json():Promise.reject(Error('Game model unavailable'))),loadS3ActorPack(),fetchCorrelatedSnapshot()]);baseCatalog=base;model=extendModelWithLevel2(game);const code=inviteCodeFromLocation(location);invite=code?decodeInviteCode(code,model):new URLSearchParams(location.search).get('demo')==='1'?{runnerId:model.defaultRunner,targetHp:model.defaultTargetHp}:null;if(!invite)throw Error('Challenge invitation is missing or invalid');catalog=extendCatalogWithLevel2(applyRunnerModel(baseCatalog,model,invite.runnerId),model);runnerAuthority=resolveRunnerAuthority({snapshot:correlatedSnapshot,templateMaxHp:catalog.heroes.warrior.maxHp,templateAttack:catalog.heroes.warrior.damage,templateDefense:catalog.heroes.warrior.armor});if(runnerAuthority.source==='snapshot'){catalog.heroes.warrior.maxHp=runnerAuthority.maxHp;catalog.heroes.warrior.damage=runnerAuthority.attack;catalog.heroes.warrior.armor=runnerAuthority.defense;}runner=runnerSummary(model,invite.runnerId,catalog);session=createReceiverSession({invite,senderName:inviteSender(location.search)});renderControls();calibrated=calibrateEncounter({catalog,model,runnerId:invite.runnerId,runner,targetHp:invite.targetHp});applyEncounter(calibrated.encounter);session=setEncounter(session,encounter());dungeonPresets=buildDungeonPresets({catalog,model,runnerId:invite.runnerId,runner,targetHp:invite.targetHp,budget:model.budget,roomIds:specs.map(s=>s.id)});renderDungeonChooser();startComposedHeroStance($('inviteHeroCanvas'),heroPack);await Promise.all(allSpecs.map(async spec=>rooms.set(spec.id,await loadS7StockRoom(spec.id))));$('acceptChallenge').disabled=false;$('loadStatus').textContent='Your Hero-Runner is ready.';show();window.__s8aData={model,catalog,invite,runner,rooms,specs:allSpecs,runnerAuthority,dungeonPresets};}catch(error){console.error(error);if(error?.message==='SNAPSHOT_SERVICE_UNAVAILABLE'||/snapshot/i.test(String(error?.message))){$('heading-invitation').textContent='COULD NOT LOAD THIS RUNNER';$('loadStatus').innerHTML='';const status=document.createElement('span');status.textContent="We couldn't load your friend's Runner data. ";const retry=document.createElement('button');retry.type='button';retry.className='nav-link';retry.textContent='RETRY';retry.addEventListener('click',()=>location.reload());$('loadStatus').append(status,retry);return}$('heading-invitation').textContent='THIS CHALLENGE CANNOT OPEN';$('loadStatus').textContent=error.message;}}
+async function bootReceiver(){try{const [base,game,heroPack,correlatedSnapshot]=await Promise.all([fetch('/quick-dungeon/flare-p0/data/catalog.json').then(r=>r.ok?r.json():Promise.reject(Error('Catalogue unavailable'))),fetch('/quick-dungeon/flare-s7/data/game.json').then(r=>r.ok?r.json():Promise.reject(Error('Game model unavailable'))),loadS3ActorPack(),fetchCorrelatedSnapshot()]);baseCatalog=base;model=extendModelWithLevel2(game);const code=inviteCodeFromLocation(location);invite=code?decodeInviteCode(code,model):new URLSearchParams(location.search).get('demo')==='1'?{runnerId:model.defaultRunner,targetHp:model.defaultTargetHp}:null;if(!invite)throw Error('Challenge invitation is missing or invalid');catalog=extendCatalogWithLevel2(applyRunnerModel(baseCatalog,model,invite.runnerId),model);runnerAuthority=resolveRunnerAuthority({snapshot:correlatedSnapshot,templateMaxHp:catalog.heroes.warrior.maxHp,templateAttack:catalog.heroes.warrior.damage,templateDefense:catalog.heroes.warrior.armor});if(runnerAuthority.source==='snapshot'){catalog.heroes.warrior.maxHp=runnerAuthority.maxHp;catalog.heroes.warrior.damage=runnerAuthority.attack;catalog.heroes.warrior.armor=runnerAuthority.defense;}runner=runnerSummary(model,invite.runnerId,catalog);session=createReceiverSession({invite,senderName:inviteSender(location.search)});renderControls();calibrated=calibrateEncounter({catalog,model,runnerId:invite.runnerId,runner,targetHp:invite.targetHp});applyEncounter(calibrated.encounter);session=setEncounter(session,encounter());dungeonPresets=buildDungeonPresets({catalog,model,runnerId:invite.runnerId,runner,targetHp:invite.targetHp,budget:model.budget,roomIds:specs.map(s=>s.id)});renderDungeonChooser();heroActorPack=heroPack;startComposedHeroStance($('inviteHeroCanvas'),heroPack);await Promise.all(allSpecs.map(async spec=>rooms.set(spec.id,await loadS7StockRoom(spec.id))));$('acceptChallenge').disabled=false;$('loadStatus').textContent='Your Hero-Runner is ready.';show();window.__s8aData={model,catalog,invite,runner,rooms,specs:allSpecs,runnerAuthority,dungeonPresets};}catch(error){console.error(error);if(error?.message==='SNAPSHOT_SERVICE_UNAVAILABLE'||/snapshot/i.test(String(error?.message))){$('heading-invitation').textContent='COULD NOT LOAD THIS RUNNER';$('loadStatus').innerHTML='';const status=document.createElement('span');status.textContent="We couldn't load your friend's Runner data. ";const retry=document.createElement('button');retry.type='button';retry.className='nav-link';retry.textContent='RETRY';retry.addEventListener('click',()=>location.reload());$('loadStatus').append(status,retry);return}$('heading-invitation').textContent='THIS CHALLENGE CANNOT OPEN';$('loadStatus').textContent=error.message;}}
 void bootReceiver();

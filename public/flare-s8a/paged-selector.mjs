@@ -40,6 +40,9 @@ export function installPagedSelector(row,kind){
       actions[i].setAttribute('aria-label',`${label} ${card.querySelector('strong').textContent}`);
     });position.textContent=`${index+1} / ${cards.length}`;
   }
-  row.parentElement.append(nav);row.addEventListener('change',render);render();
+  // Jump the visible page to the card that is actually selected (initial load, presets, level-up
+  // rebuilds) so the single mobile card on screen reflects the real selection, not always page 1.
+  render.syncToSelection=()=>{const at=cards.findIndex(card=>card.querySelector('input')?.checked&&card.querySelector('input').value!=='none');if(at>=0)index=at;render();};
+  row.parentElement.append(nav);row.addEventListener('change',render);render.syncToSelection();
   return render;
 }

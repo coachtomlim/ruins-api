@@ -113,43 +113,76 @@
 .account-cta{display:grid;gap:3px;text-align:center}
 .account-cta-note{color:#ffffff99;font-size:10px}
 
-/* 002E8 Parts A-D: a true full-screen modal that completely owns the viewport during the first-run
-   unlock ceremony. Underlying rewards DOM keeps rendering normally beneath/behind it. Phases are
-   driven by challenge.mjs adding phase-* classes on a timer; each phase's CSS is additive (a later
-   phase's selector does not need the earlier one removed), so phases layer visually as intended. */
-.unlock-overlay{position:fixed;inset:0;z-index:30;display:grid;place-items:center;padding:24px 18px;overflow-y:auto;background:radial-gradient(circle at 50% 30%,#4a2558 0,#1c0f20 65%,#0f0912 100%)}
-.unlock-overlay-inner{display:grid;justify-items:center;gap:14px;text-align:center;max-width:380px;width:100%}
-.unlock-phase{opacity:0;transform:translateY(10px);transition:opacity .35s ease,transform .35s ease}
-.unlock-success-text{font-size:clamp(22px,7vw,30px);font-weight:900;letter-spacing:.03em;color:#e9c46b;text-shadow:0 0 18px #e9c46b88}
-.unlock-overlay.phase-success .unlock-success-text{opacity:1;transform:none}
-.unlock-final-text{font-size:15px;font-weight:900;letter-spacing:.05em;color:#fff}
-.unlock-overlay.phase-revealed .unlock-final-text{opacity:1;transform:none}
-
-/* Lock: body + shackle are separate SVG elements so the shackle can rise/rotate open distinctly
-   from a static scale — it must visibly read as closed, then visibly open, not just pulse. */
-.unlock-lock-stage{width:104px;height:104px;opacity:0;transform:scale(.5);transition:opacity .35s ease,transform .35s ease}
-.unlock-overlay.phase-locked .unlock-lock-stage{opacity:1;transform:scale(1)}
-.unlock-lock-stage svg{width:100%;height:100%;overflow:visible}
-.unlock-shackle{fill:none;stroke:#e9c46b;stroke-width:8;stroke-linecap:round;transform-origin:42px 58px;transition:transform .5s cubic-bezier(.34,1.56,.64,1)}
-.unlock-lock-body{fill:#e9c46b;transition:fill .3s ease}
-.unlock-lock-glow{stroke:#e9c46b;stroke-width:0;opacity:0;transition:stroke-width .4s ease,opacity .4s ease}
-.unlock-overlay.phase-unlocking .unlock-shackle{transform:translateY(-14px) rotate(-28deg)}
-.unlock-overlay.phase-unlocking .unlock-lock-body{fill:#9be3d5}
-.unlock-overlay.phase-unlocking .unlock-lock-glow{stroke-width:3;opacity:.8}
-
-.unlock-tool-cards{display:grid;gap:8px;width:100%}
-.unlock-tool-card{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;align-items:center;text-align:left;padding:10px 12px;border-radius:14px;border:1px solid #9be3d5;background:#17222080;color:#fff;cursor:pointer;opacity:0;transform:translateY(8px);transition:opacity .3s ease,transform .3s ease,background .2s ease}
-.unlock-tool-card .card-icon{grid-row:1/3}
-.unlock-tool-card strong{font-size:13px;letter-spacing:.03em}
-.unlock-tool-card small{font-size:10px;color:#ffffffbb}
-.unlock-tool-card:hover,.unlock-tool-card:focus-visible{background:#1d2e2b;outline:none}
-.unlock-overlay.phase-revealed .unlock-tool-card{opacity:1;transform:none}
-.unlock-overlay.phase-revealed .unlock-tool-card:nth-child(1){transition-delay:.1s}
-.unlock-overlay.phase-revealed .unlock-tool-card:nth-child(2){transition-delay:.22s}
-.unlock-overlay.phase-revealed .unlock-tool-card:nth-child(3){transition-delay:.34s}
-.unlock-continue{opacity:0;transform:translateY(8px);transition:opacity .3s ease .4s,transform .3s ease .4s}
-.unlock-overlay.phase-revealed .unlock-continue{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){.unlock-overlay *{transition:none!important}}
+/* 002E9: the post-run reward journey — one full-screen modal that owns the viewport (it supersedes the
+   002E8 lock/unlock ceremony). Visual language follows the owner-approved V7 prototype. */
+.journey-overlay{position:fixed;inset:0;z-index:30;display:flex;flex-direction:column;background:radial-gradient(circle at top,#6b3478 0,#35163f 50%,#150b19 100%);color:#fff;padding:var(--dr-safe-top) 18px var(--dr-safe-bottom)}
+.j-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:34px}
+.j-dots{display:flex;gap:6px}
+.j-dot{width:8px;height:8px;border-radius:50%;background:#ffffff33}
+.j-dot.is-done{background:#f2c45d88}
+.j-dot.is-current{background:#f2c45d;box-shadow:0 0 0 3px #f2c45d33}
+.j-sound{min-height:30px;padding:3px 10px;font-size:10px;letter-spacing:.06em;border-radius:999px;background:#241328;border-color:#cda25788}
+.j-scene{position:relative;flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;width:100%;max-width:420px;margin:0 auto;overflow:hidden}
+.j-scene.is-scroll{justify-content:flex-start;overflow-y:auto;padding:12px 0 10px;-webkit-overflow-scrolling:touch}
+.j-scene h2,.j-scene h3,.j-scene p{margin:0}
+.j-eyebrow{font-weight:900;letter-spacing:.12em;color:#f2c45d;font-size:13px}
+.j-big{font-size:clamp(34px,11vw,46px);line-height:.98;font-weight:900;letter-spacing:-.035em;margin:8px 0}
+.j-kit-title{font-size:clamp(26px,8vw,34px);letter-spacing:-.02em;margin:6px 0 10px}
+.j-sub{font-size:17px;color:#f4eefa}
+.j-note{font-size:12px;color:#e9c46bcc;max-width:300px}
+.j-next,.j-ghost{margin-top:18px;min-width:200px;min-height:50px;border-radius:13px;font-weight:900;cursor:pointer}
+.j-next{border:1px solid #9a691d;background:linear-gradient(#f6cf72,#d99823);color:#1a0f1b}
+.j-ghost{margin-top:8px;background:#321a38;color:#fff;border:1px solid #cda257}
+.j-next:focus-visible,.j-ghost:focus-visible,.j-tool:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.j-burst{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.j-confetti{position:absolute;width:8px;height:14px;border-radius:2px;top:-20px;animation:jFall 1.4s cubic-bezier(.1,.6,.2,1) forwards}
+@keyframes jFall{to{transform:translate(var(--dx),900px) rotate(var(--rot));opacity:.8}}
+.j-medal{width:96px;height:96px;border-radius:50%;border:4px solid #f2c45d;background:radial-gradient(circle,#f2c45d55,#331b3c 70%);display:grid;place-items:center;font-size:40px;box-shadow:0 0 0 10px #f2c45d16,0 0 40px #f2c45d66;animation:jPulse 1s ease-in-out infinite alternate}
+@keyframes jPulse{to{box-shadow:0 0 0 18px #f2c45d08,0 0 55px #f2c45daa}}
+.j-success-word{font-size:clamp(46px,16vw,64px);font-weight:900;letter-spacing:-.04em;text-shadow:0 0 12px #f2c45d,0 0 32px #f2c45d88;animation:jPop .58s cubic-bezier(.2,1.6,.3,1) both}
+@keyframes jPop{0%{transform:scale(.45);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}
+.j-stack{width:100%;display:grid;gap:12px}
+.j-line{opacity:0;transform:translateY(10px);transition:opacity .35s ease,transform .35s ease}
+.j-line.is-shown{opacity:1;transform:none}
+.j-metric{background:#241328;border:1px solid #70447a;border-radius:16px;padding:14px}
+.j-metric span{display:block;font-size:11px;letter-spacing:.1em;color:#baa9c1}
+.j-metric strong{font-size:31px}
+.j-distance{font-weight:900;font-size:18px;color:#f2c45d}
+.j-coin{width:228px;max-width:70vw;max-height:188px;object-fit:contain;margin:24px 0 22px;background:transparent;filter:drop-shadow(0 14px 22px #0009);animation:jCoin .8s cubic-bezier(.3,1.5,.5,1) both}
+@keyframes jCoin{0%{transform:translateY(40px) scale(.4);opacity:0}70%{transform:translateY(-8px) scale(1.08);opacity:1}100%{transform:none}}
+.j-reward-label{font-size:17px;color:#f6d780;font-weight:900;margin:8px 0 12px}
+.j-reward-num{font-size:clamp(40px,14vw,58px);font-weight:900;margin:6px 0}
+.j-hero{width:170px;height:200px;margin:6px 0}
+.j-badge{width:170px;height:170px;clip-path:polygon(25% 6.7%,75% 6.7%,100% 50%,75% 93.3%,25% 93.3%,0 50%);background:linear-gradient(145deg,#f7d678,#b97a18);display:grid;place-items:center;color:#2a142f;box-shadow:0 0 40px #f2c45d88;animation:jBadge .9s cubic-bezier(.2,1.4,.3,1) both}
+@keyframes jBadge{from{transform:scale(.2) rotate(-25deg);opacity:0}to{transform:none;opacity:1}}
+.j-badge span{display:block;font-size:12px;font-weight:900;letter-spacing:.08em}
+.j-badge strong{font-size:74px;line-height:1}
+.j-levelup{display:grid;gap:0;margin:14px 0;font-size:44px;line-height:.9;font-weight:900;color:#f2c45d;text-shadow:0 0 18px #f2c45d66;animation:jLevel 1.05s ease-in-out infinite alternate}
+.j-levelup-line{display:block}
+@keyframes jLevel{from{transform:scale(.96);text-shadow:0 0 10px #f2c45d55}to{transform:scale(1.055);text-shadow:0 0 30px #f2c45daa}}
+.j-tools{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.j-tool{border:1px solid #80568b;border-radius:16px;padding:12px 8px;background:#26142e;color:#fff;cursor:pointer;min-height:124px;display:grid;grid-template-rows:58px auto auto;justify-items:center;align-content:center;gap:4px}
+.j-tool strong{font-size:14px}
+.j-tool small{font-size:10px;color:#ffffffbb;line-height:1.2}
+.j-category-art{display:block;width:84px;height:58px;object-fit:contain;filter:drop-shadow(0 5px 7px #0008)}
+.j-tool.is-active{border-color:#f6d77d;background:linear-gradient(#f4cd70,#dda02b);color:#1b101c;box-shadow:0 0 0 2px #fff2b955 inset}
+.j-tool.is-active small{color:#1b101c}
+.j-detail{width:100%;margin-top:12px;background:#1d0f22;border:1px solid #70447a;border-radius:16px;padding:12px;text-align:left}
+.j-detail h3{margin:2px 0 6px;font-size:16px}
+.j-assets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.j-assets.is-dungeon{display:block}
+.j-asset{min-width:0;border:1px solid #70447a;border-radius:12px;padding:8px 6px;text-align:center;background:#2a1631;display:grid;place-items:center;gap:4px}
+.j-asset b,.j-asset-plain b{font-size:12px}
+.j-art{display:block;width:88px;height:78px;max-width:100%}
+.j-asset-plain{display:grid;place-items:center;gap:6px}
+.j-dungeon{display:block;width:min(300px,100%);height:150px;background:transparent}
+.j-empty{padding:18px 12px;text-align:center;color:#cdbfd2;border:1px dashed #70447a;border-radius:12px;background:#23142a}
+.j-values{display:grid;gap:8px;width:100%;margin:14px 0 8px}
+.j-value{background:#25132c;border:1px solid #70447a;border-radius:13px;padding:10px 12px;text-align:left;font-weight:800}
+.j-cta{width:100%;display:grid;gap:8px;margin-top:6px}
+.j-cta .j-next,.j-cta .j-ghost{margin-top:0}
+@media(max-height:700px){.j-coin{margin:10px 0}.j-medal{width:72px;height:72px}.j-badge{width:130px;height:130px}.j-badge strong{font-size:56px}.j-levelup{font-size:36px}.j-hero{height:150px}}
+@media(prefers-reduced-motion:reduce){.journey-overlay *{animation:none!important;transition:none!important}.j-line{opacity:1;transform:none}}
 .result-actions{grid-template-columns:1fr}
 .result-actions .account-cta{grid-column:1/-1}
 @media(max-height:820px){.runner-summary canvas,#inviteHeroCanvas{height:150px}.room-stage canvas{height:120px}.panel-main{gap:7px}.panel-main{font-size:14px}.panel-main h1{font-size:24px}}@media(max-height:700px){.invitation-main #inviteHeroCanvas{height:100px}.target-card{gap:3px;padding:7px}.target-card small{font-size:10px}.result-main{gap:5px}.reward-grid article{padding:7px}.result-actions{gap:5px}}
@@ -158,3 +191,7 @@
 .dungeon-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .card.dungeon-card{grid-template-columns:1fr;justify-items:center;text-align:center;gap:4px;padding:8px}
 .dungeon-card-preview{width:100%;height:84px;border-radius:8px;background:#160b19}
+
+/* 002E9: real Flare art on editor option cards (monsters, traps, health potion). */
+.card-icon--art{width:44px;height:44px;grid-row:1/3}
+.card-icon--art canvas{width:100%;height:100%;display:block}

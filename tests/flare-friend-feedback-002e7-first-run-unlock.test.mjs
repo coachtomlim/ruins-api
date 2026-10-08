@@ -120,8 +120,8 @@ test('002E8: the old inline unlock card is gone; only a compact, non-repeating s
   const [html,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge.mjs')]);
   assert.doesNotMatch(html,/id="unlockMoment"/);
   assert.doesNotMatch(mjs,/function renderUnlockMoment\(\)\{/);
-  assert.match(html,/id="unlockedStatus" class="unlocked-status" hidden>BUILDER TOOLS UNLOCKED/);
-  assert.match(mjs,/\$\('unlockedStatus'\)\.hidden=!customizationUnlocked;/);
+  assert.match(html,/id="unlockedStatus" class="unlocked-status" hidden>BUILDER LEVEL 2 · THIS SESSION/);
+  assert.match(mjs,/\$\('unlockedStatus'\)\.hidden=builderLevel<2;/);
 });
 
 test('CUSTOMIZE THIS DUNGEON is the primary post-result action; RUN AGAIN remains available; account CTA is present but not required to view the unlock',async()=>{

@@ -1,3 +1,5 @@
+import {FLARE_ART,flareArtCanvas} from './flare-art.mjs';
+
 // public/flare-s7 is a frozen tree (verified byte-for-byte by tests/flare-s71-onboarding.test.mjs)
 // and cannot be edited to export its private `presentation` map, so the exact governed
 // {label,color} pairs are reproduced here verbatim from public/flare-s7/renderer.mjs lines 3-6 —
@@ -48,4 +50,15 @@ export function encounterItemBadge(itemId){
 
 export function encounterItemEffectLabel(itemId){
   return ENCOUNTER_ITEM_PRESENTATION[itemId]?.label||'';
+}
+
+// 002E9: real Flare art (monster stance frames, spike/arrow traps, health potion) for the editor option
+// cards. Returns null when no governed Flare art exists for the id so callers keep their badge.
+export function flareArtIcon(id){
+  if(!FLARE_ART[id])return null;
+  const wrap=document.createElement('span');
+  wrap.className='card-icon card-icon--art';
+  wrap.setAttribute('aria-hidden','true');
+  wrap.append(flareArtCanvas(id,{width:88,height:88,className:'card-art'}));
+  return wrap;
 }
