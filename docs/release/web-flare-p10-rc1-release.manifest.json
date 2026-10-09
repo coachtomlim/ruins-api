@@ -1,7 +1,7 @@
 {
   "label": "WEB-FLARE-RC1 release archive (public_html/quick-dungeon/flare-s8b)",
-  "sourceSha": "2db4b3e27b23068927cdcf1b19b0512f8e039ccd",
-  "fileCount": 25,
+  "sourceSha": "35567116ad1ff0dea66d128ee98255709058a421",
+  "fileCount": 26,
   "zip": "web-flare-p10-rc1-release.zip",
   "files": [
     {
@@ -24,9 +24,9 @@
     },
     {
       "path": "account.css",
-      "sha256": "660603d87d87a50b6642cac01398e235eed4f2d1881498eed9dd8d8f49cc3c30",
+      "sha256": "b06725921e8b0a168bb88b2291df33522e0006212face6861ea427a94588a858",
       "mime": "text/css; charset=utf-8",
-      "bytes": 23819
+      "bytes": 24129
     },
     {
       "path": "builder-progression-view.mjs",
@@ -83,10 +83,16 @@
       "bytes": 5224
     },
     {
+      "path": "guest-continue.mjs",
+      "sha256": "194491a83bc0fb389c06227231e9c9e1c6a80b6625a11179ba1181e7bbcb199e",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 731
+    },
+    {
       "path": "index.html",
-      "sha256": "8301fa6fe2a7925a1a105dbbabffc4c38ffbf4f197df3268d67e284fffed96bd",
+      "sha256": "823b13be086bfb098166b0f1718a19453e7cd03a72edcdf693d45d336b014b6c",
       "mime": "text/html; charset=utf-8",
-      "bytes": 16653
+      "bytes": 16939
     },
     {
       "path": "practice-app.mjs",
