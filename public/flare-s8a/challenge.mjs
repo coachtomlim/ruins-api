@@ -354,6 +354,8 @@ function renderReady(m){
   const gauge=buildEstimateGaugeViewModel({targetHp:invite.targetHp,estimatedHpPercent:estimateGoverned({catalog,model,runnerId:invite.runnerId,runner,encounter:e}).estimatedHpPercent});
   $('readyTarget').textContent=`Aim for ~${target}% HP at the exit`;
   $('runHero').disabled=!m.canRun;
+  const bands=targetBands(invite.targetHp),rg=$('readyGauge');rg.style.setProperty('--harsh',`${bands.harshBelow}%`);rg.style.setProperty('--gentle',`${bands.gentleAbove}%`);
+  $('readyBands').textContent=`<${bands.harshBelow}% Too Harsh · ${bands.harshBelow}%-${bands.gentleAbove}% Just Nice · >${bands.gentleAbove}% Too Gentle`;
   $('readyGaugeTargetLabel').textContent=`TARGET ${gauge.targetPercent}%`;
   $('readyGaugeTargetLabel').style.left=gaugeLeft(gauge.targetPercent);$('readyGaugeTarget').style.left=gaugeLeft(gauge.targetPercent);
   const dot=$('readyGaugeEstimate'),copy=$('readyGaugeEstimateCopy');
@@ -405,7 +407,7 @@ $('runnerInspector').addEventListener('click',e=>{if(e.target===$('runnerInspect
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('runnerInspector').hidden)closeRunnerInspector();});
 $('createAccount').addEventListener('click',()=>{if($('createAccount').disabled)return;try{sessionStorage.setItem(FRIEND_GOAL_CLAIM_KEY,JSON.stringify({senderName:session.senderName,runnerId:invite.runnerId,targetHp:invite.targetHp}));}catch(error){console.error(error);}saveGuestReturn(SESSION_STORE,location);location.href='/quick-dungeon/flare-s8b/';});
 $('resetSuggested').addEventListener('click',()=>{activePreset=null;applyEncounter(calibrated.encounter);session=setEncounter(session,encounter());show();});
-for(const tab of document.querySelectorAll('[data-custom-tab]'))tab.addEventListener('click',()=>{activePanel=tab.dataset.customTab;show();});
+for(const tab of document.querySelectorAll('[data-custom-tab]'))tab.addEventListener('click',()=>{activePanel=tab.dataset.customTab;setEditorMessage('');show();});
 $('runHero').addEventListener('click',()=>runtimeStart?.());
 let pointer=null;$('roomStage').addEventListener('pointerdown',e=>pointer={x:e.clientX,y:e.clientY});$('roomStage').addEventListener('pointerup',e=>{const direction=pointer&&roomSwipeDirection({startX:pointer.x,startY:pointer.y,endX:e.clientX,endY:e.clientY});pointer=null;if(direction)moveRoom(direction);});
 window.__s8aReceiver={get session(){return session;},get encounter(){return encounter();},get roomId(){return selectedSpec().id;},get room(){return selectedRoom();},get runnerAuthority(){return runnerAuthority;},get customizationUnlocked(){return customizationUnlocked;},get builderLevel(){return builderLevel;},get justUnlocked(){return justUnlocked;},setRuntimeStart(fn){runtimeStart=fn;},loadingBegin(){loading.begin('Loading your dungeon…',{immediate:true});},loadingStep(i){loading.setStep(i);},loadingEnd(){loading.end();},startRuntime(){chooseSessionRoom();currentAttemptToken=createAttemptToken();session=advanceReceiver(session,'RUN');show();},completeRuntime(result,score){session=advanceReceiver(session,'COMPLETE',{result,score});// Plan the receipt BEFORE any presentation work and never let a payload problem escape (an

@@ -294,3 +294,7 @@
 .option-list .card{min-width:0}
 .option-empty{margin:0;padding:16px;text-align:center;color:#cdbfd2;border:1px dashed #70447a;border-radius:12px}
 @media(max-width:340px){.mix-row{grid-template-columns:44px minmax(0,1fr) 38px 26px 38px;gap:4px;padding:6px}.mix-row img{width:44px}.mini-arrow{width:38px;min-height:38px;height:38px}.add-picker{grid-template-columns:1fr}}
+
+.ready-bands{margin:0;text-align:center;font-size:11px;color:#ffffffbb}
+.sg-track{background:linear-gradient(90deg,#e0696933 0 var(--harsh,35%),#e9c46b33 var(--harsh,35%) var(--gentle,70%),#6ad1a633 var(--gentle,70%) 100%)}
+.static-gauge{--harsh:35%;--gentle:70%}
