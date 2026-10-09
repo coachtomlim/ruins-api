@@ -53,14 +53,14 @@ export function extendCatalogWithLevel2(catalog,model){
 // the server is certain to reject.
 export const RECEIPT_SERVER_ENEMY_IDS=Object.freeze(['goblin','skeleton','goblin-elite','antlion','zombie','skeleton-archer']);
 // 002E9C/002E9D: what the result service accepts.
-//  * up to RECEIPT_SERVER_ORDINARY_MAX_ENEMIES monsters for ANY legal encounter (proven on S8B staging: three);
+//  * up to RECEIPT_SERVER_ORDINARY_MAX_ENEMIES monsters for ANY legal encounter (proven on S8B staging: eight slots);
 //  * the exact governed Level 1 BRUTAL preset (five monsters, room iron-labyrinth-08) up to RECEIPT_SERVER_MAX_ENEMIES
 //    (proven on S8B staging by the 002E9C migration).
 // The Level 2 guard mixer can build four or five legal guards (e.g. 5 x Goblin = 100). The 002E9D migration
-// (20261005) lets the server accept those, but it is NOT yet applied/proven, so until PM proves it the client holds
-// those receipts back honestly. After PM proof set RECEIPT_SERVER_ORDINARY_MAX_ENEMIES to 8 (one line). Six or more
-// governed monsters and unknown ids are never submitted.
-export const RECEIPT_SERVER_ORDINARY_MAX_ENEMIES=3;
+// (20261005, staging version 20261009071015) is applied and proven on S8B staging, so ordinary receipts accept up to
+// eight entries; the server still derives budget (<=100) and Gold, so illegal builds are rejected. Nine entries and
+// unknown ids are never submitted.
+export const RECEIPT_SERVER_ORDINARY_MAX_ENEMIES=8;
 export const RECEIPT_SERVER_MAX_ENEMIES=5;
 export function receiptSupportsEncounter(encounter,{roomId='',maxOrdinary=RECEIPT_SERVER_ORDINARY_MAX_ENEMIES,maxGoverned=RECEIPT_SERVER_MAX_ENEMIES}={}){
   const enemies=(encounter?.enemyTypes||[]).filter(id=>id&&id!=='none');

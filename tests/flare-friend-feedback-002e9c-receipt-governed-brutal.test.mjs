@@ -143,10 +143,11 @@ test('client receipt payload preserves all five monsters and accepts 39 Gold; 40
   assert.throws(()=>buildResultReceipt({publicToken:token,roomId:'iron-labyrinth-08',encounter:{enemyTypes:BRUTAL},rulesVersion:'s8a-1',result:{status:'cleared',hp:30,maxHp:100},heroGold:40,attemptToken:attempt}),/INVALID_HERO_GOLD/);
 });
 
-test('client guard (final, tightened by 002E9D): ordinary <=3 guards and the room-bound governed Brutal submit; six, unknown ids and ordinary 4+ stay held back',()=>{
+test('client guard (final, tightened by 002E9D): ordinary guards up to eight and the governed Brutal submit; nine and unknown ids do not',()=>{
   assert.equal(RECEIPT_SERVER_MAX_ENEMIES,5);
   assert.equal(receiptSupportsEncounter({enemyTypes:BRUTAL},{roomId:'iron-labyrinth-08'}),true,'governed five-monster Brutal submits');
-  assert.equal(receiptSupportsEncounter({enemyTypes:[...BRUTAL,'goblin']},{roomId:'iron-labyrinth-08'}),false,'six monsters never submit');
+  assert.equal(receiptSupportsEncounter({enemyTypes:[...BRUTAL,'goblin']},{roomId:'iron-labyrinth-08'}),true,'six entries are structurally supported; the server rejects them as over-budget');
+  assert.equal(receiptSupportsEncounter({enemyTypes:Array(9).fill('goblin')},{roomId:'iron-labyrinth-08'}),false,'nine entries never submit');
   assert.equal(receiptSupportsEncounter({enemyTypes:['skeleton','goblin','none']}),true,'ordinary 2-monster EASY');
   assert.equal(receiptSupportsEncounter({enemyTypes:['skeleton','goblin','skeleton']}),true,'ordinary 3-monster JUST NICE');
   assert.equal(receiptSupportsEncounter({enemyTypes:['zombie','skeleton-archer','goblin']}),true,'Level 2 monsters still supported');
@@ -161,7 +162,9 @@ test('receipt plan (final): governed Brutal builds a normal payload with all fiv
   const ok=planResultReceipt({...base,encounter:{enemyTypes:BRUTAL,trapTypes:[],supportTypes:[]},heroGold:39});
   assert.equal(ok.block,null);assert.deepEqual(ok.payload.p_encounter.enemyTypes,BRUTAL);assert.equal(ok.payload.p_hero_gold,39);
   const six=planResultReceipt({...base,encounter:{enemyTypes:[...BRUTAL,'goblin'],trapTypes:[],supportTypes:[]},heroGold:45});
-  assert.deepEqual([six.payload,six.block],[null,'UNSUPPORTED_ENCOUNTER']);
+  assert.deepEqual([six.payload,six.block],[null,'PAYLOAD_INVALID'],'Hero Gold above the 39 ceiling never submits');
+  const nine=planResultReceipt({...base,encounter:{enemyTypes:Array(9).fill('goblin'),trapTypes:[],supportTypes:[]},heroGold:30});
+  assert.deepEqual([nine.payload,nine.block],[null,'UNSUPPORTED_ENCOUNTER']);
   const forty=planResultReceipt({...base,encounter:{enemyTypes:BRUTAL,trapTypes:[],supportTypes:[]},heroGold:40});
   assert.deepEqual([forty.payload,forty.block],[null,'PAYLOAD_INVALID']);
   const unknown=planResultReceipt({...base,encounter:{enemyTypes:['dragon'],trapTypes:[],supportTypes:[]},heroGold:0});

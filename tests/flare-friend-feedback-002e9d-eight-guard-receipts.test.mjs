@@ -126,15 +126,17 @@ test('proof script exists, targets staging only and covers the eight-slot cases 
 });
 
 // ---- client side ----
-test('client guard: ordinary builds above three guards are held back until PM proves this migration (one switch); the governed Brutal and all <=3 builds submit',()=>{
-  assert.equal(RECEIPT_SERVER_ORDINARY_MAX_ENEMIES,3);assert.equal(RECEIPT_SERVER_MAX_ENEMIES,5);
+test('client guard: after staging proof ordinary builds up to eight entries submit; nine, unknown ids and non-Brutal overflow do not',()=>{
+  assert.equal(RECEIPT_SERVER_ORDINARY_MAX_ENEMIES,8);assert.equal(RECEIPT_SERVER_MAX_ENEMIES,5);
+  const g=n=>({enemyTypes:Array(n).fill('goblin')});
   assert.equal(receiptSupportsEncounter({enemyTypes:['goblin','skeleton','goblin']},{roomId:R}),true);
-  assert.equal(receiptSupportsEncounter({enemyTypes:BRUTAL},{roomId:'iron-labyrinth-08'}),true);
-  assert.equal(receiptSupportsEncounter({enemyTypes:BRUTAL},{roomId:R}),false,'the five-monster exception is room-bound');
-  assert.equal(receiptSupportsEncounter({enemyTypes:['goblin','goblin','goblin','goblin']},{roomId:R}),false,'ordinary 4-guard build: server not yet proven');
-  assert.equal(receiptSupportsEncounter({enemyTypes:['goblin','goblin','goblin','goblin']},{roomId:R,maxOrdinary:8}),true,'flag-on path used after PM proof');
-  assert.equal(receiptSupportsEncounter({enemyTypes:Array(6).fill('goblin')},{roomId:'iron-labyrinth-08',maxOrdinary:5}),false);
-  assert.equal(receiptSupportsEncounter({enemyTypes:['goblin','dragon']},{roomId:R,maxOrdinary:8}),false);
+  for(const n of [4,5,6,7,8])assert.equal(receiptSupportsEncounter(g(n),{roomId:R}),true,n+' entries are structurally supported (budget is still enforced by gameplay and the server)');
+  assert.equal(receiptSupportsEncounter(g(9),{roomId:R}),false,'nine entries unsupported');
+  assert.equal(receiptSupportsEncounter(g(9),{roomId:'iron-labyrinth-08'}),false);
+  assert.equal(receiptSupportsEncounter({enemyTypes:BRUTAL},{roomId:'iron-labyrinth-08'}),true,'governed Brutal still supported');
+  assert.equal(receiptSupportsEncounter({enemyTypes:['goblin','goblin','goblin','goblin','goblin']},{roomId:R}),true);
+  assert.equal(receiptSupportsEncounter({enemyTypes:['goblin','dragon']},{roomId:R}),false,'unknown id blocked');
+  assert.equal(receiptSupportsEncounter({enemyTypes:['goblin','goblin','goblin','goblin','dragon']},{roomId:R}),false);
   assert.deepEqual([...RECEIPT_SERVER_ENEMY_IDS],['goblin','skeleton','goblin-elite','antlion','zombie','skeleton-archer']);
 });
 
@@ -142,6 +144,10 @@ test('receipt plan carries the room into the guard and builds a normal payload f
   const base={publicToken:'T'.repeat(40),result:{status:'cleared',hp:30,maxHp:100},attemptToken:'a'.repeat(20)};
   const ok=planResultReceipt({...base,roomId:'iron-labyrinth-08',encounter:{enemyTypes:BRUTAL,trapTypes:[],supportTypes:[]},heroGold:39});
   assert.equal(ok.block,null);assert.deepEqual(ok.payload.p_encounter.enemyTypes,BRUTAL);
-  const held=planResultReceipt({...base,roomId:R,encounter:{enemyTypes:['goblin','goblin','goblin','goblin'],trapTypes:[],supportTypes:[]},heroGold:24});
-  assert.deepEqual([held.payload,held.block],[null,'UNSUPPORTED_ENCOUNTER']);
+  const four=planResultReceipt({...base,roomId:R,encounter:{enemyTypes:['goblin','goblin','goblin','goblin'],trapTypes:[],supportTypes:[]},heroGold:24});
+  assert.equal(four.block,null);assert.equal(four.payload.p_encounter.enemyTypes.length,4);assert.equal(four.payload.p_hero_gold,24);
+  const five=planResultReceipt({...base,roomId:R,encounter:{enemyTypes:Array(5).fill('goblin'),trapTypes:[],supportTypes:[]},heroGold:30});
+  assert.equal(five.block,null);assert.equal(five.payload.p_encounter.enemyTypes.length,5);
+  const nine=planResultReceipt({...base,roomId:R,encounter:{enemyTypes:Array(9).fill('goblin'),trapTypes:[],supportTypes:[]},heroGold:30});
+  assert.deepEqual([nine.payload,nine.block],[null,'UNSUPPORTED_ENCOUNTER']);
 });

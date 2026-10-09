@@ -181,10 +181,10 @@ test('RUNTIME: mixed quantity builds with traps and support place deterministica
   const base=estimateGoverned({catalog,model,runnerId:'warrior-l1',runner,encounter:enc(['goblin','goblin','goblin','goblin'])});
   assert.ok(est.estimatedHpPercent>base.estimatedHpPercent,'potion heals in the estimate');
 });
-test('RUNTIME + RECEIPT: the result plan keeps every guard; ordinary 4+ guard receipts are held back with an honest message until the 002E9D migration is proven',()=>{
+test('RUNTIME + RECEIPT: the result plan keeps every guard; ordinary 4+ guard receipts now build a normal payload (migration proven on staging)',()=>{
   const e=enc(['goblin','goblin','goblin','goblin']);const {r}=run('iron-labyrinth-03',e);
   const base={publicToken:'T'.repeat(40),roomId:'iron-labyrinth-03',encounter:e,result:r,heroGold:r.gold,attemptToken:'a'.repeat(20)};
-  const held=planResultReceipt(base);assert.deepEqual([held.payload,held.block],[null,'UNSUPPORTED_ENCOUNTER']);
+  const ok=planResultReceipt(base);assert.equal(ok.block,null);assert.equal(ok.payload.p_encounter.enemyTypes.length,4);
 });
 
 // ---------------- GUEST / HOME ----------------
