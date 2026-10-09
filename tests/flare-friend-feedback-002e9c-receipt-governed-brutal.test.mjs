@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {LEVEL1_PRESETS,GOVERNED_BRUTAL_ROOM_ID} from '../public/flare-s8a/governed-encounter.mjs';
 import {buildResultReceipt} from '../public/flare-s8a/result-receipt.mjs';
-import {receiptSupportsEncounter,RECEIPT_SERVER_ENEMY_IDS} from '../public/flare-s8a/level2-content.mjs';
+import {receiptSupportsEncounter,RECEIPT_SERVER_ENEMY_IDS,RECEIPT_SERVER_MAX_ENEMIES} from '../public/flare-s8a/level2-content.mjs';
 
 // Static contract tests for the 002E9C migration (no local Postgres here). They prove (a) the new function body is
 // the applied 002E9A body plus EXACTLY the documented edits, and (b) the migration's own governed tables, parsed from
@@ -22,7 +22,7 @@ const parse=()=>{
   const block=/select coalesce\(sum\(case x([\s\S]*?)into v_budget,v_hero_gold_max/.exec(fn)[1];
   const [c,g]=block.split(/coalesce\(sum\(case x/);
   const pairs=t=>Object.fromEntries([...t.matchAll(/when '([a-z-]+)' then (\d+)/g)].map(m=>[m[1],Number(m[2])]));
-  const gold=/p_hero_gold>case when v_governed then (\d+) else (\d+) end/.exec(fn);
+  const gold=/p_hero_gold>\(case when v_governed then (\d+) else (\d+) end\)/.exec(fn);
   return{allowed,cost:pairs(c),gold:pairs(g),governedCeiling:Number(gold[1]),ordinaryCeiling:Number(gold[2]),maxSlots:Number(/jsonb_array_length\(p_encounter->'enemyTypes'\)>(\d+)/.exec(fn)[1]),governedRoom:/p_room_id='([a-z0-9-]+)'/.exec(fn.slice(fn.indexOf('v_governed:=')))[1],governedMix:/v_enemy_slots=array\[([^\]]*)\]/.exec(fn)[1].split(',').map(s=>s.trim().replace(/'/g,''))};
 };
 // Reference evaluation of the validation order for the parts this migration touches.
@@ -55,7 +55,7 @@ test('the function is the applied 002E9A body plus EXACTLY the documented edits 
     .replace(/  -- 002E9C: up to FIVE slots[\s\S]*?\) into v_enemy_slots;\n/,"  select array[\n    coalesce(p_encounter->'enemyTypes'->>0,'none'),\n    coalesce(p_encounter->'enemyTypes'->>1,'none'),\n    coalesce(p_encounter->'enemyTypes'->>2,'none')\n  ] into v_enemy_slots;\n")
     .replace(/  -- 002E9C: the ONE encounter allowed[\s\S]*?end if;\n\n  select coalesce\(sum\(case x/,"  select coalesce(sum(case x")
     .replace("if v_budget>100 and not v_governed then","if v_budget>100 then")
-    .replace("p_hero_gold>case when v_governed then 39 else 31 end then","p_hero_gold>31 then");
+    .replace("p_hero_gold>(case when v_governed then 39 else 31 end) then","p_hero_gold>31 then");
   assert.equal(reverted,priorFn);
 });
 
@@ -143,10 +143,31 @@ test('client receipt payload preserves all five monsters and accepts 39 Gold; 40
   assert.throws(()=>buildResultReceipt({publicToken:token,roomId:'iron-labyrinth-08',encounter:{enemyTypes:BRUTAL},rulesVersion:'s8a-1',result:{status:'cleared',hp:30,maxHp:100},heroGold:40,attemptToken:attempt}),/INVALID_HERO_GOLD/);
 });
 
-test('client guard: until PM proves this migration the five-monster receipt is explicitly held back, with one switch to flip',()=>{
-  assert.equal(receiptSupportsEncounter({enemyTypes:BRUTAL}),false,'default: server not yet proven for five slots');
-  assert.equal(receiptSupportsEncounter({enemyTypes:BRUTAL},{maxEnemies:5}),true,'flag-on path used after PM proof');
+test('client guard (final): server proven on staging, so the default allows up to five monsters; six and unknown ids stay blocked',()=>{
+  assert.equal(RECEIPT_SERVER_MAX_ENEMIES,5);
+  assert.equal(receiptSupportsEncounter({enemyTypes:BRUTAL}),true,'default: governed five-monster Brutal submits');
+  assert.equal(receiptSupportsEncounter({enemyTypes:[...BRUTAL,'goblin']}),false,'six monsters never submit');
+  assert.equal(receiptSupportsEncounter({enemyTypes:['skeleton','goblin','none']}),true,'ordinary 2-monster EASY');
+  assert.equal(receiptSupportsEncounter({enemyTypes:['skeleton','goblin','skeleton']}),true,'ordinary 3-monster JUST NICE');
+  assert.equal(receiptSupportsEncounter({enemyTypes:['zombie','skeleton-archer','goblin']}),true,'Level 2 monsters still supported');
+  assert.equal(receiptSupportsEncounter({enemyTypes:['goblin','goblin','skeleton','skeleton','dragon']}),false,'unknown id blocked');
+  assert.equal(receiptSupportsEncounter({enemyTypes:['goblin','goblin','skeleton','skeleton','Skeleton']}),false);
   assert.equal(receiptSupportsEncounter({enemyTypes:['goblin','skeleton','none']}),true);
   assert.equal(receiptSupportsEncounter({enemyTypes:['dragon']},{maxEnemies:5}),false);
   assert.deepEqual([...RECEIPT_SERVER_ENEMY_IDS],['goblin','skeleton','goblin-elite','antlion','zombie','skeleton-archer']);
+});
+
+test('receipt plan (final): governed Brutal builds a normal payload with all five monsters and 39 Gold; six monsters and 40 Gold never submit',async()=>{
+  const {planResultReceipt}=await import('../public/flare-s8a/receipt-plan.mjs');
+  const base={publicToken:'T'.repeat(40),roomId:'iron-labyrinth-08',result:{status:'cleared',hp:30,maxHp:100},attemptToken:'a'.repeat(20)};
+  const ok=planResultReceipt({...base,encounter:{enemyTypes:BRUTAL,trapTypes:[],supportTypes:[]},heroGold:39});
+  assert.equal(ok.block,null);assert.deepEqual(ok.payload.p_encounter.enemyTypes,BRUTAL);assert.equal(ok.payload.p_hero_gold,39);
+  const six=planResultReceipt({...base,encounter:{enemyTypes:[...BRUTAL,'goblin'],trapTypes:[],supportTypes:[]},heroGold:45});
+  assert.deepEqual([six.payload,six.block],[null,'UNSUPPORTED_ENCOUNTER']);
+  const forty=planResultReceipt({...base,encounter:{enemyTypes:BRUTAL,trapTypes:[],supportTypes:[]},heroGold:40});
+  assert.deepEqual([forty.payload,forty.block],[null,'PAYLOAD_INVALID']);
+  const unknown=planResultReceipt({...base,encounter:{enemyTypes:['dragon'],trapTypes:[],supportTypes:[]},heroGold:0});
+  assert.equal(unknown.block,'UNSUPPORTED_ENCOUNTER');
+  const l2=planResultReceipt({...base,roomId:'iron-labyrinth-07',encounter:{enemyTypes:['zombie','zombie','skeleton'],trapTypes:[],supportTypes:[]},heroGold:31});
+  assert.equal(l2.block,null);assert.equal(l2.payload.p_hero_gold,31);
 });
