@@ -19,16 +19,17 @@ import {resolveRunnerAuthority} from './runner-authority.mjs';
 import {buildEstimateGaugeViewModel} from './estimate-gauge-view-model.mjs';
 import {buildRunnerInspectorViewModel} from './runner-inspector-view-model.mjs';
 import {gearSlotIcon} from './gear-slot-icon.mjs';
-import {monsterCardIcon,emptySlotCardIcon,encounterItemBadge,encounterItemEffectLabel,flareArtIcon} from './card-icons.mjs';
-import {LEVEL1_PRESETS,buildLevel1Presets,describeMix,estimateGoverned,governedCost,monsterCount} from './governed-encounter.mjs';
-import {installPagedSelector} from './paged-selector.mjs';
-import {targetFitCue} from './target-fit.mjs';
+import {encounterItemBadge,encounterItemEffectLabel,flareArtIcon} from './card-icons.mjs';
+import {LEVEL1_PRESETS,MAX_GUARD_SLOTS,buildLevel1Presets,canAddGuard,describeMix,estimateGoverned,governedCost,monsterCount} from './governed-encounter.mjs';
+import {LOOT_ASSETS} from './loot-assets.mjs';
+import {saveGuestReturn,isGuestReturn,withoutGuestParam} from './guest-return.mjs';
+import {targetFitCue,targetBands,bandsCopy} from './target-fit.mjs';
+import {createLoadingOverlay} from './loading-view.mjs';
 import {extendModelWithLevel2,extendCatalogWithLevel2} from './level2-content.mjs';
 import {createRewardJourney} from './reward-journey-view.mjs';
 import {buildRewardJourney} from './reward-journey.mjs';
 import {planResultReceipt,receiptBlockMessage} from './receipt-plan.mjs';
 import {readBuilderLevel,grantFirstRunLevel,clampBuilderLevel,customizationUnlockedAt,contentForLevel,editorContentIds,BROKEN_GALLERY_ID} from './builder-level.mjs';
-const refreshSelectors=[];
 
 // 002E9: BUILDER progression (not Runner progression). The first completed run grants Builder Level 2
 // for the CURRENT browser session only (see builder-level.mjs): sessionStorage keeps it across a
@@ -47,6 +48,8 @@ function requiredElement(id){const el=$(id);if(!el)throw new Error(`S8A_DOM_CONT
 const REWARDS_DOM_CONTRACT=['heading-rewards','resultTarget','resultFinished','resultDifference','resultScore','heroRewardLabel','heroRewardGold','builderRewardGold','resultReceiptStatus','retryResultReceipt'];
 let model,baseCatalog,catalog,invite,runner,session,calibrated,roomIndex=0,activePanel='monsters',runtimeStart=null,lastReceiptPayload=null,receiptBlock=null,currentAttemptToken=null,runnerAuthority=null,dungeonPresets=null;
 const publicToken=publicChallengeTokenFromLocation(location);
+const loading=createLoadingOverlay({root:document.getElementById('loadingOverlay'),reducedMotion:()=>prefersReducedMotion()});
+let roomsReady=null,roomsLoaded=false;
 const FRIEND_GOAL_CLAIM_KEY='s8aFriendGoalClaim';
 function accountServiceAvailable(){const config=globalThis.__FLARE_S8B_PUBLIC_CONFIG__,sdk=globalThis.supabase;return Boolean(config?.url&&config?.publishableKey&&typeof sdk?.createClient==='function');}
 function publicSnapshotClient(){const config=globalThis.__FLARE_S8B_PUBLIC_CONFIG__,sdk=globalThis.supabase;if(!config?.url||!config?.publishableKey||typeof sdk?.createClient!=='function')return null;return sdk.createClient(config.url,config.publishableKey,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}})}
@@ -58,17 +61,23 @@ async function fetchCorrelatedSnapshot(){
   return result?.runnerSnapshot||null;
 }
 const selectedSpec=()=>specs[roomIndex],selectedRoom=()=>rooms.get(selectedSpec().id);
-const domEncounter=()=>({enemyTypes:[0,1,2].map(i=>document.querySelector(`input[name="guard-${i}"]:checked`)?.value||'none'),trapTypes:TRAP_IDS.filter(id=>document.querySelector(`[data-choice="${id}"]`)?.checked),supportTypes:SUPPORT_IDS.filter(id=>document.querySelector(`[data-choice="${id}"]`)?.checked)});
-// 002E9C: the single source of truth for the encounter. The player editor only has three guard slots, so
-// the governed five-monster BRUTAL preset cannot live in the DOM controls; while it is the active selection
-// it is returned whole (never truncated to three). Any editor change, or entering the UNLOCKED editor,
-// drops back to the DOM-authored (<=3 monster, <=100 budget) encounter.
+// 002E9D: the Level 2 builder is a QUANTITY-BASED guard mixer (no Guard 1/2/3 slots, no positions). The guard mix
+// lives in `guardCounts`; traps/support stay as checkbox toggles. Placement of the guards is system-controlled.
+const MIXER_ORDER=Object.freeze(['goblin','skeleton','zombie','skeleton-archer']);
+const MIXER_NOTE=Object.freeze({goblin:'Starter monster',skeleton:'Starter monster',zombie:'Level 2 unlock','skeleton-archer':'Level 2 unlock'});
+let guardCounts=Object.fromEntries(MIXER_ORDER.map(id=>[id,0]));
+const expandGuards=()=>MIXER_ORDER.flatMap(id=>Array(guardCounts[id]).fill(id));
+const guardTotal=()=>MIXER_ORDER.reduce((n,id)=>n+guardCounts[id],0);
+const domEncounter=()=>({enemyTypes:expandGuards(),trapTypes:TRAP_IDS.filter(id=>document.querySelector(`[data-choice="${id}"]`)?.checked),supportTypes:SUPPORT_IDS.filter(id=>document.querySelector(`[data-choice="${id}"]`)?.checked)});
+// The single source of truth for the encounter. While a Level 1 preset is the active selection it is returned
+// as authored (route order preserved; the governed five-monster BRUTAL included); any editor change drops it and
+// the mixer's own encounter takes over.
 let activePreset=null;
-const encounter=()=>activePreset&&monsterCount(activePreset.encounter)>3?structuredClone(activePreset.encounter):domEncounter();
+const encounter=()=>activePreset?structuredClone(activePreset.encounter):domEncounter();
 const usedBudget=e=>governedCost(catalog,e);
 const labels=(ids,kind)=>ids.filter(id=>id!=='none').map(id=>kind==='monster'?catalog.enemies[id]?.name:model.items?.[id]?.name||model.items?.[id]?.label||id);
 function context(){const e=encounter(),estimate=estimateGoverned({catalog,model,runnerId:invite.runnerId,runner,encounter:e}),used=usedBudget(e),governedOverBudget=Boolean(activePreset)&&used>(model.budget||100);return{runnerName:runner.name,runnerLevel:runner.level,roomName:selectedSpec().name,roomIndex,roomCount:specs.length,estimatedHpPercent:estimate.estimatedHpPercent,usedBudget:used,totalBudget:governedOverBudget?used:(model.budget||100),activePanel,monsters:labels(e.enemyTypes,'monster'),traps:labels(e.trapTypes,'item'),supports:labels(e.supportTypes,'item'),accountServiceAvailable:accountServiceAvailable()};}
-function show(){for(const refresh of refreshSelectors)refresh();const view=buildReceiverView({session,context:context()});for(const root of document.querySelectorAll('[data-screen]'))root.hidden=root.dataset.screen!==view.shell.state;requestAnimationFrame(()=>$(view.shell.headingId)?.focus());renderCurrent(view);$('receiverNav').hidden=view.kind==='runtime';$('navBack').hidden=!canTransition(session.journey,'BACK');}
+function show(){refreshGuardMixer();const view=buildReceiverView({session,context:context()});for(const root of document.querySelectorAll('[data-screen]'))root.hidden=root.dataset.screen!==view.shell.state;requestAnimationFrame(()=>$(view.shell.headingId)?.focus());renderCurrent(view);$('receiverNav').hidden=view.kind==='runtime';$('navBack').hidden=!canTransition(session.journey,'BACK');}
 // Part H outcome summary line — formats the SAME targetFitCue zone/delta the gauge already uses,
 // just as a one-glance sentence ("12 POINTS TOO HARSH"), not a new calculation.
 function outcomeInterpretationLabel(estimatedHpPercent,targetHp){
@@ -80,9 +89,25 @@ function outcomeInterpretationLabel(estimatedHpPercent,targetHp){
   return fit.note;
 }
 function renderGaugeMarker(id,percent){const el=$(id);if(!el)return;el.style.left=`${Math.max(4,Math.min(96,Number(percent)||0))}%`;}
+// 002E9D (V18) invitation: ONE combined headline and ONE explanation paragraph, the real Runner, and a
+// display-only target gauge using the shared 35/70-style bands.
+function renderInvitation(){
+  const name=session.senderName.toUpperCase(),target=Math.round(invite.targetHp),bands=targetBands(invite.targetHp);
+  $('heading-invitation').textContent=`${name} HAS CHALLENGED YOU TO BUILD A DUNGEON FOR 'THE RUNNER'`;
+  $('inviteExplain').textContent='Your Dungeon will contain monsters who will attack the Runner! But fear not, we have devised some good ones for you already! Just choose one and go!';
+  $('inviteRunner').textContent=`Level ${runner.level} ${runner.name}`;
+  $('inviteTarget').textContent=`TARGET: ${target}% HP`;
+  $('targetMission').textContent=`Get the Runner to the EXIT with as close to ${target}% HP health remaining!`;
+  const gauge=$('inviteGauge');gauge.style.setProperty('--harsh',`${bands.harshBelow}%`);gauge.style.setProperty('--gentle',`${bands.gentleAbove}%`);
+  $('inviteGaugeTrack').style.setProperty('--harsh',`${bands.harshBelow}%`);$('inviteGaugeTrack').style.setProperty('--gentle',`${bands.gentleAbove}%`);
+  $('inviteGaugeTarget').textContent=`TARGET ${target}%`;$('inviteGaugeTarget').style.left=`${bands.target}%`;$('inviteGaugeArrow').style.left=`${bands.target}%`;
+  $('targetRules').textContent=bandsCopy(invite.targetHp);
+  $('inviteReward').textContent=`The closer your eventual score is to the Target (${target}%), the more rewards you will earn!`;
+  gauge.setAttribute('aria-label',`Target ${target}% HP`);
+}
 function renderCurrent(view){
   const m=view.model;
-  if(view.kind==='invitation'){$('senderName').textContent=session.senderName;$('senderHeading').textContent=session.senderName.toUpperCase();$('inviteRunner').textContent=`Level ${runner.level} ${runner.name}`;$('inviteTarget').textContent=`TARGET: ${invite.targetHp}% HP`;$('targetMission').textContent=`Get the Runner to the EXIT with about ${invite.targetHp}% health remaining.`;const inviteGauge=buildEstimateGaugeViewModel({targetHp:invite.targetHp});$('inviteGaugeTarget').textContent=`TARGET ${inviteGauge.targetPercent}%`;renderGaugeMarker('inviteGaugeTarget',inviteGauge.targetPercent);$('targetRules').textContent=`Above ${invite.targetHp}% = too gentle · Below ${invite.targetHp}% = too harsh`;}
+  if(view.kind==='invitation')renderInvitation();
   else if(view.kind==='mission'){$('missionTarget').textContent=`~${invite.targetHp}% HP`;$('missionRewardCue').textContent='Closer to target earns more Builder Gold.';$('targetFitCue').textContent=`${m.targetFit.label} · ${m.targetFit.note}`;$('missionRunnerContext').textContent=`${session.senderName}'s Runner has ${runner.hp} HP, ${runner.attack} ATK and ${runner.defense} DEF.`;renderDungeonChooserFrame();renderRoom();}
   else if(view.kind==='customize'){
     $('customizeLocked').hidden=customizationUnlocked;$('customizeEditor').hidden=!customizationUnlocked;$('customizeActions').hidden=!customizationUnlocked;
@@ -103,17 +128,6 @@ function renderCurrent(view){
 function chooseSessionRoom(){session=selectDungeon(session,selectedSpec().id);session=setEncounter(session,encounter());}
 function renderRoom(){const carousel=buildRoomCarousel({rooms:specs,index:roomIndex});$('roomName').textContent=carousel.current.name;$('roomCounter').textContent=carousel.counter;if(selectedRoom())drawPreview($('roomPreview'),selectedRoom().map,selectedRoom().tiles);}
 function moveRoom(delta){activePreset=null;roomIndex=(roomIndex+delta+specs.length)%specs.length;calibrated=calibrateEncounter({catalog,model,runnerId:invite.runnerId,runner,targetHp:invite.targetHp});applyEncounter(calibrated.encounter);if(session?.journey==='mission')show();}
-function monsterCard({name,value,label,cost,summary,icon}){
-  const card=document.createElement('label');card.className='card';
-  const input=document.createElement('input');input.type='radio';input.name=name;input.value=value;input.className='visually-hidden';
-  const body=document.createElement('div');body.className='card-body';
-  const strong=document.createElement('strong');strong.textContent=label;
-  const costLine=document.createElement('small');costLine.className='card-cost';costLine.textContent=cost!=null?`${cost} BUDGET`:'';
-  const summaryLine=document.createElement('small');summaryLine.className='card-effect';summaryLine.textContent=summary||'';
-  body.append(strong,summaryLine,costLine);
-  card.append(input,icon,body);
-  return card;
-}
 function itemCard(item){
   const card=document.createElement('label');card.className='card';
   const input=document.createElement('input');input.type='checkbox';input.dataset.choice=item.id;input.className='visually-hidden';
@@ -127,26 +141,77 @@ function itemCard(item){
   return card;
 }
 function renderControls(){
-  refreshSelectors.length=0;
   const access=editorContentIds(builderLevel,LEVEL1_PRESETS.map(p=>p.encounter));
   const vm=buildCustomizationCatalog({model,catalog,runnerId:invite.runnerId,runner,access}),monsterPanel=document.querySelector('[data-custom-panel="monsters"]');
   monsterPanel.replaceChildren();
-  for(let i=0;i<3;i++){
-    const group=document.createElement('div');group.className='guard-group';
-    const title=document.createElement('strong');title.textContent=`GUARD ${i+1}`;group.append(title);
-    const row=document.createElement('div');row.className='card-row';
-    row.append(monsterCard({name:`guard-${i}`,value:'none',label:'EMPTY',cost:0,summary:'No monster',icon:emptySlotCardIcon()}));
-    for(const item of vm.monsters)row.append(monsterCard({name:`guard-${i}`,value:item.id,label:item.label,cost:item.cost,summary:item.summary,icon:flareArtIcon(item.id)||monsterCardIcon()}));
-    group.append(row);monsterPanel.append(group);refreshSelectors.push(installPagedSelector(row,`monster for guard ${i+1}`));
-  }
+  renderGuardMixer(monsterPanel,vm.monsters);
   for(const kind of ['traps','supports']){
     const panel=document.querySelector(`[data-custom-panel="${kind}"]`);panel.replaceChildren();
-    const row=document.createElement('div');row.className='card-row';
-    for(const item of vm[kind])row.append(itemCard(item));
-    panel.append(row);refreshSelectors.push(installPagedSelector(row,kind==='traps'?'trap':'support'));
+    const message=document.createElement('p');message.className='editor-message';message.setAttribute('role','status');message.setAttribute('aria-live','polite');
+    const list=document.createElement('div');list.className='option-list';
+    for(const item of vm[kind])list.append(itemCard(item));
+    if(!vm[kind].length){const empty=document.createElement('p');empty.className='option-empty';empty.textContent=kind==='traps'?'No traps unlocked yet.':'No support available yet.';list.append(empty);}
+    panel.append(message,list);
   }
-  for(const control of document.querySelectorAll('[name^="guard-"],[data-choice]'))control.addEventListener('change',()=>{activePreset=null;session=setEncounter(session,encounter());show();});
+  for(const control of document.querySelectorAll('[data-choice]'))control.addEventListener('change',()=>handleItemToggle(control));
   renderDungeonCards();
+}
+// --- guard mixer -------------------------------------------------------------------------------------------
+function setEditorMessage(text,tone='warn'){for(const m of document.querySelectorAll('.editor-message')){m.textContent=text||'';m.dataset.tone=text?tone:'';}}
+function commitEditorChange(){activePreset=null;session=setEncounter(session,encounter());show();}
+function tryAddGuard(id){
+  const verdict=canAddGuard({roomId:selectedSpec().id,catalog,encounter:encounter(),monsterId:id,budget:model.budget||100});
+  if(!verdict.ok){setEditorMessage(verdict.message);return false;}
+  const keep=encounter();guardCounts=Object.fromEntries(MIXER_ORDER.map(k=>[k,0]));for(const t of keep.enemyTypes)if(t in guardCounts)guardCounts[t]++;
+  guardCounts[id]++;setEditorMessage('');commitEditorChange();return true;
+}
+function tryRemoveGuard(id){
+  const keep=encounter();guardCounts=Object.fromEntries(MIXER_ORDER.map(k=>[k,0]));for(const t of keep.enemyTypes)if(t in guardCounts)guardCounts[t]++;
+  if(guardCounts[id]<=0)return false;guardCounts[id]--;setEditorMessage('');commitEditorChange();return true;
+}
+function handleItemToggle(control){
+  const id=control.dataset.choice;
+  if(control.checked){
+    const probe=domEncounter(),spec=model.items?.[id],used=governedCost(catalog,{...probe,trapTypes:probe.trapTypes.filter(t=>t!==id),supportTypes:probe.supportTypes.filter(t=>t!==id)}),left=(model.budget||100)-used;
+    if(spec&&spec.cost>left){control.checked=false;setEditorMessage(`Not enough dungeon budget: ${spec.name} costs ${spec.cost} and you have ${Math.max(0,left)} left.`);return;}
+  }
+  setEditorMessage('');commitEditorChange();
+}
+let guardPickerOpen=false;
+function renderGuardMixer(panel,monsters){
+  const total=document.createElement('div');total.className='guard-total';
+  const count=document.createElement('strong');count.id='guardTotal';
+  const note=document.createElement('small');note.className='cap-note';note.textContent='Use the arrows on each monster to adjust your guard mix.';
+  total.append(count,note);
+  const message=document.createElement('p');message.className='editor-message';message.setAttribute('role','status');message.setAttribute('aria-live','polite');
+  const wrap=document.createElement('div');wrap.className='add-guard-wrap';
+  const addBtn=document.createElement('button');addBtn.type='button';addBtn.id='addGuardBtn';addBtn.className='add-guard-btn';addBtn.setAttribute('aria-expanded','false');
+  const picker=document.createElement('div');picker.id='addGuardPicker';picker.className='add-picker';picker.hidden=true;
+  const syncPicker=()=>{picker.hidden=!guardPickerOpen;addBtn.textContent=guardPickerOpen?'CLOSE GUARD PICKER':'+ ADD A GUARD';addBtn.setAttribute('aria-expanded',String(guardPickerOpen));};
+  addBtn.addEventListener('click',()=>{guardPickerOpen=!guardPickerOpen;syncPicker();});
+  const mixer=document.createElement('div');mixer.className='mixer';
+  for(const m of monsters){
+    const art=()=>{const i=document.createElement('img');i.src=LOOT_ASSETS[m.id];i.alt='';i.decoding='async';return i;};
+    const choice=document.createElement('button');choice.type='button';choice.className='add-choice';choice.dataset.monster=m.id;
+    const label=document.createElement('strong');label.textContent=m.label;choice.append(art(),label);
+    choice.addEventListener('click',()=>{if(tryAddGuard(m.id)){guardPickerOpen=false;syncPicker();}});
+    picker.append(choice);
+    const row=document.createElement('div');row.className='mix-row';row.dataset.monster=m.id;
+    const name=document.createElement('div');name.className='mix-name';const strong=document.createElement('strong');strong.textContent=m.label;const small=document.createElement('small');small.textContent=`${MIXER_NOTE[m.id]||'Monster'} · ${m.cost} budget`;name.append(strong,small);
+    const minus=document.createElement('button');minus.type='button';minus.className='mini-arrow';minus.textContent='‹';minus.setAttribute('aria-label',`Remove one ${m.label}`);
+    const qty=document.createElement('div');qty.className='qty';qty.dataset.qty=m.id;qty.setAttribute('aria-live','polite');
+    const plus=document.createElement('button');plus.type='button';plus.className='mini-arrow';plus.textContent='›';plus.setAttribute('aria-label',`Add one ${m.label}`);
+    minus.addEventListener('click',()=>tryRemoveGuard(m.id));plus.addEventListener('click',()=>tryAddGuard(m.id));
+    row.append(art(),name,minus,qty,plus);mixer.append(row);
+  }
+  wrap.append(addBtn,picker);syncPicker();
+  panel.append(total,message,wrap,mixer);
+}
+function refreshGuardMixer(){
+  const e=encounter(),counts=Object.fromEntries(MIXER_ORDER.map(k=>[k,0]));for(const t of e.enemyTypes)if(t in counts)counts[t]++;
+  const total=Object.values(counts).reduce((a,b)=>a+b,0),el=$('guardTotal');if(el)el.textContent=`${total} / ${MAX_GUARD_SLOTS} GUARDS`;
+  for(const q of document.querySelectorAll('[data-qty]'))q.textContent=String(counts[q.dataset.qty]||0);
+  for(const row of document.querySelectorAll('.mix-row')){const id=row.dataset.monster,buttons=row.querySelectorAll('.mini-arrow');buttons[0].disabled=!(counts[id]>0);}
 }
 // DUNGEONS tab (002E9): one card per dungeon the current Builder Level can use; selecting a card
 // changes the real session room, so Broken Gallery is playable the moment Level 2 is reached.
@@ -183,10 +248,10 @@ function applyBuilderLevel(level){
   renderControls();applyEncounter(keep);session=setEncounter(session,encounter());
 }
 function applyEncounter(e){
-  for(let i=0;i<3;i++){const value=e.enemyTypes[i]||'none';const radio=document.querySelector(`input[name="guard-${i}"][value="${value}"]`)||document.querySelector(`input[name="guard-${i}"][value="none"]`);if(radio)radio.checked=true;}
+  guardCounts=Object.fromEntries(MIXER_ORDER.map(k=>[k,0]));
+  for(const t of (e.enemyTypes||[]))if(t in guardCounts)guardCounts[t]++;
   const selected=[...(e.trapTypes||[]),...(e.supportTypes||[])];
   for(const id of [...TRAP_IDS,...SUPPORT_IDS]){const box=document.querySelector(`[data-choice="${id}"]`);if(box)box.checked=selected.includes(id);}
-  for(const refresh of refreshSelectors)refresh.syncToSelection?.();
 }
 function renderTabs(){for(const tab of document.querySelectorAll('[data-custom-tab]')){const on=tab.dataset.customTab===activePanel;tab.setAttribute('aria-selected',String(on));document.querySelector(`[data-custom-panel="${tab.dataset.customTab}"]`).hidden=!on;}}
 let presetIndex=1; // 0=EASY, 1=JUST NICE (default), 2=BRUTAL - Owner-approved Level 1 compositions (governed-encounter.mjs)
@@ -254,11 +319,25 @@ const journeyView=createRewardJourney({
   reducedMotion:prefersReducedMotion,
   // The New Gizmos CTA starts the browse-only LOOT REVIEW inside the journey; it never opens the editor.
   // CUSTOMIZE THIS DUNGEON (final scene) is the explicit, separate handoff into the REAL customization flow.
-  onCustomize:()=>openUnlockedTool('monsters'),
-  onCreateAccount:()=>{journeyView.dismiss();transition('SAVE_GOAL');},
+  onCustomize:()=>{
+    // A Guest who returned from the Runner Hub has no result screen behind the journey: walk the normal path
+    // (invitation -> mission) before opening the real editor.
+    if(session.journey==='invitation'){journeyView.dismiss();transition('ACCEPT');activePanel='monsters';transition('CUSTOMIZE');return;}
+    openUnlockedTool('monsters');
+  },
+  onCreateAccount:()=>{journeyView.dismiss();if(session.journey==='rewards')transition('SAVE_GOAL');else{saveGuestReturn(SESSION_STORE,location);location.href='/quick-dungeon/flare-s8b/';}},
   onGuest:()=>journeyView.dismiss()
 });
 function openUnlockedTool(panel){activePanel=panel;journeyView.dismiss();transition('EDIT_DUNGEON');}
+// A Guest who pressed HOME and then CONTINUE AS GUEST on the Runner Hub lands back here with ?guest=1. If Builder
+// Level 2 is active for this session, reopen the New Gizmos overview (session-only; nothing is persisted).
+const GUEST_RETURN_RESULT=Object.freeze({cleared:true,targetHpPercent:0,actualHpPercent:0,differenceFromTarget:0,builderReward:Object.freeze({gold:0}),heroReward:Object.freeze({gold:0})});
+function resumeGuestSession(){
+  try{history.replaceState(null,'',withoutGuestParam(location));}catch{}
+  if(builderLevel<2)return;
+  try{journeyView.start(buildRewardJourney({result:GUEST_RETURN_RESULT,senderName:session.senderName,level:builderLevel,nameOf:journeyNameOf}),{sceneId:'gizmos'});}
+  catch(error){console.error(error);journeyView.dismiss();}
+}
 function renderRewardJourney(m){
   if(!justUnlocked||journeyShown)return;
   journeyShown=true;
@@ -299,31 +378,42 @@ function renderRunnerInspector(){
 }
 function openRunnerInspector(){renderRunnerInspector();$('runnerInspector').hidden=false;$('closeRunnerInspector').focus();}
 function closeRunnerInspector(){$('runnerInspector').hidden=true;$('viewRunner').focus();}
-function transition(event){try{if(['CUSTOMIZE','EDIT_DUNGEON'].includes(event)&&customizationUnlocked&&activePreset&&monsterCount(activePreset.encounter)>3){const keep=domEncounter();activePreset=null;applyEncounter(keep);session=setEncounter(session,encounter());}if(['USE_DUNGEON','CUSTOMIZE'].includes(event))chooseSessionRoom();if(event==='DONE')session=setEncounter(session,encounter());session=advanceReceiver(session,event);show();}catch(error){$('loadStatus').textContent=error.message;}}
+function transition(event){try{if(['USE_DUNGEON','CUSTOMIZE'].includes(event))chooseSessionRoom();if(event==='DONE')session=setEncounter(session,encounter());session=advanceReceiver(session,event);show();}catch(error){$('loadStatus').textContent=error.message;}}
 function receiptClient(){const config=globalThis.__FLARE_S8B_PUBLIC_CONFIG__,sdk=globalThis.supabase;if(!publicToken||!config?.url||!config?.publishableKey||typeof sdk?.createClient!=='function')return null;return sdk.createClient(config.url,config.publishableKey,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}})}
 async function sendResultReceipt(){const status=requiredElement('resultReceiptStatus'),retry=requiredElement('retryResultReceipt');if(!publicToken){status.textContent='Legacy challenge · result stays on this device.';retry.hidden=true;return}if(receiptBlock||!lastReceiptPayload){status.textContent=receiptBlockMessage(receiptBlock||'PAYLOAD_INVALID',session.senderName);retry.hidden=true;return}status.textContent='Sending result…';retry.hidden=true;try{const client=receiptClient();if(!client)throw new Error('RESULT_SERVICE_UNAVAILABLE');const row=await submitResultReceipt({client,payload:lastReceiptPayload});status.textContent=`RESULT SENT TO ${session.senderName.toUpperCase()}`;status.dataset.resultId=row.result_id;retry.hidden=true}catch(error){console.error(error);status.textContent='Result not sent yet. Your result is safe — retry when connected.';retry.hidden=false}}
 $('retryResultReceipt').addEventListener('click',sendResultReceipt);
-$('acceptChallenge').addEventListener('click',()=>transition('ACCEPT'));
+// 002E9D: the rooms/tiles load in the background after the invitation is usable; if the player is faster than the
+// load, a real loading screen covers exactly the remaining wait (nothing is delayed artificially).
+$('acceptChallenge').addEventListener('click',async()=>{
+  if(!roomsLoaded&&roomsReady){
+    try{loading.begin('Loading your dungeon…',{immediate:true});loading.setStep(0);await roomsReady;}
+    catch(error){$('loadStatus').textContent='We could not load the dungeon art. Please retry.';return;}
+    finally{loading.end();}
+  }
+  transition('ACCEPT');
+});
 $('previousRoom').addEventListener('click',()=>moveRoom(-1));$('nextRoom').addEventListener('click',()=>moveRoom(1));
 $('useDungeon').addEventListener('click',()=>transition('USE_DUNGEON'));$('openCustomize').addEventListener('click',()=>transition('CUSTOMIZE'));
 $('finishCustomize').addEventListener('click',()=>transition('DONE'));$('editDungeon').addEventListener('click',()=>transition('CUSTOMIZE'));
 $('editThisDungeon').addEventListener('click',()=>transition('EDIT_DUNGEON'));$('saveGoalBuildOwn').addEventListener('click',()=>transition('SAVE_GOAL'));$('backToRewards').addEventListener('click',()=>transition('BACK_TO_REWARDS'));
 $('navBack').addEventListener('click',()=>transition('BACK'));
+// HOME leaves for the Runner Hub; remember (session-only) where a Guest should come back to.
+$('navHome').addEventListener('click',()=>{saveGuestReturn(SESSION_STORE,location);});
 $('viewRunner').addEventListener('click',openRunnerInspector);
 $('closeRunnerInspector').addEventListener('click',closeRunnerInspector);
 $('runnerInspector').addEventListener('click',e=>{if(e.target===$('runnerInspector'))closeRunnerInspector();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('runnerInspector').hidden)closeRunnerInspector();});
-$('createAccount').addEventListener('click',()=>{if($('createAccount').disabled)return;try{sessionStorage.setItem(FRIEND_GOAL_CLAIM_KEY,JSON.stringify({senderName:session.senderName,runnerId:invite.runnerId,targetHp:invite.targetHp}));}catch(error){console.error(error);}location.href='/quick-dungeon/flare-s8b/';});
+$('createAccount').addEventListener('click',()=>{if($('createAccount').disabled)return;try{sessionStorage.setItem(FRIEND_GOAL_CLAIM_KEY,JSON.stringify({senderName:session.senderName,runnerId:invite.runnerId,targetHp:invite.targetHp}));}catch(error){console.error(error);}saveGuestReturn(SESSION_STORE,location);location.href='/quick-dungeon/flare-s8b/';});
 $('resetSuggested').addEventListener('click',()=>{activePreset=null;applyEncounter(calibrated.encounter);session=setEncounter(session,encounter());show();});
 for(const tab of document.querySelectorAll('[data-custom-tab]'))tab.addEventListener('click',()=>{activePanel=tab.dataset.customTab;show();});
 $('runHero').addEventListener('click',()=>runtimeStart?.());
 let pointer=null;$('roomStage').addEventListener('pointerdown',e=>pointer={x:e.clientX,y:e.clientY});$('roomStage').addEventListener('pointerup',e=>{const direction=pointer&&roomSwipeDirection({startX:pointer.x,startY:pointer.y,endX:e.clientX,endY:e.clientY});pointer=null;if(direction)moveRoom(direction);});
-window.__s8aReceiver={get session(){return session;},get encounter(){return encounter();},get roomId(){return selectedSpec().id;},get room(){return selectedRoom();},get runnerAuthority(){return runnerAuthority;},get customizationUnlocked(){return customizationUnlocked;},get builderLevel(){return builderLevel;},get justUnlocked(){return justUnlocked;},setRuntimeStart(fn){runtimeStart=fn;},startRuntime(){chooseSessionRoom();currentAttemptToken=createAttemptToken();session=advanceReceiver(session,'RUN');show();},completeRuntime(result,score){session=advanceReceiver(session,'COMPLETE',{result,score});// Plan the receipt BEFORE any presentation work and never let a payload problem escape (an
+window.__s8aReceiver={get session(){return session;},get encounter(){return encounter();},get roomId(){return selectedSpec().id;},get room(){return selectedRoom();},get runnerAuthority(){return runnerAuthority;},get customizationUnlocked(){return customizationUnlocked;},get builderLevel(){return builderLevel;},get justUnlocked(){return justUnlocked;},setRuntimeStart(fn){runtimeStart=fn;},loadingBegin(){loading.begin('Loading your dungeon…',{immediate:true});},loadingStep(i){loading.setStep(i);},loadingEnd(){loading.end();},startRuntime(){chooseSessionRoom();currentAttemptToken=createAttemptToken();session=advanceReceiver(session,'RUN');show();},completeRuntime(result,score){session=advanceReceiver(session,'COMPLETE',{result,score});// Plan the receipt BEFORE any presentation work and never let a payload problem escape (an
       // exception here used to abort completion): see receipt-plan.mjs.
       const plan=planResultReceipt({publicToken,roomId:session.roomId,encounter:session.encounter,rulesVersion:'s8a-1',result,heroGold:session.reward?.heroGold,attemptToken:currentAttemptToken});
       lastReceiptPayload=plan.payload;receiptBlock=plan.block;if(plan.error)console.error(plan.error);
       const grant=grantFirstRunLevel(SESSION_STORE,builderLevel);justUnlocked=grant.leveledUp;if(grant.leveledUp){journeyShown=false;try{applyBuilderLevel(grant.level);}catch(error){console.error(error);}}
       try{show();}catch(error){console.error(error);}finally{void sendResultReceipt();}},replayRuntime(){currentAttemptToken=createAttemptToken();session=advanceReceiver(session,'RUN_AGAIN');show();},runFailed(message){session={...session,journey:'ready'};show();$('readySummary').textContent=`Run could not start: ${message}`;},show};
 installRuntime(window.__s8aReceiver);
-async function bootReceiver(){try{const [base,game,heroPack,correlatedSnapshot]=await Promise.all([fetch('/quick-dungeon/flare-p0/data/catalog.json').then(r=>r.ok?r.json():Promise.reject(Error('Catalogue unavailable'))),fetch('/quick-dungeon/flare-s7/data/game.json').then(r=>r.ok?r.json():Promise.reject(Error('Game model unavailable'))),loadS3ActorPack(),fetchCorrelatedSnapshot()]);baseCatalog=base;model=extendModelWithLevel2(game);const code=inviteCodeFromLocation(location);invite=code?decodeInviteCode(code,model):new URLSearchParams(location.search).get('demo')==='1'?{runnerId:model.defaultRunner,targetHp:model.defaultTargetHp}:null;if(!invite)throw Error('Challenge invitation is missing or invalid');catalog=extendCatalogWithLevel2(applyRunnerModel(baseCatalog,model,invite.runnerId),model);runnerAuthority=resolveRunnerAuthority({snapshot:correlatedSnapshot,templateMaxHp:catalog.heroes.warrior.maxHp,templateAttack:catalog.heroes.warrior.damage,templateDefense:catalog.heroes.warrior.armor});if(runnerAuthority.source==='snapshot'){catalog.heroes.warrior.maxHp=runnerAuthority.maxHp;catalog.heroes.warrior.damage=runnerAuthority.attack;catalog.heroes.warrior.armor=runnerAuthority.defense;}runner=runnerSummary(model,invite.runnerId,catalog);session=createReceiverSession({invite,senderName:inviteSender(location.search)});renderControls();calibrated=calibrateEncounter({catalog,model,runnerId:invite.runnerId,runner,targetHp:invite.targetHp});applyEncounter(calibrated.encounter);session=setEncounter(session,encounter());dungeonPresets=buildLevel1Presets({catalog,model,runnerId:invite.runnerId,runner,targetHp:invite.targetHp});renderDungeonChooser();heroActorPack=heroPack;startComposedHeroStance($('inviteHeroCanvas'),heroPack);await Promise.all(allSpecs.map(async spec=>rooms.set(spec.id,await loadS7StockRoom(spec.id))));$('acceptChallenge').disabled=false;$('loadStatus').textContent='Your Hero-Runner is ready.';show();window.__s8aData={model,catalog,invite,runner,rooms,specs:allSpecs,runnerAuthority,dungeonPresets};}catch(error){console.error(error);if(error?.message==='SNAPSHOT_SERVICE_UNAVAILABLE'||/snapshot/i.test(String(error?.message))){$('heading-invitation').textContent='COULD NOT LOAD THIS RUNNER';$('loadStatus').innerHTML='';const status=document.createElement('span');status.textContent="We couldn't load your friend's Runner data. ";const retry=document.createElement('button');retry.type='button';retry.className='nav-link';retry.textContent='RETRY';retry.addEventListener('click',()=>location.reload());$('loadStatus').append(status,retry);return}$('heading-invitation').textContent='THIS CHALLENGE CANNOT OPEN';$('loadStatus').textContent=error.message;}}
-void bootReceiver();
+async function bootReceiver(){loading.begin('Loading your challenge…');try{const [base,game,heroPack,correlatedSnapshot]=await Promise.all([fetch('/quick-dungeon/flare-p0/data/catalog.json').then(r=>r.ok?r.json():Promise.reject(Error('Catalogue unavailable'))),fetch('/quick-dungeon/flare-s7/data/game.json').then(r=>r.ok?r.json():Promise.reject(Error('Game model unavailable'))),loadS3ActorPack(),fetchCorrelatedSnapshot()]);baseCatalog=base;model=extendModelWithLevel2(game);const code=inviteCodeFromLocation(location);invite=code?decodeInviteCode(code,model):new URLSearchParams(location.search).get('demo')==='1'?{runnerId:model.defaultRunner,targetHp:model.defaultTargetHp}:null;if(!invite)throw Error('Challenge invitation is missing or invalid');catalog=extendCatalogWithLevel2(applyRunnerModel(baseCatalog,model,invite.runnerId),model);runnerAuthority=resolveRunnerAuthority({snapshot:correlatedSnapshot,templateMaxHp:catalog.heroes.warrior.maxHp,templateAttack:catalog.heroes.warrior.damage,templateDefense:catalog.heroes.warrior.armor});if(runnerAuthority.source==='snapshot'){catalog.heroes.warrior.maxHp=runnerAuthority.maxHp;catalog.heroes.warrior.damage=runnerAuthority.attack;catalog.heroes.warrior.armor=runnerAuthority.defense;}runner=runnerSummary(model,invite.runnerId,catalog);session=createReceiverSession({invite,senderName:inviteSender(location.search)});renderControls();calibrated=calibrateEncounter({catalog,model,runnerId:invite.runnerId,runner,targetHp:invite.targetHp});applyEncounter(calibrated.encounter);session=setEncounter(session,encounter());dungeonPresets=buildLevel1Presets({catalog,model,runnerId:invite.runnerId,runner,targetHp:invite.targetHp});renderDungeonChooser();heroActorPack=heroPack;startComposedHeroStance($('inviteHeroCanvas'),heroPack);roomsReady=Promise.all(allSpecs.map(async spec=>rooms.set(spec.id,await loadS7StockRoom(spec.id)))).then(()=>{roomsLoaded=true;});roomsReady.catch(error=>console.error(error));$('acceptChallenge').disabled=false;$('loadStatus').textContent='';show();window.__s8aData={model,catalog,invite,runner,rooms,specs:allSpecs,runnerAuthority,dungeonPresets};if(isGuestReturn(location.search))resumeGuestSession();}catch(error){console.error(error);if(error?.message==='SNAPSHOT_SERVICE_UNAVAILABLE'||/snapshot/i.test(String(error?.message))){$('heading-invitation').textContent='COULD NOT LOAD THIS RUNNER';$('loadStatus').innerHTML='';const status=document.createElement('span');status.textContent="We couldn't load your friend's Runner data. ";const retry=document.createElement('button');retry.type='button';retry.className='nav-link';retry.textContent='RETRY';retry.addEventListener('click',()=>location.reload());$('loadStatus').append(status,retry);return}$('heading-invitation').textContent='THIS CHALLENGE CANNOT OPEN';$('loadStatus').textContent=error.message;}}
+void bootReceiver().finally(()=>loading.end());

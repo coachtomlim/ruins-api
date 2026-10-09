@@ -78,7 +78,8 @@ test('mobile paging is width-scoped and retains desktop cards and existing calcu
   // 002E7 Part L: nav buttons are now compact round [‹]/[›] controls (not full-width 44px bars),
   // but touch targets stay practical (min 40px) and the SELECT/REMOVE action is still full-width.
   assert.match(css,/\.selector-nav-btn\{min-height:40px;min-width:40px/);assert.match(css,/\.selector-action\{display:block;width:100%;min-height:40px\}/);
-  assert.match(source,/control.addEventListener\('change',\(\)=>\{activePreset=null;session=setEncounter\(session,encounter\(\)\);show\(\);\}\)/);
+  assert.match(source,/control.addEventListener\('change',\(\)=>handleItemToggle\(control\)\)/);
   assert.match(source,/estimatedHpPercent:estimateGoverned/);assert.match(source,/usedBudget:e|usedBudget\(e\)/);
-  assert.match(source,/installPagedSelector\(row,kind==='traps'\?'trap':'support'\)/);
+  // 002E9D: the editor no longer pages options (explicit guard mixer + option lists); the module stays covered here.
+  assert.doesNotMatch(source,/installPagedSelector/);
 });

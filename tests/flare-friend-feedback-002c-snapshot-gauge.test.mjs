@@ -70,7 +70,8 @@ test('invitation and customize screens each have a real gauge with a fixed targe
 
 test('customize screen gauge updates on monster/trap/support change via the existing renderControls change listener',async()=>{
   const mjs=await read('public/flare-s8a/challenge.mjs');
-  assert.match(mjs,/control\.addEventListener\('change',\(\)=>\{activePreset=null;session=setEncounter\(session,encounter\(\)\);show\(\);\}\)/);
+  assert.match(mjs,/control\.addEventListener\('change',\(\)=>handleItemToggle\(control\)\)/);
+  assert.match(mjs,/function commitEditorChange\(\)\{activePreset=null;session=setEncounter\(session,encounter\(\)\);show\(\);\}/);
   assert.match(mjs,/buildEstimateGaugeViewModel\(\{targetHp:invite\.targetHp,estimatedHpPercent:estimateGoverned/);
 });
 

@@ -61,10 +61,10 @@ test('dungeon cards change the real session room (Broken Gallery is runnable, no
   assert.match(mjs,/window\.__s8aData=\{model,catalog,invite,runner,rooms,specs:allSpecs,/);
 });
 
-test('editor cards use real Flare art where governed art exists and keep the badge otherwise',async()=>{
+test('trap/support editor cards use real Flare art where governed art exists; guard-mixer monsters use the packaged governed thumbnails',async()=>{
   const [mjs,icons]=await Promise.all([read('public/flare-s8a/challenge.mjs'),read('public/flare-s8a/card-icons.mjs')]);
-  assert.match(mjs,/icon:flareArtIcon\(item\.id\)\|\|monsterCardIcon\(\)/);
   assert.match(mjs,/const icon=flareArtIcon\(item\.id\)\|\|encounterItemBadge\(item\.id\);/);
+  assert.match(mjs,/i\.src=LOOT_ASSETS\[m\.id\]/);
   assert.match(icons,/export function flareArtIcon\(id\)\{\s*if\(!FLARE_ART\[id\]\)return null;/);
 });
 

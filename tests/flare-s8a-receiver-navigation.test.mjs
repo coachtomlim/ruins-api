@@ -51,13 +51,14 @@ test('runtime has no HOME/BACK controls that could corrupt an active run',async(
   assert.match(mjs,/\$\('receiverNav'\)\.hidden=view\.kind==='runtime'/);
 });
 
-test('opening copy reads "Your friend\'s Runner is ready." while preserving sender, runner and builder-role copy',async()=>{
-  const html=await readHtml();
-  assert.match(html,/Your friend's Runner is ready\./);
-  assert.match(html,/HAS CHALLENGED YOU/);
-  assert.match(html,/YOU ARE THE DUNGEON BUILDER/);
-  assert.match(html,/id="senderName"/);
+test('opening copy (V18): one combined headline, one explanation paragraph, Runner level label, VIEW RUNNER',async()=>{
+  const [html,mjs]=await Promise.all([readHtml(),readFile(new URL('../public/flare-s8a/challenge.mjs',import.meta.url),'utf8')]);
+  assert.match(mjs,/HAS CHALLENGED YOU TO BUILD A DUNGEON FOR 'THE RUNNER'/);
+  assert.match(mjs,/Your Dungeon will contain monsters who will attack the Runner! But fear not, we have devised some good ones for you already! Just choose one and go!/);
+  assert.match(html,/id="inviteExplain"/);
   assert.match(html,/id="inviteRunner"/);
+  assert.match(html,/VIEW RUNNER/);
+  assert.doesNotMatch(html,/YOU ARE THE DUNGEON BUILDER|Your friend's Runner is ready\./);
 });
 
 test('primary buttons have an explicit bold/contrast/state contract, not just inherited button styling',async()=>{

@@ -125,13 +125,13 @@ test('Check out your new gizmos starts the in-journey LOOT REVIEW; it does not o
   assert.doesNotMatch(view,/onTry/);
   assert.doesNotMatch(mjs,/onTry/);
   // the explicit, separate handoff into the REAL customization flow is the final scene's CUSTOMIZE THIS DUNGEON
-  assert.match(mjs,/onCustomize:\(\)=>openUnlockedTool\('monsters'\)/);
+  assert.match(mjs,/onCustomize:\(\)=>\{[\s\S]*?openUnlockedTool\('monsters'\);\s*\}/);
   assert.match(mjs,/function openUnlockedTool\(panel\)\{activePanel=panel;journeyView\.dismiss\(\);transition\('EDIT_DUNGEON'\);\}/);
 });
 
 test('account conversion hands off through the existing SAVE_GOAL transition; guest simply dismisses',async()=>{
   const mjs=await read('public/flare-s8a/challenge.mjs');
-  assert.match(mjs,/onCreateAccount:\(\)=>\{journeyView\.dismiss\(\);transition\('SAVE_GOAL'\);\}/);
+  assert.match(mjs,/onCreateAccount:\(\)=>\{journeyView\.dismiss\(\);if\(session\.journey==='rewards'\)transition\('SAVE_GOAL'\);else\{saveGuestReturn\(SESSION_STORE,location\);location\.href='\/quick-dungeon\/flare-s8b\/';\}\}/);
   assert.match(mjs,/onGuest:\(\)=>journeyView\.dismiss\(\)/);
 });
 

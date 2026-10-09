@@ -5,6 +5,7 @@
 // new URL(..., import.meta.url) so the release manifest traces and packages every file.
 export const LOOT_ASSETS=Object.freeze({
   goblin:new URL('./assets/loot/goblin.png',import.meta.url).href,
+  skeleton:new URL('./assets/loot/skeleton.png',import.meta.url).href,
   zombie:new URL('./assets/loot/zombie.png',import.meta.url).href,
   'skeleton-archer':new URL('./assets/loot/skeleton-archer.png',import.meta.url).href,
   'spike-trap':new URL('./assets/loot/spike.png',import.meta.url).href,

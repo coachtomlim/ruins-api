@@ -98,10 +98,12 @@ test('equipment slot icons are the existing Runner Hub icon set, not newly inven
 
 // --- VISUAL EDITOR ---
 
-test('monster slots are radio-style cards (one selection per guard), not bare <select> elements',async()=>{
+test('002E9D: monsters are a quantity-based guard mixer (arrows + quantity), not radio cards, selects or Guard 1/2/3 slots',async()=>{
   const mjs=await read('public/flare-s8a/challenge.mjs');
-  assert.match(mjs,/input\.type='radio';input\.name=name/);
+  assert.match(mjs,/function renderGuardMixer\(panel,monsters\)\{/);
+  assert.doesNotMatch(mjs,/input\.type='radio';input\.name=name/);
   assert.doesNotMatch(mjs,/document\.createElement\('select'\)/);
+  assert.doesNotMatch(mjs,/GUARD \$\{i\+1\}|guard-\$\{i\}/);
 });
 
 test('trap/support cards are checkbox-backed labels with a visible, non-color-only selected indicator (border/background treatment, not a duplicate badge — 002E7 Part K)',async()=>{
@@ -125,9 +127,10 @@ test('budget enforcement is unchanged: DONE stays disabled over the legal budget
   assert.match(mjs,/\$\('finishCustomize'\)\.disabled=!m\.canFinish/);
 });
 
-test('selecting a card dispatches the existing change-driven estimate/budget pipeline, no new state path',async()=>{
+test('selecting a trap/support card or changing the guard mix dispatches the existing estimate/budget pipeline (commitEditorChange -> setEncounter -> show)',async()=>{
   const mjs=await read('public/flare-s8a/challenge.mjs');
-  assert.match(mjs,/for\(const control of document\.querySelectorAll\('\[name\^="guard-"\],\[data-choice\]'\)\)control\.addEventListener\('change',\(\)=>\{activePreset=null;session=setEncounter\(session,encounter\(\)\);show\(\);\}\)/);
+  assert.match(mjs,/for\(const control of document\.querySelectorAll\('\[data-choice\]'\)\)control\.addEventListener\('change',\(\)=>handleItemToggle\(control\)\)/);
+  assert.match(mjs,/function commitEditorChange\(\)\{activePreset=null;session=setEncounter\(session,encounter\(\)\);show\(\);\}/);
 });
 
 // --- GAUGE (regression from 002C, still wired through the new editor) ---

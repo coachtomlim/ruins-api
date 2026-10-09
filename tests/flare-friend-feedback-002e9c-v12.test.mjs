@@ -5,7 +5,7 @@ import {readFile} from 'node:fs/promises';
 import {parseMap} from '../public/flare-p0/src/core/flare.mjs';
 import {S7_ROOMS} from '../public/flare-s7/rooms.mjs';
 import {applyRunnerModel,runnerSummary,normalizeEncounter} from '../public/flare-s7/game.mjs';
-import {LEVEL1_PRESETS,buildLevel1Presets,createRunSimulation,buildRunChallenge,assertLegalEncounter,isGovernedBrutal,governedCost,governedHeroGold,monsterCount,estimateGoverned,describeMix,PLAYER_BUDGET} from '../public/flare-s8a/governed-encounter.mjs';
+import {LEVEL1_PRESETS,MAX_GUARD_SLOTS,buildLevel1Presets,createRunSimulation,buildRunChallenge,assertLegalEncounter,isGovernedBrutal,governedCost,governedHeroGold,monsterCount,estimateGoverned,describeMix,PLAYER_BUDGET} from '../public/flare-s8a/governed-encounter.mjs';
 import {extendModelWithLevel2,extendCatalogWithLevel2} from '../public/flare-s8a/level2-content.mjs';
 import {contentForLevel,STARTER_DUNGEON_IDS,BROKEN_GALLERY_ID} from '../public/flare-s8a/builder-level.mjs';
 import {createReplayContext,replayInputs} from '../public/flare-s8a/replay-context.mjs';
@@ -72,10 +72,11 @@ test('8: serialization and replay preserve all five (challenge JSON, replay cont
   assert.deepEqual(JSON.parse(canonicalRunInputJson(ctx)).encounter.enemyTypes,['goblin','goblin','skeleton','skeleton','skeleton']);
   const a=play(BRUTAL).r,b=play(BRUTAL).r;assert.deepEqual(a,b,'deterministic replay');
 });
-test('9: ordinary custom-build budget stays 100 and three monsters; the engine does not widen it',()=>{
+test('9: ordinary custom-build budget stays 100; guard slots are capacity (8), the budget is the gate',()=>{
   assert.equal(PLAYER_BUDGET,100);
   assert.throws(()=>assertLegalEncounter({roomId:'iron-labyrinth-03',catalog,encounter:{enemyTypes:['antlion','antlion','zombie'],trapTypes:[],supportTypes:[]}}),/Budget exceeded: 135\/100/);
-  assert.throws(()=>assertLegalEncounter({roomId:'iron-labyrinth-03',catalog,encounter:{enemyTypes:['goblin','goblin','goblin','goblin'],trapTypes:[],supportTypes:[]}}),/Maximum three enemies/);
+  assert.equal(assertLegalEncounter({roomId:'iron-labyrinth-03',catalog,encounter:{enemyTypes:['goblin','goblin','goblin','goblin'],trapTypes:[],supportTypes:[]}}).governed,false,'four goblins = 80 is legal');
+  assert.throws(()=>assertLegalEncounter({roomId:'iron-labyrinth-03',catalog,encounter:{enemyTypes:Array(9).fill('goblin'),trapTypes:[],supportTypes:[]}}),/Maximum 8 enemies/);
   assert.equal(assertLegalEncounter({roomId:'iron-labyrinth-03',catalog,encounter:{enemyTypes:['goblin','skeleton','skeleton'],trapTypes:[],supportTypes:[]}}).governed,false);
   assert.equal(readJson('../public/flare-s7/data/game.json').budget,100);
 });
@@ -89,7 +90,7 @@ test('10: the only >100 exception is the exact governed BRUTAL (room, order, no 
     ['iron-labyrinth-08',e(['goblin','goblin','skeleton','skeleton','skeleton'],{trapTypes:['spike-trap']})],
     ['iron-labyrinth-08',e(['goblin','goblin','skeleton','skeleton','skeleton'],{supportTypes:['small-potion']})],
     ['iron-labyrinth-08',e(['skeleton','skeleton','skeleton','skeleton','skeleton'])],
-    ['iron-labyrinth-08',e(['goblin','goblin','skeleton','skeleton'])],
+    ['iron-labyrinth-08',e(['goblin','goblin','skeleton','skeleton','skeleton','goblin'])],
     ['iron-labyrinth-08',e(['antlion','antlion','zombie'])]
   ]){assert.equal(isGovernedBrutal(room,enc),false,JSON.stringify([room,enc]));assert.throws(()=>assertLegalEncounter({roomId:room,catalog,encounter:enc}));}
 });
@@ -104,23 +105,20 @@ test('the frozen predecessor trees were not edited for five-monster support',()=
   assert.match(g,/Nothing in the frozen trees is edited/);
   assert.match(g,/class GovernedSimulation extends Simulation/);
 });
-test('the receiver keeps one encounter source: the whole governed preset while active, the DOM controls otherwise',async()=>{
+test('the receiver keeps one encounter source: the active preset as authored, otherwise the guard mixer',async()=>{
   const mjs=await read('public/flare-s8a/challenge.mjs');
-  assert.match(mjs,/const encounter=\(\)=>activePreset&&monsterCount\(activePreset\.encounter\)>3\?structuredClone\(activePreset\.encounter\):domEncounter\(\);/);
+  assert.match(mjs,/const encounter=\(\)=>activePreset\?structuredClone\(activePreset\.encounter\):domEncounter\(\);/);
   assert.match(mjs,/function applyPreset\(preset\)\{[\s\S]*?activePreset=preset;\r?\n\}/);
-  assert.match(mjs,/control\.addEventListener\('change',\(\)=>\{activePreset=null;/);
+  assert.match(mjs,/function commitEditorChange\(\)\{activePreset=null;/);
   const rt=await read('public/flare-s8a/runtime-controller.mjs');
   assert.match(rt,/createRunSimulation\(\{roomId:spec\.id,roomTitle:spec\.name,map:stock\.map,catalog:data\.catalog,targetHp:data\.invite\.targetHp,encounter:bridge\.encounter,budget:data\.model\.budget\|\|100\}\)/);
   assert.doesNotMatch(rt,/buildS7Challenge|new Simulation\(/);
 });
-test('entering the UNLOCKED editor from a five-monster preset drops back to the editable three-slot encounter; the locked editor never changes it',async()=>{
+test('the editor is a quantity mixer: no per-guard position controls, no Guard 4 / Guard 5 slots, eight guards of capacity',async()=>{
   const mjs=await read('public/flare-s8a/challenge.mjs');
-  assert.match(mjs,/if\(\['CUSTOMIZE','EDIT_DUNGEON'\]\.includes\(event\)&&customizationUnlocked&&activePreset&&monsterCount\(activePreset\.encounter\)>3\)/);
-});
-test('the player editor still exposes exactly three guard slots (no Guard 4 / Guard 5 controls)',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
-  assert.match(mjs,/for\(let i=0;i<3;i\+\+\)\{\s*const group/);
-  assert.doesNotMatch(mjs,/guard-3|guard-4|GUARD 4|GUARD 5/);
+  assert.match(mjs,/function renderGuardMixer\(panel,monsters\)\{/);
+  assert.doesNotMatch(mjs,/guard-3|guard-4|GUARD 4|GUARD 5|GUARD \$\{/);
+  assert.equal(MAX_GUARD_SLOTS,8);
 });
 
 // ---------- R. difficulty verification ----------
@@ -137,7 +135,7 @@ test('R: the three Level 1 presets at the default Runner and target 50 order EAS
   assert.deepEqual(other.map(p=>[...p.encounter.enemyTypes]),presets.map(p=>[...p.encounter.enemyTypes]));
 });
 test('R: BRUTAL on the other starter rooms is not a governed run (the exception is room-bound)',()=>{
-  assert.throws(()=>createRunSimulation({roomId:'iron-labyrinth-01',roomTitle:'x',map:roomMap('iron-labyrinth-01'),catalog,targetHp:50,encounter:BRUTAL.encounter}),/Maximum three enemies/);
+  assert.throws(()=>createRunSimulation({roomId:'iron-labyrinth-01',roomTitle:'x',map:roomMap('iron-labyrinth-01'),catalog,targetHp:50,encounter:BRUTAL.encounter}),/Budget exceeded: 130\/100/);
 });
 
 // ---------- F. READY (V12) ----------
@@ -226,7 +224,7 @@ test('26/27/28: CTA is exactly "Check out your new gizmos" and starts the loot r
   assert.doesNotMatch(view,/EDIT_DUNGEON|onTry|openUnlockedTool/);
   for(const f of ['reward-journey.mjs','reward-journey-view.mjs','challenge.mjs'])assert.doesNotMatch(await read(`public/flare-s8a/${f}`),/Try out new gizmos/i);
   // the only journey path into the editor is the explicit CUSTOMIZE THIS DUNGEON on the last scene
-  assert.match(mjs,/onCustomize:\(\)=>openUnlockedTool\('monsters'\)/);
+  assert.match(mjs,/onCustomize:\(\)=>\{[\s\S]*?openUnlockedTool\('monsters'\);\s*\}/);
   assert.equal(view.split('onCustomize').length-1,2);
 });
 test('29: final loot page copy matches Owner authority exactly',()=>{

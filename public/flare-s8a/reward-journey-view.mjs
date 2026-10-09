@@ -144,7 +144,7 @@ export function createRewardJourney({root,coinSrc,startHero,reducedMotion=()=>fa
   }
 
   return{
-    start(nextJourney){journey=nextJourney;index=0;open=true;root.hidden=false;render();},
+    start(nextJourney,{sceneId=null}={}){journey=nextJourney;index=0;if(sceneId){const at=journey.scenes.findIndex(x=>x.id===sceneId);if(at>=0)index=at;}open=true;root.hidden=false;render();},
     dismiss(){open=false;clear();root.hidden=true;root.replaceChildren();delete root.dataset.scene;},
     isOpen:()=>open,
     get sceneId(){return journey?.scenes[index]?.id||null;}

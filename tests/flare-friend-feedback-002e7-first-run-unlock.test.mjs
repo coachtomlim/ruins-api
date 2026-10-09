@@ -96,13 +96,12 @@ test('active tab (MONSTERS/TRAPS/SUPPORTS) has an unmistakable visual treatment,
 test('duplicate selected-state treatment is removed — no always-present "SELECTED" badge alongside the SELECT/REMOVE action',async()=>{
   const mjs=await read('public/flare-s8a/challenge.mjs');
   assert.doesNotMatch(mjs,/card-selected-mark/);
-  assert.match(mjs,/function monsterCard\(/);
+  assert.match(mjs,/function renderGuardMixer\(/);
   assert.match(mjs,/function itemCard\(/);
 });
 
-test('option card density is reworked: icon, name, effect, cost, then the paged-selector action — not a tall centered stack',async()=>{
+test('option card density is reworked: icon, name, effect, cost — not a tall centered stack',async()=>{
   const [mjs,css]=await Promise.all([read('public/flare-s8a/challenge.mjs'),read('public/flare-s8a/style.css')]);
-  assert.match(mjs,/body\.append\(strong,summaryLine,costLine\);/);
   assert.match(mjs,/body\.append\(strong,effectLine,costLine\);/);
   assert.match(css,/\.card\{display:grid;grid-template-columns:auto 1fr/);
 });

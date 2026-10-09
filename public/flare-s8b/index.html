@@ -53,6 +53,8 @@
         <label><span>CONFIRM PASSWORD</span><input name="confirmPassword" type="password" autocomplete="new-password" required minlength="8" placeholder="Repeat password"></label>
         <button class="primary" type="submit">UPDATE PASSWORD <span>›</span></button>
       </form>
+      <button class="guest-btn" id="continueAsGuest" type="button" hidden>CONTINUE AS GUEST</button>
+      <p class="guest-note" id="guestNote" hidden>Continue as Guest returns you to your unlocked Gizmos for this session.</p>
       <p class="status" id="authStatus" role="alert" aria-live="polite"></p>
       <p class="policy-note">Email confirmation is required. Dungeon Runner never stores or reveals your password.</p>
     </section>
@@ -228,5 +230,6 @@
   <script src="config.js"></script>
   <script src="vendor/supabase.js"></script>
   <script type="module" src="account-app.mjs"></script>
+  <script type="module" src="guest-continue.mjs"></script>
 </body>
 </html>

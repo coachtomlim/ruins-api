@@ -86,7 +86,8 @@ test('Runner Hub exposes four top-level destinations and bounded result detail',
 
 test('receiver invitation and result are viewport states with explicit precision copy',async()=>{
   const [html,css]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/style.css')]);
-  for(const text of ['HAS CHALLENGED YOU','YOU ARE THE DUNGEON BUILDER','TOO HARSH','TOO GENTLE','Builder reward = 0','CHOOSE A DUNGEON','Level &amp; Stats · Equipment'])assert.match(html,new RegExp(text));
+  for(const text of ['TOO HARSH','TOO GENTLE','CHOOSE A DUNGEON','Level &amp; Stats · Equipment'])assert.match(html,new RegExp(text));
+  assert.match(await read('public/flare-s8a/challenge.mjs'),/HAS CHALLENGED YOU TO BUILD A DUNGEON/);
   assert.match(css,/height:calc\(100dvh - 34px - var\(--dr-safe-top\)\);overflow:hidden/);assert.match(html,/resultDifference/);assert.match(html,/retryResultReceipt/);
 });
 

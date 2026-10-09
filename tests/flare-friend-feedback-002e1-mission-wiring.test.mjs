@@ -117,10 +117,10 @@ test('legacy (non-correlated) links still generate 3 presets from the template R
   assert.doesNotMatch(boot,/if\(publicToken\)[^;]*buildLevel1Presets/);
 });
 
-test('the visual dungeon editor (monster/trap/support cards) is untouched by this change',async()=>{
+test('the visual dungeon editor (guard mixer + trap/support cards) is present',async()=>{
   const mjs=await read('public/flare-s8a/challenge.mjs');
   assert.match(mjs,/function renderControls\(\)\{/);
-  assert.match(mjs,/function monsterCard\(/);
+  assert.match(mjs,/function renderGuardMixer\(/);
   assert.match(mjs,/function itemCard\(/);
 });
 

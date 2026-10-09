@@ -7,11 +7,14 @@
 // player-authored budget stays 100: the single exception is the exact governed BRUTAL preset below.
 import {deriveSlots,gridPath} from '../flare-s2/core.mjs';
 import {Simulation} from '../flare-s7/simulation.mjs';
-import {buildS7Challenge,encounterCost,monsterSummary,normalizeEncounter} from '../flare-s7/game.mjs';
+import {buildS7Challenge,encounterCost,monsterSummary,itemSummary,normalizeEncounter} from '../flare-s7/game.mjs';
 import {estimateEncounter} from '../flare-s7/calibration.mjs';
 
 export const PLAYER_BUDGET=100;
 export const MAX_GOVERNED_ENEMIES=5;
+// 002E9D: the Level 2 guard mixer has EIGHT guard slots. That is structural capacity only — the 100 budget still
+// decides what is legal (the cheapest monster costs 20, so at most five guards ever fit).
+export const MAX_GUARD_SLOTS=8;
 export const GOVERNED_BRUTAL_ROOM_ID='iron-labyrinth-08';
 
 const freezeEncounter=e=>Object.freeze({enemyTypes:Object.freeze([...e.enemyTypes]),trapTypes:Object.freeze([...(e.trapTypes||[])]),supportTypes:Object.freeze([...(e.supportTypes||[])])});
@@ -44,13 +47,26 @@ export function governedCost(catalog,encounter){
 }
 export function governedHeroGold(catalog,encounter){return monstersOf(encounter).reduce((n,id)=>n+(catalog.enemies[id]?.gold||0),0);}
 
-// Budget rule: ordinary encounters stay within 3 monsters and 100. Only the governed BRUTAL may exceed both.
+// Budget rule: every ordinary encounter stays within the eight guard slots AND the 100 budget. Only the exact
+// governed BRUTAL preset may exceed the budget (its nominal cost is 130).
 export function assertLegalEncounter({roomId,catalog,encounter,budget=PLAYER_BUDGET}){
   const cost=governedCost(catalog,encounter);
   if(isGovernedBrutal(roomId,encounter))return Object.freeze({cost,governed:true});
-  if(monstersOf(encounter).length>3)throw Error('Maximum three enemies');
+  if(monstersOf(encounter).length>MAX_GUARD_SLOTS)throw Error(`Maximum ${MAX_GUARD_SLOTS} enemies`);
   if(cost>budget)throw Error(`Budget exceeded: ${cost}/${budget}`);
   return Object.freeze({cost,governed:false});
+}
+
+// Would adding one more of `monsterId` (or a trap/support id) to this encounter still be legal? Used by the
+// guard mixer so an addition is PREVENTED (with a clear reason) instead of silently accepted.
+export function canAddGuard({roomId,catalog,encounter,monsterId,budget=PLAYER_BUDGET}){
+  const spec=catalog.enemies[monsterId];
+  if(!spec)return Object.freeze({ok:false,reason:'UNKNOWN_MONSTER',message:'That monster is not available.'});
+  const count=monstersOf(encounter).length;
+  if(count>=MAX_GUARD_SLOTS)return Object.freeze({ok:false,reason:'NO_SLOTS',message:`All ${MAX_GUARD_SLOTS} guard slots are full.`});
+  const used=governedCost(catalog,encounter),left=budget-used;
+  if(spec.cost>left)return Object.freeze({ok:false,reason:'OVER_BUDGET',message:`Not enough dungeon budget: ${spec.name} costs ${spec.cost} and you have ${Math.max(0,left)} left.`,cost:spec.cost,left:Math.max(0,left)});
+  return Object.freeze({ok:true,cost:spec.cost,left});
 }
 
 // Same additive estimator formula as flare-s7 estimateEncounter, but over every monster (the original
@@ -62,6 +78,8 @@ export function estimateGoverned({catalog,model,runnerId,runner,encounter}){
   const attackBonus=e.supportTypes.includes('battle-tonic')?2:0,defenseBonus=e.supportTypes.includes('iron-tonic')?2:0;
   let gross=0;
   for(const id of monstersOf(encounter)){const m=monsterSummary(id,model,runnerId,catalog,runner);gross+=Math.max(1,m.attack-runner.defense-defenseBonus)*hitsBeforeDefeat(m,attackBonus);}
+  for(const id of e.trapTypes){const trap=itemSummary(id,model);gross+=trap.armorPiercing?trap.damage:Math.max(1,trap.damage-runner.defense-defenseBonus);}
+  if(e.supportTypes.includes('small-potion'))gross=Math.max(0,gross-(catalog.items['small-potion']?.heal||0));
   const factor=Number(model?.calibration?.timingFactor)||.75,damage=gross*factor,loss=runner.hp?damage/runner.hp*100:100;
   return Object.freeze({estimatedDamage:Number(damage.toFixed(1)),estimatedHpPercent:Number(Math.max(0,100-loss).toFixed(1)),cost:governedCost(catalog,encounter)});
 }
@@ -69,29 +87,42 @@ export function estimateGoverned({catalog,model,runnerId,runner,encounter}){
 const fnv1a=text=>{let h=0x811c9dc5;for(let i=0;i<text.length;i++){h^=text.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0}return h.toString(36).padStart(7,'0')};
 function nearestFree(path,index,used){for(let d=0;d<path.length;d++)for(const i of [index-d,index+d])if(i>0&&i<path.length-1){const p=path[i],key=p.join(',');if(!used.has(key)){used.add(key);return p}}return null}
 
-// Challenge for the governed BRUTAL: same shape and the same placement rule as buildS7Challenge (route
-// fractions along the spawn->exit path), spread over five positions.
-const GOVERNED_FRACTIONS=Object.freeze([.2,.35,.5,.65,.8]);
-function buildGovernedBrutalChallenge({roomId,roomTitle,map,catalog,targetHp,encounter}){
+// Challenge for any encounter with MORE than three monsters (the governed BRUTAL and, from 002E9D, ordinary
+// quantity-based Level 2 builds up to eight guards): same shape and the same placement rule as buildS7Challenge
+// (route fractions along the spawn->exit path), spread evenly over however many guards there are. Placement is
+// deterministic and system-controlled — the player never positions guards.
+export const spreadFractions=n=>n<=1?[.5]:Array.from({length:n},(_,i)=>Number((.2+.6*i/(n-1)).toFixed(4)));
+const ITEM_FRACTIONS=Object.freeze({'battle-tonic':.16,'iron-tonic':.38,'small-potion':.48,'spike-trap':.63,'dart-trap':.82});
+function buildSpreadChallenge({roomId,roomTitle,map,catalog,targetHp,encounter,governed,budget}){
   const types=monstersOf(encounter);
+  if(types.length>MAX_GUARD_SLOTS)throw Error(`Maximum ${MAX_GUARD_SLOTS} enemies`);
+  const e=normalizeEncounter(encounter);
   const slots=deriveSlots(map,3),path=gridPath(map,slots.spawn,slots.exit);if(!path)throw Error('S7 route unavailable');
-  const used=new Set([slots.spawn.join(','),slots.exit.join(',')]),enemies=[];
+  const used=new Set([slots.spawn.join(','),slots.exit.join(',')]),enemies=[],fractions=spreadFractions(types.length);
   for(let i=0;i<types.length;i++){
     if(!catalog.enemies[types[i]])throw Error(`Unknown enemy: ${types[i]}`);
-    const at=nearestFree(path,Math.round((path.length-1)*GOVERNED_FRACTIONS[i]),used);if(!at)throw Error('No legal enemy slot');
+    const at=nearestFree(path,Math.round((path.length-1)*fractions[i]),used);if(!at)throw Error('No legal enemy slot');
     enemies.push({id:`guard-${i+1}`,type:types[i],at});
   }
+  const items=[];
+  for(const type of [...e.supportTypes,...e.trapTypes]){
+    if(!catalog.items[type])throw Error(`Unknown item: ${type}`);
+    const at=nearestFree(path,Math.round((path.length-1)*ITEM_FRACTIONS[type]),used);if(!at)throw Error(`No legal ${type} slot`);
+    items.push({id:`${type}-${items.length+1}`,type,at});
+  }
   const spent=governedCost(catalog,encounter);
-  const challenge={version:1,rules:catalog.rules,id:'',title:roomTitle||'Quick Challenge',room:roomId,hero:'warrior',spawn:slots.spawn,exit:slots.exit,budget:spent,targetHp:Number(targetHp),enemies,items:[]};
+  const challenge={version:1,rules:catalog.rules,id:'',title:roomTitle||'Quick Challenge',room:roomId,hero:'warrior',spawn:slots.spawn,exit:slots.exit,budget:governed?spent:budget,targetHp:Number(targetHp),enemies,items};
   if(!Number.isInteger(challenge.targetHp)||challenge.targetHp<1||challenge.targetHp>100)throw Error('Target HP must be 1..100');
   challenge.id=`quick-${fnv1a(JSON.stringify({...challenge,id:undefined}))}`;
-  return{challenge,spent,remaining:PLAYER_BUDGET-spent,governed:true,slots:{...slots,itemSlots:{}}};
+  return{challenge,spent,remaining:budget-spent,governed,slots:{...slots,itemSlots:Object.fromEntries(items.map(x=>[x.type,x.at]))}};
 }
 
 export function buildRunChallenge({roomId,roomTitle,map,catalog,targetHp,encounter,budget=PLAYER_BUDGET}){
   const legal=assertLegalEncounter({roomId,catalog,encounter,budget});
-  if(legal.governed)return buildGovernedBrutalChallenge({roomId,roomTitle,map,catalog,targetHp,encounter});
-  return{...buildS7Challenge({roomId,roomTitle,map,catalog,targetHp,encounter,budget}),governed:false};
+  if(legal.governed)return buildSpreadChallenge({roomId,roomTitle,map,catalog,targetHp,encounter,governed:true,budget});
+  // up to three guards: the frozen S7 builder, byte-for-byte the previous behaviour
+  if(monstersOf(encounter).length<=3)return{...buildS7Challenge({roomId,roomTitle,map,catalog,targetHp,encounter,budget}),governed:false};
+  return buildSpreadChallenge({roomId,roomTitle,map,catalog,targetHp,encounter,governed:false,budget});
 }
 
 // The base Simulation validates budget <= 100 in its constructor. For the governed BRUTAL ONLY the
