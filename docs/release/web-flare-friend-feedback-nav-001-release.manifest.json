@@ -1,6 +1,6 @@
 {
   "label": "FRIEND_CHALLENGE_FEEDBACK_NAV_001 complete multi-root release archive",
-  "sourceSha": "35567116ad1ff0dea66d128ee98255709058a421",
+  "sourceSha": "dc9133ce276baafb03a220b5054bab63271da8b5",
   "fileCount": 130,
   "zip": "web-flare-friend-feedback-nav-001-release.zip",
   "files": [
@@ -402,9 +402,9 @@
     },
     {
       "path": "flare-s8a/level2-content.mjs",
-      "sha256": "8eeca2e7b3103193444781adecc795a3744693fc1f5817a39f3531789af09fd0",
+      "sha256": "9099f56725f488536b42c28f84792efd9274159833c7f5d2d8995f286aa85f31",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 4799
+      "bytes": 4784
     },
     {
       "path": "flare-s8a/loading-view.mjs",
