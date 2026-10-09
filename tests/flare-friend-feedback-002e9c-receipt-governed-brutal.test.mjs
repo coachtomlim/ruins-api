@@ -143,17 +143,15 @@ test('client receipt payload preserves all five monsters and accepts 39 Gold; 40
   assert.throws(()=>buildResultReceipt({publicToken:token,roomId:'iron-labyrinth-08',encounter:{enemyTypes:BRUTAL},rulesVersion:'s8a-1',result:{status:'cleared',hp:30,maxHp:100},heroGold:40,attemptToken:attempt}),/INVALID_HERO_GOLD/);
 });
 
-test('client guard (final): server proven on staging, so the default allows up to five monsters; six and unknown ids stay blocked',()=>{
+test('client guard (final, tightened by 002E9D): ordinary <=3 guards and the room-bound governed Brutal submit; six, unknown ids and ordinary 4+ stay held back',()=>{
   assert.equal(RECEIPT_SERVER_MAX_ENEMIES,5);
-  assert.equal(receiptSupportsEncounter({enemyTypes:BRUTAL}),true,'default: governed five-monster Brutal submits');
-  assert.equal(receiptSupportsEncounter({enemyTypes:[...BRUTAL,'goblin']}),false,'six monsters never submit');
+  assert.equal(receiptSupportsEncounter({enemyTypes:BRUTAL},{roomId:'iron-labyrinth-08'}),true,'governed five-monster Brutal submits');
+  assert.equal(receiptSupportsEncounter({enemyTypes:[...BRUTAL,'goblin']},{roomId:'iron-labyrinth-08'}),false,'six monsters never submit');
   assert.equal(receiptSupportsEncounter({enemyTypes:['skeleton','goblin','none']}),true,'ordinary 2-monster EASY');
   assert.equal(receiptSupportsEncounter({enemyTypes:['skeleton','goblin','skeleton']}),true,'ordinary 3-monster JUST NICE');
   assert.equal(receiptSupportsEncounter({enemyTypes:['zombie','skeleton-archer','goblin']}),true,'Level 2 monsters still supported');
-  assert.equal(receiptSupportsEncounter({enemyTypes:['goblin','goblin','skeleton','skeleton','dragon']}),false,'unknown id blocked');
-  assert.equal(receiptSupportsEncounter({enemyTypes:['goblin','goblin','skeleton','skeleton','Skeleton']}),false);
-  assert.equal(receiptSupportsEncounter({enemyTypes:['goblin','skeleton','none']}),true);
-  assert.equal(receiptSupportsEncounter({enemyTypes:['dragon']},{maxEnemies:5}),false);
+  assert.equal(receiptSupportsEncounter({enemyTypes:['goblin','goblin','skeleton','skeleton','dragon']},{roomId:'iron-labyrinth-08'}),false,'unknown id blocked');
+  assert.equal(receiptSupportsEncounter({enemyTypes:['goblin','goblin','skeleton','skeleton','Skeleton']},{roomId:'iron-labyrinth-08'}),false);
   assert.deepEqual([...RECEIPT_SERVER_ENEMY_IDS],['goblin','skeleton','goblin-elite','antlion','zombie','skeleton-archer']);
 });
 

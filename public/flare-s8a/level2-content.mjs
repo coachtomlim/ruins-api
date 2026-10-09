@@ -1,3 +1,4 @@
+import {isGovernedBrutal} from './governed-encounter.mjs';
 // 002E9 Stage A — Level 2 monster content (Zombie, Skeleton Archer).
 //
 // public/flare-s7 and public/flare-s71 are frozen predecessor trees (tools/frozen-web-trees.json), so
@@ -51,11 +52,19 @@ export function extendCatalogWithLevel2(catalog,model){
 // outside it are not submitted, and the client reports that truthfully instead of attempting a call
 // the server is certain to reject.
 export const RECEIPT_SERVER_ENEMY_IDS=Object.freeze(['goblin','skeleton','goblin-elite','antlion','zombie','skeleton-archer']);
-// 002E9C: the governed Level 1 BRUTAL preset has FIVE monsters. The result service accepts up to five slots
-// since migration 20261004 (applied and proven on S8B staging); anything above three is still only legal for
-// that exact governed preset, which the server enforces. Six or more monsters are never submitted.
+// 002E9C/002E9D: what the result service accepts.
+//  * up to RECEIPT_SERVER_ORDINARY_MAX_ENEMIES monsters for ANY legal encounter (proven on S8B staging: three);
+//  * the exact governed Level 1 BRUTAL preset (five monsters, room iron-labyrinth-08) up to RECEIPT_SERVER_MAX_ENEMIES
+//    (proven on S8B staging by the 002E9C migration).
+// The Level 2 guard mixer can build four or five legal guards (e.g. 5 x Goblin = 100). The 002E9D migration
+// (20261005) lets the server accept those, but it is NOT yet applied/proven, so until PM proves it the client holds
+// those receipts back honestly. After PM proof set RECEIPT_SERVER_ORDINARY_MAX_ENEMIES to 8 (one line). Six or more
+// governed monsters and unknown ids are never submitted.
+export const RECEIPT_SERVER_ORDINARY_MAX_ENEMIES=3;
 export const RECEIPT_SERVER_MAX_ENEMIES=5;
-export function receiptSupportsEncounter(encounter,{maxEnemies=RECEIPT_SERVER_MAX_ENEMIES}={}){
+export function receiptSupportsEncounter(encounter,{roomId='',maxOrdinary=RECEIPT_SERVER_ORDINARY_MAX_ENEMIES,maxGoverned=RECEIPT_SERVER_MAX_ENEMIES}={}){
   const enemies=(encounter?.enemyTypes||[]).filter(id=>id&&id!=='none');
-  return enemies.length<=maxEnemies&&enemies.every(id=>RECEIPT_SERVER_ENEMY_IDS.includes(id));
+  if(!enemies.every(id=>RECEIPT_SERVER_ENEMY_IDS.includes(id)))return false;
+  if(enemies.length<=maxOrdinary)return true;
+  return enemies.length<=maxGoverned&&isGovernedBrutal(roomId,encounter);
 }
