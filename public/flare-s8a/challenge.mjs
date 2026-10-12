@@ -1,3 +1,5 @@
+// 002E9E: FIRST import. Verifies the document matches this build (or recovers/blocks) before any app module runs.
+import './build-gate.mjs';
 import {loadS3ActorPack} from './actors.mjs';
 import {S7_ROOMS,loadS7StockRoom,drawPreview} from '../flare-s71/rooms.mjs';
 import {applyRunnerModel,runnerSummary,TRAP_IDS,SUPPORT_IDS} from '../flare-s71/game.mjs';
