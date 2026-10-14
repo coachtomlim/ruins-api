@@ -1,6 +1,6 @@
 {
   "releaseId": "WEB-FLARE-RC1",
-  "generatedAt": "2026-10-12T03:35:31.392Z",
+  "generatedAt": "2026-10-14T03:20:27.102Z",
   "entryPoints": [
     "public/flare-s8a/index.html",
     "public/flare-s8a/challenge.html",
@@ -8,7 +8,7 @@
     "public/flare-s8b/practice.html",
     "public/flare-s8b/daily-trial.html"
   ],
-  "fileCount": 132,
+  "fileCount": 131,
   "files": [
     {
       "path": "public/flare-p0/data/catalog.json",
@@ -275,18 +275,6 @@
       "bytes": 684
     },
     {
-      "path": "public/flare-s8a/build-gate.mjs",
-      "sha256": "ffa9659bc403a89d29edcdd062f0469a150029f2883a9c72e9bcb43b688a9cd2",
-      "mime": "text/javascript; charset=utf-8",
-      "bytes": 5064
-    },
-    {
-      "path": "public/flare-s8a/build-id.mjs",
-      "sha256": "ea1ea7eb34ad82530c161c54d688932446e3387fcbda6bbd2e91648f4652dfd2",
-      "mime": "text/javascript; charset=utf-8",
-      "bytes": 571
-    },
-    {
       "path": "public/flare-s8a/builder-invite.mjs",
       "sha256": "ec5f1e959c6ab92aac444f99afcb0e7dc7e34de2ab0abc823abbd076fdff4b71",
       "mime": "text/javascript; charset=utf-8",
@@ -329,16 +317,22 @@
       "bytes": 1147
     },
     {
+      "path": "public/flare-s8a/challenge-app.mjs",
+      "sha256": "4d642c4e6edb9e2f6f942d5cb87656310608d4f0a61bd95b83c462cffb9e1672",
+      "mime": "text/javascript; charset=utf-8",
+      "bytes": 43288
+    },
+    {
       "path": "public/flare-s8a/challenge.html",
-      "sha256": "05d7c2c640789e60899a8985036ac06a02d4e1f692ba50f9ddfaa42bcfc1b780",
+      "sha256": "4c4a4dc50bdcb65723d872c1ec89509d0e9e392ae96d448c90a19e7e58bef887",
       "mime": "text/html; charset=utf-8",
-      "bytes": 9829
+      "bytes": 9810
     },
     {
       "path": "public/flare-s8a/challenge.mjs",
-      "sha256": "f4b8040c883656ce5cbbb49ec636ba6ce60a4e2c21cb588f0381d71f6c8f02de",
+      "sha256": "432de1bc1a59ba3cf58fa62c1069c55dac350ecd222f75235046273b05d12a90",
       "mime": "text/javascript; charset=utf-8",
-      "bytes": 43582
+      "bytes": 7311
     },
     {
       "path": "public/flare-s8a/customize-panels.mjs",
