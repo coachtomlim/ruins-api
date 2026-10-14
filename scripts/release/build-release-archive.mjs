@@ -25,6 +25,17 @@ const MIME_BY_EXT={
   '.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8'
 };
 
+// Python 3 is part of this project's tooling; try the usual launcher names.
+function runPython(args){
+  const candidates=[process.env.PYTHON,'python','python3','py'].filter(Boolean);
+  let lastError;
+  for(const exe of candidates){
+    try{return execFileSync(exe,args,{encoding:'utf8',stdio:['ignore','pipe','pipe']});}
+    catch(error){lastError=error;if(error.code!=='ENOENT')throw error;}
+  }
+  throw lastError;
+}
+
 function gitShow(sha,relPath){
   return execFileSync('git',['-C',root,'show',`${sha}:${relPath}`]);
 }
@@ -48,12 +59,15 @@ function buildArchive({label,sha,files,deployRootPrefix,zipName}){
   }
   const zipPath=path.join(outDir,zipName);
   if(existsSync(zipPath))rmSync(zipPath);
-  // PowerShell Compress-Archive: available on this Windows host, produces a standard .zip that
-  // cPanel File Manager's Extract action can read directly.
-  execFileSync('powershell.exe',[
-    '-NoProfile','-NonInteractive','-Command',
-    `Compress-Archive -Path '${stage}\\*' -DestinationPath '${zipPath}' -Force`
-  ]);
+  // 002E9G: the ZIP is written by scripts/release/portable_zip.py (Python standard-library zipfile) so every member
+  // name is an explicit POSIX path ('flare-p0/src/core/flare.mjs') with explicit parent directory entries. The old
+  // PowerShell Compress-Archive wrote Windows backslash member names, which Windows tolerates but cPanel/Linux
+  // extractors do not: nested files were silently lost on HostGator.
+  const listPath=path.join(stage,'..',path.basename(stage)+'.files.json');
+  writeFileSync(listPath,JSON.stringify(manifestFiles.map(f=>f.path)));
+  const zipReport=JSON.parse(runPython([path.join(__dirname,'portable_zip.py'),'build',stage,zipPath,listPath]).toString().trim());
+  rmSync(listPath,{force:true});
+  if(zipReport.fileEntries!==manifestFiles.length)throw new Error(`${zipName}: ${zipReport.fileEntries} file entries != ${manifestFiles.length} manifest files`);
   rmSync(stage,{recursive:true,force:true});
   const manifest={label,sourceSha:sha,fileCount:manifestFiles.length,zip:zipName,files:manifestFiles};
   const manifestPath=zipPath.replace(/\.zip$/,'.manifest.json');
