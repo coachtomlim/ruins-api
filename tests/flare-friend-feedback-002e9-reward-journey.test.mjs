@@ -104,7 +104,7 @@ test('real Flare art, not emoji: monsters, traps, health potion and the Broken G
   assert.match(FLARE_ART['small-potion'].src,/images\/loot\/hp_potion\.png$/);
   assert.deepEqual(CATEGORY_ART,{monsters:'goblin',traps:'spike-trap',supports:'small-potion',dungeons:null});
   assert.equal(S7_ROOMS['iron-labyrinth-07'].source,'mods/empyrean_campaign/maps/iron_labyrinth/room7.txt');
-  const files=await Promise.all(['reward-journey.mjs','reward-journey-view.mjs','flare-art.mjs','challenge.mjs','card-icons.mjs'].map(f=>read(`public/flare-s8a/${f}`)));
+  const files=await Promise.all(['reward-journey.mjs','reward-journey-view.mjs','flare-art.mjs','challenge-app.mjs','card-icons.mjs'].map(f=>read(`public/flare-s8a/${f}`)));
   for(const src of files)assert.doesNotMatch(src,/[👾⚠🧪🏰]/u);
 });
 
@@ -120,7 +120,7 @@ test('editor option cards still reverse the selected background strongly (gold f
 });
 
 test('Check out your new gizmos starts the in-journey LOOT REVIEW; it does not open EDIT DUNGEON (002E9C)',async()=>{
-  const [mjs,view]=await Promise.all([read('public/flare-s8a/challenge.mjs'),read('public/flare-s8a/reward-journey-view.mjs')]);
+  const [mjs,view]=await Promise.all([read('public/flare-s8a/challenge-app.mjs'),read('public/flare-s8a/reward-journey-view.mjs')]);
   assert.match(view,/button\('j-next',s\.try,\(\)=>goId\(s\.next\)\)/);
   assert.doesNotMatch(view,/onTry/);
   assert.doesNotMatch(mjs,/onTry/);
@@ -130,13 +130,13 @@ test('Check out your new gizmos starts the in-journey LOOT REVIEW; it does not o
 });
 
 test('account conversion hands off through the existing SAVE_GOAL transition; guest simply dismisses',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/onCreateAccount:\(\)=>\{journeyView\.dismiss\(\);if\(session\.journey==='rewards'\)transition\('SAVE_GOAL'\);else\{saveGuestReturn\(SESSION_STORE,location\);location\.href='\/quick-dungeon\/flare-s8b\/';\}\}/);
   assert.match(mjs,/onGuest:\(\)=>journeyView\.dismiss\(\)/);
 });
 
 test('result variables feeding the journey come from buildResultViewModel (target, actual, difference, both Golds)',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/renderRewardJourney\(m\);\}/);
   assert.match(mjs,/buildRewardJourney\(\{result:m,senderName:session\.senderName,level:builderLevel,nameOf:journeyNameOf\}\)/);
 });
@@ -181,7 +181,7 @@ test('receipt plan: a legacy challenge with no public token plans nothing and bl
 });
 
 test('completeRuntime plans the receipt before any presentation and always sends in finally (retry/idempotency/supersession untouched)',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   const start=mjs.indexOf('completeRuntime(result,score){'),end=mjs.indexOf('replayRuntime(');
   const body=mjs.slice(start,end);
   assert.ok(body.indexOf('planResultReceipt(')<body.indexOf('show();'),'payload is built before show()');

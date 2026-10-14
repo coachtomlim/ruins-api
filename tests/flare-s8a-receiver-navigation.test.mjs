@@ -7,7 +7,7 @@ import {buildRegistrationViewModel} from '../public/flare-s8a/registration-view-
 import {registrationCopy} from '../public/flare-s8a/mission-copy.mjs';
 
 const readHtml=()=>readFile(new URL('../public/flare-s8a/challenge.html',import.meta.url),'utf8');
-const readMjs=()=>readFile(new URL('../public/flare-s8a/challenge.mjs',import.meta.url),'utf8');
+const readMjs=()=>readFile(new URL('../public/flare-s8a/challenge-app.mjs',import.meta.url),'utf8');
 
 test('HOME control exists once, points at the public S8B hub, and is outside runtime-only markup',async()=>{
   const html=await readHtml();
@@ -52,7 +52,7 @@ test('runtime has no HOME/BACK controls that could corrupt an active run',async(
 });
 
 test('opening copy (V18): one combined headline, one explanation paragraph, Runner level label, VIEW RUNNER',async()=>{
-  const [html,mjs]=await Promise.all([readHtml(),readFile(new URL('../public/flare-s8a/challenge.mjs',import.meta.url),'utf8')]);
+  const [html,mjs]=await Promise.all([readHtml(),readFile(new URL('../public/flare-s8a/challenge-app.mjs',import.meta.url),'utf8')]);
   assert.match(mjs,/HAS CHALLENGED YOU TO BUILD A DUNGEON FOR 'THE RUNNER'/);
   assert.match(mjs,/Your Dungeon will contain monsters who will attack the Runner! But fear not, we have devised some good ones for you already! Just choose one and go!/);
   assert.match(html,/id="inviteExplain"/);

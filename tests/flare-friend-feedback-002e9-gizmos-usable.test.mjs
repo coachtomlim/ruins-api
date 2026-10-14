@@ -49,20 +49,20 @@ test('the editor lists exactly the Level 2 kit with real costs, and the DUNGEONS
 });
 
 test('levelling up rebuilds controls but re-applies the player\'s current selection and room',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   const fn=mjs.slice(mjs.indexOf('function applyBuilderLevel(level){'),mjs.indexOf('function',mjs.indexOf('function applyBuilderLevel(level){')+10));
   assert.match(fn,/const keepRoomId=selectedSpec\(\)\?\.id,keep=encounter\(\);/);
   assert.match(fn,/renderControls\(\);applyEncounter\(keep\);session=setEncounter\(session,encounter\(\)\);/);
 });
 
 test('dungeon cards change the real session room (Broken Gallery is runnable, not a preview)',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/input\.addEventListener\('change',\(\)=>\{roomIndex=specs\.findIndex\(x=>x\.id===spec\.id\);session=selectDungeon\(session,spec\.id\);show\(\);\}\);/);
   assert.match(mjs,/window\.__s8aData=\{model,catalog,invite,runner,rooms,specs:allSpecs,/);
 });
 
 test('trap/support editor cards use real Flare art where governed art exists; guard-mixer monsters use the packaged governed thumbnails',async()=>{
-  const [mjs,icons]=await Promise.all([read('public/flare-s8a/challenge.mjs'),read('public/flare-s8a/card-icons.mjs')]);
+  const [mjs,icons]=await Promise.all([read('public/flare-s8a/challenge-app.mjs'),read('public/flare-s8a/card-icons.mjs')]);
   assert.match(mjs,/const icon=flareArtIcon\(item\.id\)\|\|encounterItemBadge\(item\.id\);/);
   assert.match(mjs,/i\.src=LOOT_ASSETS\[m\.id\]/);
   assert.match(icons,/export function flareArtIcon\(id\)\{\s*if\(!FLARE_ART\[id\]\)return null;/);

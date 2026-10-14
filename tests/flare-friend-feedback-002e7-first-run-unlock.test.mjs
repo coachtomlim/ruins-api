@@ -8,7 +8,7 @@ const read=p=>readFile(new URL(`../${p}`,import.meta.url),'utf8');
 // --- FIRST-RUN GATE ---
 
 test('customization is locked by default and the lock is tracked via a current-session level, not a new permanent store (002E9: Builder Level in sessionStorage)',async()=>{
-  const [mjs,level]=await Promise.all([read('public/flare-s8a/challenge.mjs'),read('public/flare-s8a/builder-level.mjs')]);
+  const [mjs,level]=await Promise.all([read('public/flare-s8a/challenge-app.mjs'),read('public/flare-s8a/builder-level.mjs')]);
   assert.match(mjs,/let builderLevel=readBuilderLevel\(SESSION_STORE\);/);
   assert.match(mjs,/let customizationUnlocked=customizationUnlockedAt\(builderLevel\);/);
   assert.match(level,/export const BUILDER_LEVEL_KEY='s8aBuilderLevel'/);
@@ -27,14 +27,14 @@ test('a desirable locked teaser (not a bare hidden element) is shown in place of
 });
 
 test('all 3 presets (EASY / JUST NICE / BRUTAL) and USE THIS DUNGEON remain usable before any run, unaffected by the lock',async()=>{
-  const html=await read('public/flare-s8a/challenge.html'),mjs=await read('public/flare-s8a/challenge.mjs');
+  const html=await read('public/flare-s8a/challenge.html'),mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(html,/id="dungeonPresets" class="dungeon-chooser"/);
   assert.match(html,/id="useDungeon" class="primary">USE THIS DUNGEON/);
   assert.match(mjs,/const presetList=\(\)=>dungeonPresets;/);
 });
 
 test('first run completion grants Builder Level 2 exactly once for this session (002E9: also arms the reward journey)',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   const completeStart=mjs.indexOf('completeRuntime(result,score){');
   const complete=mjs.slice(completeStart,mjs.indexOf('replayRuntime('));
   assert.match(complete,/const grant=grantFirstRunLevel\(SESSION_STORE,builderLevel\);justUnlocked=grant\.leveledUp;/);
@@ -44,7 +44,7 @@ test('first run completion grants Builder Level 2 exactly once for this session 
 test('(see tests/flare-friend-feedback-002e8-fullscreen-unlock.test.mjs for the full-screen ceremony, phased lock animation, reduced-motion and direct tool handoff coverage)',()=>{assert.ok(true)});
 
 test('normal UI entry points into customization (mission CUSTOMIZE, ready EDIT DUNGEON, rewards CUSTOMIZE THIS DUNGEON) all render through the one gated customize branch — no bypass path',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/\$\('openCustomize'\)\.addEventListener\('click',\(\)=>transition\('CUSTOMIZE'\)\)/);
   assert.match(mjs,/\$\('editDungeon'\)\.addEventListener\('click',\(\)=>transition\('CUSTOMIZE'\)\)/);
   assert.match(mjs,/\$\('editThisDungeon'\)\.addEventListener\('click',\(\)=>transition\('EDIT_DUNGEON'\)\)/);
@@ -94,14 +94,14 @@ test('active tab (MONSTERS/TRAPS/SUPPORTS) has an unmistakable visual treatment,
 });
 
 test('duplicate selected-state treatment is removed — no always-present "SELECTED" badge alongside the SELECT/REMOVE action',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.doesNotMatch(mjs,/card-selected-mark/);
   assert.match(mjs,/function renderGuardMixer\(/);
   assert.match(mjs,/function itemCard\(/);
 });
 
 test('option card density is reworked: icon, name, effect, cost — not a tall centered stack',async()=>{
-  const [mjs,css]=await Promise.all([read('public/flare-s8a/challenge.mjs'),read('public/flare-s8a/style.css')]);
+  const [mjs,css]=await Promise.all([read('public/flare-s8a/challenge-app.mjs'),read('public/flare-s8a/style.css')]);
   assert.match(mjs,/body\.append\(strong,effectLine,costLine\);/);
   assert.match(css,/\.card\{display:grid;grid-template-columns:auto 1fr/);
 });
@@ -116,7 +116,7 @@ test('action copy is SAVE CHANGES, not the repetitive DONE/OPTIONAL wording',asy
 // --- RESULT ---
 
 test('002E9B: no inline unlock card or status remains on the rewards screen — the reward journey is the only unlock presentation',async()=>{
-  const [html,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge.mjs')]);
+  const [html,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge-app.mjs')]);
   assert.doesNotMatch(html,/id="unlockMoment"/);
   assert.doesNotMatch(mjs,/function renderUnlockMoment\(\)\{/);
   assert.doesNotMatch(html,/unlockedStatus|unlocked-status/);
@@ -142,21 +142,21 @@ test('result receipt status, retry control and replay-replacement notice are unt
 });
 
 test('replay/current-result and attempt-token semantics are untouched',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/replayRuntime\(\)\{currentAttemptToken=createAttemptToken\(\);session=advanceReceiver\(session,'RUN_AGAIN'\);show\(\);\}/);
 });
 
 // --- REGRESSION ---
 
 test('002E5 single-dungeon visual chooser (3 presets, real preview, LEFT/RIGHT) is unregressed',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/function renderDungeonChooser\(\)\{/);
   assert.match(mjs,/function renderDungeonChooserFrame\(\)\{/);
   assert.match(mjs,/drawPreview\(\$\('presetPreview'\),roomData\.map,roomData\.tiles\)/);
 });
 
 test('Runner Inspector, HOME/BACK and account handoff remain untouched by this change',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/function openRunnerInspector\(\)\{/);
   assert.match(mjs,/\$\('navBack'\)\.addEventListener\('click',\(\)=>transition\('BACK'\)\)/);
   assert.match(mjs,/FRIEND_GOAL_CLAIM_KEY/);

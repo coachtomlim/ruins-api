@@ -74,6 +74,10 @@ function scanModule(modPath){
   const imports=/\b(?:import|export)\s+(?:[^'"]*?\s+from\s+)?['"]([^'"]+)['"]/g;
   while((m=imports.exec(src)))resolveAndQueue(m[1],dir);
 
+  // 002E9F: the dependency-free bootstrap loads the application with a literal dynamic import().
+  const dynamicImports=/\bimport\(\s*['"]([^'"]+)['"]/g;
+  while((m=dynamicImports.exec(src)))resolveAndQueue(m[1],dir);
+
   const urls=/new URL\(\s*['"]([^'"]+)['"]\s*,\s*import\.meta\.url\s*\)/g;
   while((m=urls.exec(src)))resolveAndQueue(m[1],dir);
 

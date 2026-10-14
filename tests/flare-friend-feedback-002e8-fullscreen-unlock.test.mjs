@@ -18,7 +18,7 @@ test('the unlock moment is a true full-screen overlay (fixed, full-viewport, abo
 });
 
 test('the 002E8 lock/unlock ceremony is gone — one unlock experience only, no stacked duplicate',async()=>{
-  const [html,mjs,css]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge.mjs'),read('public/flare-s8a/style.css')]);
+  const [html,mjs,css]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge-app.mjs'),read('public/flare-s8a/style.css')]);
   for(const gone of ['unlockOverlay','unlockShackle','unlockLockBody','unlockLockGlow','unlockToolCards','continueToResults','unlockSuccessText','unlockFinalText','FIRST RUN COMPLETE!','DUNGEON BUILDER TOOLS UNLOCKED','CONTINUE TO RESULTS'])assert.doesNotMatch(html,new RegExp(gone));
   for(const gone of ['runUnlockSequence','buildUnlockToolCards','UNLOCK_TOOLS','phase-locked','phase-unlocking','phase-revealed','unlockCeremonyShown'])assert.doesNotMatch(mjs,new RegExp(gone));
   assert.doesNotMatch(css,/\.unlock-overlay|\.unlock-tool-card|\.unlock-lock/);
@@ -33,14 +33,14 @@ test('normal result/receipt/reward DOM remains intact underneath and is not repl
 });
 
 test('receipt submission is wired independently of the overlay — completeRuntime always calls sendResultReceipt in its finally block',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   const completeStart=mjs.indexOf('completeRuntime(result,score){');
   const complete=mjs.slice(completeStart,mjs.indexOf('replayRuntime('));
   assert.match(complete,/finally\{void sendResultReceipt\(\);\}/);
 });
 
 test('the rewards screen shows no unlock status at all (002E9B retired the inline cyan status)',async()=>{
-  const [html,mjs,css]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge.mjs'),read('public/flare-s8a/style.css')]);
+  const [html,mjs,css]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge-app.mjs'),read('public/flare-s8a/style.css')]);
   assert.doesNotMatch(html,/unlockedStatus|unlocked-status/);
   assert.doesNotMatch(mjs,/unlockedStatus/);
   assert.doesNotMatch(css,/unlocked-status/);
@@ -48,7 +48,7 @@ test('the rewards screen shows no unlock status at all (002E9B retired the inlin
 });
 
 test('the journey runs only once per first completion and does not replay on a later show() while still on the rewards screen',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/let heroActorPack=null,journeyShown=false;/);
   assert.match(mjs,/journeyShown=true;/);
 });

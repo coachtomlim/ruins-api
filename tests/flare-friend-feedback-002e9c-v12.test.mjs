@@ -26,7 +26,7 @@ const names=e=>[...e.enemyTypes].filter(x=>x!=='none');
 
 // ---------- A. Level 1 preset authority ----------
 test('1: the Owner-only composition-authority screen is not in the player UI',async()=>{
-  for(const f of ['challenge.html','challenge.mjs','style.css','reward-journey.mjs','reward-journey-view.mjs'])
+  for(const f of ['challenge.html','challenge-app.mjs','style.css','reward-journey.mjs','reward-journey-view.mjs'])
     assert.doesNotMatch(await read(`public/flare-s8a/${f}`),/OWNER ONLY|COMPOSITION AUTHORITY|Three difficulty mixes|NOT SHOWN TO PLAYERS/i,f);
 });
 test('2: Level 1 EASY is exactly Skeleton + Goblin',()=>{assert.deepEqual(names(EASY.encounter),['skeleton','goblin']);assert.equal(EASY.label,'EASY');assert.equal(EASY.roomId,'iron-labyrinth-01');assert.equal(S7_ROOMS[EASY.roomId].name,'Pillar Court')});
@@ -43,7 +43,7 @@ test('5: no Level 1 preset contains support, traps, Zombie, Skeleton Archer or B
   assert.doesNotMatch(JSON.stringify(LEVEL1_PRESETS.map(p=>[p.encounter.enemyTypes,p.encounter.supportTypes,p.encounter.trapTypes,p.roomId])),/potion|tonic|trap-|zombie|archer|-07/i);
 });
 test('player chooser maps EASY / JUST NICE / BRUTAL to Pillar Court / Crossed Court / Scattered Hall, defaults to JUST NICE, and ships no Owner screen',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.deepEqual(LEVEL1_PRESETS.map(p=>[p.label,S7_ROOMS[p.roomId].name]),[['EASY','Pillar Court'],['JUST NICE','Crossed Court'],['BRUTAL','Scattered Hall']]);
   assert.match(mjs,/let presetIndex=1;/);assert.match(mjs,/const presetList=\(\)=>dungeonPresets;/);
   const presets=buildLevel1Presets({catalog,model,runnerId:'warrior-l1',runner,targetHp:50});
@@ -106,7 +106,7 @@ test('the frozen predecessor trees were not edited for five-monster support',()=
   assert.match(g,/class GovernedSimulation extends Simulation/);
 });
 test('the receiver keeps one encounter source: the active preset as authored, otherwise the guard mixer',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/const encounter=\(\)=>activePreset\?structuredClone\(activePreset\.encounter\):domEncounter\(\);/);
   assert.match(mjs,/function applyPreset\(preset\)\{[\s\S]*?activePreset=preset;\r?\n\}/);
   assert.match(mjs,/function commitEditorChange\(\)\{activePreset=null;/);
@@ -115,7 +115,7 @@ test('the receiver keeps one encounter source: the active preset as authored, ot
   assert.doesNotMatch(rt,/buildS7Challenge|new Simulation\(/);
 });
 test('the editor is a quantity mixer: no per-guard position controls, no Guard 4 / Guard 5 slots, eight guards of capacity',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/function renderGuardMixer\(panel,monsters\)\{/);
   assert.doesNotMatch(mjs,/guard-3|guard-4|GUARD 4|GUARD 5|GUARD \$\{/);
   assert.equal(MAX_GUARD_SLOTS,8);
@@ -140,7 +140,7 @@ test('R: BRUTAL on the other starter rooms is not a governed run (the exception 
 
 // ---------- F. READY (V12) ----------
 test('15-18: READY is a static display — down-pointing yellow triangle, estimate numeral inside a green circle, ESTIMATED FINISH below, not interactive',async()=>{
-  const [html,css,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/style.css'),read('public/flare-s8a/challenge.mjs')]);
+  const [html,css,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/style.css'),read('public/flare-s8a/challenge-app.mjs')]);
   const ready=html.slice(html.indexOf('data-screen="ready"'),html.indexOf('data-screen="runtime"'));
   const gauge=ready.slice(ready.indexOf('id="readyGauge"'),ready.indexOf('class="summary-box"'));
   assert.match(css,/\.sg-target\{[^}]*border-top:18px solid #f2c45d/);          // points DOWN toward the target
@@ -158,7 +158,7 @@ test('15-18: READY is a static display — down-pointing yellow triangle, estima
   assert.doesNotMatch(css.match(/\.static-gauge\{[^}]*\}/)[0],/cursor:(pointer|grab)/);
 });
 test('READY summary: dungeon, difficulty, monster count and level only — no guard positions, no build budget',async()=>{
-  const [html,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge.mjs')]);
+  const [html,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge-app.mjs')]);
   const ready=html.slice(html.indexOf('data-screen="ready"'),html.indexOf('data-screen="runtime"'));
   assert.doesNotMatch(ready,/Guard|GUARD|BUDGET|budget/);
   const fn=mjs.slice(mjs.indexOf('function renderReady(m){'),mjs.indexOf('function renderRunnerInspector'));
@@ -219,10 +219,10 @@ test('25: Broken Gallery gets the flashing NEW DUNGEON badge and confetti; Scatt
 test('26/27/28: CTA is exactly "Check out your new gizmos" and starts the loot review, never EDIT DUNGEON',async()=>{
   const g=journey().scenes.find(s=>s.id==='gizmos');
   assert.equal(g.try,'Check out your new gizmos');assert.equal(g.next,'loot-monsters');
-  const [view,mjs]=await Promise.all([read('public/flare-s8a/reward-journey-view.mjs'),read('public/flare-s8a/challenge.mjs')]);
+  const [view,mjs]=await Promise.all([read('public/flare-s8a/reward-journey-view.mjs'),read('public/flare-s8a/challenge-app.mjs')]);
   assert.match(view,/button\('j-next',s\.try,\(\)=>goId\(s\.next\)\)/);
   assert.doesNotMatch(view,/EDIT_DUNGEON|onTry|openUnlockedTool/);
-  for(const f of ['reward-journey.mjs','reward-journey-view.mjs','challenge.mjs'])assert.doesNotMatch(await read(`public/flare-s8a/${f}`),/Try out new gizmos/i);
+  for(const f of ['reward-journey.mjs','reward-journey-view.mjs','challenge-app.mjs'])assert.doesNotMatch(await read(`public/flare-s8a/${f}`),/Try out new gizmos/i);
   // the only journey path into the editor is the explicit CUSTOMIZE THIS DUNGEON on the last scene
   assert.match(mjs,/onCustomize:\(\)=>\{[\s\S]*?openUnlockedTool\('monsters'\);\s*\}/);
   assert.equal(view.split('onCustomize').length-1,2);
@@ -241,7 +241,7 @@ test('loot review sequence: overview -> monsters -> traps -> support -> dungeon 
   assert.equal(new Set(Object.values(JOURNEY_STAGE_BY_SCENE)).size,7);
 });
 test('30: no retired 002E8 cyan unlock status or ceremony returns',async()=>{
-  for(const f of ['challenge.html','challenge.mjs','style.css','reward-journey.mjs','reward-journey-view.mjs'])assert.doesNotMatch(await read(`public/flare-s8a/${f}`),/unlockedStatus|unlocked-status|unlockOverlay|unlock-overlay|phase-unlocking|BUILDER LEVEL 2 · THIS SESSION/,f);
+  for(const f of ['challenge.html','challenge-app.mjs','style.css','reward-journey.mjs','reward-journey-view.mjs'])assert.doesNotMatch(await read(`public/flare-s8a/${f}`),/unlockedStatus|unlocked-status|unlockOverlay|unlock-overlay|phase-unlocking|BUILDER LEVEL 2 · THIS SESSION/,f);
 });
 test('old New Gizmos tool-card/detail UI is gone (replaced by the V12 overview + loot review)',async()=>{
   const [css,view]=await Promise.all([read('public/flare-s8a/style.css'),read('public/flare-s8a/reward-journey-view.mjs')]);

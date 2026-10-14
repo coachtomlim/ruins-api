@@ -27,7 +27,7 @@ const run=(roomId,encounter)=>{const {built,sim}=createRunSimulation({roomId,roo
 
 // ---------------- INVITATION ----------------
 test('INVITATION: one combined headline, one explanation paragraph, Level label, VIEW RUNNER — no builder-role tagline',async()=>{
-  const [html,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge.mjs')]);
+  const [html,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge-app.mjs')]);
   const inv=html.slice(html.indexOf('data-screen="invitation"'),html.indexOf('data-screen="mission"'));
   assert.equal((inv.match(/<h1\b/g)||[]).length,1);
   assert.equal((inv.match(/class="invite-extra"/g)||[]).length,1);
@@ -38,7 +38,7 @@ test('INVITATION: one combined headline, one explanation paragraph, Level label,
   assert.match(inv,/VIEW RUNNER/);assert.match(inv,/id="viewRunner"/);
 });
 test('RUNNER: the real animated canvas, smaller, transparent, fully visible; the inspector still shows real HP / ATK / DEF / weapon / shield',async()=>{
-  const [html,css,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/style.css'),read('public/flare-s8a/challenge.mjs')]);
+  const [html,css,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/style.css'),read('public/flare-s8a/challenge-app.mjs')]);
   assert.match(html,/<canvas id="inviteHeroCanvas"/);
   assert.match(css,/#inviteHeroCanvas\{width:96px!important;height:117px!important;background:transparent/);
   assert.doesNotMatch(css.match(/#inviteHeroCanvas\{[^}]*\}/)[0],/background:#|background:linear|border/);
@@ -51,7 +51,7 @@ test('RUNNER: the real animated canvas, smaller, transparent, fully visible; the
 
 // ---------------- TARGET ----------------
 test('TARGET: downward yellow triangle, display-only gauge, exact band wording, consistent 35% / 70% bands',async()=>{
-  const [html,css,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/style.css'),read('public/flare-s8a/challenge.mjs')]);
+  const [html,css,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/style.css'),read('public/flare-s8a/challenge-app.mjs')]);
   assert.match(css,/\.range-target\{[^}]*border-top:18px solid #f2c45d/);assert.doesNotMatch(css.match(/\.range-target\{[^}]*\}/)[0],/border-bottom/);
   assert.match(css,/\.range-gauge\{[^}]*pointer-events:none/);
   const gauge=html.slice(html.indexOf('id="inviteGauge"'),html.indexOf('id="targetRules"'));
@@ -92,7 +92,7 @@ test('LOADING: a genuine overlay for pending work only — paints after a tiny g
   });
 });
 test('LOADING: reduced-motion gets a static, clearly labelled progress state; real async preparation is wired to the overlay',async()=>{
-  const [css,mjs,rt,view]=await Promise.all([read('public/flare-s8a/style.css'),read('public/flare-s8a/challenge.mjs'),read('public/flare-s8a/runtime-controller.mjs'),read('public/flare-s8a/loading-view.mjs')]);
+  const [css,mjs,rt,view]=await Promise.all([read('public/flare-s8a/style.css'),read('public/flare-s8a/challenge-app.mjs'),read('public/flare-s8a/runtime-controller.mjs'),read('public/flare-s8a/loading-view.mjs')]);
   assert.match(css,/@media\(prefers-reduced-motion:reduce\)\{\.loader-orb\{animation:none!important\}\.load-fill\{animation:none!important;width:var\(--static-width,60%\)\}\}/);
   assert.match(view,/aria-valuenow/);assert.match(view,/setAttribute\('role','progressbar'\)/);
   assert.match(mjs,/loading\.begin\('Loading your challenge…'\)/);
@@ -104,7 +104,7 @@ test('LOADING: reduced-motion gets a static, clearly labelled progress state; re
 
 // ---------------- BUILDER ----------------
 test('BUILDER: no Guard 1/2/3 positional UI, no horizontal card rows; Preview your Guards with + ADD A GUARD, quantity arrows, N / 8 GUARDS',async()=>{
-  const [html,mjs,css]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge.mjs'),read('public/flare-s8a/style.css')]);
+  const [html,mjs,css]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge-app.mjs'),read('public/flare-s8a/style.css')]);
   const cust=html.slice(html.indexOf('data-screen="customize"'),html.indexOf('data-screen="ready"'));
   assert.match(cust,/<p class="eyebrow">EDIT DUNGEON<\/p><h1 id="heading-customize" tabindex="-1">Preview your Guards<\/h1>/);
   for(const tab of ['MONSTERS','TRAPS','SUPPORT','DUNGEONS'])assert.match(cust,new RegExp(`>${tab}<`));
@@ -209,7 +209,7 @@ test('GUEST: only challenge pages are valid return targets (no open redirect), n
   const lv=mem();lv.setItem('s8aBuilderLevel','2');assert.equal(readBuilderLevel(lv),2);assert.equal(readBuilderLevel(mem()),1);
 });
 test('HOME / HUB: HOME records the return target; the Runner Hub has CONTINUE AS GUEST wired to it; the challenge page reopens the unlocked Gizmos only when Level 2 is active',async()=>{
-  const [mjs,hub,gc,css]=await Promise.all([read('public/flare-s8a/challenge.mjs'),read('public/flare-s8b/index.html'),read('public/flare-s8b/guest-continue.mjs'),read('public/flare-s8b/account.css')]);
+  const [mjs,hub,gc,css]=await Promise.all([read('public/flare-s8a/challenge-app.mjs'),read('public/flare-s8b/index.html'),read('public/flare-s8b/guest-continue.mjs'),read('public/flare-s8b/account.css')]);
   assert.match(mjs,/\$\('navHome'\)\.addEventListener\('click',\(\)=>\{saveGuestReturn\(SESSION_STORE,location\);\}\)/);
   assert.match(hub,/<button class="guest-btn" id="continueAsGuest" type="button" hidden>CONTINUE AS GUEST<\/button>/);
   assert.match(hub,/Continue as Guest returns you to your unlocked Gizmos for this session\./);

@@ -42,7 +42,7 @@ test('inspector view model never carries ownership/account/player identifiers',(
 });
 
 test('inspector opens/closes with CLOSE and is wired to the Runner portrait button',async()=>{
-  const [html,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge.mjs')]);
+  const [html,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge-app.mjs')]);
   assert.match(html,/id="viewRunner"/);
   assert.match(html,/id="runnerInspector" class="modal-overlay" hidden/);
   assert.match(html,/id="closeRunnerInspector"/);
@@ -99,7 +99,7 @@ test('equipment slot icons are the existing Runner Hub icon set, not newly inven
 // --- VISUAL EDITOR ---
 
 test('002E9D: monsters are a quantity-based guard mixer (arrows + quantity), not radio cards, selects or Guard 1/2/3 slots',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/function renderGuardMixer\(panel,monsters\)\{/);
   assert.doesNotMatch(mjs,/input\.type='radio';input\.name=name/);
   assert.doesNotMatch(mjs,/document\.createElement\('select'\)/);
@@ -107,7 +107,7 @@ test('002E9D: monsters are a quantity-based guard mixer (arrows + quantity), not
 });
 
 test('trap/support cards are checkbox-backed labels with a visible, non-color-only selected indicator (border/background treatment, not a duplicate badge — 002E7 Part K)',async()=>{
-  const [mjs,css]=await Promise.all([read('public/flare-s8a/challenge.mjs'),read('public/flare-s8a/style.css')]);
+  const [mjs,css]=await Promise.all([read('public/flare-s8a/challenge-app.mjs'),read('public/flare-s8a/style.css')]);
   assert.match(mjs,/input\.type='checkbox';input\.dataset\.choice=item\.id/);
   assert.match(css,/\.card:has\(:checked\)\{border-color:/);
   assert.match(css,/\.card\.is-selected\{border-color:/);
@@ -117,18 +117,18 @@ test('trap/support cards are checkbox-backed labels with a visible, non-color-on
 });
 
 test('every card shows an icon, name, budget cost and short effect',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/costLine\.textContent=`\$\{item\.cost\} BUDGET`/);
   assert.match(mjs,/effectLine\.textContent=encounterItemEffectLabel\(item\.id\)\|\|item\.summary/);
 });
 
 test('budget enforcement is unchanged: DONE stays disabled over the legal budget, authority untouched',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/\$\('finishCustomize'\)\.disabled=!m\.canFinish/);
 });
 
 test('selecting a trap/support card or changing the guard mix dispatches the existing estimate/budget pipeline (commitEditorChange -> setEncounter -> show)',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/for\(const control of document\.querySelectorAll\('\[data-choice\]'\)\)control\.addEventListener\('change',\(\)=>handleItemToggle\(control\)\)/);
   assert.match(mjs,/function commitEditorChange\(\)\{activePreset=null;session=setEncounter\(session,encounter\(\)\);show\(\);\}/);
 });
@@ -145,7 +145,7 @@ test('gauge stays visible and live while the card editor is open',async()=>{
 // --- READY SUMMARY (Part H) ---
 
 test('Ready screen (002E9C V12) shows a static target/estimate display and a minimal summary; no selection chips or budget',async()=>{
-  const [html,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge.mjs')]);
+  const [html,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge-app.mjs')]);
   assert.match(html,/id="readyGaugeTarget"/);
   assert.match(html,/id="readyGaugeEstimate"/);
   assert.match(html,/id="readyDungeon"/);
@@ -155,7 +155,7 @@ test('Ready screen (002E9C V12) shows a static target/estimate display and a min
 });
 
 test('Ready summary is dungeon + difficulty, monster count and Builder Level (no guard positions, no build budget)',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/\$\('readyDungeon'\)\.textContent=`\$\{selectedSpec\(\)\.name\} · \$\{activePreset\?activePreset\.label:'CUSTOM'\}`;/);
   assert.match(mjs,/\$\('readySummary'\)\.textContent=`\$\{count\} monster\$\{count===1\?'':'s'\} · Level \$\{builderLevel\}`;/);
 });
@@ -171,7 +171,7 @@ test('RUN AGAIN replacement copy and v2 Activity RPC remain intact',async()=>{
 // --- FOUNDATION REGRESSION ---
 
 test('HOME/BACK, bold primary buttons, account handoff and Rewards DOM contract are untouched',async()=>{
-  const [html,mjs,css]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge.mjs'),read('public/flare-s8a/style.css')]);
+  const [html,mjs,css]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge-app.mjs'),read('public/flare-s8a/style.css')]);
   assert.match(html,/id="navHome" class="nav-link" href="\/quick-dungeon\/flare-s8b\/"/);
   assert.match(html,/id="navBack" class="nav-link" type="button" hidden/);
   assert.match(css,/\.primary\{[^}]*color:#000/);

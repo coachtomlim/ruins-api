@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 
 const readHtml=()=>readFile(new URL('../public/flare-s8a/challenge.html',import.meta.url),'utf8');
-const readMjs=()=>readFile(new URL('../public/flare-s8a/challenge.mjs',import.meta.url),'utf8');
+const readMjs=()=>readFile(new URL('../public/flare-s8a/challenge-app.mjs',import.meta.url),'utf8');
 
 // Live production failure (think-2-thrive.com, correlated Friend Feedback run, 2026-09-29):
 // "TypeError: Cannot set properties of null (setting 'textContent')" at

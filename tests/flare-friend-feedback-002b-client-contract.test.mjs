@@ -13,7 +13,7 @@ test('createAttemptToken produces a bounded opaque identifier, not derived from 
 });
 
 test('a fresh run gets a new attempt token; the same completed run reuses it across retries',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/startRuntime\(\)\{chooseSessionRoom\(\);currentAttemptToken=createAttemptToken\(\);/);
   assert.match(mjs,/replayRuntime\(\)\{currentAttemptToken=createAttemptToken\(\);/);
   assert.match(mjs,/attemptToken:currentAttemptToken/);

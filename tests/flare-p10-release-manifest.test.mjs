@@ -63,6 +63,7 @@ test('runtime manifest includes the S8A friend receiver as a first-class release
   for(const required of [
     'public/flare-s8a/challenge.html',
     'public/flare-s8a/challenge.mjs',
+    'public/flare-s8a/challenge-app.mjs',
     'public/flare-s8a/invitation-view-model.mjs',
     'public/flare-s8a/result-receipt.mjs',
     'public/flare-s8a/result-view-model.mjs',

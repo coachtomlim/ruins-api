@@ -111,7 +111,7 @@ test('customization catalog honours Builder Level access (Level 2 lists Zombie a
 });
 
 test('the receiver wires Builder Level into dungeon visibility, controls and the DUNGEONS tab',async()=>{
-  const [mjs,html,css]=await Promise.all([read('public/flare-s8a/challenge.mjs'),read('public/flare-s8a/challenge.html'),read('public/flare-s8a/style.css')]);
+  const [mjs,html,css]=await Promise.all([read('public/flare-s8a/challenge-app.mjs'),read('public/flare-s8a/challenge.html'),read('public/flare-s8a/style.css')]);
   assert.match(mjs,/const visibleSpecs=\(\)=>contentForLevel\(builderLevel\)\.dungeons\.map\(id=>S7_ROOMS\[id\]\);/);
   assert.match(mjs,/function applyBuilderLevel\(level\)\{/);
   assert.match(mjs,/function renderDungeonCards\(\)\{/);
@@ -129,6 +129,6 @@ test('selected option cards use a strong reversed background, not a subtle outli
 });
 
 test('Broken Gallery is excluded from the Level 1 starter chooser and the receiver never persists Level 2 beyond sessionStorage',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.doesNotMatch(mjs,/localStorage|indexedDB|document\.cookie|\.rpc\(['"]set_builder/);
 });

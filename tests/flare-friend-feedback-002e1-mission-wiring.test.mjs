@@ -21,20 +21,20 @@ test('room-stage/prev/next controls still exist (ids preserved) but are demoted 
 });
 
 test('exactly 3 presets are addressable by the chooser (presetIndex cycles mod 3), not a 4th/5th tier',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/const presetList=\(\)=>dungeonPresets;/);
   assert.match(mjs,/presetIndex=\(presetIndex-1\+3\)%3/);
   assert.match(mjs,/presetIndex=\(presetIndex\+1\)%3/);
 });
 
 test('JUST NICE is the default displayed/applied preset (index 1), not locking out the other two',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/let presetIndex=1; \/\/ 0=EASY, 1=JUST NICE \(default\), 2=BRUTAL/);
   assert.match(mjs,/\$\('presetRecommended'\)\.hidden=!preset\.recommended/);
 });
 
 test('the chooser shows difficulty label, estimated finish, room, and preset contents — not room-appearance-first — plus explicit RECOMMENDED and position indicator',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/\$\('presetEstimate'\)\.textContent=`ESTIMATED FINISH ~\$\{Math\.round\(preset\.estimatedHpPercent\)\}% HP`/);
   assert.match(mjs,/\$\('presetRoomName'\)\.textContent=roomSpec\?\.name\|\|preset\.roomId/);
   assert.match(mjs,/\$\('presetContents'\)\.textContent=describeMix\(labels\(preset\.encounter\.enemyTypes,'monster'\)\)\.join\(' · '\)/);
@@ -42,12 +42,12 @@ test('the chooser shows difficulty label, estimated finish, room, and preset con
 });
 
 test('the dungeon preview uses the real governed room renderer (drawPreview), not an invented thumbnail',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/if\(roomData\)drawPreview\(\$\('presetPreview'\),roomData\.map,roomData\.tiles\)/);
 });
 
 test('explicit LEFT/RIGHT controls exist with accessible labels, no reliance on swipe/scroll',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/prev\.setAttribute\('aria-label','Previous dungeon'\)/);
   assert.match(mjs,/next\.setAttribute\('aria-label','Next dungeon'\)/);
   assert.match(mjs,/prev\.addEventListener\('click',\(\)=>\{presetIndex=\(presetIndex-1\+3\)%3;applyCurrentPreset\(\);show\(\);\}\)/);
@@ -55,18 +55,18 @@ test('explicit LEFT/RIGHT controls exist with accessible labels, no reliance on 
 });
 
 test('generic reward-cue copy is demoted to a secondary Gold line, not the primary mission rationale',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/\$\('missionRewardCue'\)\.textContent='Closer to target earns more Builder Gold\.'/);
   assert.doesNotMatch(mjs,/WIN UP TO 25 GOLD/);
 });
 
 test('runner context line connects Runner capability to the preset decision',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/\$\('missionRunnerContext'\)\.textContent=`\$\{session\.senderName\}'s Runner has \$\{runner\.hp\} HP, \$\{runner\.attack\} ATK and \$\{runner\.defense\} DEF\.`/);
 });
 
 test('no HARDCORE/IMPOSSIBLE tier is rendered in the mission screen markup or script',async()=>{
-  const [html,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge.mjs')]);
+  const [html,mjs]=await Promise.all([read('public/flare-s8a/challenge.html'),read('public/flare-s8a/challenge-app.mjs')]);
   assert.doesNotMatch(html,/HARDCORE|IMPOSSIBLE/i);
   assert.doesNotMatch(mjs,/HARDCORE|IMPOSSIBLE/i);
 });
@@ -74,14 +74,14 @@ test('no HARDCORE/IMPOSSIBLE tier is rendered in the mission screen markup or sc
 // --- SELECTION APPLIES THE ACTUAL PRESET ENCOUNTER ---
 
 test('navigating to a preset applies its room and encounter via the existing applyEncounter pipeline (browsing the chooser IS selecting, per Part 1 — there is no separate commit step in the mockup)',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/function applyPreset\(preset\)\{/);
   assert.match(mjs,/applyEncounter\(preset\.encounter\);/);
   assert.match(mjs,/function applyCurrentPreset\(\)\{applyPreset\(presetList\(\)\[presetIndex\]\);session=setEncounter\(session,encounter\(\)\);\}/);
 });
 
 test('USE THIS DUNGEON still goes through the existing chooseSessionRoom/transition pipeline, now acting on the applied preset state',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/\$\('useDungeon'\)\.addEventListener\('click',\(\)=>transition\('USE_DUNGEON'\)\)/);
   assert.match(mjs,/function chooseSessionRoom\(\)\{session=selectDungeon\(session,selectedSpec\(\)\.id\);session=setEncounter\(session,encounter\(\)\)\;?\}/);
 });
@@ -89,7 +89,7 @@ test('USE THIS DUNGEON still goes through the existing chooseSessionRoom/transit
 // --- EDIT DUNGEON STARTS FROM THE SELECTED PRESET ---
 
 test('CUSTOMIZE/EDIT DUNGEON transitions share the same session.encounter already set by the selected preset, no reset',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   // transition('CUSTOMIZE') calls chooseSessionRoom() which re-reads the live DOM encounter() —
   // the same radios/checkboxes applyPreset() just set — so Edit Dungeon opens on the preset state.
   assert.match(mjs,/if\(\['USE_DUNGEON','CUSTOMIZE'\]\.includes\(event\)\)chooseSessionRoom\(\);/);
@@ -98,7 +98,7 @@ test('CUSTOMIZE/EDIT DUNGEON transitions share the same session.encounter alread
 // --- FOUNDATION REGRESSION: snapshot authority, legacy fallback, editor, receipt/replay ---
 
 test('snapshot-authoritative Runner stats are computed before presets, so presets reflect the real Runner',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   const bootStart=mjs.indexOf('async function bootReceiver');
   const boot=mjs.slice(bootStart,mjs.indexOf('void bootReceiver();'));
   const runnerIdx=boot.indexOf('runner=runnerSummary(model,invite.runnerId,catalog)');
@@ -107,7 +107,7 @@ test('snapshot-authoritative Runner stats are computed before presets, so preset
 });
 
 test('legacy (non-correlated) links still generate 3 presets from the template Runner, same pipeline',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   // buildLevel1Presets is called unconditionally in bootReceiver regardless of publicToken/snapshot
   // source — legacy links get presets from template runner stats, correlated links from snapshot
   // stats (already applied to catalog.heroes.warrior earlier in the same function).
@@ -118,14 +118,14 @@ test('legacy (non-correlated) links still generate 3 presets from the template R
 });
 
 test('the visual dungeon editor (guard mixer + trap/support cards) is present',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/function renderControls\(\)\{/);
   assert.match(mjs,/function renderGuardMixer\(/);
   assert.match(mjs,/function itemCard\(/);
 });
 
 test('receipt/replay/attempt-token semantics are untouched by this change',async()=>{
-  const mjs=await read('public/flare-s8a/challenge.mjs');
+  const mjs=await read('public/flare-s8a/challenge-app.mjs');
   assert.match(mjs,/currentAttemptToken=createAttemptToken\(\)/);
   assert.match(mjs,/submit_builder_challenge_result_v2|submitResultReceipt/);
 });

@@ -73,7 +73,7 @@ for(const kind of ['traps','supports'])test(`${kind}: actual catalog selection/r
   }finally{globalThis.document=old}
 });
 test('mobile paging is width-scoped and retains desktop cards and existing calculation authority',()=>{
-  const css=readFileSync('public/flare-s8a/style.css','utf8'),source=readFileSync('public/flare-s8a/challenge.mjs','utf8');
+  const css=readFileSync('public/flare-s8a/style.css','utf8'),source=readFileSync('public/flare-s8a/challenge-app.mjs','utf8');
   assert.match(css,/@media\(max-width:540px\)/);assert.match(css,/\.paged-card-row\{[^}]*overflow:visible/);assert.match(css,/\.paged-card-row \.card\.is-current-page\{display:grid/);
   // 002E7 Part L: nav buttons are now compact round [‹]/[›] controls (not full-width 44px bars),
   // but touch targets stay practical (min 40px) and the SELECT/REMOVE action is still full-width.
