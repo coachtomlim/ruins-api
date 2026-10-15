@@ -6,23 +6,11 @@ import {LOOT_ASSETS,CATEGORY_ASSET} from './loot-assets.mjs';
 const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!=null)n.textContent=text;return n;};
 const CONFETTI_COLORS=['#f2c45d','#75dbc9','#e27379','#ffffff','#bb83d0'];
 
-export function createRewardJourney({root,coinSrc,startHero,reducedMotion=()=>false,onCustomize,onCreateAccount,onGuest}={}){
-  let journey=null,index=0,timers=[],stopHero=null,muted=false,audio=null,open=false,lootIndex={monsters:0,traps:0};
+export function createRewardJourney({root,coinSrc,startHero,reducedMotion=()=>false,audio,onCustomize,onCreateAccount,onGuest}={}){
+  let journey=null,index=0,timers=[],stopHero=null,open=false,lootIndex={monsters:0,traps:0};
   const later=(fn,ms)=>{timers.push(setTimeout(fn,ms));};
   function clear(){for(const t of timers)clearTimeout(t);timers=[];if(stopHero){try{stopHero()}catch{}stopHero=null;}}
 
-  function chime(){
-    if(muted||reducedMotion())return;
-    try{
-      const Ctx=window.AudioContext||window.webkitAudioContext;if(!Ctx)return;
-      audio=audio||new Ctx();const a=audio,now=a.currentTime;
-      for(const [freq,offset] of [[523,0],[659,.12],[784,.24],[1046,.38]]){
-        const osc=a.createOscillator(),gain=a.createGain();osc.type='triangle';osc.frequency.value=freq;
-        gain.gain.setValueAtTime(.0001,now+offset);gain.gain.exponentialRampToValueAtTime(.11,now+offset+.02);gain.gain.exponentialRampToValueAtTime(.0001,now+offset+.18);
-        osc.connect(gain);gain.connect(a.destination);osc.start(now+offset);osc.stop(now+offset+.2);
-      }
-    }catch{}
-  }
   function confetti(layer,count=52){
     if(reducedMotion())return;
     for(let i=0;i<count;i++){
@@ -40,8 +28,8 @@ export function createRewardJourney({root,coinSrc,startHero,reducedMotion=()=>fa
     const dots=el('div','j-dots');dots.setAttribute('aria-hidden','true');
     const stage=JOURNEY_STAGE_BY_SCENE[journey.scenes[index].id]??0;
     for(let i=0;i<=6;i++)dots.append(el('span',`j-dot${i===stage?' is-current':i<stage?' is-done':''}`));
-    const sound=button('j-sound',muted?'SOUND OFF':'SOUND ON',()=>{muted=!muted;sound.textContent=muted?'SOUND OFF':'SOUND ON';sound.setAttribute('aria-pressed',String(!muted));});
-    sound.setAttribute('aria-pressed',String(!muted));
+    const sound=button('j-sound',audio?.enabled?'SOUND ON':'SOUND OFF',()=>{audio?.toggle();sound.textContent=audio?.enabled?'SOUND ON':'SOUND OFF';sound.setAttribute('aria-pressed',String(Boolean(audio?.enabled)));});
+    sound.setAttribute('aria-pressed',String(Boolean(audio?.enabled)));
     bar.append(dots,sound);return bar;
   }
 
@@ -62,7 +50,7 @@ export function createRewardJourney({root,coinSrc,startHero,reducedMotion=()=>fa
       const layer=el('div','j-burst');layer.setAttribute('aria-hidden','true');if(s.celebrate)confetti(layer);box.append(layer);
       if(s.celebrate)box.append(el('div','j-medal','★'));
       box.append(el('h2','j-success-word',s.title),el('p','j-sub',s.subtitle),button('j-next',s.next,next));
-      if(s.celebrate)chime();
+      if(s.celebrate)audio?.playSfx('GOLD_PICKUP');
     },
     performance(s,box){
       box.append(el('p','j-eyebrow',s.eyebrow),el('h2','j-big',s.title));
@@ -86,7 +74,7 @@ export function createRewardJourney({root,coinSrc,startHero,reducedMotion=()=>fa
       const badge=el('div','j-badge'),inner=el('div');inner.append(el('span','',s.levelLabel),el('strong','',String(s.level)));badge.append(inner);
       const lines=el('h2','j-levelup');for(const line of s.lines)lines.append(el('span','j-levelup-line',line));
       box.append(el('p','j-eyebrow',s.eyebrow),badge,lines,el('p','j-sub',s.support),el('p','j-note',s.sessionNote),button('j-next',s.next,next));
-      chime();
+      audio?.playSfx('LEVEL_UP');
     },
     // New Gizmos overview (V12): four equally-weighted, selectable category cards. Titles and counts sit on
     // fixed grid rows so they align across all four cards. The CTA starts the loot review; it never edits.
@@ -116,7 +104,7 @@ export function createRewardJourney({root,coinSrc,startHero,reducedMotion=()=>fa
       const layer=el('div','j-burst');layer.setAttribute('aria-hidden','true');confetti(layer,36);box.append(layer);
       const img=el('img','j-dungeon-img');img.src=LOOT_ASSETS[s.item?.asset||'broken-gallery'];img.alt=`${s.title} — real Flare room preview`;
       box.append(backButton(s),el('div','j-new-badge',s.badge),el('h2','j-big',s.title),img,el('p','j-sub',s.subtitle),button('j-next',s.next,()=>goId(s.nextScene)));
-      chime();
+      audio?.playSfx('ITEM_PICKUP');
     },
     'loot-complete'(s,box){
       box.classList.add('is-scroll');

@@ -298,3 +298,5 @@
 .ready-bands{margin:0;text-align:center;font-size:11px;color:#ffffffbb}
 .sg-track{background:linear-gradient(90deg,#e0696933 0 var(--harsh,35%),#e9c46b33 var(--harsh,35%) var(--gentle,70%),#6ad1a633 var(--gentle,70%) 100%)}
 .static-gauge{--harsh:35%;--gentle:70%}
+.receiver-nav-actions{display:flex;align-items:center;gap:6px;margin-left:auto}.sound-toggle[aria-pressed="false"]{border-color:#ffffff66;color:#ffffffaa}
+.runtime-actions{grid-template-columns:1fr 1fr 1fr}.runtime-actions button{padding-inline:6px;font-size:12px}.runtime-sound-toggle[aria-pressed="false"]{border-color:#ffffff66;color:#ffffffaa}

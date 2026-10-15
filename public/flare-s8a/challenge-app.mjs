@@ -30,6 +30,7 @@ import {createRewardJourney} from './reward-journey-view.mjs';
 import {buildRewardJourney} from './reward-journey.mjs';
 import {planResultReceipt,receiptBlockMessage} from './receipt-plan.mjs';
 import {readBuilderLevel,grantFirstRunLevel,clampBuilderLevel,customizationUnlockedAt,contentForLevel,editorContentIds,BROKEN_GALLERY_ID} from './builder-level.mjs';
+import {createAudioManager} from './audio-manager.mjs';
 
 // 002E9: BUILDER progression (not Runner progression). The first completed run grants Builder Level 2
 // for the CURRENT browser session only (see builder-level.mjs): sessionStorage keeps it across a
@@ -49,6 +50,10 @@ const REWARDS_DOM_CONTRACT=['heading-rewards','resultTarget','resultFinished','r
 let model,baseCatalog,catalog,invite,runner,session,calibrated,roomIndex=0,activePanel='monsters',runtimeStart=null,lastReceiptPayload=null,receiptBlock=null,currentAttemptToken=null,runnerAuthority=null,dungeonPresets=null;
 const publicToken=publicChallengeTokenFromLocation(location);
 const loading=createLoadingOverlay({root:document.getElementById('loadingOverlay'),reducedMotion:()=>prefersReducedMotion()});
+const audio=createAudioManager();
+window.__flareAudio=audio;
+function renderSoundToggle(){for(const button of [$('soundToggle'),$('runtimeSoundToggle')]){button.textContent=audio.enabled?'SOUND ON':'SOUND OFF';button.setAttribute('aria-pressed',String(audio.enabled));}}
+renderSoundToggle();
 let roomsReady=null,roomsLoaded=false;
 const FRIEND_GOAL_CLAIM_KEY='s8aFriendGoalClaim';
 function accountServiceAvailable(){const config=globalThis.__FLARE_S8B_PUBLIC_CONFIG__,sdk=globalThis.supabase;return Boolean(config?.url&&config?.publishableKey&&typeof sdk?.createClient==='function');}
@@ -317,6 +322,7 @@ const journeyView=createRewardJourney({
   coinSrc:new URL('./assets/tactics-coins.png',import.meta.url).href,
   startHero:canvas=>startComposedHeroStance(canvas,heroActorPack),
   reducedMotion:prefersReducedMotion,
+  audio,
   // The New Gizmos CTA starts the browse-only LOOT REVIEW inside the journey; it never opens the editor.
   // CUSTOMIZE THIS DUNGEON (final scene) is the explicit, separate handoff into the REAL customization flow.
   onCustomize:()=>{
@@ -387,6 +393,7 @@ $('retryResultReceipt').addEventListener('click',sendResultReceipt);
 // 002E9D: the rooms/tiles load in the background after the invitation is usable; if the player is faster than the
 // load, a real loading screen covers exactly the remaining wait (nothing is delayed artificially).
 $('acceptChallenge').addEventListener('click',async()=>{
+  audio.unlock();audio.setMusicState('SAFE');
   if(!roomsLoaded&&roomsReady){
     try{loading.begin('Loading your dungeon…',{immediate:true});loading.setStep(0);await roomsReady;}
     catch(error){$('loadStatus').textContent='We could not load the dungeon art. Please retry.';return;}
@@ -399,6 +406,8 @@ $('useDungeon').addEventListener('click',()=>transition('USE_DUNGEON'));$('openC
 $('finishCustomize').addEventListener('click',()=>transition('DONE'));$('editDungeon').addEventListener('click',()=>transition('CUSTOMIZE'));
 $('editThisDungeon').addEventListener('click',()=>transition('EDIT_DUNGEON'));$('saveGoalBuildOwn').addEventListener('click',()=>transition('SAVE_GOAL'));$('backToRewards').addEventListener('click',()=>transition('BACK_TO_REWARDS'));
 $('navBack').addEventListener('click',()=>transition('BACK'));
+$('soundToggle').addEventListener('click',()=>{audio.unlock();audio.toggle();renderSoundToggle();});
+$('runtimeSoundToggle').addEventListener('click',()=>{audio.unlock();audio.toggle();renderSoundToggle();});
 // HOME leaves for the Runner Hub; remember (session-only) where a Guest should come back to.
 $('navHome').addEventListener('click',()=>{saveGuestReturn(SESSION_STORE,location);});
 $('viewRunner').addEventListener('click',openRunnerInspector);
@@ -410,7 +419,7 @@ $('resetSuggested').addEventListener('click',()=>{activePreset=null;applyEncount
 for(const tab of document.querySelectorAll('[data-custom-tab]'))tab.addEventListener('click',()=>{activePanel=tab.dataset.customTab;setEditorMessage('');show();});
 $('runHero').addEventListener('click',()=>runtimeStart?.());
 let pointer=null;$('roomStage').addEventListener('pointerdown',e=>pointer={x:e.clientX,y:e.clientY});$('roomStage').addEventListener('pointerup',e=>{const direction=pointer&&roomSwipeDirection({startX:pointer.x,startY:pointer.y,endX:e.clientX,endY:e.clientY});pointer=null;if(direction)moveRoom(direction);});
-window.__s8aReceiver={get session(){return session;},get encounter(){return encounter();},get roomId(){return selectedSpec().id;},get room(){return selectedRoom();},get runnerAuthority(){return runnerAuthority;},get customizationUnlocked(){return customizationUnlocked;},get builderLevel(){return builderLevel;},get justUnlocked(){return justUnlocked;},setRuntimeStart(fn){runtimeStart=fn;},loadingBegin(){loading.begin('Loading your dungeon…',{immediate:true});},loadingStep(i){loading.setStep(i);},loadingEnd(){loading.end();},startRuntime(){chooseSessionRoom();currentAttemptToken=createAttemptToken();session=advanceReceiver(session,'RUN');show();},completeRuntime(result,score){session=advanceReceiver(session,'COMPLETE',{result,score});// Plan the receipt BEFORE any presentation work and never let a payload problem escape (an
+window.__s8aReceiver={get session(){return session;},get encounter(){return encounter();},get roomId(){return selectedSpec().id;},get room(){return selectedRoom();},get runnerAuthority(){return runnerAuthority;},get customizationUnlocked(){return customizationUnlocked;},get builderLevel(){return builderLevel;},get justUnlocked(){return justUnlocked;},get audio(){return audio;},setRuntimeStart(fn){runtimeStart=fn;},loadingBegin(){loading.begin('Loading your dungeon…',{immediate:true});},loadingStep(i){loading.setStep(i);},loadingEnd(){loading.end();},startRuntime(){chooseSessionRoom();currentAttemptToken=createAttemptToken();session=advanceReceiver(session,'RUN');show();},completeRuntime(result,score){audio.playSfx('DOOR_OPEN');audio.setMusicState('SAFE');session=advanceReceiver(session,'COMPLETE',{result,score});// Plan the receipt BEFORE any presentation work and never let a payload problem escape (an
       // exception here used to abort completion): see receipt-plan.mjs.
       const plan=planResultReceipt({publicToken,roomId:session.roomId,encounter:session.encounter,rulesVersion:'s8a-1',result,heroGold:session.reward?.heroGold,attemptToken:currentAttemptToken});
       lastReceiptPayload=plan.payload;receiptBlock=plan.block;if(plan.error)console.error(plan.error);
