@@ -3,8 +3,10 @@ export const DAY1_HASHES=Object.freeze({
   1:'931db491d994df65b86a19fbe842c01d06c46627f82ae21a73271cd144e9f17d',
   2:'c225a37af72f08eb032f531f863146f2651ae48c194d39d0ec33f532edbba15e'
 });
+export const canonicalGateCText=text=>text.replace(/\r\n?/g,'\n');
 export function parseGateCRoom(text){
-  const sections=text.split(/(?=^\[(?:header|layer|enemy|event|npc|tilesets)\]\s*$)/m);
+  const source=canonicalGateCText(text);
+  const sections=source.split(/(?=^\[(?:header|layer|enemy|event|npc|tilesets)\]\s*$)/m);
   const header=sections.find(s=>s.startsWith('[header]'))||'';
   const property=(body,key)=>body.match(new RegExp('^'+key+'=(.*)$','m'))?.[1]??'';
   const width=Number(property(header,'width')),height=Number(property(header,'height'));
@@ -24,13 +26,13 @@ export async function loadAuthoredDay1Rooms({fetcher=fetch,cryptoImpl=globalThis
   const rooms={};for(const day of [1,2]){
     const url=new URL(`./authority/gate_c_room_0${day}.txt`,import.meta.url);
     const response=await fetcher(url,{cache:'no-store'});if(!response.ok)throw new Error('GATE_C_SOURCE_NOT_AVAILABLE');
-    const text=await response.text();
+    const text=await response.text(),canonical=canonicalGateCText(text);
     if(cryptoImpl?.subtle){
-      const sum=await cryptoImpl.subtle.digest('SHA-256',new TextEncoder().encode(text));
+      const sum=await cryptoImpl.subtle.digest('SHA-256',new TextEncoder().encode(canonical));
       const actual=Array.from(new Uint8Array(sum),b=>b.toString(16).padStart(2,'0')).join('');
       if(actual!==DAY1_HASHES[day])throw new Error('GATE_C_SOURCE_HASH_MISMATCH');
     }else throw new Error('SOURCE_HASH_CHECK_UNAVAILABLE');
-    rooms[day]=parseGateCRoom(text);
+    rooms[day]=parseGateCRoom(canonical);
   }
   const r1=rooms[1],r2=rooms[2];
   if(!r1.events.some(x=>x.setStatus==='gate_c_discovery')||!r1.events.some(x=>x.requiresStatus==='gate_c_discovery'&&x.intermap==='maps/gate_c_room_02.txt,1,4')||

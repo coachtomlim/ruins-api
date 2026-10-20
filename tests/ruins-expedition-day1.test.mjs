@@ -4,12 +4,17 @@ import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {resolve,dirname} from 'node:path';
-import {parseGateCRoom,DAY1_HASHES} from '../public/ruins-expedition/day1-content.mjs';
+import {parseGateCRoom,canonicalGateCText,DAY1_HASHES} from '../public/ruins-expedition/day1-content.mjs';
 import {createDay1State,applyDay1Command,DAY1_SOURCE} from '../public/ruins-expedition/day1-state.mjs';
 import {createDay1MemoryStore} from '../public/ruins-expedition/day1-store.mjs';
 const src=resolve(dirname(fileURLToPath(import.meta.url)),'../public/ruins-expedition/authority');
 const maps={};
-for(const n of [1,2]){const buf=readFileSync(resolve(src,`gate_c_room_0${n}.txt`));maps[n]=parseGateCRoom(buf.toString('utf8'));test(`authored Room ${n} SHA-256 matches accepted Gate C`,()=>assert.equal(createHash('sha256').update(buf).digest('hex'),DAY1_HASHES[n]));}
+for(const n of [1,2]){const buf=readFileSync(resolve(src,`gate_c_room_0${n}.txt`));maps[n]=parseGateCRoom(buf.toString('utf8'));test(`authored Room ${n} SHA-256 matches accepted Gate C`,()=>assert.equal(createHash('sha256').update(canonicalGateCText(buf.toString('utf8'))).digest('hex'),DAY1_HASHES[n]));}
+test('Windows CRLF checkout preserves accepted source hash and parser semantics',()=>{
+ const lf=canonicalGateCText(readFileSync(resolve(src,'gate_c_room_01.txt'),'utf8')),crlf=lf.replaceAll('\n','\r\n');
+ assert.equal(createHash('sha256').update(canonicalGateCText(crlf)).digest('hex'),DAY1_HASHES[1]);
+ assert.equal(parseGateCRoom(crlf).title,'Gate C 01: Discovery Altar');
+});
 let serial=0;
 function cmd(state,type,fields={}){return {id:'unit-'+(++serial),expectedRevision:state.revision,type,...fields}}
 function go(state,type,fields={}){return applyDay1Command(state,cmd(state,type,fields),maps).state}
