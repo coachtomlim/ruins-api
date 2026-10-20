@@ -1,0 +1,106 @@
+{
+  "task": "RUINS_DAILY_EXPEDITION_001A",
+  "repository": "coachtomlim/xyz-aia-sim",
+  "commit": "add02bd9bc98e26cad95ae5ac00a5da1a255e0cd",
+  "directory": "project-control/flare-pc2-bootstrap/artifacts/flare-gate-c-015-mod",
+  "tree": "83de9e7c81961b5d619d188e318f57beeca290fb",
+  "files": [
+    {
+      "path": "README.md",
+      "git_blob_sha1": "7cd04e59fb630ad0e2dab65a1f9c2c3a11d5711a",
+      "bytes": 1317
+    },
+    {
+      "path": "SOURCE_DESIGN.md",
+      "git_blob_sha1": "aaf6604f59260fb57c4e977806c40b5e5bf4af51",
+      "bytes": 5814
+    },
+    {
+      "path": "enemies/gate_c_boss.txt",
+      "git_blob_sha1": "cee3b3497111171d1abdbe7636418cb6c284d7cf",
+      "bytes": 232
+    },
+    {
+      "path": "enemies/gate_c_elite.txt",
+      "git_blob_sha1": "595a9226db773e38f3be3d72d0489e39aebdcf2c",
+      "bytes": 241
+    },
+    {
+      "path": "maps/gate_c_room_01.txt",
+      "git_blob_sha1": "addea028b71fd21b329bb3e748756db08c6d6b55",
+      "bytes": 1393
+    },
+    {
+      "path": "maps/gate_c_room_02.txt",
+      "git_blob_sha1": "b95a0a5cab61f70c2c9a940a56824e82fad6c1a3",
+      "bytes": 1484
+    },
+    {
+      "path": "maps/gate_c_room_03.txt",
+      "git_blob_sha1": "5950f4116af9fd80cc11c611666ee9817bda9a75",
+      "bytes": 1454
+    },
+    {
+      "path": "maps/gate_c_room_04.txt",
+      "git_blob_sha1": "dfb6a0f1c1616ca53dd37200da2c6d7fdd1b5959",
+      "bytes": 1288
+    },
+    {
+      "path": "maps/gate_c_room_05.txt",
+      "git_blob_sha1": "779fd794533b1725cf10de286da8d196765b0368",
+      "bytes": 1629
+    },
+    {
+      "path": "maps/gate_c_room_06.txt",
+      "git_blob_sha1": "d7b8680b22222988d72be7a2375f164c9d4d38bf",
+      "bytes": 1247
+    },
+    {
+      "path": "maps/gate_c_room_07.txt",
+      "git_blob_sha1": "074cc6fc30585e7ffa080bbfd4f2219a0d374ab0",
+      "bytes": 1247
+    },
+    {
+      "path": "maps/gate_c_room_08.txt",
+      "git_blob_sha1": "2abb24bf0cd2217727cf7795e51997f27cdb893a",
+      "bytes": 1302
+    },
+    {
+      "path": "maps/gate_c_room_09.txt",
+      "git_blob_sha1": "e9eb0ce072d69d8f60f42258b0c9647baad0e41c",
+      "bytes": 1197
+    },
+    {
+      "path": "maps/gate_c_room_10.txt",
+      "git_blob_sha1": "07aed753e1f2c684c2f0daa672db32bbc0889731",
+      "bytes": 1494
+    },
+    {
+      "path": "maps/spawn.txt",
+      "git_blob_sha1": "afba382d4b21aae07a63b858dfc37dbe628cc8a3",
+      "bytes": 169
+    },
+    {
+      "path": "npcs/gate_c_quartermaster.txt",
+      "git_blob_sha1": "d343879dc9d4cb446bfce6096e959d4e89b5ac77",
+      "bytes": 300
+    },
+    {
+      "path": "settings.txt",
+      "git_blob_sha1": "534e8d09a0693c318e1f92910612fb6517a7a348",
+      "bytes": 157
+    },
+    {
+      "path": "validate_gate_c_source.py",
+      "git_blob_sha1": "349881f317899b19e265d21954de307334dba731",
+      "bytes": 5306
+    }
+  ],
+  "verification": {
+    "exact_blob_matches": 18,
+    "original_validator": "PASS",
+    "rooms": 10,
+    "failures": [],
+    "scope": "source only; no browser gameplay claim"
+  }
+}
