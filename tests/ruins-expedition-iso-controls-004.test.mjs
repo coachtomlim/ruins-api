@@ -32,6 +32,7 @@ test('one four-key rune cluster replaces the flat cardinal control',()=>{
 test('touch targets remain at least 44px while decorative SVG is never an interactive subtarget',()=>{
   assert.match(css,/width:48px;height:48px;min-width:44px;min-height:44px/);
   assert.match(css,/width:46px;height:46px/);
+  assert.match(css,/@media\(min-width:700px\) and \(max-height:760px\)\{\s*\.view\{min-height:0\}/);
   assert.equal((html.match(/aria-hidden="true" focusable="false"/g)||[]).length,4);
   assert.match(css,/\.iso-key:focus-visible/);
   assert.match(css,/prefers-reduced-motion:reduce/);
