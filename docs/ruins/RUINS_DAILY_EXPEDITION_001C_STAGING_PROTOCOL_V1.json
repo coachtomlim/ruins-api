@@ -1,0 +1,72 @@
+{
+  "contractVersion": "ruins-expedition-001c.v1",
+  "status": "DESIGN_ONLY_MIGRATION_NOT_AUTHORIZED",
+  "stagingProjectRef": "qpgwqmduqtqidmhbuclw",
+  "definitionId": "ruins-gate-c-015",
+  "campaignRewardScope": "ruins-gate-c-015:five-day:v1",
+  "initialServerSlice": {
+    "identity": "AUTHENTICATED_ONLY",
+    "guestServerClaims": false,
+    "walletTransferEnabled": false,
+    "sharedS8BWalletMutation": false,
+    "day": 1,
+    "rooms": [1, 2],
+    "nextDayEnabled": false,
+    "calendarPolicy": "UNRESOLVED",
+    "restPolicy": "UNRESOLVED",
+    "deathRetryPolicy": "UNRESOLVED",
+    "missedDayPolicy": "UNRESOLVED",
+    "rewards": "STAGING_NONTRANSFERABLE"
+  },
+  "server": {
+    "candidateHandler": "SUPABASE_EDGE_FUNCTION",
+    "handlerVerifiedOrDeployed": false,
+    "dbSchema": "ruins_private",
+    "schemaExposedToPostgREST": false,
+    "candidateDbRole": "ruins_backend",
+    "principalFrom": "VERIFIED_SUPABASE_AUTH_GET_USER",
+    "privilegedClientSecretsAllowed": false,
+    "serverOwns": ["identity", "entitlement", "revision", "clock", "map_access", "combat_outcome", "claim_resolution", "inventory_effects", "day_settlement"],
+    "browserOwnsOnly": ["input_intents", "rendering", "non_authoritative_cache", "pending_operation_ids", "audio"]
+  },
+  "api": {
+    "basePathProvisional": "/functions/v1/ruins-expedition",
+    "state": {"method": "GET", "path": "/state", "requiresUserJwt": true, "readOnly": true},
+    "command": {"method": "POST", "path": "/commands", "requiresUserJwt": true, "maxBodyBytes": 8192},
+    "envelopeRequired": ["contractVersion", "operationId", "expectedRevision", "type", "parameters"],
+    "forbiddenClientAuthorityFields": ["playerId", "principalId", "gold", "xp", "hp", "loot", "claimSourceId", "rewardAmount", "roomState", "serverTime", "policy"],
+    "allowedCommands": ["BOOTSTRAP", "MOVE", "DISCOVER_ALTAR", "ENTER_ROOM2", "ATTACK_ZOMBIE", "CLAIM_ROOM2_CHEST", "SETTLE_DAY1"],
+    "blockedCommands": ["BEGIN_NEXT_DAY", "ENTER_ROOM3", "TRANSFER_REWARD", "GUEST_ATTACH"],
+    "receiptRequired": ["operationId", "revision", "status", "events", "publicState", "duplicate", "serverRecordedAt"],
+    "errorCodes": ["AUTH_REQUIRED", "UNSUPPORTED_VERSION", "BAD_COMMAND", "COMMAND_TOO_LARGE", "ENTITLEMENT_CONFLICT", "REVISION_CONFLICT", "OPERATION_ID_REUSE_MISMATCH", "NOT_YET_UNLOCKED", "DAY_ALREADY_SETTLED", "OUT_OF_RANGE", "INTERNAL_RETRY_SAFE"]
+  },
+  "db": {
+    "tables": ["expedition_entitlement", "expedition_instance", "expedition_claim", "expedition_operation", "expedition_inventory_event", "expedition_day_settlement"],
+    "allTablesRlsEnabled": true,
+    "anonDirectDml": false,
+    "authenticatedDirectDml": false,
+    "publicExecuteOnInternalRoutines": false,
+    "internalRoutines": ["bootstrap_account_expedition", "get_account_expedition", "apply_account_expedition_command"],
+    "entitlementUnique": ["principal_kind", "principal_id", "campaign_reward_scope"],
+    "instanceUnique": ["entitlement_id"],
+    "claimUnique": ["entitlement_id", "reward_source_id"],
+    "operationUnique": ["entitlement_id", "operation_id"],
+    "settlementUnique": ["entitlement_id", "day_number"],
+    "stableRewardSources": ["ruins-gate-c-015:room02:zombie:01:defeat", "ruins-gate-c-015:room02:chest:01"],
+    "transaction": ["verified_identity", "entitlement_lock", "expedition_lock", "repeat_operation_fingerprint_check", "expected_revision_check", "authoritative_rules_validation", "stable_claim_source_resolution", "atomic_claim_inventory_checkpoint_receipt", "commit_before_success"],
+    "receiptLookupBeforeRevision": true,
+    "scopeClaimAcrossInstances": true,
+    "oneTransactionPerCommand": true,
+    "contentAndRulesPinned": true
+  },
+  "securityGates": {
+    "ddlApplied": false,
+    "advisorAfterDdl": "NOT_APPLICABLE",
+    "newCriticalErrorPermitted": false,
+    "publicTablesAuthorized": false,
+    "dailyTrialChangesAuthorized": false,
+    "friendChangesAuthorized": false,
+    "legacySlSimChangesAuthorized": false,
+    "productionDeploymentAuthorized": false
+  }
+}
