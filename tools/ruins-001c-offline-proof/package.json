@@ -1,0 +1,14 @@
+{
+ "name": "ruins-001c-offline-proof",
+ "private": true,
+ "version": "0.0.0",
+ "description": "RUINS 001C disposable local Postgres proof harness. Offline only; never points at Supabase staging or production.",
+ "type": "module",
+ "scripts": {
+  "test": "node --test --test-concurrency=1 proof.test.mjs"
+ },
+ "devDependencies": {
+  "embedded-postgres": "17.6.0-beta.15",
+  "pg": "8.16.3"
+ }
+}
