@@ -25,7 +25,9 @@ test('full-repo scan: every service_role/sb_secret_ occurrence in tracked source
     hits=e.stdout?.toString()||'';
   }
   const lines=hits.split(/\r?\n/).filter(Boolean);
-  const allowed=/vendor\/supabase\.js|account-adapter\.mjs:.*startsWith\('sb_secret_'\)|friend-share\.mjs:.*\/service_role\|sb_secret_|hostgator-flare-p10-rc1\.py:.*for forbidden in|test\.mjs:|scripts\/deploy\/hostgator-flare-s8b-update-006\.py|scripts\/deploy\/hostgator-flare-s8b-update-005\.py/;
+  const allowed=/vendor\/supabase\.js|account-adapter\.mjs:.*startsWith\('sb_secret_'\)|friend-share\.mjs:.*\/service_role\|sb_secret_|hostgator-flare-p10-rc1\.py:.*for forbidden in|test\.mjs:|scripts\/deploy\/hostgator-flare-s8b-update-006\.py|scripts\/deploy\/hostgator-flare-s8b-update-005\.py|supabase\/drafts\/ruins_001c\/[^:]+\.sql:\d+:(revoke all on [^;]+ from [^;]*service_role[^;]*;|\s*foreach v_role in array array\[[^\]]*'service_role'[^\]]*\] loop)|tools\/ruins-001c-offline-proof\/supabase-roles-shim\.sql:/;
+  // RUINS 001C (package 006): deny-direction revokes / privilege self-checks in the private-schema draft and the
+  // test-only local role shim name the role only to REMOVE access; a grant to it or a key literal still fails.
   const offenders=lines.filter(l=>!allowed.test(l));
   assert.deepEqual(offenders,[],`unexpected service_role/sb_secret_ reference outside known guard/test patterns:\n${offenders.join('\n')}`);
 });

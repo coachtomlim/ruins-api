@@ -5,7 +5,7 @@
 // Required environment (configured out-of-band by an authorized operator; never committed or logged):
 //   SUPABASE_URL, SUPABASE_ANON_KEY  publishable values, used ONLY to verify user tokens via auth.getUser
 //   RUINS_BACKEND_DB_URL              Postgres URL for the dedicated `ruins_backend` login (NOT postgres,
-//                                     NOT service_role). Feasibility of a dedicated login through the
+//                                     NOT the Supabase service role). Feasibility of a dedicated login through the
 //                                     Supabase pooler is UNVERIFIED (see proof result: role/pooler obstacles).
 //   RUINS_ALLOWED_ORIGINS             comma-separated exact staging origins
 // No service-role key is read or used.
