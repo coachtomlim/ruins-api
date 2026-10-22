@@ -14,7 +14,9 @@ const platformPkg={win32:'@embedded-postgres/windows-x64',linux:'@embedded-postg
 export const HERE=path.dirname(fileURLToPath(import.meta.url));
 const BIN=path.join(HERE,'node_modules',platformPkg,'native','bin');
 const exe=name=>path.join(BIN,process.platform==='win32'?name+'.exe':name);
-export const MIGRATION=path.resolve(HERE,'../../supabase/drafts/ruins_001c/20261022120000_ruins_001c_private_expedition_DRAFT.sql');
+// Active candidate (008 r2, principal binding) and the retained 006 draft (vulnerable-design fixture only).
+export const MIGRATION=path.resolve(HERE,'../../supabase/drafts/ruins_001c/20261022200000_ruins_001c_private_expedition_r2_principal_binding_DRAFT.sql');
+export const MIGRATION_006=path.resolve(HERE,'../../supabase/drafts/ruins_001c/20261022120000_ruins_001c_private_expedition_DRAFT.sql');
 
 export async function startLocalPostgres({port=55000+Math.floor(Math.random()*4000)}={}){
   const dir=mkdtempSync(path.join(tmpdir(),'ruins-001c-pg-'));const data=path.join(dir,'data');

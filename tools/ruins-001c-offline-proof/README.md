@@ -1,10 +1,18 @@
-# RUINS 001C offline backend proof harness (package 006)
+# RUINS 001C offline backend proof harness (packages 006 and 008)
 
 Offline only. Starts its own disposable PostgreSQL 17.6 on `127.0.0.1` in a fresh OS temp directory,
-applies the Supabase role shim (`supabase-roles-shim.sql`, test-only) and then the migration **draft**
-`supabase/drafts/ruins_001c/20261022120000_ruins_001c_private_expedition_DRAFT.sql` as a non-superuser
-`migrator`. It then attacks the result through the trusted handler candidate
+applies the Supabase role shim (`supabase-roles-shim.sql`, test-only, including pgcrypto in schema `extensions`)
+and then the active migration **draft r2**
+`supabase/drafts/ruins_001c/20261022200000_ruins_001c_private_expedition_r2_principal_binding_DRAFT.sql` as a
+non-superuser `migrator`. The 006 draft is kept unmodified as the 006 proof record and as the vulnerable-design
+fixture. It then attacks the result through the trusted handler candidate
 (`supabase/functions/ruins-expedition/handler.mjs`) using fake accounts. The database is deleted on exit.
+
+Suites:
+- `proof.test.mjs` (P01-P21): privileges, identity isolation, concurrency, replay, rollback, oracle fuzz.
+- `credential-theft.test.mjs` (C01-C13, package 008): an attacker holding only the `ruins_backend` password
+  connects directly and tries every routine for a victim; the retained 006 draft is shown to be exploitable and
+  r2 to block the same attack. Keys are random per run, held in memory only, and never written anywhere.
 
 It never reads Supabase credentials and cannot target staging or production: it only connects to the
 server it started.

@@ -1,4 +1,4 @@
-// RUINS 001C Offline Backend Proof 006 — database-free checks that run in the normal suite.
+// RUINS 001C Offline Backend Proof 006 / Principal Binding 008 — database-free checks that run in the normal suite.
 // Static migration-draft invariants + MOCK-ONLY handler tests. These make NO database-security claim;
 // the real-Postgres adversarial proof is tools/ruins-001c-offline-proof (npm test there).
 import test from 'node:test';
@@ -8,10 +8,16 @@ import {resolve,dirname,join,relative} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {parseGateCRoom,canonicalGateCText,DAY1_HASHES} from '../public/ruins-expedition/day1-content.mjs';
 import {createRuinsExpeditionHandler,validateEnvelope,ROUTINES,CONTRACT_VERSION,MAX_BODY_BYTES} from '../supabase/functions/ruins-expedition/handler.mjs';
+import {createPrincipalProofSigner,canonicalProofMessage,PROOF_FIELDS,MAX_PROOF_TTL_SECONDS} from '../supabase/functions/ruins-expedition/principal-proof.mjs';
+import {createHmac,createHash} from 'node:crypto';
 
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const read=p=>readFileSync(resolve(root,p),'utf8').replace(/\r\n/g,'\n');
-const DRAFT='supabase/drafts/ruins_001c/20261022120000_ruins_001c_private_expedition_DRAFT.sql';
+// Active candidate: 008 r2 (principal binding). The 006 draft is retained byte-for-byte as the 006 proof record.
+const DRAFT='supabase/drafts/ruins_001c/20261022200000_ruins_001c_private_expedition_r2_principal_binding_DRAFT.sql';
+const DRAFT_006='supabase/drafts/ruins_001c/20261022120000_ruins_001c_private_expedition_DRAFT.sql';
+// Explicit, security-tested 008 deviation from the six-table protocol: owner-only key custody + one-time nonces.
+const PROOF_TABLES=['principal_proof_key','principal_proof_nonce'];
 const sqlWithComments=read(DRAFT);
 const sql=sqlWithComments.replace(/--.*$/gm,''); // scan executable SQL only; comments name the forbidden objects on purpose
 const protocol=JSON.parse(read('docs/ruins/RUINS_DAILY_EXPEDITION_001C_STAGING_PROTOCOL_V1.json'));
@@ -22,14 +28,15 @@ const handlerSrc=read('supabase/functions/ruins-expedition/handler.mjs');
 test('migration is a draft outside supabase/migrations and nothing RUINS 001C is queued for apply',()=>{
   assert.ok(existsSync(resolve(root,DRAFT)));
   assert.deepEqual(readdirSync(resolve(root,'supabase/migrations')).filter(f=>/ruins|expedition/i.test(f)),[]);
-  assert.match(sqlWithComments,/MIGRATION DRAFT \(SOURCE ONLY\)/);assert.match(sqlWithComments,/NOT AUTHORIZED FOR SUPABASE STAGING OR PRODUCTION/);
+  assert.match(sqlWithComments,/MIGRATION DRAFT r2 \(SOURCE ONLY\)/);assert.match(sqlWithComments,/NOT AUTHORIZED FOR SUPABASE STAGING OR PRODUCTION/);
 });
 test('draft creates only ruins_private objects; never public, wallet, XP, Daily Trial, Friend or SL-SIM',()=>{
   assert.doesNotMatch(sql,/create\s+(table|function|view|sequence|policy|trigger)[^;]*\bpublic\./i);
   assert.doesNotMatch(sql,/wallet_ledger|runner_xp_event|daily_trial|builder_challenge|class_sessions|role_seats/i);
-  for(const t of protocol.db.tables)assert.match(sql,new RegExp(`create table ruins_private\\.${t} \\(`));
-  assert.equal((sql.match(/create table /g)||[]).length,protocol.db.tables.length);
-  for(const t of protocol.db.tables)assert.match(sql,new RegExp(`alter table ruins_private\\.${t}\\s+enable row level security`));
+  const tables=[...protocol.db.tables,...PROOF_TABLES];
+  for(const t of tables)assert.match(sql,new RegExp(`create table ruins_private\\.${t} \\(`));
+  assert.equal((sql.match(/create table /g)||[]).length,tables.length);
+  for(const t of tables)assert.match(sql,new RegExp(`alter table ruins_private\\.${t}\\s+enable row level security`));
   assert.doesNotMatch(sql,/create policy/i);
 });
 test('draft grants nothing to browser roles or PUBLIC, no login secret, and EXECUTE only to ruins_backend on the 3 entry routines',()=>{
@@ -81,7 +88,8 @@ test('browser build (public/) contains no backend connection strings, RUINS back
 
 // ------------------------------- MOCK-ONLY handler tests (no DB) --------------------------------
 const UUID='11111111-1111-4111-8111-111111111111';
-const mk=(overrides={})=>{const calls=[];const h=createRuinsExpeditionHandler({allowedOrigins:['https://ok.test'],
+let proofSerial=0;const fakeSign=async({principalId,purpose})=>({fake:true,principalId,purpose,n:++proofSerial}); // MOCK signer: no key, no crypto claim
+const mk=(overrides={})=>{const calls=[];const h=createRuinsExpeditionHandler({allowedOrigins:['https://ok.test'],signProof:fakeSign,
   verifyUser:async t=>t==='good'?{id:UUID}:null,db:{call:async(...a)=>{calls.push(a);return overrides.result??{ok:true}}},...overrides});return {h,calls}};
 const req=(method,route,{token='good',body,raw,headers={}}={})=>new Request('https://x.test/functions/v1/ruins-expedition'+route,{method,
   headers:{...(token?{authorization:'Bearer '+token}:{}),...(body!==undefined||raw!==undefined?{'content-type':'application/json'}:{}),...headers},body:raw??(body!==undefined?JSON.stringify(body):undefined)});
@@ -130,4 +138,64 @@ test('MOCK-ONLY: size, content-type, route and origin guards',async()=>{
   assert.equal((await json(await h(req('POST','/commands',{body:cmd('BOOTSTRAP'),headers:{origin:'https://evil.test'}})))).body.error.reason,'ORIGIN_NOT_ALLOWED');
   const ok=await h(req('OPTIONS','/commands',{token:null,headers:{origin:'https://ok.test'}}));assert.equal(ok.status,204);assert.equal(ok.headers.get('access-control-allow-origin'),'https://ok.test');
   assert.equal(calls.length,0);
+});
+
+// ------------------------------- 008 principal binding (static + MOCK-ONLY) --------------------------------
+test('008: the 006 draft is retained byte-for-byte (its proof record stays valid for its exact bytes)',()=>{
+  const lf=Buffer.from(read(DRAFT_006),'utf8');
+  assert.equal(createHash('sha256').update(lf).digest('hex'),'fd24a213a995167a5972d868fb70f588caf64a9312961044ec29634fbc947cc8');
+  assert.match(sqlWithComments,/Supersedes, as the active candidate, 20261022120000_ruins_001c_private_expedition_DRAFT\.sql \(006\)/);
+});
+test('008: SQL and JS share one wire format (field order, field whitelist, TTL bound)',()=>{
+  const concat=sql.match(/concat_ws\(E'\\n',([\s\S]*?)\);/)[1];
+  const order=[...concat.matchAll(/p_proof->>'(\w+)'/g)].map(m=>m[1]);
+  assert.deepEqual(order,[...PROOF_FIELDS]);
+  const whitelist=sql.match(/c_fields constant text\[\] := array\[([\s\S]*?)\];/)[1].match(/'(\w+)'/g).map(s=>s.slice(1,-1));
+  assert.deepEqual(whitelist,[...PROOF_FIELDS,'mac']);
+  assert.match(sql,/v_exp - v_iat > 30 or v_iat > v_now \+ 5 or v_exp <= v_now/);assert.equal(MAX_PROOF_TTL_SECONDS,30);
+  assert.match(sql,/extensions\.hmac\(pg_catalog\.convert_to\(v_msg, 'UTF8'\), v_key, 'sha256'\)/);
+});
+test('008: signer output equals an independent HMAC-SHA256 over the exact canonical bytes; refuses bad inputs',async()=>{
+  const key=globalThis.crypto.getRandomValues(new Uint8Array(32)); // random per run; no key is ever checked in
+  const sign=await createPrincipalProofSigner({kid:'k-test',keyBytes:key,now:()=>1_800_000_000_000,randomUUID:()=>'33333333-3333-4333-8333-333333333333'});
+  const p=await sign({principalId:UUID,purpose:'COMMAND',command:cmd('MOVE',{direction:'left'})});
+  const {mac,...fields}=p;const msg=canonicalProofMessage(fields);
+  assert.equal(msg,['ruins-principal-proof.v1','k-test','ruins-expedition-001c-private',UUID,'COMMAND','22222222-2222-4222-8222-222222222222','0','MOVE','left','1800000000','1800000020','33333333-3333-4333-8333-333333333333'].join('\n'));
+  assert.equal(mac,createHmac('sha256',Buffer.from(key)).update(msg,'utf8').digest('hex'));
+  const s=await sign({principalId:UUID,purpose:'STATE'});assert.deepEqual([s.operationId,s.expectedRevision,s.commandType,s.direction],['-','-','-','-']);
+  await assert.rejects(createPrincipalProofSigner({kid:'k',keyBytes:new Uint8Array(16)}),/RUINS_PROOF_KEY/);
+  await assert.rejects(createPrincipalProofSigner({kid:'k',keyBytes:key,ttlSeconds:31}),/RUINS_PROOF_TTL/);
+  await assert.rejects(createPrincipalProofSigner({kid:'Bad Kid',keyBytes:key}),/RUINS_PROOF_KID/);
+  await assert.rejects(sign({principalId:'not-a-uuid',purpose:'STATE'}),/RUINS_PROOF_PRINCIPAL/);
+  assert.throws(()=>canonicalProofMessage({...fields,kid:'k\nx'}),/RUINS_PROOF_FIELD/);
+});
+test('008: every entry routine verifies the principal proof before touching any expedition table',()=>{
+  for(const [name,purpose] of [['bootstrap_account_expedition','BOOTSTRAP'],['get_account_expedition','STATE'],['apply_account_expedition_command','COMMAND']]){
+    const fn=sql.match(new RegExp(`create function ruins_private\\.${name}\\(([\\s\\S]*?)\\n\\$\\$;`))[1];
+    const body=fn.slice(fn.indexOf('\nbegin\n')); // executable body only; DECLARE %rowtype types are not table access
+    const verify=body.indexOf(`verify_principal_proof(p_principal_id, '${purpose}'`);const firstTable=body.search(/ruins_private\.(expedition_|principal_proof_)/);
+    assert.ok(verify>0,name);assert.ok(firstTable<0||verify<firstTable,`${name}: verify before first table access`);
+    assert.match(fn,/p_proof jsonb/,name);
+  }
+  assert.match(sql,/create function ruins_private\.get_account_expedition\(p_principal_id uuid, p_proof jsonb\)\nreturns jsonb\nlanguage plpgsql\nvolatile/);
+});
+test('008: no key material, key insert or signing helper is part of the migration; helpers are owner-only',()=>{
+  assert.doesNotMatch(sql,/insert into ruins_private\.principal_proof_key/i);
+  assert.doesNotMatch(sql,/decode\('[0-9a-f]{32,}'|'\x[0-9a-f]{32,}'/i);
+  assert.doesNotMatch(sql,/grant[^;]*(verify_principal_proof|purge_expired_principal_proof_nonces|principal_proof_key|principal_proof_nonce)/i);
+  assert.match(sql,/count\(\*\) from ruins_private\.principal_proof_key\) <> 0/);
+  assert.doesNotMatch(sql,/create function [^(]*\b(sign|mint|issue)\w*\(/i,'no signing oracle routine');
+});
+test('MOCK-ONLY 008: the handler mints a fresh proof for every DB attempt, bound to the verified user and routine purpose',async()=>{
+  const seen=[];let n=0;
+  const flaky={call:async(routine,principal,command,proof)=>{seen.push({routine,principal,proof});if(++n<3)throw Object.assign(new Error('deadlock'),{code:'40P01'});return {ok:1}}};
+  const {h}=mk({db:flaky});const r=await h(req('POST','/commands',{body:cmd('MOVE',{direction:'up'})}));assert.equal(r.status,200);
+  assert.equal(seen.length,3);assert.equal(new Set(seen.map(s=>s.proof.n)).size,3,'never reuses a proof on retry');
+  assert.ok(seen.every(s=>s.principal===UUID&&s.proof.principalId===UUID&&s.proof.purpose==='COMMAND'));
+  const purposes=[];const {h:h2}=mk({db:{call:async(routine,principal,command,proof)=>{purposes.push([routine,proof.purpose]);return {ok:1}}}});
+  await h2(req('GET','/state'));await h2(req('POST','/commands',{body:cmd('BOOTSTRAP')}));
+  assert.deepEqual(purposes,[[ROUTINES.state,'STATE'],[ROUTINES.bootstrap,'BOOTSTRAP']]);
+  const failing=createRuinsExpeditionHandler({allowedOrigins:[],verifyUser:async()=>({id:UUID}),signProof:async()=>{throw new Error('no key')},db:{call:async()=>{throw new Error('unreachable')}}});
+  const f=await json(await failing(req('GET','/state')));assert.deepEqual(f.body.error,{code:'INTERNAL_RETRY_SAFE',reason:'RETRY'});
+  assert.throws(()=>createRuinsExpeditionHandler({verifyUser:async()=>null,db:{call:async()=>null}}),/RUINS_HANDLER_SEAMS_REQUIRED/);
 });

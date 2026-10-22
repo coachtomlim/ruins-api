@@ -58,7 +58,7 @@ test('P02 catalog: schema/table/routine ownership, RLS on, zero policies, zero s
   const schema=(await q(`select nspname, pg_get_userbyid(nspowner) owner, nspacl::text acl from pg_namespace where nspname='ruins_private'`))[0];
   assert.equal(schema.owner,'ruins_owner');
   const tables=await q(`select c.relname, pg_get_userbyid(c.relowner) owner, c.relrowsecurity rls, c.relforcerowsecurity force, coalesce(c.relacl::text,'') acl from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname='ruins_private' and c.relkind='r' order by 1`);
-  assert.deepEqual(tables.map(t=>t.relname),['expedition_claim','expedition_day_settlement','expedition_entitlement','expedition_instance','expedition_inventory_event','expedition_operation']);
+  assert.deepEqual(tables.map(t=>t.relname),['expedition_claim','expedition_day_settlement','expedition_entitlement','expedition_instance','expedition_inventory_event','expedition_operation','principal_proof_key','principal_proof_nonce']);
   for(const t of tables){assert.equal(t.owner,'ruins_owner');assert.equal(t.rls,true);assert.doesNotMatch(t.acl,/anon|authenticated|service_role|ruins_backend|(^|[{,])=/)}
   assert.equal((await q(`select count(*)::int n from pg_policy p join pg_class c on c.oid=p.polrelid join pg_namespace n on n.oid=c.relnamespace where n.nspname='ruins_private'`))[0].n,0);
   assert.equal((await q(`select count(*)::int n from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname='ruins_private' and c.relkind='S'`))[0].n,0);
@@ -72,7 +72,7 @@ test('P02 catalog: schema/table/routine ownership, RLS on, zero policies, zero s
   assert.deepEqual(u.expedition_inventory_event,['entitlement_id','operation_id','item_key']);
   const routines=await q(`select p.oid::regprocedure::text sig, pg_get_userbyid(p.proowner) owner, p.prosecdef definer, p.proconfig config, coalesce(p.proacl::text,'') acl, p.provolatile vol from pg_proc p where p.pronamespace='ruins_private'::regnamespace order by 1`);
   for(const r of routines){assert.equal(r.owner,'ruins_owner');assert.deepEqual(r.config,['search_path=""']);assert.doesNotMatch(r.acl,/(^|[{,])=X|anon|authenticated|service_role/)}
-  assert.deepEqual(routines.filter(r=>r.definer).map(r=>r.sig).sort(),['ruins_private.apply_account_expedition_command(uuid,jsonb)','ruins_private.bootstrap_account_expedition(uuid,jsonb)','ruins_private.get_account_expedition(uuid)']);
+  assert.deepEqual(routines.filter(r=>r.definer).map(r=>r.sig).sort(),['ruins_private.apply_account_expedition_command(uuid,jsonb,jsonb)','ruins_private.bootstrap_account_expedition(uuid,jsonb,jsonb)','ruins_private.get_account_expedition(uuid,jsonb)']);
   const bodies=await q(`select p.proname, p.prosrc from pg_proc p where p.pronamespace='ruins_private'::regnamespace`);
   for(const b of bodies){assert.doesNotMatch(b.prosrc,/\bexecute\s+(format|'|\$|[a-z_]+\s*(\|\||;))/i,`no dynamic SQL in ${b.proname}`);assert.doesNotMatch(b.prosrc,/\bpublic\./,`no public.* in ${b.proname}`)}
   const defaults=await q(`select pg_get_userbyid(d.defaclrole) role, case when d.defaclnamespace=0 then '(global)' else d.defaclnamespace::regnamespace::text end ns, d.defaclobjtype t, d.defaclacl::text acl from pg_default_acl d order by 1,2,3`);
@@ -116,9 +116,11 @@ test('P04 dynamic negatives: PostgREST-style SET ROLE anon/authenticated/service
   const attempts=['select * from ruins_private.expedition_entitlement','select * from ruins_private.expedition_claim',
     "insert into ruins_private.expedition_claim (entitlement_id,instance_id,reward_source_id,operation_id,payload,claimed_revision) values (gen_random_uuid(),gen_random_uuid(),'ruins-gate-c-015:room02:chest:01',gen_random_uuid(),'{}',1)",
     'update ruins_private.expedition_instance set revision=99','delete from ruins_private.expedition_operation',
-    `select ruins_private.get_account_expedition('${env.accounts.A}')`,
-    `select ruins_private.apply_account_expedition_command('${env.accounts.A}','{}'::jsonb)`,
-    `select ruins_private.bootstrap_account_expedition('${env.accounts.A}','{}'::jsonb)`,
+    `select ruins_private.get_account_expedition('${env.accounts.A}','{}'::jsonb)`,
+    `select ruins_private.apply_account_expedition_command('${env.accounts.A}','{}'::jsonb,'{}'::jsonb)`,
+    `select ruins_private.bootstrap_account_expedition('${env.accounts.A}','{}'::jsonb,'{}'::jsonb)`,
+    'select * from ruins_private.principal_proof_key','select * from ruins_private.principal_proof_nonce',
+    "select ruins_private.verify_principal_proof(gen_random_uuid(),'STATE',null,'{}'::jsonb)",
     'select ruins_private.day1_rules()','select ruins_private.day1_reduce(\'{}\'::jsonb,\'MOVE\',\'{}\'::jsonb)'];
   const out=[];const c=new pg.Client(env.authenticatorConfig);await c.connect();
   try{for(const role of ['anon','authenticated','service_role'])for(const sql of attempts){
@@ -131,8 +133,12 @@ test('P04 dynamic negatives: PostgREST-style SET ROLE anon/authenticated/service
 test('P05 backend login: no direct table access, no helpers, no DDL, cannot become owner, cannot touch public sentinels',async()=>{
   const attempts={selectTable:'select * from ruins_private.expedition_instance',insertClaim:"insert into ruins_private.expedition_claim (entitlement_id,instance_id,reward_source_id,operation_id,payload,claimed_revision) values (gen_random_uuid(),gen_random_uuid(),'ruins-gate-c-015:room02:chest:01',gen_random_uuid(),'{}',1)",
     updateInstance:'update ruins_private.expedition_instance set revision=0',helperReduce:"select ruins_private.day1_reduce('{}'::jsonb,'MOVE','{}'::jsonb)",helperReject:"select ruins_private.reject('X','Y')",
+    readKey:'select kid, key_material from ruins_private.principal_proof_key',readNonce:'select * from ruins_private.principal_proof_nonce',insertKey:"insert into ruins_private.principal_proof_key (kid,key_material,status) values ('evil',decode(repeat('00',32),'hex'),'ACTIVE')",
+    insertNonce:"insert into ruins_private.principal_proof_nonce (kid,nonce,principal_id,purpose,message_sha256,issued_at,expires_at) values ('k',gen_random_uuid(),gen_random_uuid(),'STATE',repeat('a',64),now(),now())",
+    verifyHelper:"select ruins_private.verify_principal_proof(gen_random_uuid(),'STATE',null,'{}'::jsonb)",purgeHelper:'select ruins_private.purge_expired_principal_proof_nonces()',
+    hmacDirect:"select extensions.hmac('x'::bytea,'k'::bytea,'sha256')",
     createInPrivate:'create table ruins_private.x(i int)',createInPublic:'create table public.ruins_x(i int)',setOwnerRole:'set role ruins_owner',
-    alterRoutine:'alter function ruins_private.get_account_expedition(uuid) security invoker',walletRead:'select * from public.wallet_ledger',walletWrite:"insert into public.wallet_ledger(delta,note) values (30,'x')",
+    alterRoutine:'alter function ruins_private.get_account_expedition(uuid,jsonb) security invoker',walletRead:'select * from public.wallet_ledger',walletWrite:"insert into public.wallet_ledger(delta,note) values (30,'x')",
     xpWrite:'insert into public.runner_xp_event(xp) values (2)',dailyTrial:'select * from public.daily_trial_run',friend:'select * from public.builder_challenge'};
   const out={};const c=new pg.Client(env.backendConfig);await c.connect();
   try{for(const [k,sql] of Object.entries(attempts)){let code='OK';try{await c.query(sql)}catch(e){code=e.code}out[k]=code}}finally{await c.end()}
@@ -290,7 +296,7 @@ test('P15 tamper payloads rejected by the handler AND independently by the priva
   // Defense in depth: bypass the handler and send a forged envelope straight to the routine as ruins_backend.
   const direct={};
   for(const [k,body] of Object.entries({gold:{...env.cmd('MOVE',0,{direction:'up'}),gold:30},params:env.cmd('DISCOVER_ALTAR',0,{x:1}),version:{...env.cmd('MOVE',0,{direction:'up'}),contractVersion:'v0'},room3:env.cmd('ENTER_ROOM3',0)})){
-    try{await env.backendPool.query('select ruins_private.apply_account_expedition_command($1::uuid,$2::jsonb)',[a.id,JSON.stringify(body)]);direct[k]='ACCEPTED'}catch(e){direct[k]=e.message}}
+    try{await env.backendPool.query('select ruins_private.apply_account_expedition_command($1::uuid,$2::jsonb,$3::jsonb)',[a.id,JSON.stringify(body),JSON.stringify(env.forge({principalId:a.id,purpose:'COMMAND',command:{...body,parameters:body.parameters??{}}}))]);direct[k]='ACCEPTED'}catch(e){direct[k]=e.message}}
   assert.deepEqual(direct,{gold:'RUINS:BAD_COMMAND:UNKNOWN_FIELD',params:'RUINS:BAD_COMMAND:UNEXPECTED_PARAMETERS',version:'RUINS:UNSUPPORTED_VERSION:CONTRACT_VERSION',room3:'RUINS:NOT_YET_UNLOCKED:ENTER_ROOM3'});
   assert.equal((await instOf(a.id)).revision,'0');
   rec('P15',{handler:out,unsupportedVersion:ver.json.error,oversize:big.json.error,directRoutine:direct});

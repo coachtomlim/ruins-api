@@ -22,3 +22,9 @@ insert into public.builder_challenge (owner, state) values ('00000000-0000-4000-
 -- Supabase grants browser roles on public; replicate so RUINS isolation is tested against that posture.
 grant usage on schema public to anon, authenticated, service_role;
 grant select on public.wallet_ledger, public.runner_xp_event, public.daily_trial_run, public.builder_challenge to anon, authenticated, service_role;
+
+-- Supabase installs pgcrypto in schema extensions (owned by the migration role there). The r2 draft only checks
+-- for it; it never creates or alters an extension.
+create schema extensions authorization migrator;
+create extension pgcrypto with schema extensions;
+grant usage on schema extensions to anon, authenticated;

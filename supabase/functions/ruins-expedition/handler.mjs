@@ -1,9 +1,11 @@
 // RUINS_DAILY_EXPEDITION_001C trusted request handler CANDIDATE (source only; NOT deployed).
 // Runtime-neutral (Web Request/Response), so the same code runs under the Supabase Edge (Deno) entry
-// in ./index.ts and under the offline Node proof harness. Two injected seams:
-//   verifyUser(token) -> {id} | null   : MUST verify the token with Supabase Auth (auth.getUser); never decode-only.
-//   db.call(routine, principalId, cmd)  : ONE private-routine call in its own transaction as ruins_backend.
-// The browser supplies intent only. The principal comes exclusively from verifyUser.
+// in ./index.ts and under the offline Node proof harness. Three injected seams:
+//   verifyUser(token) -> {id} | null          : MUST verify the token with Supabase Auth (auth.getUser); never decode-only.
+//   signProof({principalId,purpose,command})   : 008 principal assertion (./principal-proof.mjs), server-side only.
+//   db.call(routine, principalId, cmd, proof)  : ONE private-routine call in its own transaction as ruins_backend.
+// The browser supplies intent only. The principal comes exclusively from verifyUser, and the database accepts it
+// only with a valid single-use proof, so the DB credential alone cannot act for an arbitrary user.
 
 export const CONTRACT_VERSION='ruins-expedition-001c.v1';
 export const MAX_BODY_BYTES=8192;
@@ -15,6 +17,7 @@ const STATUS={AUTH_REQUIRED:401,UNSUPPORTED_VERSION:400,BAD_COMMAND:400,COMMAND_
   REVISION_CONFLICT:409,OPERATION_ID_REUSE_MISMATCH:409,NOT_YET_UNLOCKED:403,DAY_ALREADY_SETTLED:409,OUT_OF_RANGE:422,INTERNAL_RETRY_SAFE:503};
 const RETRYABLE=new Set(['40P01','40001']); // deadlock / serialization: retried with the SAME operation ID
 export const ROUTINES=Object.freeze({state:'get_account_expedition',bootstrap:'bootstrap_account_expedition',command:'apply_account_expedition_command'});
+const PURPOSE=Object.freeze({[ROUTINES.state]:'STATE',[ROUTINES.bootstrap]:'BOOTSTRAP',[ROUTINES.command]:'COMMAND'});
 
 class Rejection extends Error{constructor(code,reason){super(code);this.code=code;this.reason=reason}}
 const reject=(code,reason)=>{throw new Rejection(code,reason)};
@@ -52,12 +55,15 @@ function projectDbError(error){
   return new Rejection('INTERNAL_RETRY_SAFE','RETRY'); // never leak SQL text, object names or IDs
 }
 
-export function createRuinsExpeditionHandler({verifyUser,db,allowedOrigins=[],maxRetries=3,log=()=>{}}){
-  if(typeof verifyUser!=='function'||typeof db?.call!=='function')throw new Error('RUINS_HANDLER_SEAMS_REQUIRED');
+export function createRuinsExpeditionHandler({verifyUser,signProof,db,allowedOrigins=[],maxRetries=3,log=()=>{}}){
+  if(typeof verifyUser!=='function'||typeof signProof!=='function'||typeof db?.call!=='function')throw new Error('RUINS_HANDLER_SEAMS_REQUIRED');
   const origins=new Set(allowedOrigins);
   async function callDb(routine,principal,command){
     for(let attempt=0;;attempt++){
-      try{return await db.call(routine,principal,command)}
+      // 008: a fresh principal assertion (new nonce) for EVERY database attempt, retries included; a proof is
+      // never reused. Retrying the same operation ID still returns the original receipt from the database.
+      let proof;try{proof=await signProof({principalId:principal,purpose:PURPOSE[routine],command})}catch{reject('INTERNAL_RETRY_SAFE','RETRY')}
+      try{return await db.call(routine,principal,command,proof)}
       catch(error){if(RETRYABLE.has(error?.code)&&attempt<maxRetries)continue;throw projectDbError(error)}
     }
   }
