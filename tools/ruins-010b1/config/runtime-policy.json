@@ -1,0 +1,27 @@
+{
+  "package": "RUINS_DAILY_EXPEDITION_001C_010B1",
+  "bundleVersion": "codex-independent-002",
+  "encryptedDrive": "R:",
+  "encryptedDevice": "\\Device\\VeraCryptVolumeR",
+  "encryptedVolumeSerial": "04E4F605",
+  "workspaceRoot": "R:\\010b1\\codex-independent-002",
+  "containerPath": "E:\\RUINS_010B1_PRIVATE\\ruins-010b1.hc",
+  "containerBytes": 8589934592,
+  "projectRef": "qpgwqmduqtqidmhbuclw",
+  "expectedLiveSchemas": [
+    "public",
+    "sl_sim",
+    "sl_sim_basic1_hosted_poc",
+    "sl_sim_basic1_postpilot"
+  ],
+  "expectedSyntheticSchemas": ["public", "sl_sim"],
+  "postgresMajor": 17,
+  "postgresVersion": "17.6",
+  "retentionDays": 14,
+  "requiredManagedDataRelations": [
+    "auth.users",
+    "storage.buckets",
+    "storage.objects",
+    "supabase_migrations.schema_migrations"
+  ]
+}

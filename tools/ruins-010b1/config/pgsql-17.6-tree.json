@@ -1,0 +1,2601 @@
+{
+  "root": "R:\\010b1\\tools\\pgsql",
+  "version": "17.6",
+  "files": [
+    {
+      "path": "bin/clusterdb.exe",
+      "bytes": 132608,
+      "sha256": "52031adc5a0ec7616923dad0a108402afee5f4319c9c92ae1ccb2671c28e6de8"
+    },
+    {
+      "path": "share/extension/pg_stat_statements.control",
+      "bytes": 205,
+      "sha256": "def533a679b8033cffb2e07949c8f65b13805c3a13de2d4b3218a6404eee51c9"
+    },
+    {
+      "path": "share/extension/pg_stat_statements--1.9--1.10.sql",
+      "bytes": 2114,
+      "sha256": "cfb235d790cceb4bb64dc1e23211114324a978b6ea874fe143bf6acc64bc6171"
+    },
+    {
+      "path": "share/extension/pg_stat_statements--1.8--1.9.sql",
+      "bytes": 2128,
+      "sha256": "56b838f8d2eb7dcad313370d656fc6a8d886574e93ddc1d942c6d9af85b89d57"
+    },
+    {
+      "path": "share/extension/pg_stat_statements--1.7--1.8.sql",
+      "bytes": 1744,
+      "sha256": "049ebb696bfbd46fe5b9695a3b44aa6f4059e360e1edd2c047f9c0a0d5f619dd"
+    },
+    {
+      "path": "share/extension/pg_stat_statements--1.6--1.7.sql",
+      "bytes": 806,
+      "sha256": "7a5ffffffbff4eab6dff365f8cdb63fd5b675674e2ab52a53adf705aec45fc73"
+    },
+    {
+      "path": "share/extension/pg_stat_statements--1.5--1.6.sql",
+      "bytes": 376,
+      "sha256": "7c537b11d4bb551208b8f61ecc240ab8af9ba779b76fbd653bd12f38bfe28dc6"
+    },
+    {
+      "path": "share/extension/pg_stat_statements--1.4.sql",
+      "bytes": 1427,
+      "sha256": "2bf423c3cebe2fcce8ac589f4b12cbdd6c4e678520d5d8bd76bbf21d7d86a185"
+    },
+    {
+      "path": "share/extension/pg_stat_statements--1.4--1.5.sql",
+      "bytes": 305,
+      "sha256": "2f0256a0f057d6bbf62fec58045f06e31974d8d391f553b6ba48fb8583962b86"
+    },
+    {
+      "path": "share/extension/pg_stat_statements--1.3--1.4.sql",
+      "bytes": 345,
+      "sha256": "1224d505a793c90f36e8d9ee860780a3b9cc57043d75bf5a3c3b9f3e45b20a60"
+    },
+    {
+      "path": "share/extension/pg_stat_statements--1.2--1.3.sql",
+      "bytes": 1454,
+      "sha256": "fec6a32365da764be76cf65d3cc5aa70286601f33a07191d122f394eb34c6214"
+    },
+    {
+      "path": "share/extension/pg_stat_statements--1.10--1.11.sql",
+      "bytes": 2644,
+      "sha256": "91165d66ca91a64c6fee227e601641cc35771ddebc6213f9162eefaffdc5b0aa"
+    },
+    {
+      "path": "share/extension/pg_stat_statements--1.1--1.2.sql",
+      "bytes": 1336,
+      "sha256": "585bcd4b958d9509a4884807895263dc408cd84deb591422fb5088c84797a03c"
+    },
+    {
+      "path": "share/extension/pg_stat_statements--1.0--1.1.sql",
+      "bytes": 1246,
+      "sha256": "3be14c0cfbc48097813ddb38be7b6ba8b64e61eed495ac78691b112f177fad5d"
+    },
+    {
+      "path": "share/extension/pg_surgery--1.0.sql",
+      "bytes": 608,
+      "sha256": "03db9e2e8ab9d92eed941cdbf3f2cb5f43f530cff2d2810baaca36dea5cdee6d"
+    },
+    {
+      "path": "share/extension/pg_prewarm.control",
+      "bytes": 139,
+      "sha256": "02457f028a8d2b0a861c4a6611318e3a9af92926881fb111d7d39c329da52b08"
+    },
+    {
+      "path": "share/extension/pg_prewarm--1.1--1.2.sql",
+      "bytes": 458,
+      "sha256": "1e3071f0c1535462db8e3d03df58c4de0de73e0106f16a013c4b47e4d84cdd19"
+    },
+    {
+      "path": "share/extension/pg_prewarm--1.0--1.1.sql",
+      "bytes": 281,
+      "sha256": "086aab8d6f130184865916aa93e84a2563ce335eb8da130fc485368860c8c390"
+    },
+    {
+      "path": "share/extension/pg_freespacemap.control",
+      "bytes": 160,
+      "sha256": "37218e3edb4b4b1e9c0e71b0771128ae7ba49fffb21443b9056d137c8cadfea4"
+    },
+    {
+      "path": "share/extension/pg_freespacemap--1.1.sql",
+      "bytes": 899,
+      "sha256": "af0b659e01f3d1c49cdae9857be584e7ee0358b80c917eb810e8a808b5a3d087"
+    },
+    {
+      "path": "share/extension/pg_freespacemap--1.1--1.2.sql",
+      "bytes": 377,
+      "sha256": "d864b9660785a2b139368539f5523c26a125e1f70e110d60f7106f203b4bb5b2"
+    },
+    {
+      "path": "share/extension/pg_freespacemap--1.0--1.1.sql",
+      "bytes": 335,
+      "sha256": "67a3bc34c99015ddb234e33af7468aecf7d07d32ad2edca1689c8f385b8ff0f5"
+    },
+    {
+      "path": "share/extension/pg_buffercache.control",
+      "bytes": 157,
+      "sha256": "fd5737bd6c022cf6a190a24397a175992ab18925b10afa2c958877be0d612ccc"
+    },
+    {
+      "path": "share/extension/pg_buffercache--1.4--1.5.sql",
+      "bytes": 230,
+      "sha256": "bf0e0c61ae6274b281ed65757064b1d7b54d07d5e7e7dfdd8c5f1286f3fd60e4"
+    },
+    {
+      "path": "share/extension/pg_buffercache--1.3--1.4.sql",
+      "bytes": 1021,
+      "sha256": "d90f11f4e76c28f5a92a298658a44f2d1bdf6751cf5543fdf9647ebd085abefd"
+    },
+    {
+      "path": "share/extension/pg_buffercache--1.2.sql",
+      "bytes": 794,
+      "sha256": "ef83a188c86f21905f9ace8393143c6407d2c25c577e486df6a251c742b6cb6e"
+    },
+    {
+      "path": "share/extension/pg_buffercache--1.2--1.3.sql",
+      "bytes": 328,
+      "sha256": "7a90452071e7dae7ca6e75bacf15b73f96bb4be46abfa93502c3e6d520540aad"
+    },
+    {
+      "path": "share/extension/pg_buffercache--1.1--1.2.sql",
+      "bytes": 271,
+      "sha256": "78054761138f260a9c1b34577e7f2a09b81ff3d58ac3f6e1c6424e0f7f5ca00f"
+    },
+    {
+      "path": "share/extension/pg_buffercache--1.0--1.1.sql",
+      "bytes": 508,
+      "sha256": "88d9a4fe3d4b1f57716786357bf323c3a563da32e5ba424220dc79b96134458c"
+    },
+    {
+      "path": "share/extension/pg_prewarm--1.1.sql",
+      "bytes": 475,
+      "sha256": "879227a872c8a8e200b87a09470d166264d0f71269118dcd2117cd89370dbdf6"
+    },
+    {
+      "path": "share/extension/pg_surgery.control",
+      "bytes": 168,
+      "sha256": "4f213c2f2ae1e53ef463a20d8b3c5dd0e7122c6cb6fd32c1f0b50f0aee627cd6"
+    },
+    {
+      "path": "share/extension/pg_trgm--1.0--1.1.sql",
+      "bytes": 536,
+      "sha256": "a85cff55497081250bef3bb3b7fc8d8beb3b9bab64675501f79f923d7bd0a06c"
+    },
+    {
+      "path": "share/extension/pg_trgm--1.1--1.2.sql",
+      "bytes": 2192,
+      "sha256": "0ed40419dc9b01417ce058aba210c615bf1ff04daba44e4d23085983a4565f7f"
+    },
+    {
+      "path": "share/extension/pgstattuple.control",
+      "bytes": 147,
+      "sha256": "51ddd02509a3c65c5b07eae95f4f49375cd3d3da56f0357a4c9c12bc5a357941"
+    },
+    {
+      "path": "share/extension/pgstattuple--1.4.sql",
+      "bytes": 3764,
+      "sha256": "f2340a359a830b8ca02d192a40470df25e4cd600212062910980ad694f49d5cb"
+    },
+    {
+      "path": "share/extension/pgstattuple--1.4--1.5.sql",
+      "bytes": 5506,
+      "sha256": "8d8eb6a614cbfca248684edff229303a1c18ad0e12c89f62da0e1b2411f35e24"
+    },
+    {
+      "path": "share/extension/pgstattuple--1.3--1.4.sql",
+      "bytes": 623,
+      "sha256": "d4a79f01e50e9623ed1bc0e44d84b88ab5312ed1b25c23d43b6eb5db9dccf7d7"
+    },
+    {
+      "path": "share/extension/pgstattuple--1.2--1.3.sql",
+      "bytes": 1126,
+      "sha256": "140f5d8b2a6fa9285244fafeb3763e579e3478762ab2646011c8aab6a21e43f6"
+    },
+    {
+      "path": "share/extension/pgstattuple--1.1--1.2.sql",
+      "bytes": 1435,
+      "sha256": "3166dce80800ea8cd1abe4334f8d76b16b4b1c25f5fc69533264ee97920646d5"
+    },
+    {
+      "path": "share/extension/pgstattuple--1.0--1.1.sql",
+      "bytes": 400,
+      "sha256": "f3d746e666e75ea13570858459e9cc6264de26fe9a7149af35f6739605682947"
+    },
+    {
+      "path": "share/extension/pgrowlocks.control",
+      "bytes": 152,
+      "sha256": "95be083d42f975d6868a667d2c085accea63e65e235cd65d1697de4e4ea0ff49"
+    },
+    {
+      "path": "share/extension/pgrowlocks--1.2.sql",
+      "bytes": 555,
+      "sha256": "6645e58b3282e3f7ef35a7ec832bf1a06cd0480715993f379e03472eb8d9e636"
+    },
+    {
+      "path": "share/extension/pgrowlocks--1.1--1.2.sql",
+      "bytes": 253,
+      "sha256": "5718fa13fd8e3ea9058284683eafe8c1be3ea8d549032d04b625ecb33208f46b"
+    },
+    {
+      "path": "share/extension/pgrowlocks--1.0--1.1.sql",
+      "bytes": 651,
+      "sha256": "679105d3cf9c1ae69ee1f95653bc3bdfd6501b1ce2b4f166749937c7a7c9e52f"
+    },
+    {
+      "path": "share/extension/pgcrypto.control",
+      "bytes": 152,
+      "sha256": "2a6c81eef34ae6cee9ff5b557f3b6285db7fdd7bc76ee57798e82c945c61c939"
+    },
+    {
+      "path": "share/extension/pgcrypto--1.3.sql",
+      "bytes": 5708,
+      "sha256": "84f8eee1d6b03982fac596988b46bf89d5d5d8790d3133783eedad38bc7d8d38"
+    },
+    {
+      "path": "share/extension/pgcrypto--1.2--1.3.sql",
+      "bytes": 2346,
+      "sha256": "dfc2f4de2ca4eef79c4b24e25562b8d1948f5a6571a916b6b4c81b07d14dfbc6"
+    },
+    {
+      "path": "share/extension/pgcrypto--1.1--1.2.sql",
+      "bytes": 483,
+      "sha256": "d33b87d052730a764df864d59f16f09686c0f6c8883184d60784c02702ab1af3"
+    },
+    {
+      "path": "share/extension/pgcrypto--1.0--1.1.sql",
+      "bytes": 307,
+      "sha256": "530abf4709c3010f600312b513cafd2c169b8d8810b59f54ad4da5e576689ec3"
+    },
+    {
+      "path": "share/extension/pg_walinspect.control",
+      "bytes": 183,
+      "sha256": "794e7a688fc60ea2e0dd109f6ce6d5f7a013a2e5e9fc230f9c8d0de645fdec2a"
+    },
+    {
+      "path": "share/extension/pg_walinspect--1.0.sql",
+      "bytes": 3665,
+      "sha256": "dc1835c445c2a571d1d46740941618e0d07a0a0596b9b04217c4dc50f09ba782"
+    },
+    {
+      "path": "share/extension/pg_walinspect--1.0--1.1.sql",
+      "bytes": 1296,
+      "sha256": "f0f705c1776991de419b64fa77eb7ab75cb323ab9345fd4ae1e3333019dd51a5"
+    },
+    {
+      "path": "share/extension/pg_visibility.control",
+      "bytes": 186,
+      "sha256": "5265d68f17d85a14d89441b5a800a2689509dab34c05419bbdb1c5081d4cc39e"
+    },
+    {
+      "path": "share/extension/pg_visibility--1.1.sql",
+      "bytes": 2825,
+      "sha256": "4894754ecbcd82334a9af001bc8eec10f81a12149afe89ff04ea1193ea71cc34"
+    },
+    {
+      "path": "share/extension/pg_visibility--1.1--1.2.sql",
+      "bytes": 833,
+      "sha256": "e013d95f190343277fb02d797b2ab845a975e4a4280a4702cb6941c2211a8b60"
+    },
+    {
+      "path": "share/extension/pg_visibility--1.0--1.1.sql",
+      "bytes": 883,
+      "sha256": "60764a081274333c2fb9378e339ede225cd914d72da82fb4f2e7144e9630f6af"
+    },
+    {
+      "path": "share/extension/pg_trgm.control",
+      "bytes": 192,
+      "sha256": "17c2745da2a706e1443ee363ab7424ced871a9a652e86bf55d25d139f43ee27b"
+    },
+    {
+      "path": "share/extension/pg_trgm--1.5--1.6.sql",
+      "bytes": 418,
+      "sha256": "76d02b6ac7c6a5c2eed44d8fa48c8a104b7af98da594969b19e5bdafbb706bb8"
+    },
+    {
+      "path": "share/extension/pg_trgm--1.4--1.5.sql",
+      "bytes": 858,
+      "sha256": "e5de4624f7dcc3954b4c8d84136f9cc6dfc9942545b091180ca18da41f234d18"
+    },
+    {
+      "path": "share/extension/pg_trgm--1.3.sql",
+      "bytes": 7942,
+      "sha256": "2d90a742f644ca794f3819bbefac60bddb53fd9e253bfbc68d6ad3b6d1cf45c4"
+    },
+    {
+      "path": "share/extension/pg_trgm--1.3--1.4.sql",
+      "bytes": 2045,
+      "sha256": "98763d59a6e221dd1bfc43e941024e4ed363fc05c9ce4514bc93554dfd8a8ed5"
+    },
+    {
+      "path": "share/extension/pg_trgm--1.2--1.3.sql",
+      "bytes": 3498,
+      "sha256": "29caec4ef2830920c74c2594c11e0255c3a17102c59d244d9aacb3b1add541ea"
+    },
+    {
+      "path": "share/extension/pageinspect.control",
+      "bytes": 174,
+      "sha256": "a828f9f2b9bd160bbd67c6604c70a95e81a3b4150be698c8d76b8eab3fbc4f2e"
+    },
+    {
+      "path": "share/extension/pldbgapi--1.0--1.1.sql",
+      "bytes": 2893,
+      "sha256": "f1f6ff053f859fac77cc9e9a2e463badc98c45763381e4d944a98127431e43fe"
+    },
+    {
+      "path": "share/extension/pageinspect--1.9--1.10.sql",
+      "bytes": 589,
+      "sha256": "a2b2dde12407e6bdfddf9bec8e6db6a48a973d4ed6fed1e4349b1b6a477b20ec"
+    },
+    {
+      "path": "share/extension/pageinspect--1.7--1.8.sql",
+      "bytes": 1711,
+      "sha256": "063f1cd1dc1fbf11db12e10528dee5f2298e7032e5a2cbc5853c864526a02215"
+    },
+    {
+      "path": "share/extension/intarray--1.4--1.5.sql",
+      "bytes": 282,
+      "sha256": "2fadcb036e13e88a68ad11030c5c90234951050c0db3ce925cd8b82ae4797dd1"
+    },
+    {
+      "path": "share/extension/intarray--1.3--1.4.sql",
+      "bytes": 692,
+      "sha256": "df2479d62a6aac3fba7a924f5c84f994fd98d4ad9926966d9d471794f604460e"
+    },
+    {
+      "path": "share/extension/intarray--1.2.sql",
+      "bytes": 12293,
+      "sha256": "cdbe2efda79cb5c9cfc17f157425e240bcd659b5c4ff590b30ab7dafc8b9dab1"
+    },
+    {
+      "path": "share/extension/intarray--1.2--1.3.sql",
+      "bytes": 663,
+      "sha256": "6ec2bd07555168eac88c09efd777fdf5855b01e8170e9c21c164d36e2976513f"
+    },
+    {
+      "path": "share/extension/intarray--1.1--1.2.sql",
+      "bytes": 5525,
+      "sha256": "999a398ea4c6c568c9c539223fd6fa22582e5cfbce48efeaff73cb88157c7737"
+    },
+    {
+      "path": "share/extension/intarray--1.0--1.1.sql",
+      "bytes": 1794,
+      "sha256": "afe3f46b5ea00c14d203b81de1f9c44ddff65fb1780f12fdbe9f9a5fe8bf3296"
+    },
+    {
+      "path": "share/extension/intagg.control",
+      "bytes": 119,
+      "sha256": "b0fd3e80a9386f194adebdcdec7a87d3e3be05f2b121b5feedf24c70c3a6590f"
+    },
+    {
+      "path": "share/extension/intagg--1.1.sql",
+      "bytes": 1089,
+      "sha256": "23efea89ed8f96cc6aff196d2ca19100757e8a27d69add7ea516ade554273324"
+    },
+    {
+      "path": "share/extension/intagg--1.0--1.1.sql",
+      "bytes": 897,
+      "sha256": "7d1dc1395321cf717ccb84383f95bf5f34f9691a303ee16c5a32bb2387d60e57"
+    },
+    {
+      "path": "share/extension/insert_username.control",
+      "bytes": 170,
+      "sha256": "a50a089237d1da5e5d56ace503a601d5e3d759ffb1d3cc5a61c9024eb19a0ddd"
+    },
+    {
+      "path": "share/extension/insert_username--1.0.sql",
+      "bytes": 273,
+      "sha256": "dfd01c866f57383291de8998b03dc99f4ef0d0f6a6f238a61511f6b3c05676db"
+    },
+    {
+      "path": "share/extension/hstore.control",
+      "bytes": 173,
+      "sha256": "1df9f2b3059cd77e38920dd35235161b3ad336fc71198c66120d120262ad086d"
+    },
+    {
+      "path": "share/extension/hstore--1.7--1.8.sql",
+      "bytes": 508,
+      "sha256": "49bbb159d5f67e86ddcb93d11a9d444f6dd70bcb03a8400ce8c3664fbb974dba"
+    },
+    {
+      "path": "share/extension/intarray.control",
+      "bytes": 191,
+      "sha256": "4639c9ee34acfc0f3a25bcff0c4e6398722f9a6371241b1950a4c1d1b73121c1"
+    },
+    {
+      "path": "share/extension/hstore--1.6--1.7.sql",
+      "bytes": 1061,
+      "sha256": "0d410440dc457b525626b0fd6f5a0262dd233ec6f299e5c3ca7b090d2f9576db"
+    },
+    {
+      "path": "share/extension/hstore--1.4.sql",
+      "bytes": 13765,
+      "sha256": "bcd0328004e985554dc3831cb0db92da3f45bec48b6501fce962187b7a2c2bbf"
+    },
+    {
+      "path": "share/extension/hstore--1.4--1.5.sql",
+      "bytes": 409,
+      "sha256": "045d0def508a248fd0049f1bf99bbbec9bccff523f31514ffa3f7daf46b11de6"
+    },
+    {
+      "path": "share/extension/hstore--1.3--1.4.sql",
+      "bytes": 5310,
+      "sha256": "7e8df8d33964ce7ab39d32be90e94b64f9776588fe43b53e70077a3e58ec95f9"
+    },
+    {
+      "path": "share/extension/hstore--1.2--1.3.sql",
+      "bytes": 525,
+      "sha256": "0753c346e86147cb7767f603310b774cff6affb11e65c2d5caf173cf0766ad2c"
+    },
+    {
+      "path": "share/extension/hstore--1.1--1.2.sql",
+      "bytes": 1639,
+      "sha256": "8e166794ad480bd9141f5627b838d9c9076a76f63237c9058b836c36f0600df7"
+    },
+    {
+      "path": "share/extension/hstore_plpython3u.control",
+      "bytes": 201,
+      "sha256": "3de66771562dae0ce5cc830ce780d9d67883f458e5fece4920ea0183f5d5c4e6"
+    },
+    {
+      "path": "share/extension/hstore_plpython3u--1.0.sql",
+      "bytes": 750,
+      "sha256": "0439a302b4f76dd5a6c556686b368ce6541cfc88390156eb0630983c040322cf"
+    },
+    {
+      "path": "share/extension/hstore_plperlu.control",
+      "bytes": 189,
+      "sha256": "e002350703f6eb8b8dab94bcea938bef8176b9d6d5624478e6eb67d5be297f35"
+    },
+    {
+      "path": "share/extension/hstore_plperlu--1.0.sql",
+      "bytes": 627,
+      "sha256": "6fb0cb4ea07faf0ed479975ff5be57b271b341212148ed364218e82d299122ed"
+    },
+    {
+      "path": "share/extension/hstore_plperl.control",
+      "bytes": 186,
+      "sha256": "cfba6a09c204d8010b7da4a62efd190f10d895fd2a3fa93894ffc0bc5a1e17f5"
+    },
+    {
+      "path": "share/extension/hstore_plperl--1.0.sql",
+      "bytes": 580,
+      "sha256": "1db9dd3199d7f549920b0eb1bbda9a1c29e82328c4da8769e9f8bbbbddd0f9ac"
+    },
+    {
+      "path": "share/extension/fuzzystrmatch.control",
+      "bytes": 190,
+      "sha256": "03cb75eb2e7602c93bae23f6912a9cb6728229c1118434505ff26958829045d4"
+    },
+    {
+      "path": "share/extension/fuzzystrmatch--1.1.sql",
+      "bytes": 1576,
+      "sha256": "84009c54e3756973a0e8c5786161eb5bbd1d45b83d2f1c717ecac2917ae6cf06"
+    },
+    {
+      "path": "share/extension/hstore--1.5--1.6.sql",
+      "bytes": 455,
+      "sha256": "957ae4e39efc2841766c59e2ece1bc431d87a8cfe39e8433b70ba08cf3e3b8d5"
+    },
+    {
+      "path": "share/extension/isn--1.0--1.1.sql",
+      "bytes": 12333,
+      "sha256": "481e984efaf9cf02f0351f601945976b1604bbb46eaf72f8400da7121f206302"
+    },
+    {
+      "path": "share/extension/isn--1.1--1.2.sql",
+      "bytes": 5264,
+      "sha256": "a8bb938809c0c3cd239ba3248590e774961a54da454a7f2d3050169b221e46b2"
+    },
+    {
+      "path": "share/extension/isn--1.1.sql",
+      "bytes": 69885,
+      "sha256": "eedbf152770a67be7cb839ce3c229c2886ae07d4888f8ec61caac09c818a0fcb"
+    },
+    {
+      "path": "share/extension/pageinspect--1.6--1.7.sql",
+      "bytes": 698,
+      "sha256": "9429a8581910c56ca47892c6c0c5f21f978de3b365735234dc918eb88da689fb"
+    },
+    {
+      "path": "share/extension/pageinspect--1.5.sql",
+      "bytes": 6262,
+      "sha256": "c8ae5e8b5b2a4ddd91606768bb97a15b20d9801bf221dc5f5a6b9d04f8728582"
+    },
+    {
+      "path": "share/extension/pageinspect--1.5--1.6.sql",
+      "bytes": 2252,
+      "sha256": "24280667f07c8e9323361c01e6180453f659c3b7aa92ed4cb2356bc6742fcc10"
+    },
+    {
+      "path": "share/extension/pageinspect--1.4--1.5.sql",
+      "bytes": 1347,
+      "sha256": "b433f6d5838c1055b9d67fa15c170069b9f7e48f0c44d89b30b9207254b4de2a"
+    },
+    {
+      "path": "share/extension/pageinspect--1.3--1.4.sql",
+      "bytes": 2566,
+      "sha256": "77ea8f779d43ca5fbf04b81170e9971459c9667f0d3e340b5d1ae2c055d35f41"
+    },
+    {
+      "path": "share/extension/pageinspect--1.2--1.3.sql",
+      "bytes": 1946,
+      "sha256": "df73aa055b6977ae94cbafca5ce57dab3778633189525ffcd517722a333cb9d7"
+    },
+    {
+      "path": "share/extension/pageinspect--1.11--1.12.sql",
+      "bytes": 1165,
+      "sha256": "9ac047074faab612b9b04e8a9239ee99eb662522538b855016575618374954fa"
+    },
+    {
+      "path": "share/extension/pageinspect--1.10--1.11.sql",
+      "bytes": 1570,
+      "sha256": "37957ad54c1565165d586604605ffe6c017a2fcd749eadb91f19c1d04c980db6"
+    },
+    {
+      "path": "share/extension/pageinspect--1.1--1.2.sql",
+      "bytes": 562,
+      "sha256": "84899c9fbf372d2c2dacffd817eec64c6076fe41006be6261e76f3661c91435e"
+    },
+    {
+      "path": "share/extension/pageinspect--1.0--1.1.sql",
+      "bytes": 560,
+      "sha256": "84268e37d39bef6585d42a4e14dee567e7afb919addf6621dfd4ec9eabf08fca"
+    },
+    {
+      "path": "share/extension/moddatetime.control",
+      "bytes": 165,
+      "sha256": "7c6e860c0570348baa620603566c6bc4d7bb4b3b11a66dd0033493fcb4f1f96e"
+    },
+    {
+      "path": "share/extension/moddatetime--1.0.sql",
+      "bytes": 261,
+      "sha256": "81aa1167a1f7ab51f1518698c8f56f712a5030e15ec588d2e1def03dddc69c96"
+    },
+    {
+      "path": "share/extension/ltree.control",
+      "bytes": 170,
+      "sha256": "73290b3b95f8045c7081d65f4e1decab49f74b4ac521b59b07622493e717f181"
+    },
+    {
+      "path": "share/extension/ltree--1.2--1.3.sql",
+      "bytes": 652,
+      "sha256": "ed01ab8c7da84e75e2e2f4d502b1526e8ef29a26236817b4ec332a0b77e93d4e"
+    },
+    {
+      "path": "share/extension/ltree--1.1.sql",
+      "bytes": 19375,
+      "sha256": "17bd2b7616cc0fdd72ded20017c224e7c1d8d145a7562f985f5093bb8180b7cc"
+    },
+    {
+      "path": "share/extension/ltree--1.1--1.2.sql",
+      "bytes": 5217,
+      "sha256": "e8f907408575edae282a028691eaa6f61b0c810b6f7c3a9cd2b7fb8935bfb406"
+    },
+    {
+      "path": "share/extension/ltree--1.0--1.1.sql",
+      "bytes": 6336,
+      "sha256": "069cf8d289005a3ce19bbd4f7c0b7aa84fccac2763392a1c7ebe1fcfe641a25f"
+    },
+    {
+      "path": "share/extension/ltree_plpython3u.control",
+      "bytes": 197,
+      "sha256": "881d44740488f0339e89a1b87bbd9b5697a045139dfe6a1568f483127eec33d0"
+    },
+    {
+      "path": "share/extension/ltree_plpython3u--1.0.sql",
+      "bytes": 449,
+      "sha256": "4b576bd49f567410a8b6c8506729079ec78b6e331c76623117a0336a4c7db9b0"
+    },
+    {
+      "path": "share/extension/lo.control",
+      "bytes": 141,
+      "sha256": "bf59f18118f7f02c6d79cd3a559249414c3a373f5af318d9a75f343749a919f6"
+    },
+    {
+      "path": "share/extension/lo--1.1.sql",
+      "bytes": 722,
+      "sha256": "d045cbbb5385d15052b9dacd213d896d994ba51af55695e1685681b2f7637d5e"
+    },
+    {
+      "path": "share/extension/lo--1.0--1.1.sql",
+      "bytes": 223,
+      "sha256": "6b746a7b34517f8c4a9aded518085fcdce85ee9145b7400788167401833a3485"
+    },
+    {
+      "path": "share/extension/jsonb_plpython3u.control",
+      "bytes": 191,
+      "sha256": "3de997dc17c74bd808972e3689d80d52fd26336815272242141cb4efacc6c9e3"
+    },
+    {
+      "path": "share/extension/jsonb_plpython3u--1.0.sql",
+      "bytes": 732,
+      "sha256": "b3e695c8192d716ca3b851310162cb86ffda8c97c33d7d83eacbc234797ffa61"
+    },
+    {
+      "path": "share/extension/jsonb_plperlu.control",
+      "bytes": 178,
+      "sha256": "3921ac857c91d90e72ee32460249b505e08360ff7e233eddd321d76f45ac8248"
+    },
+    {
+      "path": "share/extension/jsonb_plperlu--1.0.sql",
+      "bytes": 704,
+      "sha256": "c747f638060e4335c023bf1ae9a8015858e07e310f50ddba872955aacf812651"
+    },
+    {
+      "path": "share/extension/jsonb_plperl.control",
+      "bytes": 191,
+      "sha256": "d71e1b2bdf89c97e804af1a51d83c2558e84d004067890f58e3bc3d8f7ad1397"
+    },
+    {
+      "path": "share/extension/jsonb_plperl--1.0.sql",
+      "bytes": 658,
+      "sha256": "23e7e30bdb43fc83f8936694f491f35974a997e79b5d4a8881e4e66fd50f584c"
+    },
+    {
+      "path": "share/extension/isn.control",
+      "bytes": 175,
+      "sha256": "444230950d1bc13cccaa16c9e9fbf69da1ec92eeb4d9546eafcc7ea7a8529e8e"
+    },
+    {
+      "path": "share/extension/pageinspect--1.8--1.9.sql",
+      "bytes": 3398,
+      "sha256": "52b688ab40c01ef54b9ac660fd05520aa35b5132b712f001fcb4a2f4c3bdc307"
+    },
+    {
+      "path": "share/extension/fuzzystrmatch--1.1--1.2.sql",
+      "bytes": 351,
+      "sha256": "69c66f21261fb48cf64bbcfccc204a5f5bb078d0d3dbd1bdbb3f2fc7fd99ea31"
+    },
+    {
+      "path": "share/extension/pldbgapi--1.1.sql",
+      "bytes": 7623,
+      "sha256": "52a1b3715770cf22496c832525e3fca18faf338499a0dd80c08d1d6bfc97ba46"
+    },
+    {
+      "path": "share/extension/pldbgapi.control",
+      "bytes": 186,
+      "sha256": "9971a08cfff4a1e2b7934989238a0dc432ecf45250543b1faf47b0fd85348c58"
+    },
+    {
+      "path": "share/timezonesets/Asia.txt",
+      "bytes": 8311,
+      "sha256": "ae480b39d72487ffc4576a7fdf9a1e613ac3f87633daafeb7e071d6cd47dc982"
+    },
+    {
+      "path": "share/timezonesets/Antarctica.txt",
+      "bytes": 1134,
+      "sha256": "6f47ca542b13b594bb3a3689a63fbf3bcc8414815ece60eeeb15158ea4becb7c"
+    },
+    {
+      "path": "share/timezonesets/America.txt",
+      "bytes": 11007,
+      "sha256": "8ca517c53d723a61b85cea6880af7ce1672e6c1be73f704fbf28477db2645124"
+    },
+    {
+      "path": "share/timezonesets/Africa.txt",
+      "bytes": 6973,
+      "sha256": "29f630662fde2db5724990f715b73f09791a85627dfeb5612adfef12a6a0b8f4"
+    },
+    {
+      "path": "share/timezone/Zulu",
+      "bytes": 111,
+      "sha256": "fddce1e648a1732ac29afd9a16151b2973cdf082e7ec0c690f7e42be6b598b93"
+    },
+    {
+      "path": "share/timezone/WET",
+      "bytes": 1463,
+      "sha256": "44d2f6cf84737e6a1e0daf914109e94256beca40b40c9a11b7a04e8bddaee4ec"
+    },
+    {
+      "path": "share/timezone/W-SU",
+      "bytes": 908,
+      "sha256": "ed2e0a099fb446b2416683438d3f56f9fc5a62a16c7549a7f59cbc935b364c8a"
+    },
+    {
+      "path": "share/timezone/UTC",
+      "bytes": 111,
+      "sha256": "fddce1e648a1732ac29afd9a16151b2973cdf082e7ec0c690f7e42be6b598b93"
+    },
+    {
+      "path": "share/timezone/Universal",
+      "bytes": 111,
+      "sha256": "fddce1e648a1732ac29afd9a16151b2973cdf082e7ec0c690f7e42be6b598b93"
+    },
+    {
+      "path": "share/timezone/UCT",
+      "bytes": 111,
+      "sha256": "fddce1e648a1732ac29afd9a16151b2973cdf082e7ec0c690f7e42be6b598b93"
+    },
+    {
+      "path": "share/timezone/Turkey",
+      "bytes": 1200,
+      "sha256": "2a7163b16b94806f69991348e7d0a60c46eb61b1f0305f5f4b83f613db10806f"
+    },
+    {
+      "path": "share/timezone/Singapore",
+      "bytes": 256,
+      "sha256": "0954b2d9a301d94f4348024606a71bbcb2fa24d3cd3709f5bc8bca605039785d"
+    },
+    {
+      "path": "share/timezone/ROK",
+      "bytes": 415,
+      "sha256": "64a70b6fbcc9b65e762dbd25eb89b6f40c137146edc8dbd4d081eafacdab78de"
+    },
+    {
+      "path": "share/timezonesets/Atlantic.txt",
+      "bytes": 3533,
+      "sha256": "d03378d66a563226cb25390dcdbc8d5dc9015d0ec86cbba07b81718062c28ca5"
+    },
+    {
+      "path": "share/timezone/ROC",
+      "bytes": 511,
+      "sha256": "a04c2c72f4f76a83178d036dd97d157ee1f32e478e44dda7a5c10923687ee6cf"
+    },
+    {
+      "path": "share/timezone/PRC",
+      "bytes": 393,
+      "sha256": "bf8b7ed82fe6e63e6d98f8cea934eeac901cd16aba85eb5755ce3f8b4289ea8a"
+    },
+    {
+      "path": "share/timezone/Portugal",
+      "bytes": 1463,
+      "sha256": "44d2f6cf84737e6a1e0daf914109e94256beca40b40c9a11b7a04e8bddaee4ec"
+    },
+    {
+      "path": "share/timezone/Poland",
+      "bytes": 923,
+      "sha256": "e88f5a51f168157a41ac2dd8a4ee0e9a879419c84c6122b4771b1a2a33d93a4c"
+    },
+    {
+      "path": "share/timezone/NZ-CHAT",
+      "bytes": 808,
+      "sha256": "a67858fcb6fc5787a8e9c2b7c8be8964bd3ce9223f7ad1baac2c9ca6925f4c78"
+    },
+    {
+      "path": "share/timezone/NZ",
+      "bytes": 1043,
+      "sha256": "0e06e7e55aedbc92ef5b3d106e7c392ab1628cfd8a428b20e92e99028a0bfbb9"
+    },
+    {
+      "path": "share/timezone/Navajo",
+      "bytes": 1042,
+      "sha256": "9bb703920eca4b6119e81a105583a4f6ca220651f13b418479ab7cd56c413f3e"
+    },
+    {
+      "path": "share/timezone/MST7MDT",
+      "bytes": 1042,
+      "sha256": "9bb703920eca4b6119e81a105583a4f6ca220651f13b418479ab7cd56c413f3e"
+    },
+    {
+      "path": "share/timezone/MST",
+      "bytes": 240,
+      "sha256": "ae11453c21d08984de75f2efec04dc93178a7b4e23c5e52f2098b8bd45ccb547"
+    },
+    {
+      "path": "share/timezone/MET",
+      "bytes": 1103,
+      "sha256": "b10f9542a8509f0a63ebca78e3d80432dd86b8ea296400280febd9cfa76e8288"
+    },
+    {
+      "path": "share/timezone/Libya",
+      "bytes": 431,
+      "sha256": "cf33012d9661e15438fc045ee64e0bfebb2ea8a3fb79d2af56df05ea4be3e453"
+    },
+    {
+      "path": "share/timezone/Kwajalein",
+      "bytes": 219,
+      "sha256": "4be6458ba89d2b30da7a52f2ec346318f783d2cee856e777c4b33164a365064f"
+    },
+    {
+      "path": "share/timezone/Japan",
+      "bytes": 213,
+      "sha256": "59a3871430f0d3b93e619fa30a43a41d1e88bdd49ff26f09d0f405a500706f96"
+    },
+    {
+      "path": "share/timezone/Jamaica",
+      "bytes": 339,
+      "sha256": "a437b1700333aeff53a8b5868d5387c080dc14c2d3e95aa5ce36f901b3669284"
+    },
+    {
+      "path": "share/timezone/PST8PDT",
+      "bytes": 1294,
+      "sha256": "200d05754f6d83a371cf408d7085125797657b3b0bebeba1e508cffe86a3e5c8"
+    },
+    {
+      "path": "share/timezonesets/Australia",
+      "bytes": 1135,
+      "sha256": "249e83499ae7cd0348571d31ef50e240071bca5b063eed97ee902edcc98105dd"
+    },
+    {
+      "path": "share/timezonesets/Australia.txt",
+      "bytes": 3384,
+      "sha256": "32128798fcc64d269c9033acf05ea5e404f155d13c4d7afee0046f3a4649e2b9"
+    },
+    {
+      "path": "share/timezonesets/Default",
+      "bytes": 27214,
+      "sha256": "0dadd689b1998cc2d3acec42f66913194661f8d4835623776593b7bcdd075cb1"
+    },
+    {
+      "path": "share/tsearch_data/turkish.stop",
+      "bytes": 260,
+      "sha256": "f2c7f0c2bd3dba42da700776266831853a3b5f1207fada5c15207334109abb57"
+    },
+    {
+      "path": "share/tsearch_data/thesaurus_sample.ths",
+      "bytes": 473,
+      "sha256": "346954eaf1def3007ad848731b3c26c203ed12923911b6a0ac198604831f7dc4"
+    },
+    {
+      "path": "share/tsearch_data/synonym_sample.syn",
+      "bytes": 73,
+      "sha256": "59a46c3c25c2b5a1fe174de62bf2f53ce46021e3831eec0eb62d9301ea327e49"
+    },
+    {
+      "path": "share/tsearch_data/swedish.stop",
+      "bytes": 559,
+      "sha256": "2a9d9d756bc4257d49329994f805c712cd5ab6746162e2082752238766c1c0c8"
+    },
+    {
+      "path": "share/tsearch_data/spanish.stop",
+      "bytes": 2178,
+      "sha256": "7450c1f7196c161d9a4e537de43f88bd55cdb64028c808e14587bd7a6ac7be3d"
+    },
+    {
+      "path": "share/tsearch_data/russian.stop",
+      "bytes": 1235,
+      "sha256": "1743191192b4a4f77fcc216499455dc00c1b8626fdd407076a8deefff80e3d59"
+    },
+    {
+      "path": "share/tsearch_data/portuguese.stop",
+      "bytes": 1267,
+      "sha256": "5f305fac1d830620eeb9b2a68a1b96bf26f65c2e9257d56c8413d6fb36ed6cac"
+    },
+    {
+      "path": "share/tsearch_data/norwegian.stop",
+      "bytes": 851,
+      "sha256": "f7e5b42208ccf1b1f282f9e0f8570e464272762bda5718b6b26750f510a688dc"
+    },
+    {
+      "path": "share/tsearch_data/nepali.stop",
+      "bytes": 4261,
+      "sha256": "43245d062fa39a6543d5ff3216552a391bac95fd2ba26c05b1d6959d26f441fb"
+    },
+    {
+      "path": "share/tsearch_data/italian.stop",
+      "bytes": 1654,
+      "sha256": "293d7841f198e4012f49e8e5653c3bfd073a58cea1259fa2c0fcec894167b628"
+    },
+    {
+      "path": "share/tsearch_data/ispell_sample.dict",
+      "bytes": 81,
+      "sha256": "e913216b14f04ebfe390f8f6048c408aebab7fe7ff313d61a0d2355146d83397"
+    },
+    {
+      "path": "share/tsearch_data/ispell_sample.affix",
+      "bytes": 465,
+      "sha256": "3a5a3e7a54acd42c27d3c231526ccf8ccf7f29f688ef6ad74dbd04af11309d8f"
+    },
+    {
+      "path": "share/tsearch_data/hunspell_sample.affix",
+      "bytes": 243,
+      "sha256": "0f1fb5943562c9523d010780b61784c147b49e57596b2497d1396d31c5214aaf"
+    },
+    {
+      "path": "share/tsearch_data/hunspell_sample_num.dict",
+      "bytes": 129,
+      "sha256": "dc6e8fcfaf5bc2b93cd58e8273cae625107ba02dace80061bb6c765ec97dea6f"
+    },
+    {
+      "path": "share/tsearch_data/hunspell_sample_num.affix",
+      "bytes": 462,
+      "sha256": "5c2eeed5197453472cc4f918d556a8d092b3b8891579dc8cc0b3db939da52364"
+    },
+    {
+      "path": "share/tsearch_data/hunspell_sample_long.dict",
+      "bytes": 98,
+      "sha256": "1926afe91b724eb2a3bcd6dd3a03ae3d46691d3246a597d2682a209eb3ada459"
+    },
+    {
+      "path": "share/tsearch_data/hunspell_sample_long.affix",
+      "bytes": 633,
+      "sha256": "2132c84f2453d7c3d8bc6b5598a57afe4f9c4aca04d886f46308a070a86df217"
+    },
+    {
+      "path": "share/tsearch_data/hungarian.stop",
+      "bytes": 1227,
+      "sha256": "cb66b000fe0c852579ab2cb01e086f3d0eef80d650353bcd854958556dcf917d"
+    },
+    {
+      "path": "share/tsearch_data/german.stop",
+      "bytes": 1349,
+      "sha256": "46bf0dcec5b5bd83cd7fb96a5283876fdf91cfae7f988252132218545a61d1f7"
+    },
+    {
+      "path": "share/tsearch_data/french.stop",
+      "bytes": 805,
+      "sha256": "6ca60ffd4257c35cc3981d0e923881c3d8b85c8c0f6ef7a6697bd4ae97200fd8"
+    },
+    {
+      "path": "share/tsearch_data/finnish.stop",
+      "bytes": 1579,
+      "sha256": "952af766edc9b8e7ddc877fc464cbd94b91754b5621fdfdd7020568fd4813fcd"
+    },
+    {
+      "path": "share/tsearch_data/english.stop",
+      "bytes": 622,
+      "sha256": "b3f772a000465cb76e23adb03b47073c591c156fad8f7af09c8b8e80d6bd8eac"
+    },
+    {
+      "path": "share/tsearch_data/dutch.stop",
+      "bytes": 453,
+      "sha256": "e5a2a7c390fe3ad0c0a132586ed11492b635d66a1f426cd89677f80b07bc76a6"
+    },
+    {
+      "path": "share/tsearch_data/danish.stop",
+      "bytes": 424,
+      "sha256": "1bedc9cf5a8830dacf8c4ee0d8b301f0801861756ad0d504431d01047f961b0c"
+    },
+    {
+      "path": "share/timezonesets/Pacific.txt",
+      "bytes": 3768,
+      "sha256": "55f614feedb1857c43d0f5aee1a5cabe9073365e368865c6c79495a3ee25e0a3"
+    },
+    {
+      "path": "share/timezonesets/Indian.txt",
+      "bytes": 1261,
+      "sha256": "6973cbbfdf88507ff4d32566e8c5328685b6a441a8ae22ee83b35039722c1acc"
+    },
+    {
+      "path": "share/timezonesets/India",
+      "bytes": 593,
+      "sha256": "77eb5794aeb96c90f5016a74f1ef8efd597a2059e74ec2258be03be9a1e8d894"
+    },
+    {
+      "path": "share/timezonesets/Europe.txt",
+      "bytes": 8746,
+      "sha256": "3dc21632cab73cc7cbe973a671f549bc2603b6af862f130b82c09adb5a73c6b6"
+    },
+    {
+      "path": "share/timezonesets/Etc.txt",
+      "bytes": 1250,
+      "sha256": "abe5ce63e30162ae9200603bcf68cdab453826e3180651eee3cc10d0e6fc9c69"
+    },
+    {
+      "path": "share/timezone/Israel",
+      "bytes": 1074,
+      "sha256": "9fcde8d584dea0585f5c8727aaf35f48a149e0dbd3a83bf6cef8bca9c14021e3"
+    },
+    {
+      "path": "share/extension/pldbgapi--unpackaged--1.1.sql",
+      "bytes": 2625,
+      "sha256": "ef6e987cd360a95ce3bd11154d65693221ba7ec7631e7101a6558b799dfd7f94"
+    },
+    {
+      "path": "share/timezone/Iran",
+      "bytes": 812,
+      "sha256": "65ac5ec01f3721d608195a49bdca7c7accb3de27df020c44cec8fb70cada4377"
+    },
+    {
+      "path": "share/timezone/HST",
+      "bytes": 221,
+      "sha256": "1daa5729aa1e0f32cd44be112d01ad4cc567a9fe76d87dcbb9182be8d2c88ff0"
+    },
+    {
+      "path": "share/extension/tablefunc--1.0.sql",
+      "bytes": 2153,
+      "sha256": "82488e9d01a88bc0481d1a4be6193802d0aecd925a362a56ddcb406bea39ad7e"
+    },
+    {
+      "path": "share/extension/sslinfo.control",
+      "bytes": 146,
+      "sha256": "e6a93ff05db1a9947cbb5d2a8477a71c0726f656e934a525f651731193ff717e"
+    },
+    {
+      "path": "share/extension/sslinfo--1.2.sql",
+      "bytes": 1534,
+      "sha256": "e58a0233448e54dd486126208d4551ee1f313a8330eccf1d28a6400795ef95a4"
+    },
+    {
+      "path": "share/extension/sslinfo--1.1--1.2.sql",
+      "bytes": 746,
+      "sha256": "95cf20ca97265301b1f046a65aa153890bc93817e2cf20d5f5cddfc3cd00b122"
+    },
+    {
+      "path": "share/extension/sslinfo--1.0--1.1.sql",
+      "bytes": 375,
+      "sha256": "1a293f04b59457df7fbd0609a1358324516baff7ff1e59d47070619c92ce4bd0"
+    },
+    {
+      "path": "share/extension/seg.control",
+      "bytes": 187,
+      "sha256": "adcb5b70f99424bbdb49e866bfbc21a6d2fbaf78b3e852125fe8df7d7f42c379"
+    },
+    {
+      "path": "share/extension/seg--1.3--1.4.sql",
+      "bytes": 259,
+      "sha256": "41df806282108d0e41826a13f6a25815822bf09181e4dacbf9a9170bb3f5a196"
+    },
+    {
+      "path": "share/extension/seg--1.2--1.3.sql",
+      "bytes": 2344,
+      "sha256": "59e7d2875e78467c18349da9b0648e213be07654c0c52c0ef4cf89e719acc78f"
+    },
+    {
+      "path": "share/extension/seg--1.1.sql",
+      "bytes": 8142,
+      "sha256": "afcaf459b8f653942151c68723510724b596b8b914b6a41525efa00a378e63c0"
+    },
+    {
+      "path": "share/extension/seg--1.1--1.2.sql",
+      "bytes": 360,
+      "sha256": "fc18230eaa27579238ad232553393cf09ae9e47de249b5f3ce064e9045ea1a96"
+    },
+    {
+      "path": "share/extension/seg--1.0--1.1.sql",
+      "bytes": 3005,
+      "sha256": "7375ad8d52499dde1fa5a574ce106c926068ce97d5282bbcfa7fb067259912cb"
+    },
+    {
+      "path": "share/extension/refint.control",
+      "bytes": 169,
+      "sha256": "2c04e91a2d113ec5e6596c5b66cdbdc80dd4e0b9d0d7af9af13116c91e06fe04"
+    },
+    {
+      "path": "share/extension/refint--1.0.sql",
+      "bytes": 343,
+      "sha256": "25f8d28d97c44c2ec317755620cbfdd740360a868a58626a47ad4aebee0dfe7b"
+    },
+    {
+      "path": "share/extension/tablefunc.control",
+      "bytes": 189,
+      "sha256": "2b679be26461f6014cce2d9af5bab584fe1ab0fc016158bbde6e6e02e58fd89d"
+    },
+    {
+      "path": "share/extension/postgres_fdw.control",
+      "bytes": 172,
+      "sha256": "493ad428c23f4822c92cee17ea2816e5a73e9f46a59c1b26b1f09740331c1e8a"
+    },
+    {
+      "path": "share/extension/postgres_fdw--1.0--1.1.sql",
+      "bytes": 626,
+      "sha256": "7a9c1935dc118da7811a9b07a00e7e688362a3af7c82bad26710b1437c723e98"
+    },
+    {
+      "path": "share/extension/pltclu.control",
+      "bytes": 184,
+      "sha256": "f8b2f8f3b14be8d14326913047eb320227f6891f6d303eecf300f0231ac853d4"
+    },
+    {
+      "path": "share/extension/pltclu--1.0.sql",
+      "bytes": 259,
+      "sha256": "81990a8e4dd323fd70a2669dcbd33a9d74d250bc7a965790dee9d96b3f823d0c"
+    },
+    {
+      "path": "share/extension/pltcl.control",
+      "bytes": 187,
+      "sha256": "1a82de220094e85a979335f97e14d3baab8eed8c8d98015c2adc7ba4dd98c30c"
+    },
+    {
+      "path": "share/extension/pltcl--1.0.sql",
+      "bytes": 374,
+      "sha256": "ac88016ee30120ef28b03d64f9b511ef55bcc2e8deb1a79e6bf18302a529c174"
+    },
+    {
+      "path": "share/extension/plpython3u.control",
+      "bytes": 196,
+      "sha256": "efdfc8503fb9e88e0ecf3c8352ea2fd187ef698e10d67f152b37c7855b9a6114"
+    },
+    {
+      "path": "share/extension/plpython3u--1.0.sql",
+      "bytes": 556,
+      "sha256": "7c4588b4f1176b3bbec5f5b3fd851931fda88652ee3b3985cde4f88d75b11a65"
+    },
+    {
+      "path": "share/extension/plpgsql.control",
+      "bytes": 193,
+      "sha256": "9457c3f51d6bdfab93f13080d177795a9274c025e378fb613218342e3a3c7b45"
+    },
+    {
+      "path": "share/extension/plpgsql--1.0.sql",
+      "bytes": 658,
+      "sha256": "f4e7e05438808ac0da0b3801397d16e36102969af7e2ffc982def5b7524fb557"
+    },
+    {
+      "path": "share/extension/plperlu.control",
+      "bytes": 187,
+      "sha256": "933c365708883cb25ce9602ae342db7d75e1c0c128fb6825160c7e3cb2b8ce5a"
+    },
+    {
+      "path": "share/extension/plperlu--1.0.sql",
+      "bytes": 530,
+      "sha256": "6a0fcd71e16f0b9d81c8cc553445912993d4c5ee9794cd3733063d72a628a868"
+    },
+    {
+      "path": "share/extension/plperl.control",
+      "bytes": 190,
+      "sha256": "12e5ab2ab6f9d9963482311084b3171087a28b3168f7e1e09ada38df4ba264e3"
+    },
+    {
+      "path": "share/extension/plperl--1.0.sql",
+      "bytes": 642,
+      "sha256": "8a6ef30b252bfdd4fd79bed8acd37622600544148e780060c8bfa7f968a43716"
+    },
+    {
+      "path": "share/extension/postgres_fdw--1.0.sql",
+      "bytes": 507,
+      "sha256": "3a6af33c106f7f62040e0ed8ca97eaa5f144b23efdfc0e261bb25368d0239a70"
+    },
+    {
+      "path": "share/extension/tcn--1.0.sql",
+      "bytes": 274,
+      "sha256": "61685715d8213fe053f8e1d78864e4948df337a7a660bcdf3d61d0808b1d1af3"
+    },
+    {
+      "path": "share/extension/tcn.control",
+      "bytes": 149,
+      "sha256": "ffbb70de41a41be97629bb6918e21b442d905d4cf0b3d92ef8f398657674fb06"
+    },
+    {
+      "path": "share/extension/tsm_system_rows--1.0.sql",
+      "bytes": 327,
+      "sha256": "b6ff301cc9069b9be9f3e29ea6708f8e452b4621e5728b25cc10e8d6b45a1ef3"
+    },
+    {
+      "path": "share/timezone/Hongkong",
+      "bytes": 775,
+      "sha256": "f4068f73246db97417f73467453564c57d6646ce4909b9fa2536923efcd7eb4f"
+    },
+    {
+      "path": "share/timezone/Greenwich",
+      "bytes": 111,
+      "sha256": "dc4a07571b10884e4f4f3450c9d1a1cbf4c03ef53d06ed2e4ea152d9eba5d5d7"
+    },
+    {
+      "path": "share/timezone/GMT0",
+      "bytes": 111,
+      "sha256": "dc4a07571b10884e4f4f3450c9d1a1cbf4c03ef53d06ed2e4ea152d9eba5d5d7"
+    },
+    {
+      "path": "share/timezone/GMT+0",
+      "bytes": 111,
+      "sha256": "dc4a07571b10884e4f4f3450c9d1a1cbf4c03ef53d06ed2e4ea152d9eba5d5d7"
+    },
+    {
+      "path": "share/timezone/GMT-0",
+      "bytes": 111,
+      "sha256": "dc4a07571b10884e4f4f3450c9d1a1cbf4c03ef53d06ed2e4ea152d9eba5d5d7"
+    },
+    {
+      "path": "share/timezone/GMT",
+      "bytes": 111,
+      "sha256": "dc4a07571b10884e4f4f3450c9d1a1cbf4c03ef53d06ed2e4ea152d9eba5d5d7"
+    },
+    {
+      "path": "share/timezone/GB-Eire",
+      "bytes": 1599,
+      "sha256": "bb29fb3bc9e07af2a8004ccdd996c4a92b6b64694f84d558e20fc29473445c57"
+    },
+    {
+      "path": "share/timezone/GB",
+      "bytes": 1599,
+      "sha256": "bb29fb3bc9e07af2a8004ccdd996c4a92b6b64694f84d558e20fc29473445c57"
+    },
+    {
+      "path": "share/timezone/Factory",
+      "bytes": 113,
+      "sha256": "d32b579ed0a7427316bea260b9ee2675451046bd58c57c679c24f2671860af76"
+    },
+    {
+      "path": "share/timezone/EST5EDT",
+      "bytes": 1744,
+      "sha256": "d7f2206b3a45989fc9ad63d558922532fa7352280d5f87176bf1db79cb1d1fa9"
+    },
+    {
+      "path": "share/timezone/EST",
+      "bytes": 149,
+      "sha256": "a78d73067ba3cbd94f8a23dfdd6aa8b68cb33b18484bc17b4e20ea1aec2f0a81"
+    },
+    {
+      "path": "share/timezone/Eire",
+      "bytes": 1496,
+      "sha256": "11c00336e02f1318fe764ab29467c5f2afefbfffa644fa8dd24f5b083b495b71"
+    },
+    {
+      "path": "share/timezone/Egypt",
+      "bytes": 1309,
+      "sha256": "89cb9a36212fb82e933dcd9faa10efdfa969a29ec80c32063bbb4518c033d1be"
+    },
+    {
+      "path": "share/timezone/EET",
+      "bytes": 682,
+      "sha256": "f1fd678b0548e329b38934f6281255e698dfa761ad1ff841f6ccb79606c61345"
+    },
+    {
+      "path": "share/timezone/Cuba",
+      "bytes": 1117,
+      "sha256": "9ace6b0aeab6c81338f55993ca632d15037773968137596477c8e3cca767366f"
+    },
+    {
+      "path": "share/timezone/CST6CDT",
+      "bytes": 1754,
+      "sha256": "c27b739ff46a7df0594e120d725b439217e11e44ea9a50cdc49130383b5482e7"
+    },
+    {
+      "path": "share/timezone/CET",
+      "bytes": 1103,
+      "sha256": "b10f9542a8509f0a63ebca78e3d80432dd86b8ea296400280febd9cfa76e8288"
+    },
+    {
+      "path": "share/extension/xml2.control",
+      "bytes": 182,
+      "sha256": "8d9c0fefc71714d6e70598c164f3bb2343b7078cee75b89f9500e9a75718b210"
+    },
+    {
+      "path": "share/extension/xml2--1.1.sql",
+      "bytes": 2049,
+      "sha256": "287954e902826960e9dec8f7e86bc0e39ca1e257fe25c0641f9f9fd5a4594e0d"
+    },
+    {
+      "path": "share/extension/xml2--1.0--1.1.sql",
+      "bytes": 944,
+      "sha256": "f14378e15a56c8e837feb24deffd3fb779a456b87d9e81ddb7da702802d4990a"
+    },
+    {
+      "path": "share/extension/uuid-ossp.control",
+      "bytes": 178,
+      "sha256": "eaafef3ac3fbaa16e59986201e15f2944abb841167fb37553700c11b6ba97e5b"
+    },
+    {
+      "path": "share/extension/uuid-ossp--1.1.sql",
+      "bytes": 1516,
+      "sha256": "1cf94e2eaa2033f32b80b1a7a371809d6cacc108b39d187c254f6fe04b383f84"
+    },
+    {
+      "path": "share/extension/uuid-ossp--1.0--1.1.sql",
+      "bytes": 688,
+      "sha256": "112b84c73afb619a0dcddc2c23aef834cab2b4a2a0aa6b54c42d74e0064f3bc1"
+    },
+    {
+      "path": "share/extension/unaccent.control",
+      "bytes": 172,
+      "sha256": "6845006fd86d373d556ce0ad83b3f1cdfe6f9c35df71a4fe31e3bc23312d8160"
+    },
+    {
+      "path": "share/extension/unaccent--1.1.sql",
+      "bytes": 910,
+      "sha256": "e08a90e98ae8e1b6cdb5d25dcab352064f13f187e99f29b6d971ef61e10f6a7a"
+    },
+    {
+      "path": "share/extension/unaccent--1.0--1.1.sql",
+      "bytes": 445,
+      "sha256": "82040e64db6ec0fe8210bb414e175ca6fb7ae4a70d80b0e65d861f4f4266ac96"
+    },
+    {
+      "path": "share/extension/tsm_system_time.control",
+      "bytes": 207,
+      "sha256": "2ce290064590c7a10cdc59658acca7d5564e8275f10982139242f9a7e88f8779"
+    },
+    {
+      "path": "share/extension/tsm_system_time--1.0.sql",
+      "bytes": 327,
+      "sha256": "3c47246eab5711c561310e9c5209318deb12df9a2f26837493e701c56ca37ef3"
+    },
+    {
+      "path": "share/extension/tsm_system_rows.control",
+      "bytes": 201,
+      "sha256": "3e9077a0ef885ffb4af0de79bd2177bdd5445d9c5269061c1d6f725d2624146f"
+    },
+    {
+      "path": "share/timezone/Iceland",
+      "bytes": 130,
+      "sha256": "f3e7fcaa0e9840ff4169d3567d8fb5926644848f4963d7acf92320843c5d486e"
+    },
+    {
+      "path": "share/tsearch_data/unaccent.rules",
+      "bytes": 10003,
+      "sha256": "faebd37d87480043c2898422b3c9e63d32ad6d026cc6898b6be9f9421f522463"
+    },
+    {
+      "path": "share/extension/fuzzystrmatch--1.0--1.1.sql",
+      "bytes": 788,
+      "sha256": "b4e6797d0a1d25ca905b52bc96f5ab18b40f18b1fc71fdadd8d01513b03a754e"
+    },
+    {
+      "path": "share/extension/file_fdw--1.0.sql",
+      "bytes": 475,
+      "sha256": "9e8c813cfe876d71d5ee36ecaad5d17c77bbfc8bbfb005490f76478ac37e3f53"
+    },
+    {
+      "path": "lib/fuzzystrmatch.dll",
+      "bytes": 56832,
+      "sha256": "418f28b2068588fada34be79245d08376766cff13dffac9bd74836d3ca100703"
+    },
+    {
+      "path": "lib/file_fdw.dll",
+      "bytes": 26112,
+      "sha256": "d730485ba3736a3fc920e2a03c64758fc1c874ccc4eb693733522c47e094fc42"
+    },
+    {
+      "path": "lib/euc2004_sjis2004.dll",
+      "bytes": 16896,
+      "sha256": "2ddd77c241600a9ea26d4904b5df92b4bdd0ad7e99483f01db7461d00705e1ba"
+    },
+    {
+      "path": "lib/euc_tw_and_big5.dll",
+      "bytes": 22528,
+      "sha256": "94716ea34ce525b889fac5d78fdf25c03621983ae58d76b05e96fdc6ca5ee96f"
+    },
+    {
+      "path": "lib/euc_kr_and_mic.dll",
+      "bytes": 15872,
+      "sha256": "806c170f9b2843d587b4ff6676b12980346b93d43d098a04662252b99438a11d"
+    },
+    {
+      "path": "lib/euc_jp_and_sjis.dll",
+      "bytes": 23040,
+      "sha256": "1f730c9f17036af1b2a5ef511b604c11b379a7976d04265caf465fa44dbc3ba0"
+    },
+    {
+      "path": "lib/euc_cn_and_mic.dll",
+      "bytes": 15872,
+      "sha256": "c24ed994c38e746fb1a9b4d349b8fd8b2521e7c50b7ebabc9d2152d8fdcd90e1"
+    },
+    {
+      "path": "lib/earthdistance.dll",
+      "bytes": 14848,
+      "sha256": "0ed99d870fdb7c7362eacd5fbcbdf48cbb6e38d7c2238d27780b745ca73c9f67"
+    },
+    {
+      "path": "lib/dict_xsyn.dll",
+      "bytes": 17920,
+      "sha256": "8d3c8c250ee9fdc6d0795ed66e96cdf8546171ec3d1d0cc2775d57ae46573c73"
+    },
+    {
+      "path": "lib/dict_snowball.dll",
+      "bytes": 649216,
+      "sha256": "90a28d6aa3e6192dda6541bd0befa7011baa20c6694d82a603452e4810d3af7b"
+    },
+    {
+      "path": "lib/dict_int.dll",
+      "bytes": 15360,
+      "sha256": "efe5deabad885d7b9e204d967dc4e4a4060a423f775bd285837635bca8aa1421"
+    },
+    {
+      "path": "lib/dblink.dll",
+      "bytes": 51712,
+      "sha256": "d8f63e3bc694d276d4f52a50a5ab07272527a305630ca740205d7e34ee150424"
+    },
+    {
+      "path": "lib/cyrillic_and_mic.dll",
+      "bytes": 20480,
+      "sha256": "1cdebd8fd61420df78c187cc9974ad8681cc1e2d9e48a24d41e0b11fe69f1c56"
+    },
+    {
+      "path": "lib/hstore_plperl.dll",
+      "bytes": 20480,
+      "sha256": "94df1e52d51237a7b4a38c0acffccda7a66361062801b0a504e5a80c4d6da70b"
+    },
+    {
+      "path": "lib/cube.dll",
+      "bytes": 57344,
+      "sha256": "392d9414668a491fa19d4d3d1b56fb98e8ce1f76713fbc8203fda42f99c79052"
+    },
+    {
+      "path": "lib/btree_gist.dll",
+      "bytes": 75776,
+      "sha256": "41adca80c09f830c9344200b24ea7a298fe64df7f48c29d7b8b7e65e8badb833"
+    },
+    {
+      "path": "lib/btree_gin.dll",
+      "bytes": 29184,
+      "sha256": "89f405aa792d784e164eda15553f44ef3f89f70d76c0ef4e7ae7b994bc3e12e6"
+    },
+    {
+      "path": "lib/bool_plperl.dll",
+      "bytes": 15872,
+      "sha256": "b9f63811854cbdad55fd0f08847441039395e77837095ec83244215cec0fb7dd"
+    },
+    {
+      "path": "lib/bloom.dll",
+      "bytes": 31232,
+      "sha256": "c04713046a44e8b954b28b8e65299671cbdd86bac36c36c12bf5b882b616471a"
+    },
+    {
+      "path": "lib/basic_archive.dll",
+      "bytes": 19456,
+      "sha256": "58b699517d5ebede55987caf4aebb0c43a35ca76e984753a307dd4f6b6f0fb71"
+    },
+    {
+      "path": "lib/basebackup_to_shell.dll",
+      "bytes": 18944,
+      "sha256": "8e0d8c30c601678dbaac243f6196023e14555d0f6ac794e5aaa7b4d64756888b"
+    },
+    {
+      "path": "lib/autoinc.dll",
+      "bytes": 16384,
+      "sha256": "a08f6dd3e5c621a390655c0a8a30e8747380fe1f4a26c7937a1762fb86a87dea"
+    },
+    {
+      "path": "lib/auto_explain.dll",
+      "bytes": 20992,
+      "sha256": "052c5198840b8c2cadf1b334853920a8a264e95135960b665fca5f1e11b3d714"
+    },
+    {
+      "path": "lib/auth_delay.dll",
+      "bytes": 14336,
+      "sha256": "3f9d2a33546d17e3065d8d6b95359122c2bdab839eddfe9a73fcd327b1adbad3"
+    },
+    {
+      "path": "lib/amcheck.dll",
+      "bytes": 67584,
+      "sha256": "0add05f29e88e00704d3ae96f537fe785308682519d09e5ed7eabcf6fc84ae3c"
+    },
+    {
+      "path": "lib/_int.dll",
+      "bytes": 55808,
+      "sha256": "590376be97b96a2d8a33dea457a93c76ae2222c42982db6d00ad8860158920df"
+    },
+    {
+      "path": "bin/zlib1.dll",
+      "bytes": 91136,
+      "sha256": "8af75452efadd51320a71cc1db155f5cbc6bbc860d4473940ebc6de5ac662e68"
+    },
+    {
+      "path": "bin/wxmsw328u_xrc_vc_x64_custom.dll",
+      "bytes": 886784,
+      "sha256": "f818ee44304624de0f18448873e3eae7572fb250bfd0a883b11a0f8e90b7015f"
+    },
+    {
+      "path": "lib/citext.dll",
+      "bytes": 19968,
+      "sha256": "6948146082c6cb4e31bed9115b6f38b6b523e5f2cfd75c2f075d7e464ba75e3f"
+    },
+    {
+      "path": "lib/hstore_plpython3.dll",
+      "bytes": 18432,
+      "sha256": "0724a56f4174d432174642737fefab519bdcb44ced95743f6038361b8a6b2d0e"
+    },
+    {
+      "path": "lib/hstore.dll",
+      "bytes": 66560,
+      "sha256": "4e894d5cc37cab13f3c9fa885ae4c150af90b5b2dbbd92597d50eb5df78e7b47"
+    },
+    {
+      "path": "lib/iconv.lib",
+      "bytes": 4278,
+      "sha256": "d8af15554d8ae872c76f8c5875ed4e34ee044d7b2000662925e40b9c3ccebd9f"
+    },
+    {
+      "path": "lib/ltree_plpython3.dll",
+      "bytes": 15360,
+      "sha256": "fab4ecc12b23a9f42981c94d76fd7296b94085b454b350838de3b8c408571b1b"
+    },
+    {
+      "path": "lib/lo.dll",
+      "bytes": 15360,
+      "sha256": "76eb6d5c91e508b9e1ace90262a0d9c2e190c5cceff9d70f516b258a3cf5d021"
+    },
+    {
+      "path": "lib/libzstd.lib",
+      "bytes": 45918,
+      "sha256": "3a8251ae6b18d02a0cf2f4ee9d49ebf4a6843871cdea54ec631f5d72bdd5e1d0"
+    },
+    {
+      "path": "lib/libxslt.lib",
+      "bytes": 57318,
+      "sha256": "b372dc13c2b0587cd7bf717ece71b889a70c0ef1abcacddcd7613b5861b08c32"
+    },
+    {
+      "path": "lib/libxml2.lib",
+      "bytes": 349382,
+      "sha256": "6dae270690edb50c1f114631610f36ad58ec2f4466a523ef1fb6edfd0d84a4af"
+    },
+    {
+      "path": "lib/libssl.lib",
+      "bytes": 126434,
+      "sha256": "3a639c63fc860c225e073c67984372228b7c0323c96999709d503377d126eb67"
+    },
+    {
+      "path": "lib/libpqwalreceiver.dll",
+      "bytes": 29696,
+      "sha256": "df7d6677720ba6979836f08a74788f129efdfc0671295d9b77f02acdf3be04cd"
+    },
+    {
+      "path": "lib/libpq.lib",
+      "bytes": 40862,
+      "sha256": "7afcdb2e4b36bf94453f992313636861e080e5d5ab66a34f6750ee7f15a88b58"
+    },
+    {
+      "path": "lib/libpq.a",
+      "bytes": 1994390,
+      "sha256": "891c45704d9d5230d59e2a53d07a44176b70ebd41827157f87269ff3f3413c3c"
+    },
+    {
+      "path": "lib/libpgtypes.lib",
+      "bytes": 12358,
+      "sha256": "3cbe398df7753ff2976da0fb7f1eb4ddb7094dd3d199d9a6ac660045e921bed7"
+    },
+    {
+      "path": "lib/libpgtypes.a",
+      "bytes": 436018,
+      "sha256": "6f3acc9e03c268d7083ac734e09baf5c4d3cc7152b4a11fcfa618b855900bb06"
+    },
+    {
+      "path": "lib/libpgport.a",
+      "bytes": 1718698,
+      "sha256": "dcecd8babc8428811997115f49c7ea90c1da112342e89f344f71dbf85783af3d"
+    },
+    {
+      "path": "lib/libpgport_shlib.a",
+      "bytes": 1719758,
+      "sha256": "4787838319db792f08b085b0e5cd591242bc00c05d75bb99872e58e46f6e1100"
+    },
+    {
+      "path": "lib/libpgfeutils.a",
+      "bytes": 829826,
+      "sha256": "d66bf38e84cff1ce93f3d13b8c0fc6196eb854e56c29362d06f32bcaf3d99f1f"
+    },
+    {
+      "path": "lib/libpgcommon.a",
+      "bytes": 2325236,
+      "sha256": "3a262bfbe8bd81972db4e0113550623895554e5edec25fd44f1d259074809f22"
+    },
+    {
+      "path": "lib/libpgcommon_shlib.a",
+      "bytes": 2282582,
+      "sha256": "f7489cb46a1f2b79ae55bda542798072e20898f9ac769c60bd9ec2abaa0dc25b"
+    },
+    {
+      "path": "lib/liblz4.lib",
+      "bytes": 24918,
+      "sha256": "89cc418f5cfd5742bc30b69d34f283b9bb700e41b8b4fdd677c4573783a47920"
+    },
+    {
+      "path": "lib/libintl.lib",
+      "bytes": 18436,
+      "sha256": "f1fa5d433b8926f98d1d46a94d0ab174dde9a2621b27fa06a6f6d4e58157ac35"
+    },
+    {
+      "path": "lib/libecpg.lib",
+      "bytes": 7198,
+      "sha256": "3f8a5753dad190e11c34cbf2c963c59b49aa2ec5ab2c3d2ce10da5ec7e28bad0"
+    },
+    {
+      "path": "lib/libecpg.a",
+      "bytes": 668250,
+      "sha256": "0af745fd4c44a3f751478a8e6b078ae6115b3d2c88c624788d4a052209f78f5e"
+    },
+    {
+      "path": "lib/libecpg_compat.lib",
+      "bytes": 9086,
+      "sha256": "5879ccbb01deedeabd556cc75b464e0446d9740f563c3f5792c86cd511b1e3a7"
+    },
+    {
+      "path": "lib/libecpg_compat.a",
+      "bytes": 94082,
+      "sha256": "30378dede6b69ccbec61540d597eb69ba5ca1d70c3f2875f12b7a4749b85f604"
+    },
+    {
+      "path": "lib/libcrypto.lib",
+      "bytes": 1251364,
+      "sha256": "08ab3798bfd0942f628d2190483b81d9ace2d9767bef1c2f82f425e93742a635"
+    },
+    {
+      "path": "lib/latin2_and_win1250.dll",
+      "bytes": 16384,
+      "sha256": "0e856fdf614537e1dd758c05f76eba30981b89c0f102de1f5a5a0998218226d4"
+    },
+    {
+      "path": "lib/latin_and_mic.dll",
+      "bytes": 15872,
+      "sha256": "f94e4bd2cf3f7f38f96e19495449a95ce968169a9c1df344b834a38c43e13381"
+    },
+    {
+      "path": "lib/jsonb_plpython3.dll",
+      "bytes": 22016,
+      "sha256": "cc8df183e46353bd899e53a3be68980323a93367a85906a2894f6f3548921a0c"
+    },
+    {
+      "path": "lib/jsonb_plperl.dll",
+      "bytes": 24064,
+      "sha256": "f8a8fe4a7e903c201f3ef526b0b2509856ef31f3fc0bce4d9369538152091ec0"
+    },
+    {
+      "path": "lib/isn.dll",
+      "bytes": 70144,
+      "sha256": "642d2ef7179a5a996f053f968d100f5cdfefe62f03e2921141ba8cd9e6d1125b"
+    },
+    {
+      "path": "lib/insert_username.dll",
+      "bytes": 15360,
+      "sha256": "a31a928a84fbcbe55d0bb9a1b11e84327893bf9d54be28ab5295cfffa58f01df"
+    },
+    {
+      "path": "bin/wxmsw328u_html_vc_x64_custom.dll",
+      "bytes": 708096,
+      "sha256": "5796a8f505a8910d84cf130e08c18c36acd6056ea3d1f219609cb0904b523663"
+    },
+    {
+      "path": "lib/ltree.dll",
+      "bytes": 69120,
+      "sha256": "f4e4a7bdae14174519d33a49943250c58c8864b7f05d20ead421cdb585b28d77"
+    },
+    {
+      "path": "bin/wxmsw328u_core_vc_x64_custom.dll",
+      "bytes": 8295424,
+      "sha256": "0545358c18e5e8f1ca01d0c5b6ea6e2b6ac2a21adb034c3d94813c1ca3ea2a27"
+    },
+    {
+      "path": "bin/wxmsw328u_adv_vc_x64_custom.dll",
+      "bytes": 11264,
+      "sha256": "456303cf108a4f0821405a449f5e594df562f2a97411aecd611db006fd88a544"
+    },
+    {
+      "path": "bin/pg_amcheck.exe",
+      "bytes": 161280,
+      "sha256": "56686c41d356441cb15f1b4b96cc6baea351ecf9779db5496fe787e2ea96c9e5"
+    },
+    {
+      "path": "bin/oid2name.exe",
+      "bytes": 81408,
+      "sha256": "7286fcdde74565676d9657b546ee7fed4cd359e8bca17e7952ca580e9384e8b8"
+    },
+    {
+      "path": "bin/libzstd.dll",
+      "bytes": 727552,
+      "sha256": "a05aa4e11837e203b9d30089300d73ce05f3ed248dbe6172c630b2bce34016bf"
+    },
+    {
+      "path": "bin/libxslt.dll",
+      "bytes": 413696,
+      "sha256": "a073cb5ce97936ad57bed825378552c3c10ab15f34e7164094d5282283e3228c"
+    },
+    {
+      "path": "bin/libxml2.dll",
+      "bytes": 1284096,
+      "sha256": "ccdf543a18d1019f072210f6d6dbf03b16e8b789c6fe6cb46f2a9602678868de"
+    },
+    {
+      "path": "bin/libwinpthread-1.dll",
+      "bytes": 52736,
+      "sha256": "ffe2d56375bb4e8bdee9037df6befc5016ddd8871d0d85027314dd5792f8fdc9"
+    },
+    {
+      "path": "bin/libssl-3-x64.dll",
+      "bytes": 779776,
+      "sha256": "5142e6e9604c60789c2a28987f86e576cce1c2cfb527461623d5c0f48366010a"
+    },
+    {
+      "path": "bin/libpq.dll",
+      "bytes": 349184,
+      "sha256": "b260b08a227ee654715411efaec9100284c22b43151c9d26fe9904616b0d73c9"
+    },
+    {
+      "path": "bin/libpgtypes.dll",
+      "bytes": 84992,
+      "sha256": "d3d5bd6bc2fca9f02aa69ed4a7a5615509f281871981d59eafd771adbf1c9961"
+    },
+    {
+      "path": "bin/liblz4.dll",
+      "bytes": 128000,
+      "sha256": "096af775241b3bd4b1c3d79c83b103bb8f02da54ec4cd76c5d49eef61a68ad01"
+    },
+    {
+      "path": "bin/libintl-9.dll",
+      "bytes": 475769,
+      "sha256": "1125ac8dc0c4f5c3ed4712e0d8ad29474099fcb55bb0e563a352ce9d03ef1d78"
+    },
+    {
+      "path": "bin/libiconv-2.dll",
+      "bytes": 1850401,
+      "sha256": "3ee9786ab3eb8dfd791bdbd17c7e791dbe025734befcded0ee4170e1089f79df"
+    },
+    {
+      "path": "bin/libecpg.dll",
+      "bytes": 101376,
+      "sha256": "f96f11ca3c6d9543effff2a6c64c310be975d30b0d2ba60618dd4b7aea4810aa"
+    },
+    {
+      "path": "bin/pg_archivecleanup.exe",
+      "bytes": 92672,
+      "sha256": "133cb9c5af3d9dabdacfde46dba95f57daa81d388fdc33985b9eacb99972ceba"
+    },
+    {
+      "path": "bin/libecpg_compat.dll",
+      "bytes": 25088,
+      "sha256": "f478b00febc1951ead00b7741aa1f1327e0b5547890befeca75b019179210ba9"
+    },
+    {
+      "path": "bin/libcurl.dll",
+      "bytes": 649216,
+      "sha256": "2d3904f97088c6dc3c53bcc7063909e9626b856251f4560fdbe4b1537fe6ec8f"
+    },
+    {
+      "path": "bin/libcrypto-3-x64.dll",
+      "bytes": 4694016,
+      "sha256": "549aa1c6ce845e07c7840e3b8186461e7fe8569fc01517d7c1707ec509d69296"
+    },
+    {
+      "path": "bin/initdb.exe",
+      "bytes": 241152,
+      "sha256": "96da800ec12faed19209c7f9e21231c3dca2dcb12d2215751e18b0b9df20cec1"
+    },
+    {
+      "path": "bin/icuuc67.dll",
+      "bytes": 1906688,
+      "sha256": "2fb4007a1f1089a0807cc1abde5443f5c3b0865ecfd80344b6ad165f1fe53ade"
+    },
+    {
+      "path": "bin/icutu67.dll",
+      "bytes": 220672,
+      "sha256": "371c4784b5510b8e80a6b5896567b17bc70e231ea47ee8f614a7ebd3d510960f"
+    },
+    {
+      "path": "bin/icuio67.dll",
+      "bytes": 61440,
+      "sha256": "1ca5221753f930de19041d546ce0f24102455621c71033d4d5cb8151762c9694"
+    },
+    {
+      "path": "bin/icuin67.dll",
+      "bytes": 2674176,
+      "sha256": "23d5914acf071f566df19aaf404373e5c73c9910c370e728976f6202c04cf6c3"
+    },
+    {
+      "path": "bin/icudt67.dll",
+      "bytes": 28399104,
+      "sha256": "5ff9c8026344e886f280ddfa235a1e16e1bcd396e90f9ed600b6f71d9d881ae8"
+    },
+    {
+      "path": "bin/ecpg.exe",
+      "bytes": 999424,
+      "sha256": "f731f99f6ca697017365e84b706b84fe66f83830cc8b402769931503bc3db2eb"
+    },
+    {
+      "path": "bin/dropuser.exe",
+      "bytes": 130048,
+      "sha256": "2e58a824590b5d2f2696e8789ae2a149b16fce3efcf1613299c5c0a25312fa09"
+    },
+    {
+      "path": "bin/dropdb.exe",
+      "bytes": 130048,
+      "sha256": "00e12322380595402b905b8eb8248dca1cca1b0a76c7dd94de50c13639c5d045"
+    },
+    {
+      "path": "bin/createuser.exe",
+      "bytes": 135680,
+      "sha256": "a5245bc15d0704868f86d0e4e8aaad45d300720bcdf28468347f648c039d020c"
+    },
+    {
+      "path": "bin/createdb.exe",
+      "bytes": 131072,
+      "sha256": "3804faf6804bc0a074f95fa0d7b092621cf242bf0ab5562631809db68fbd168f"
+    },
+    {
+      "path": "bin/libcurl.lib",
+      "bytes": 21338,
+      "sha256": "62fd686b7753aa1d712fa246fdc805ac7b948f8726d01f1dc02c385679cf86f6"
+    },
+    {
+      "path": "bin/pg_basebackup.exe",
+      "bytes": 294400,
+      "sha256": "7c98aa6525f5bd7be93b8606f865fe7dcf93773b9072a245fa881e4b49ad0703"
+    },
+    {
+      "path": "bin/pg_checksums.exe",
+      "bytes": 127488,
+      "sha256": "14ebb3c69529a8ff18f5459482c6c5aea71a89e0fc22628c10abb6bc1c769f31"
+    },
+    {
+      "path": "bin/pg_combinebackup.exe",
+      "bytes": 196608,
+      "sha256": "004d69228918865d1219124f33d192f44df399999e08f5257890ad341afb9fe6"
+    },
+    {
+      "path": "bin/wxbase328u_xml_vc_x64_custom.dll",
+      "bytes": 193024,
+      "sha256": "dc43a3150f9c792c01ef9a2f4fe136415445b7874c0ac04c66fcc1a8aac65d7d"
+    },
+    {
+      "path": "bin/wxbase328u_vc_x64_custom.dll",
+      "bytes": 2963968,
+      "sha256": "6428f560778dab4734e99682537dc817d3bf5744da823efa6504c3e068ee82c5"
+    },
+    {
+      "path": "bin/wxbase328u_net_vc_x64_custom.dll",
+      "bytes": 257536,
+      "sha256": "6c520a537f4ab8e18da8bb77947e022daf07997be84febdf0b462da6e3b1246f"
+    },
+    {
+      "path": "bin/vacuumlo.exe",
+      "bytes": 80896,
+      "sha256": "fb66a5d53f01385d4555fc876163141ce4a344d0a186a01c51d077dc8faa526e"
+    },
+    {
+      "path": "bin/vacuumdb.exe",
+      "bytes": 146432,
+      "sha256": "62f233953ff2b3acd10979fd72b05c4e77a6316fadf0096f5b4abded5f51a95f"
+    },
+    {
+      "path": "bin/testplug.dll",
+      "bytes": 10752,
+      "sha256": "d1b10395868a004f6ae4700159ba89992a65147efaca63218cd5fb084b32303a"
+    },
+    {
+      "path": "bin/stackbuilder.exe",
+      "bytes": 435984,
+      "sha256": "6667397a9c05e79da594114fe601cd50dd9a6e89dce8ae2b150beee79a1c3b28"
+    },
+    {
+      "path": "bin/reindexdb.exe",
+      "bytes": 142848,
+      "sha256": "fdf6700a29d21a06e44da5bde6d421473a19cda40201e572d712d7124f780ca9"
+    },
+    {
+      "path": "bin/psql.exe",
+      "bytes": 629760,
+      "sha256": "dd76d288073bd17cca68d67a03127af6a6f0b235d3fac8f2cb28d0292a76e803"
+    },
+    {
+      "path": "bin/postgres.exe",
+      "bytes": 9894912,
+      "sha256": "54e7e05939e61f3462e3fd295bc12292623ad3cf010c02ae9cc3295a64b0770f"
+    },
+    {
+      "path": "bin/pgbench.exe",
+      "bytes": 255488,
+      "sha256": "fbf497717887843a9321007e44e764bd6f4bfbeccfa62555d4605bc60f6261f1"
+    },
+    {
+      "path": "bin/pg_walsummary.exe",
+      "bytes": 113152,
+      "sha256": "0a031a4bccbd1b9e2be15195d72b922d1daf7bcc185e0a277cb82df9e6b6a807"
+    },
+    {
+      "path": "bin/pg_waldump.exe",
+      "bytes": 161792,
+      "sha256": "1fcc082940d2e2177253423d81a94b081764ae0be08c248c160edf13b46cad37"
+    },
+    {
+      "path": "bin/pg_verifybackup.exe",
+      "bytes": 154624,
+      "sha256": "31c09534ea21e767f80b883dee31b39df4b66fb7660ee0a6d631df67d6612dd1"
+    },
+    {
+      "path": "bin/pg_upgrade.exe",
+      "bytes": 248320,
+      "sha256": "28c4298a9ba7167a1506a619ceb255dfeabb76b40d09937635940f1e82e5df8b"
+    },
+    {
+      "path": "bin/pg_test_timing.exe",
+      "bytes": 87040,
+      "sha256": "4b70ae105d3fe771804b31566d52e1511a2fc89825850aa8d650911319eb2f3a"
+    },
+    {
+      "path": "bin/pg_test_fsync.exe",
+      "bytes": 97792,
+      "sha256": "1ef1b23b58c871527ac789e11c3d6906442519cb9fd30969fa507f44b2007c85"
+    },
+    {
+      "path": "bin/pg_rewind.exe",
+      "bytes": 225280,
+      "sha256": "98dac2c92297602329cabd8faa9508ef310c5c2d8f69e2338b63db73d7eb8f67"
+    },
+    {
+      "path": "bin/pg_restore.exe",
+      "bytes": 365568,
+      "sha256": "d62e3e9384c6664c07770c2baf47a6a4beed586820086b0ab80546d9d73b1d45"
+    },
+    {
+      "path": "bin/pg_resetwal.exe",
+      "bytes": 122368,
+      "sha256": "25569b8b911e6fad32e07628ca40a85bce6b6c9517e9a22df6581fcb304b50bd"
+    },
+    {
+      "path": "bin/pg_recvlogical.exe",
+      "bytes": 110592,
+      "sha256": "5842ec152e320a4eb756f8423dd01264940da4059072ba305106b9f7b26aa8e2"
+    },
+    {
+      "path": "bin/pg_receivewal.exe",
+      "bytes": 223744,
+      "sha256": "0a393210f5406892285e1929fef17bab766604a57bcb0c1d09b01c370d5fe7ad"
+    },
+    {
+      "path": "bin/pg_isready.exe",
+      "bytes": 90112,
+      "sha256": "17dbfb470e9708d3d3fcece32efad90e89f7b0f82c266b8e99c23cc650caf3eb"
+    },
+    {
+      "path": "bin/pg_dumpall.exe",
+      "bytes": 192000,
+      "sha256": "0bc4326d36ee0ba20e7de9c8bf284279b952da55a551ec7b1014c5fb11ad9b0e"
+    },
+    {
+      "path": "bin/pg_dump.exe",
+      "bytes": 607744,
+      "sha256": "9de05135412affb6bcb6c0e1be6c39ca90de7af27a5c7d7fbb98f2af1b25ae3e"
+    },
+    {
+      "path": "bin/pg_ctl.exe",
+      "bytes": 129024,
+      "sha256": "4343536036689feb178461c559cc71c1003d11d9a7b9191ddd13e1fb835481f4"
+    },
+    {
+      "path": "bin/pg_createsubscriber.exe",
+      "bytes": 168960,
+      "sha256": "6cc83ddea490cf8681b3c023ff2e9f92216be84b4700eaba437d12659550273d"
+    },
+    {
+      "path": "bin/pg_controldata.exe",
+      "bytes": 103936,
+      "sha256": "89726a7f9bf9a359ad49bec3b8e1fa94effa9b04edbcf1c493afcfcdaa178036"
+    },
+    {
+      "path": "bin/pg_config.exe",
+      "bytes": 87552,
+      "sha256": "25abf679449561c2b6bcabb23c935e2b7735af2faa98f293dd6baeb2284df3b5"
+    },
+    {
+      "path": "bin/wxmsw328u_aui_vc_x64_custom.dll",
+      "bytes": 594944,
+      "sha256": "896e334b6e50d4a43652fdbe6ebea6429e9061cce0775013265e665fa3acd7d7"
+    },
+    {
+      "path": "share/extension/file_fdw.control",
+      "bytes": 155,
+      "sha256": "2f5964ed7e8d26aeb1a5b78674b891f219cb4d8b63fecc9600aded4315c6de78"
+    },
+    {
+      "path": "lib/moddatetime.dll",
+      "bytes": 16384,
+      "sha256": "c8f27c104e5cd9b6901c7369f1d1fde0cbe85f90540c714b9283d7746745313f"
+    },
+    {
+      "path": "lib/passwordcheck.dll",
+      "bytes": 15360,
+      "sha256": "555452bb97df877e45aa07ea2286a4cf5e813e2f3f51445d70441bbb72203158"
+    },
+    {
+      "path": "share/extension/btree_gist--1.2--1.3.sql",
+      "bytes": 1955,
+      "sha256": "5dc7a402185ddbdff6d4488686ba28e3e89c59a850e54f833114f383cda19123"
+    },
+    {
+      "path": "share/extension/btree_gist--1.1--1.2.sql",
+      "bytes": 5048,
+      "sha256": "2d3caf344f62e7367e7b9227e42196fcabbf3a666b5a2216e44854675f643033"
+    },
+    {
+      "path": "share/extension/btree_gist--1.0--1.1.sql",
+      "bytes": 3739,
+      "sha256": "bf5d5f760da60f41fbfcd31804550f06c4511b1a5c19ffa302c3c1761c4afe38"
+    },
+    {
+      "path": "share/extension/btree_gin.control",
+      "bytes": 175,
+      "sha256": "ba6ceeda8de05adc0145a152178fc96a84ef7d21b4347af36f8c644542c94bcd"
+    },
+    {
+      "path": "share/extension/btree_gin--1.2--1.3.sql",
+      "bytes": 4571,
+      "sha256": "7a159af1a74eb2202be19c5a6383720a08e65ded58d4b2393cca56fe8c34cd35"
+    },
+    {
+      "path": "share/extension/btree_gin--1.1--1.2.sql",
+      "bytes": 1445,
+      "sha256": "6a3c43f4d8e91802f205b1c0ee330eadbb23372b1ff86e2954bb1ea3dd412f42"
+    },
+    {
+      "path": "share/extension/btree_gin--1.0.sql",
+      "bytes": 24818,
+      "sha256": "0c5440a89f33c953fd0217d273a3ad6816ae32eeea8bcadbc8951ea6688756e3"
+    },
+    {
+      "path": "share/extension/btree_gin--1.0--1.1.sql",
+      "bytes": 1372,
+      "sha256": "c81798c7433e3286af13d5b876c0640e0f6cbe7fae25275b86511500ba5d8879"
+    },
+    {
+      "path": "share/extension/bool_plperlu.control",
+      "bytes": 176,
+      "sha256": "1b8806a8cb82734681c84bc5350e1c07a54607b32cf8532e15c40db7618f7817"
+    },
+    {
+      "path": "share/extension/bool_plperlu--1.0.sql",
+      "bytes": 691,
+      "sha256": "f1a2a6d44cef98a8d174a76b193bb70090c98226a600fc8d7b69e74865560624"
+    },
+    {
+      "path": "share/extension/bool_plperl.control",
+      "bytes": 188,
+      "sha256": "4427c7d1edfcce8103853ba8a9c57f28ef0fd6f76fd01aa286b7963335614b55"
+    },
+    {
+      "path": "share/extension/bool_plperl--1.0.sql",
+      "bytes": 647,
+      "sha256": "a98954c904f169003d487158a0af802996a357872de06d7578b2b91ba1595e65"
+    },
+    {
+      "path": "share/extension/bloom.control",
+      "bytes": 156,
+      "sha256": "a638be9bb2eac43f8fb73db7d5fc43a170b9112ddbf2034d7d037b34d5deedbf"
+    },
+    {
+      "path": "share/extension/btree_gist--1.2.sql",
+      "bytes": 41115,
+      "sha256": "6ce065d3cf6225cdc56d06ce0e8c18f404b658f18d5ae5b5adc652b69b4a66b4"
+    },
+    {
+      "path": "share/extension/bloom--1.0.sql",
+      "bytes": 666,
+      "sha256": "cecce7d404b82c1fb397f8598953c55a9d9eaf02b5554989259bbf185611837f"
+    },
+    {
+      "path": "share/extension/autoinc--1.0.sql",
+      "bytes": 249,
+      "sha256": "90a86e5b46d1d6b1688c3cc068b60782e26a52fa19139feb6b6049ec7c289b53"
+    },
+    {
+      "path": "share/extension/amcheck.control",
+      "bytes": 154,
+      "sha256": "3978810ee8de2dc118f51b45cc61c9984671e2e1fa587bb57047a36685d40f0d"
+    },
+    {
+      "path": "share/extension/amcheck--1.3--1.4.sql",
+      "bytes": 1082,
+      "sha256": "ce984ec2ebcdb26735661931636b91f1fa60f4ee585c208552ddf7b5713ee43c"
+    },
+    {
+      "path": "share/extension/amcheck--1.2--1.3.sql",
+      "bytes": 852,
+      "sha256": "7205188cc931c77ccf914d234285d4c67fbc8384c5d1f5178aa3be1892ed7b26"
+    },
+    {
+      "path": "share/extension/amcheck--1.1--1.2.sql",
+      "bytes": 705,
+      "sha256": "2a67d156021c0aa2f96f89e4a537c2087666debecb07cb708c022adfafa7db35"
+    },
+    {
+      "path": "share/extension/amcheck--1.0.sql",
+      "bytes": 704,
+      "sha256": "6a11b89aac993740431348d1c578d5be1e285a81de79eb27ff6335b075bb7e79"
+    },
+    {
+      "path": "share/extension/amcheck--1.0--1.1.sql",
+      "bytes": 931,
+      "sha256": "ef7837e801a68f98a386417dcc2e6daffbcf489903ac6ae2a7785f5c979f2a57"
+    },
+    {
+      "path": "share/system_views.sql",
+      "bytes": 51694,
+      "sha256": "40844d5c419bbf6ccaaeafbe650b1cbd717bdb71ed19805fdaab99b68a8cc098"
+    },
+    {
+      "path": "share/system_functions.sql",
+      "bytes": 24303,
+      "sha256": "43c810575dc8f20bc17e261411cfe75ec44cb3c4d13184c60cc7e99cfe5f7448"
+    },
+    {
+      "path": "share/system_constraints.sql",
+      "bytes": 9115,
+      "sha256": "e8693bd7a508ffcbc522f98cf68928ab97412080bf1930fbdeecca6692ecb7ce"
+    },
+    {
+      "path": "share/sql_features.txt",
+      "bytes": 35733,
+      "sha256": "0cdbecc0744ef1718134ed79deb3e0ff9b66f098ede7c2fd379def99aa533bc8"
+    },
+    {
+      "path": "share/snowball_create.sql",
+      "bytes": 45387,
+      "sha256": "234f86e18112f151cd6dd0f9a6c2708e2dd093a7c838e64857573128d639ab41"
+    },
+    {
+      "path": "share/psqlrc.sample",
+      "bytes": 278,
+      "sha256": "2b42310e0d223450f5aef5d8762531d228141397577c0fe787f09c954e437426"
+    },
+    {
+      "path": "share/extension/autoinc.control",
+      "bytes": 149,
+      "sha256": "4fc948f4ae89d47a07589a4c2cb93af211bad46369666322fe0a3d41d6d7d5ff"
+    },
+    {
+      "path": "share/extension/btree_gist--1.3--1.4.sql",
+      "bytes": 1932,
+      "sha256": "7a7f5ece012f23d7a11f460e7536b65435ee0aeead0717963a428b092135ab84"
+    },
+    {
+      "path": "share/extension/btree_gist--1.4--1.5.sql",
+      "bytes": 1872,
+      "sha256": "4e28241668ad1ccc0d645ac46726a160617af4d07a8d77f188776e91b085d3ce"
+    },
+    {
+      "path": "share/extension/btree_gist--1.5--1.6.sql",
+      "bytes": 13417,
+      "sha256": "593f167508dc9c6e8be7e5565c15d5fb8d259e38f6139170b72b3da115e2cff4"
+    },
+    {
+      "path": "share/extension/earthdistance.control",
+      "bytes": 202,
+      "sha256": "22fe151b4758eb166ec24400df08df3e9711827d207947f5511f1f476f08a9d4"
+    },
+    {
+      "path": "share/extension/earthdistance--1.1.sql",
+      "bytes": 3319,
+      "sha256": "ebd715f3f22ec5287c4d5c42b4301fb82fbc9d2f5037656b1943cc542444ea15"
+    },
+    {
+      "path": "share/extension/earthdistance--1.1--1.2.sql",
+      "bytes": 2194,
+      "sha256": "a7bc619b81e8204ddec34fd9109b34a50e6c93c4725fb281b437e5164a701781"
+    },
+    {
+      "path": "share/extension/earthdistance--1.0--1.1.sql",
+      "bytes": 671,
+      "sha256": "378acfc1526f7a7b9dff088cde21bc85548d15388f7283732fe728f7facac809"
+    },
+    {
+      "path": "share/extension/dict_xsyn.control",
+      "bytes": 179,
+      "sha256": "99ccde7920c8f430fea48e311d5420bc238491d2d9f7e2d38f916ade95a0b9cd"
+    },
+    {
+      "path": "share/extension/dict_xsyn--1.0.sql",
+      "bytes": 694,
+      "sha256": "a0ff05b7ee7c72242952d6cecb4a00837a19b3ed28da25a00a0ffa7ecaf90019"
+    },
+    {
+      "path": "share/extension/dict_int.control",
+      "bytes": 173,
+      "sha256": "7f8fecf5146855a282f1a66ce0902cf78fa0f3a6ab0ac0eb081f83bf8275c206"
+    },
+    {
+      "path": "share/extension/dict_int--1.0.sql",
+      "bytes": 711,
+      "sha256": "ef69820527c757bd6004c04353fc2136b405b47dfd78c4af6aa34e96b8fd540f"
+    },
+    {
+      "path": "share/extension/dblink.control",
+      "bytes": 170,
+      "sha256": "000235278aab047a81911dbb285563e4ea5cefbbc1930901560914f28c86237c"
+    },
+    {
+      "path": "share/extension/dblink--1.2.sql",
+      "bytes": 6645,
+      "sha256": "615d0687b504a6389ce94d4fd202a78a0dec09eef55653d358e9c964f9521914"
+    },
+    {
+      "path": "share/extension/dblink--1.1--1.2.sql",
+      "bytes": 2832,
+      "sha256": "65ef017bd7c0b07f65f0785420e83939a833645f5cd2935b9fc7235bac0f3001"
+    },
+    {
+      "path": "share/extension/dblink--1.0--1.1.sql",
+      "bytes": 419,
+      "sha256": "41aae031fc6c6e60bd64ddc21841d02a0d894a3894ddad2591a37c02281633bd"
+    },
+    {
+      "path": "share/extension/cube.control",
+      "bytes": 157,
+      "sha256": "bab0de58b95c1014fa8f2372680653c39b8b7af2fde69393c966112a44dc9a8a"
+    },
+    {
+      "path": "share/extension/cube--1.4--1.5.sql",
+      "bytes": 591,
+      "sha256": "cd493c743c1a8fc305cdfac8c8a06bfd7aac89f6ef737a6e5197c34fef8088b7"
+    },
+    {
+      "path": "share/extension/cube--1.3--1.4.sql",
+      "bytes": 2387,
+      "sha256": "1ece52185fcbeaf78b43984c9923d1949ddca64d30350a5b96e3d42fe5e1ee72"
+    },
+    {
+      "path": "share/extension/cube--1.2.sql",
+      "bytes": 9761,
+      "sha256": "5c6dbab000abc408addfbf19bd797a7d7bcea7d64f02f4ab44356eb0acb2daeb"
+    },
+    {
+      "path": "share/extension/cube--1.2--1.3.sql",
+      "bytes": 365,
+      "sha256": "ccc82742d4a9360cbd3baeb8eb50090824be5a84e30e9e01f8ef9f1e82c0beb5"
+    },
+    {
+      "path": "share/extension/cube--1.1--1.2.sql",
+      "bytes": 3815,
+      "sha256": "5815a7165eaec913b651bc1aabbecddb0a85a0c5eb67b995d86f185ac07dd8fa"
+    },
+    {
+      "path": "share/extension/cube--1.0--1.1.sql",
+      "bytes": 1594,
+      "sha256": "943afc9d06b3898eb53855166438e42f3475f284176d5ec3745a701c53365bfc"
+    },
+    {
+      "path": "share/extension/citext.control",
+      "bytes": 173,
+      "sha256": "748d123583d37e9f1be4376b736579b2e248750ddaa12a7bae1f8bc115ce43b5"
+    },
+    {
+      "path": "share/extension/citext--1.5--1.6.sql",
+      "bytes": 427,
+      "sha256": "31917f922dcc33b58c34cd9f221d4822eadfd5a190f2d3f0a447e03f46de394e"
+    },
+    {
+      "path": "share/extension/citext--1.4.sql",
+      "bytes": 13466,
+      "sha256": "ca0e42530cef4281e9ee788739c6774cf4d5e1ce8eeb1a84964150a9659d3e0b"
+    },
+    {
+      "path": "share/extension/citext--1.4--1.5.sql",
+      "bytes": 2284,
+      "sha256": "8104223ef4f55afc26bddbca5a6f5500a87c026a9692c6bf1f06e2594fe69c21"
+    },
+    {
+      "path": "share/extension/citext--1.3--1.4.sql",
+      "bytes": 668,
+      "sha256": "7289ff58c1cb20ca73b4c5a0e1c55808661b07d196f28a0b9a1c1dd7679a736e"
+    },
+    {
+      "path": "share/extension/citext--1.2--1.3.sql",
+      "bytes": 850,
+      "sha256": "7d28362af43aa2cbfe46785afeafea351dc47c75257876aa07e466f7e1c4901f"
+    },
+    {
+      "path": "share/extension/citext--1.1--1.2.sql",
+      "bytes": 3424,
+      "sha256": "9f9fe637eab0a2af2a3b6c1595d73fe8a24c8f23668c9ac43190f050055400cf"
+    },
+    {
+      "path": "share/extension/citext--1.0--1.1.sql",
+      "bytes": 1028,
+      "sha256": "8e522f09d70ccaa6794ba3aa9e0eb19e4c4235b6772605506e619f5b77ba23c4"
+    },
+    {
+      "path": "share/extension/btree_gist.control",
+      "bytes": 178,
+      "sha256": "3ca06b88ec216596b06215d9c0cc7f08cd10f0f3fdaf48f58b19bce0464c07ee"
+    },
+    {
+      "path": "share/extension/btree_gist--1.6--1.7.sql",
+      "bytes": 2170,
+      "sha256": "426340ca65ed9763e3934c39e5f427e743a4947f6e89eba6bb4c7d9bd3ad0bf5"
+    },
+    {
+      "path": "share/postgresql.conf.sample",
+      "bytes": 30662,
+      "sha256": "8c620fe50c2c627c7e195354eb12e0f2e6e222377f2dcadba2042b3d88567ed9"
+    },
+    {
+      "path": "lib/pageinspect.dll",
+      "bytes": 57344,
+      "sha256": "746ec54c0077933d0518e10d40a6133071e661be1cb6787e9167302967fb9f93"
+    },
+    {
+      "path": "share/postgres.bki",
+      "bytes": 964939,
+      "sha256": "3a4c07f17eb30d4ce2046efee9998b0abb30f777fd7bde1ee8ddbf93a4cea892"
+    },
+    {
+      "path": "share/pg_ident.conf.sample",
+      "bytes": 2640,
+      "sha256": "b4dfef08731a7d20a3bb724ad4cf3e1cd91ec01fbe51349c6a3acc5704072965"
+    },
+    {
+      "path": "lib/tcn.dll",
+      "bytes": 16896,
+      "sha256": "6cf79ac1e227e863337f426a1fd546966ac9bae8979646b0500e1d68138fd6d4"
+    },
+    {
+      "path": "lib/tablefunc.dll",
+      "bytes": 30720,
+      "sha256": "9d13013411de388763065c97bd28ccc312e01dafbdb686ca14b4e69d3540b3f1"
+    },
+    {
+      "path": "lib/system_stats.dll",
+      "bytes": 38912,
+      "sha256": "23ab369067eb64cf397dda92f2debb0b0444301be032e584ec5f708804ada8e3"
+    },
+    {
+      "path": "lib/sslinfo.dll",
+      "bytes": 21504,
+      "sha256": "5fdfc497a3553df3c23dda8cd86cb0dc01757dfe54685e5f7253dab81b1e6e46"
+    },
+    {
+      "path": "lib/seg.dll",
+      "bytes": 35840,
+      "sha256": "25c186158efe35cbb6a6b7a7a0ea592d5833e715cc2e0c10169cab3d5beac6a6"
+    },
+    {
+      "path": "lib/refint.dll",
+      "bytes": 24064,
+      "sha256": "c594f1644d58c9423dac9292360a8aa4a09ac2f2fc55a898977230d5ab382ad7"
+    },
+    {
+      "path": "lib/postgres.lib",
+      "bytes": 2333006,
+      "sha256": "24c88b93f639f543c5ba616f0ccc82da3b5771ad5acef22a6c4cb4b8f660a754"
+    },
+    {
+      "path": "lib/postgres_fdw.dll",
+      "bytes": 135680,
+      "sha256": "34c5fff8bce409b42c8f0fab180fd9b9654d04c8ddb2aae8916e64a74fa7ffa1"
+    },
+    {
+      "path": "lib/plugin_debugger.dll",
+      "bytes": 60928,
+      "sha256": "a81b44de723c48b72e1e198ec342d3db690621179b6b86ef5f1adf4644b6c13f"
+    },
+    {
+      "path": "lib/pltcl.dll",
+      "bytes": 60416,
+      "sha256": "41bd3aec112fa66552599c281bfd0a8f8337c3a1d45261a17de31adb6f9dfd41"
+    },
+    {
+      "path": "lib/plpython3.dll",
+      "bytes": 119296,
+      "sha256": "0da674585b4257e382631e80287589183437721f1960df1c92e4be0443b8f35c"
+    },
+    {
+      "path": "lib/plpgsql.dll",
+      "bytes": 195072,
+      "sha256": "e9151266903525ec1a28f2208045a9d82041ddd04f7abbaf1bdf5e6f1e27f060"
+    },
+    {
+      "path": "lib/plperl.dll",
+      "bytes": 94208,
+      "sha256": "8d739991beed7dbc1dae87c7df016a7b8bfe1002e8aa3471030479ff4fd52e57"
+    },
+    {
+      "path": "lib/test_decoding.dll",
+      "bytes": 25088,
+      "sha256": "f65c27eb1f3dca6290733ad4b605d5cdc9ce4e42be1aeb23e4a01de9db6e98f9"
+    },
+    {
+      "path": "lib/pgxml.dll",
+      "bytes": 29184,
+      "sha256": "56bfbb8efb01dbbbc88eeb37898cc9c63930d8551e9292293a49274bb6a2dcb4"
+    },
+    {
+      "path": "lib/pgrowlocks.dll",
+      "bytes": 18944,
+      "sha256": "01d00adfd6f631ef655d927df6489072b2cf89463c9d9d66c5883fc6ca07459b"
+    },
+    {
+      "path": "lib/pgoutput.dll",
+      "bytes": 33792,
+      "sha256": "488f965fa352a59e29ca2bf78a33570616feacf6629664ac2139f241fccbb43c"
+    },
+    {
+      "path": "lib/pgevent.lib",
+      "bytes": 2142,
+      "sha256": "410a569e6808bc4903331e584b7548b517644ced5c97c85b14c86d568693fdd8"
+    },
+    {
+      "path": "lib/pgevent.dll",
+      "bytes": 40960,
+      "sha256": "f35f4ea30128b262c8226258f1e5bd69b1757a0b0b4a9e31c2c08879a271e810"
+    },
+    {
+      "path": "lib/pgcrypto.dll",
+      "bytes": 195072,
+      "sha256": "bf4a28720e9314856e5d614df1fe0cce1813edb7280e05bc8e49219fb44bfb06"
+    },
+    {
+      "path": "lib/pg_walinspect.dll",
+      "bytes": 26112,
+      "sha256": "fa71efb44187bb4eee1fe567c05dcb6d02eb7f8c3ceebbcca16763af4960226d"
+    },
+    {
+      "path": "lib/pg_visibility.dll",
+      "bytes": 26112,
+      "sha256": "7ba034cb55bc397af4685c60aa7a2615c179fd0ec1314266726c77e222d147d4"
+    },
+    {
+      "path": "lib/pg_trgm.dll",
+      "bytes": 56832,
+      "sha256": "83369dd01dc1420c297aa38cf0152851d32f523378171f6978d0dce248e1936d"
+    },
+    {
+      "path": "lib/pg_surgery.dll",
+      "bytes": 20992,
+      "sha256": "cb5e10014c90f8cf2da4c573f7fc7453bfdfd2783e3bfadb7e30fd668258e7e4"
+    },
+    {
+      "path": "lib/pg_stat_statements.dll",
+      "bytes": 43008,
+      "sha256": "3971ce361706e3ffa3b2924be01114c0446d6cabd515c9f931588817ff9700eb"
+    },
+    {
+      "path": "lib/pg_prewarm.dll",
+      "bytes": 31232,
+      "sha256": "dfc522a87d6744531cb7ea68f7662ce507519f034f4e040bad3cd23fac62f9ad"
+    },
+    {
+      "path": "lib/pg_freespacemap.dll",
+      "bytes": 14848,
+      "sha256": "daadb022b0ef3d7e4fe8ee8fac08fc13b7da9561a5b448cba2356e197e2b56e4"
+    },
+    {
+      "path": "lib/pg_buffercache.dll",
+      "bytes": 19968,
+      "sha256": "597ab2f78301fdf2919837c1a226147af9cb414ca7b1e69cdcd3433320685671"
+    },
+    {
+      "path": "lib/pgstattuple.dll",
+      "bytes": 34816,
+      "sha256": "2587b6621704c8aee51f54110875831144b6da308138dc3ab54c59ab2806286c"
+    },
+    {
+      "path": "lib/tsm_system_rows.dll",
+      "bytes": 17920,
+      "sha256": "ed80ceb7d1ef85cff86a07e2f25aeaae71523f3afb5a7a6ea213b294bdbf5f40"
+    },
+    {
+      "path": "lib/tsm_system_time.dll",
+      "bytes": 17920,
+      "sha256": "9d6d32851868e04d35f0d2e4ffdcbe7cedf8408d890c6cc891314eb9ba3ae140"
+    },
+    {
+      "path": "lib/unaccent.dll",
+      "bytes": 20480,
+      "sha256": "5de7f3be7e97e80b936844d371b1ca0fe4050c69ce796e055729654d2b0a9cb2"
+    },
+    {
+      "path": "share/pg_hba.conf.sample",
+      "bytes": 5625,
+      "sha256": "773da9453bd833227b59aba7f2b686c0e6f6ac51c6779405659cda7f71b7a451"
+    },
+    {
+      "path": "share/information_schema.sql",
+      "bytes": 115523,
+      "sha256": "01b4b83b00992b924d3fa1f1509225a37b42a4535fa790a9ae739baa8d7ed7ce"
+    },
+    {
+      "path": "share/errcodes.txt",
+      "bytes": 33392,
+      "sha256": "bb53279934510355eb4135a807c90d989f07650bd90f87026a4441f11d3296b1"
+    },
+    {
+      "path": "lib/zlib.lib",
+      "bytes": 408762,
+      "sha256": "848e6a1a218b19cd9d038d65773ee2f01f8a4a0d3d7e942a1fd5f5a30b058318"
+    },
+    {
+      "path": "lib/wxmsw32u_xrc.lib",
+      "bytes": 377128,
+      "sha256": "aa0f04ac11a61dcf878659513c0eef6366e2bc177ce90cc18ac5ba9e37d92ca8"
+    },
+    {
+      "path": "lib/wxmsw32u_html.lib",
+      "bytes": 505758,
+      "sha256": "98169c59723db014f5707c8b685ce4a6cd74291f8a7146325029fee4445ee83e"
+    },
+    {
+      "path": "lib/wxmsw32u_core.lib",
+      "bytes": 7557526,
+      "sha256": "c27d75eeb8eb36a1921b610e4756c4ed955c4b05ac0b4fda60f1d8be7ededa33"
+    },
+    {
+      "path": "lib/wxmsw32u_aui.lib",
+      "bytes": 748802,
+      "sha256": "90073e32f7256aeca2f4af8285ce57ed8a0dea0439c4d328d0cab5167a6243d7"
+    },
+    {
+      "path": "lib/wxmsw32u_adv.lib",
+      "bytes": 2178,
+      "sha256": "554903261d0ee85369b87f05aa4cccaeb609e9ff1fa902288882411c0f20df95"
+    },
+    {
+      "path": "lib/wxbase32u.lib",
+      "bytes": 2871126,
+      "sha256": "fbba5d76074499bde3890c4930666159f5bcd2ae04ce385509280ed927055872"
+    },
+    {
+      "path": "lib/wxbase32u_xml.lib",
+      "bytes": 36586,
+      "sha256": "2ec8d48126ad12365078b70d252e8e9df2f117baea700b9ffe94d00def0dbad7"
+    },
+    {
+      "path": "lib/wxbase32u_net.lib",
+      "bytes": 161386,
+      "sha256": "e487a23b49c4efd0936ba3054cabcb190ac147d57af43e2f7e2f9bb9b4bb6577"
+    },
+    {
+      "path": "lib/uuid-ossp.dll",
+      "bytes": 49664,
+      "sha256": "e34ff88b2d40f514b9a84c35747e5bed8a078f78459a50f0680ce4e060e46182"
+    },
+    {
+      "path": "lib/utf8_and_win.dll",
+      "bytes": 39936,
+      "sha256": "760a32833df275b0f97e3130581b5fc3dd639e92eeec005807d63ccf2af72841"
+    },
+    {
+      "path": "lib/utf8_and_uhc.dll",
+      "bytes": 181760,
+      "sha256": "5de12184563c38e84527eb00982113ed2d258b5c11e3a0e991331c152a02cceb"
+    },
+    {
+      "path": "lib/utf8_and_sjis2004.dll",
+      "bytes": 140800,
+      "sha256": "6762c38689eeda20963a4f46cfe3c0c1d973bd587e0fec0d7e9f13d95579c19a"
+    },
+    {
+      "path": "lib/utf8_and_sjis.dll",
+      "bytes": 95744,
+      "sha256": "59c6ea5e0aeef9307d69c471f1d56f51270b36277abadb0309c7aa0f742d8452"
+    },
+    {
+      "path": "lib/utf8_and_johab.dll",
+      "bytes": 176128,
+      "sha256": "d3eebd01b808fe37e5ce42ff0d8093ff9a3c3ec9201d42457f126b34dd387a8f"
+    },
+    {
+      "path": "lib/utf8_and_iso8859.dll",
+      "bytes": 36864,
+      "sha256": "f6da583d05ea485ac876c9d6e68cd9e9c4d9402674710f7482b06c647d00e19f"
+    },
+    {
+      "path": "lib/utf8_and_iso8859_1.dll",
+      "bytes": 15360,
+      "sha256": "bdd0ee233b6fd1fd79c0c98fb3b6c4fbff856f7d31efde075b4e4330d483a971"
+    },
+    {
+      "path": "lib/utf8_and_gbk.dll",
+      "bytes": 160768,
+      "sha256": "05dc4c2ac0eb397001e085a17d99e8e7b7aeb4269ccdfde5ad11e9e4ebb89dac"
+    },
+    {
+      "path": "lib/utf8_and_gb18030.dll",
+      "bytes": 275456,
+      "sha256": "087e82424bcfdd2558f4204c254121c0cb434d32dc1abd0e0f2a37e593df1028"
+    },
+    {
+      "path": "lib/utf8_and_euc2004.dll",
+      "bytes": 219136,
+      "sha256": "f8f1b32b689f1007852de0072031352c04cf79086517f198aafea012bd30f8a0"
+    },
+    {
+      "path": "lib/utf8_and_euc_tw.dll",
+      "bytes": 214016,
+      "sha256": "b982fa0d2135ca4bde5e8e1e58a58204ca429a26d13a01811b08162376a41bc5"
+    },
+    {
+      "path": "lib/utf8_and_euc_kr.dll",
+      "bytes": 117248,
+      "sha256": "9d129da7d9f2cb3c4413fb448f164d6ad02cd07664f98c300a7f327a9ebecfe0"
+    },
+    {
+      "path": "lib/utf8_and_euc_jp.dll",
+      "bytes": 165376,
+      "sha256": "b3193367abfa372097072f4832054e64c1c6d4a16c39767da33044a96f975826"
+    },
+    {
+      "path": "lib/utf8_and_euc_cn.dll",
+      "bytes": 89600,
+      "sha256": "c61017826238aa20ed7e663dedbb9b2ec351de30807fd92cecd10193c3524ebc"
+    },
+    {
+      "path": "lib/utf8_and_cyrillic.dll",
+      "bytes": 20480,
+      "sha256": "60fa681696e3b350f01db119ef561af91e2e5bf84d951071147e51aad7e78f4e"
+    },
+    {
+      "path": "lib/utf8_and_big5.dll",
+      "bytes": 129024,
+      "sha256": "b5d0c589a07ef94eef89e49b3783523f987c4e7530c034c6297186875ae0bf37"
+    },
+    {
+      "path": "share/pg_service.conf.sample",
+      "bytes": 604,
+      "sha256": "897f62fc8e9a7a2a9d5866489a0cc54e5fc67b3e64933399c0efc46499c0c6da"
+    },
+    {
+      "path": "share/tsearch_data/xsyn_sample.rules",
+      "bytes": 139,
+      "sha256": "25346fa2b510399e4f30548067ef76b0b61aee884b301a7fa55db4781aa1d84e"
+    }
+  ]
+}

@@ -1,0 +1,395 @@
+{
+  "root": "C:\\Program Files\\Git\\usr\\bin",
+  "files": [
+    {
+      "path": "bash.exe",
+      "bytes": 2455808,
+      "sha256": "92cff5f145d42f85b55aa3be8d3ad9827844a21ec4fbeaa1ddfe1dd4d76c6474"
+    },
+    {
+      "path": "msys-svn_diff-1-0.dll",
+      "bytes": 91471,
+      "sha256": "a0a440d8eab373cee0ae0b5a5a402b6a5f3e05fd8491291ab079ff7a756bcee4"
+    },
+    {
+      "path": "msys-svn_delta-1-0.dll",
+      "bytes": 108205,
+      "sha256": "51e7274c2498bf4b2e61a7373fe2bd7a93c847ea7a472c6173d8a8302f69b8ad"
+    },
+    {
+      "path": "msys-svn_client-1-0.dll",
+      "bytes": 601267,
+      "sha256": "a165ff8e8a6180156b088cc1f7e97728cc0c78dac1cb39d0a675c561a42e16a2"
+    },
+    {
+      "path": "msys-ssl-3.dll",
+      "bytes": 982612,
+      "sha256": "3baa30fdf198b46583bdddfb152ae710d91fcbff6a5a9269051a4e4cf110981a"
+    },
+    {
+      "path": "msys-sqlite3-0.dll",
+      "bytes": 1565702,
+      "sha256": "e2032e41f1d876124a4a3ba6e2c8ecf029b94562ec73a94340d12dbb544e27dd"
+    },
+    {
+      "path": "msys-smartcols-1.dll",
+      "bytes": 223333,
+      "sha256": "9247b54f38798eee161f0d2022528c18951632ee81e924d88707ebf12667d04e"
+    },
+    {
+      "path": "msys-serf-1-0.dll",
+      "bytes": 97178,
+      "sha256": "fd74d0b24b0a1effc23f91970585732d7a6db3e42fde5ce4049c46681218130e"
+    },
+    {
+      "path": "msys-sasl2-3.dll",
+      "bytes": 99432,
+      "sha256": "31bdafb52af200ae867763a292e6763e9c99519697184329b316d89e6b655513"
+    },
+    {
+      "path": "msys-roken-18.dll",
+      "bytes": 66567,
+      "sha256": "43cd75f19c90c4383f43ef19a2721db5521c27b6daa5909c66e54d39354e7314"
+    },
+    {
+      "path": "msys-readline8.dll",
+      "bytes": 287391,
+      "sha256": "15289513b1330e3431bec652e2bd57163f1196a4a25b179807af45e1330a8539"
+    },
+    {
+      "path": "msys-psl-5.dll",
+      "bytes": 72450,
+      "sha256": "ee5275e2dc32053181d00f6af6f8c1ca4d7e89aa0d99dd7be32fc67fd5495511"
+    },
+    {
+      "path": "msys-perl5_42.dll",
+      "bytes": 3805287,
+      "sha256": "310449a9693cff9b18c82a416390d188a7cf5f1ad2931c0da5f6528b6dcda31f"
+    },
+    {
+      "path": "msys-pcre2-posix-3.dll",
+      "bytes": 11325,
+      "sha256": "483e0bd84fcef1be116e9056b87d3040e02474066c9a3402b57b67d51ed133c8"
+    },
+    {
+      "path": "msys-pcre2-8-0.dll",
+      "bytes": 715403,
+      "sha256": "e2cb90c29bd44deb32ea8cb2a711a0cc84f7cdb866d18f387c9a0c7d8e4929c6"
+    },
+    {
+      "path": "msys-pcre-1.dll",
+      "bytes": 289270,
+      "sha256": "a94b1a5ba095ac7ff81e138a1231e42e3a07391e85eeb86c3bb5c9245244597a"
+    },
+    {
+      "path": "msys-svn_fs_fs-1-0.dll",
+      "bytes": 306968,
+      "sha256": "27154aab53c14e298b966638dc762fe243be91798593362f77276cad13852e2d"
+    },
+    {
+      "path": "msys-svn_fs_util-1-0.dll",
+      "bytes": 11895,
+      "sha256": "cc8acbcb840ca8821236b63a0a7284b3eaa17ad6a508c4a2bbdb3f0443050c04"
+    },
+    {
+      "path": "msys-svn_fs_x-1-0.dll",
+      "bytes": 298067,
+      "sha256": "789c837e59ba62cc4336d39d779db13bde214bc29119485b65c36f3b71ff2eb7"
+    },
+    {
+      "path": "msys-svn_fs-1-0.dll",
+      "bytes": 44225,
+      "sha256": "9571614036658ba841479632ef2bd52370ba9446a4707101dcc58ad3591e1c5c"
+    },
+    {
+      "path": "sed.exe",
+      "bytes": 178140,
+      "sha256": "8d54e322dfc3faa60f0464691aba8634197406e53367aa8942409181c0808be8"
+    },
+    {
+      "path": "msys-zstd-1.dll",
+      "bytes": 1136580,
+      "sha256": "0ebf082dc73962688a14bd26465e05972a51a3ac5ef11fdf8cc71b93b89cea8d"
+    },
+    {
+      "path": "msys-z.dll",
+      "bytes": 91648,
+      "sha256": "f548bb1632160282c3853415182d695c655d0eb7c12aa42a0538161898694b6f"
+    },
+    {
+      "path": "msys-wind-0.dll",
+      "bytes": 164937,
+      "sha256": "4e516c0d25ee1f01e48afb81081e0d7f7078358628e135b33ef822485eb357ca"
+    },
+    {
+      "path": "msys-uuid-1.dll",
+      "bytes": 28624,
+      "sha256": "c77dcf56e4bdc490ae56a0460273e05c91e16676e3b2c653a0eee5cb20be5c15"
+    },
+    {
+      "path": "msys-unistring-5.dll",
+      "bytes": 2123146,
+      "sha256": "d1418c7a5ae07f9e8d705f68d458859e6ec1e29f87f80f3370877fe02507ceb5"
+    },
+    {
+      "path": "msys-ticw6.dll",
+      "bytes": 64883,
+      "sha256": "7919e4d8b5b48486b55aaaf98eb2c1efd391981acc30fcb938487fb5c7a6258a"
+    },
+    {
+      "path": "msys-p11-kit-0.dll",
+      "bytes": 1578053,
+      "sha256": "55e64fb3af36e8c90bdcba4a932fa88142c8de80dd7c5798b93c98dad9c9cf1a"
+    },
+    {
+      "path": "msys-tasn1-6.dll",
+      "bytes": 73656,
+      "sha256": "57fb7c61d7eeb0c9b74a8b8673551a6fee5ec370f7fd05f0af82b537f355ee4b"
+    },
+    {
+      "path": "msys-svn_swig_perl-1-0.dll",
+      "bytes": 42140,
+      "sha256": "afada6a9ef3c72b15205dd8d305478bbe5231aa6cddf80476ccc3db7c090eda0"
+    },
+    {
+      "path": "msys-svn_subr-1-0.dll",
+      "bytes": 777371,
+      "sha256": "7e2e9e4597a89b27d83c4b94e11f8085527badcca07274137f5fc6bbbc8c618c"
+    },
+    {
+      "path": "msys-svn_repos-1-0.dll",
+      "bytes": 245191,
+      "sha256": "c73cf4dcdc2d1cd3755963bf3b8815e8b40ced66cc73b45548efe45cca92a39f"
+    },
+    {
+      "path": "msys-svn_ra-1-0.dll",
+      "bytes": 50807,
+      "sha256": "2fe77928e3f20266afb88b14d398ae15821b92c464dc129421fdd9f5fd8f18fe"
+    },
+    {
+      "path": "msys-svn_ra_svn-1-0.dll",
+      "bytes": 128981,
+      "sha256": "7b7603add4385573fe50a54e1be2ada5ea5c625469281f09948f2573000edfd9"
+    },
+    {
+      "path": "msys-svn_ra_serf-1-0.dll",
+      "bytes": 191081,
+      "sha256": "a10db3da90bc1abe34776abfff801fcfde2e57a552f0697f8f2b7621c3a764da"
+    },
+    {
+      "path": "msys-svn_ra_local-1-0.dll",
+      "bytes": 38230,
+      "sha256": "824bb039787c9ecb505b0c8c31f3248b6df5caae355467bc17d47882f51cfd86"
+    },
+    {
+      "path": "msys-svn_wc-1-0.dll",
+      "bytes": 726474,
+      "sha256": "a2a773840c50fbdf3bb8ed4a3d294c6ba1334f4e79bf522bf696d7898a2740e8"
+    },
+    {
+      "path": "msys-npth-0.dll",
+      "bytes": 17194,
+      "sha256": "740e76727c26411d263788f175e4d12420a88079544bb690fd3a2f4d97f4845b"
+    },
+    {
+      "path": "msys-nettle-8.dll",
+      "bytes": 298894,
+      "sha256": "de145504fb18c137a9c267acf97d7b595915b4eec5337105cc541706560596a2"
+    },
+    {
+      "path": "msys-ncursesw6.dll",
+      "bytes": 353237,
+      "sha256": "d7feb1384b5b21ec5f87e043d9b16424ae763fda701a32442302a0f2375ec32e"
+    },
+    {
+      "path": "msys-gcrypt-20.dll",
+      "bytes": 1060867,
+      "sha256": "660e7e5441e6ddb9debb5db0f04b3e56c0cf7a6a22be14958a40b366e5f32e1c"
+    },
+    {
+      "path": "msys-gcc_s-seh-1.dll",
+      "bytes": 142049,
+      "sha256": "a9cfd10e2a4bf74f60530fc2f4f8fbe4055b50ff7ccd61b9440ef2fbe9c85aef"
+    },
+    {
+      "path": "msys-fido2-1.dll",
+      "bytes": 213075,
+      "sha256": "fe428e64b696420ca7b508674d5a92dc9f89fea81197b0653f966b57a2162a1e"
+    },
+    {
+      "path": "msys-ffi-8.dll",
+      "bytes": 31609,
+      "sha256": "a52dde4f57b41f1df2db80ab0437e9faabc6ffd663dda7e5a35c4fbe91d6df4a"
+    },
+    {
+      "path": "msys-expat-1.dll",
+      "bytes": 163380,
+      "sha256": "19337934c53d51d30510ffc2189a986c99a6a387a4b00f48f7d56b261d263a13"
+    },
+    {
+      "path": "msys-edit-0.dll",
+      "bytes": 175481,
+      "sha256": "6ad9be6549cab3102a5a31905b15103173992e69fe517650395561e9ba9b9abb"
+    },
+    {
+      "path": "msys-crypto-3.dll",
+      "bytes": 4007104,
+      "sha256": "1386eb252a9b79ebd3e5287a0be2f18aca671b0510795115d5c9f11b34fea43c"
+    },
+    {
+      "path": "msys-gdbm_compat-4.dll",
+      "bytes": 13257,
+      "sha256": "48820d01556ffb64713903e646161f42b15588adc635b6834dbd4aaf5939fe21"
+    },
+    {
+      "path": "msys-crypt-2.dll",
+      "bytes": 219319,
+      "sha256": "9a06bdbd7a934847bc0c50c3a19a7cf2b036a86ef9960fbe22984dd2ac18d608"
+    },
+    {
+      "path": "msys-cbor-0.11.dll",
+      "bytes": 50025,
+      "sha256": "6b27ae38e5a01d9b60f0e40753b158043dcf1258c29bc700b97b6eeb081b41a6"
+    },
+    {
+      "path": "msys-bz2-1.dll",
+      "bytes": 67277,
+      "sha256": "1082896c71da5e62dfd8e421fba35fa3123e6e1e2782381c08258917117b51cd"
+    },
+    {
+      "path": "msys-assuan-9.dll",
+      "bytes": 69674,
+      "sha256": "3eaf1c57c85b1ca2303e7d9544c0a96507f483aae7ae5a1125dfde09bdb12b26"
+    },
+    {
+      "path": "msys-asn1-8.dll",
+      "bytes": 547885,
+      "sha256": "24e7a09a283ee7562c1889b5319269d838cddcab837cf3df7356b0a60bff2efb"
+    },
+    {
+      "path": "msys-aprutil-1-0.dll",
+      "bytes": 132605,
+      "sha256": "23d9e2193b6c6048fbd2a039b3c3f7739e02c49ba10d475aa5eb087410909f97"
+    },
+    {
+      "path": "msys-apr-1-0.dll",
+      "bytes": 180557,
+      "sha256": "bf9ce85c6994ffbeec2842cf29b84d5a5b1adaaf305da750d9487e21f0c3df51"
+    },
+    {
+      "path": "msys-2.0.dll",
+      "bytes": 3364447,
+      "sha256": "13f0b0dc94588766ecfa1867f1a00061508ba1dc62f5b8e858ac59f01e358aa0"
+    },
+    {
+      "path": "msys-com_err-1.dll",
+      "bytes": 10102,
+      "sha256": "541eec990f72219d49033b49a9c394610f0c98feb05ff3e94d965e1be5830e8f"
+    },
+    {
+      "path": "uniq.exe",
+      "bytes": 45019,
+      "sha256": "07e78095a79870b52ac988989faa5ff8446e1a8cdc861165d7eb93904fff5211"
+    },
+    {
+      "path": "msys-gdbm-6.dll",
+      "bytes": 60583,
+      "sha256": "64835aec02b4b5b648dc3e8a15d951816dce11ca0c8d439b1d3626af248f0d86"
+    },
+    {
+      "path": "msys-gnutls-30.dll",
+      "bytes": 1821842,
+      "sha256": "673e90ab864e852164494f1364d1520e8259068df7f86962691147aee7c6c8ac"
+    },
+    {
+      "path": "msys-mpfr-6.dll",
+      "bytes": 652490,
+      "sha256": "7be008ed823d8ce65a205669c44fd8ad56eee5838111101d29c6684f8eccc4f4"
+    },
+    {
+      "path": "msys-magic-1.dll",
+      "bytes": 173094,
+      "sha256": "5297d4199e45e229b0ad2531fa42295ac374be30dec8aae8322c342e886ee2de"
+    },
+    {
+      "path": "msys-lzma-5.dll",
+      "bytes": 181333,
+      "sha256": "e4eeb83b8fee005114204a933d47b2518f04152d05a231161e138af70a89b5a4"
+    },
+    {
+      "path": "msys-lz4-1.dll",
+      "bytes": 149330,
+      "sha256": "a67c703cf7b2585b294469050a5fd5edef50cce2a9f487f448f5cd7c8a447ce2"
+    },
+    {
+      "path": "msys-ksba-8.dll",
+      "bytes": 259527,
+      "sha256": "f7589b00010083b8d079e004fdfc8a3a3c188b7743433348c9f699d680595ed3"
+    },
+    {
+      "path": "msys-krb5-26.dll",
+      "bytes": 483341,
+      "sha256": "1aa90c10f2f31101faeb356bf4112892b5bb983aa62d30b51b2a508cce32c1ff"
+    },
+    {
+      "path": "msys-intl-8.dll",
+      "bytes": 111181,
+      "sha256": "50f7de0c712d867ddca2c9eb8562ca6ee2d69e120e798ec6126ad29dd1ed5402"
+    },
+    {
+      "path": "msys-gmp-10.dll",
+      "bytes": 605220,
+      "sha256": "e3d88ffc1bd3bb3bdda1d84f3f823e6f0f07c89dfd17e2d003c588f56dd80784"
+    },
+    {
+      "path": "msys-idn2-0.dll",
+      "bytes": 197084,
+      "sha256": "0ddf7bd2b0a7dffe80e64460f1df168a6947115a0ef636506dded262dea95b32"
+    },
+    {
+      "path": "msys-hx509-5.dll",
+      "bytes": 274850,
+      "sha256": "b3b7210e5e2f00125357fa2e377406ae220a3527a8051a28f0fcc761f83e2da0"
+    },
+    {
+      "path": "msys-hogweed-6.dll",
+      "bytes": 272980,
+      "sha256": "d060c26961d4c3f64773a807319621971a2dd3fb60d94284f3d3dc3e7038433e"
+    },
+    {
+      "path": "msys-heimntlm-0.dll",
+      "bytes": 32789,
+      "sha256": "5abb16fff85e9054ba552d225f6d370c5d806bb6498e6b96e7c4797c55791312"
+    },
+    {
+      "path": "msys-heimbase-1.dll",
+      "bytes": 51426,
+      "sha256": "0cb52850d34714d1b3d13b4ae8b9ecab54be73e2a7b00f2c45a13827bf0a5c6a"
+    },
+    {
+      "path": "msys-hcrypto-4.dll",
+      "bytes": 200624,
+      "sha256": "542bb844e0af85188e55645a53cd6c9ff33d8757214a23e7fa6cb73047f48678"
+    },
+    {
+      "path": "msys-gssapi-3.dll",
+      "bytes": 225361,
+      "sha256": "483a33bb29bc4decbcecb5298d1da6d134814abfea985501571bfc492fc66ac9"
+    },
+    {
+      "path": "msys-gpg-error-0.dll",
+      "bytes": 155840,
+      "sha256": "83fc96e9a1d6dbf3739b96f94f0053bf902b277f3472d564ecc5052a68cbc386"
+    },
+    {
+      "path": "msys-iconv-2.dll",
+      "bytes": 1103690,
+      "sha256": "50012969ed96a5232220185d2fc1ac1e3abe5790f6b3027f4fc3c4cad3fd38f0"
+    },
+    {
+      "path": "winpty.dll",
+      "bytes": 279552,
+      "sha256": "5d892d04b5051d998907147c514f6ae058e5d0bbbf98e2ed78cd1d30dd5d0360"
+    }
+  ]
+}

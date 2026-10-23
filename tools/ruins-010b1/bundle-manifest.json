@@ -1,0 +1,81 @@
+{
+  "package": "RUINS_DAILY_EXPEDITION_001C_010B1",
+  "bundleVersion": "codex-independent-002",
+  "files": [
+    {
+      "path": "config/git-bash-runtime-tree.json",
+      "bytes": 12470,
+      "sha256": "bb57a59f10ee5176c0f8e1e4abc5161e44a334ddcb97d7ad271787c7fa1d3bc9"
+    },
+    {
+      "path": "config/pgsql-17.6-tree.json",
+      "bytes": 87475,
+      "sha256": "4b9e6877b953b738187bb2cadb455452aa2db4f930ce2c2d4b93412c970bb498"
+    },
+    {
+      "path": "config/runtime-policy.json",
+      "bytes": 800,
+      "sha256": "658ebd3ad312aa3417cf161147fd585bd954684e3ea0dbb4ec80b1e8ddaacb62"
+    },
+    {
+      "path": "config/tool-pins.json",
+      "bytes": 1195,
+      "sha256": "25af1cd8cfcf833620ee147eff3bf1acf7c9d97940f3228a68253274a5515acd"
+    },
+    {
+      "path": "families/F1-roles.sh",
+      "bytes": 1021,
+      "sha256": "3519ec69c625ab29dfc76c614c7e424b807d98c4f3206c237b1ae1fc7adbfea6"
+    },
+    {
+      "path": "families/F2-schema.sh",
+      "bytes": 2406,
+      "sha256": "79378c751d340a82e8c2f834d8ab63542dc1dadc85b92ae2dedce7bce87700b8"
+    },
+    {
+      "path": "families/F3-data.sh",
+      "bytes": 709,
+      "sha256": "26d893d67afd6aff14ab963da110d5096d18570d41c16986e0204be035b9a514"
+    },
+    {
+      "path": "families/F4a-migrations-schema.sh",
+      "bytes": 1161,
+      "sha256": "6c3678f1191b76e6ae273f3f53bc2bcf4aaf338852f03ff562b66915283ce77e"
+    },
+    {
+      "path": "families/F4b-migrations-data.sh",
+      "bytes": 398,
+      "sha256": "540bc4ece507cd76b86a45a0d71dc1e08b6d6966414432eb54788187328f15db"
+    },
+    {
+      "path": "scripts/lib-010b1.ps1",
+      "bytes": 11829,
+      "sha256": "f72ab28ad71c46276ee0b6e3626891bd23156968e3c12cefe296df788e8e9c41"
+    },
+    {
+      "path": "scripts/run-010b1-capture.ps1",
+      "bytes": 9483,
+      "sha256": "aece8359598c789c4ab95e96587f9ad09ab5bb7b73dda6bfd517965ab2586beb"
+    },
+    {
+      "path": "scripts/run-010b1-restore-verify.ps1",
+      "bytes": 16144,
+      "sha256": "ba19261a88ccda63de50b1b18ab1c28cdb40b832d64bcc367b6d48ddbe117e2a"
+    },
+    {
+      "path": "sql/F0-preflight.sql",
+      "bytes": 2197,
+      "sha256": "c6c4de98c798f01899ad3dc3a91a1de3141aca4e9ed81b64197e1ec134764a85"
+    },
+    {
+      "path": "sql/F7-inventory.sql",
+      "bytes": 5303,
+      "sha256": "0e307f6e89c73d37a7f00a83d22e3afd598d9875d580f1ea16e405cc129a03ad"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2878,
+      "sha256": "9034e4957f3fea6503d1570c28d48abbea79441d0973f273273eed0232c7d846"
+    }
+  ]
+}
