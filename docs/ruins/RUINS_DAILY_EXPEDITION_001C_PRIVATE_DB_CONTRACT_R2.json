@@ -1,0 +1,90 @@
+{
+  "contractId": "ruins-expedition-001c.private.r2",
+  "scope": "OFFLINE_DESIGN_NOT_STAGING_AUTHORIZATION",
+  "sourceBranch": "work/ruins-001c-principal-binding-008",
+  "sourceCommit": "4039da028984bd155baf1c0c8b239d0a4c3116dd",
+  "migrationDraft": {
+    "path": "supabase/drafts/ruins_001c/20261022200000_ruins_001c_private_expedition_r2_principal_binding_DRAFT.sql",
+    "sha256": "e1ef979945cb0b0c89155e80b69fd1f779e5c5d512f02c4f44436440c602cb57",
+    "stagingApplied": false,
+    "productionApplied": false
+  },
+  "publicBrowserContract": "ruins-expedition-001c.v1",
+  "privateSchema": "ruins_private",
+  "privateTables": [
+    "expedition_entitlement",
+    "expedition_instance",
+    "expedition_operation",
+    "expedition_claim",
+    "expedition_inventory_event",
+    "expedition_day_settlement",
+    "principal_proof_key",
+    "principal_proof_nonce"
+  ],
+  "browserRolesNoDirectAccess": [
+    "anon",
+    "authenticated"
+  ],
+  "otherRolesNoDirectAccess": [
+    "service_role",
+    "ruins_backend"
+  ],
+  "backendEntryRoutines": [
+    "ruins_private.bootstrap_account_expedition(uuid,jsonb,jsonb)",
+    "ruins_private.get_account_expedition(uuid,jsonb)",
+    "ruins_private.apply_account_expedition_command(uuid,jsonb,jsonb)"
+  ],
+  "ownerOnlyRoutines": [
+    "ruins_private.verify_principal_proof(uuid,text,jsonb,jsonb)",
+    "ruins_private.purge_expired_principal_proof_nonces()"
+  ],
+  "proof": {
+    "version": "ruins-principal-proof.v1",
+    "audience": "ruins-expedition-001c-private",
+    "algorithm": "HMAC-SHA256",
+    "fieldsInMacOrder": [
+      "proofVersion",
+      "kid",
+      "aud",
+      "principalId",
+      "purpose",
+      "operationId",
+      "expectedRevision",
+      "commandType",
+      "direction",
+      "issuedAt",
+      "expiresAt",
+      "nonce"
+    ],
+    "macField": "mac",
+    "maxLifetimeSeconds": 30,
+    "maxIssuedAtFutureSkewSeconds": 5,
+    "nonceUniqueKey": [
+      "kid",
+      "nonce"
+    ],
+    "nonceConsumedInCallerTransaction": true,
+    "returnProofToBrowser": false,
+    "storeRealKeysInSourceOrEvidence": false
+  },
+  "databaseCrypto": {
+    "extension": "pgcrypto",
+    "versionObservedOnStaging": "1.3",
+    "schemaObservedOnStaging": "extensions",
+    "requiredRoutine": "extensions.hmac(bytea,bytea,text)",
+    "newGrantInDraft": "GRANT USAGE ON SCHEMA extensions TO ruins_owner"
+  },
+  "authoritativeMonetaryEffects": "STAGING_NONTRANSFERABLE_ONLY",
+  "unresolvedGates": [
+    "DENO_EXECUTION",
+    "REAL_AUTH_INTEGRATION",
+    "DB_ROLE_POOLER_LOGIN",
+    "KEY_OPERATOR_PROVISIONING_ROTATION",
+    "RATE_LIMITING",
+    "CLOCK_SKEW",
+    "STAGING_GRANT_FEASIBILITY",
+    "POST_DDL_SECURITY_ADVISOR"
+  ],
+  "stagingMigrationAuthorized": false,
+  "deploymentAuthorized": false
+}
