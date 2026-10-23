@@ -1,0 +1,19 @@
+{
+  "project": "RUINS_DAILY_EXPEDITION_001C",
+  "gate": "010B1_DEV4_GATE05_004",
+  "date": "2026-10-23",
+  "source": "208b8399409383a4dcf329be8270e8e8a201a101",
+  "sourcePublished": true,
+  "synthetic": "PASS_OFFLINE",
+  "encryptionC": "NOT_OBSERVED",
+  "containerAcl": "REVISE",
+  "veracryptRecovery": "NOT_PROVEN",
+  "caPinned": true,
+  "exactPoolerHost": "NOT_VERIFIED",
+  "liveBackup": "HOLD",
+  "ownerAuthorizedBackupOnly": true,
+  "ownerAuthorizedOsOrContainerActions": false,
+  "migration011A": "HOLD",
+  "executor": "Codex",
+  "claude": "PAUSED"
+}
