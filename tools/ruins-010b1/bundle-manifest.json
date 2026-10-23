@@ -4,13 +4,13 @@
   "files": [
     {
       "path": "config/git-bash-runtime-tree.json",
-      "bytes": 12470,
-      "sha256": "bb57a59f10ee5176c0f8e1e4abc5161e44a334ddcb97d7ad271787c7fa1d3bc9"
+      "bytes": 12076,
+      "sha256": "47231235b6570ee966d728365163eb4f518573dc83d8501c5cfe322bce0cfe19"
     },
     {
       "path": "config/pgsql-17.6-tree.json",
-      "bytes": 87475,
-      "sha256": "4b9e6877b953b738187bb2cadb455452aa2db4f930ce2c2d4b93412c970bb498"
+      "bytes": 84875,
+      "sha256": "b41495efc4f9c5441a9a84b3f6beed0c01ecfff87c17c764797b7680adeadbd3"
     },
     {
       "path": "config/runtime-policy.json",
@@ -54,8 +54,8 @@
     },
     {
       "path": "scripts/protect-workspace-acl.ps1",
-      "bytes": 1422,
-      "sha256": "71ef0a8413daae3f8b665c598e953d25fa4a14b039ccc93c2f66d6c02acfd4e0"
+      "bytes": 1650,
+      "sha256": "0a76844cd29de596611f99d57c0492570e0402fee996faa6eec888629bca5bc3"
     },
     {
       "path": "scripts/run-010b1-capture.ps1",

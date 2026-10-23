@@ -13,5 +13,5 @@ foreach($name in $include){
   }
 }
 $doc=[ordered]@{package='RUINS_DAILY_EXPEDITION_001C_010B1';bundleVersion='codex-independent-002';files=@($files|Sort-Object path)}
-$json=$doc|ConvertTo-Json -Depth 6
+$json=($doc|ConvertTo-Json -Depth 6).Replace("`r`n","`n")
 [IO.File]::WriteAllText((Join-Path $rootFull 'bundle-manifest.json'),$json+"`n",(New-Object Text.UTF8Encoding($false)))
