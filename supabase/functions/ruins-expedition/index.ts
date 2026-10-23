@@ -14,12 +14,14 @@ import postgres from 'npm:postgres@3.4.9';
 import {createRuinsExpeditionHandler,ROUTINES} from './handler.mjs';
 import {createPrincipalProofSigner} from './principal-proof.mjs';
 
+type JsonValue=string|number|boolean|null|JsonValue[]|{[key:string]:JsonValue};
+
 // 008 additions (also CONDITIONAL, operator-provisioned out-of-band, never committed or logged):
 //   RUINS_PRINCIPAL_PROOF_KID  key id matching an ACTIVE row in ruins_private.principal_proof_key
 //   RUINS_PRINCIPAL_PROOF_KEY  base64 of the same >= 32-byte HMAC key; independent of the DB password
 const env=(name: string)=>{const v=Deno.env.get(name);if(!v)throw new Error('RUINS_CONFIG_MISSING');return v};
 const auth=createClient(env('SUPABASE_URL'),env('SUPABASE_ANON_KEY'),{auth:{persistSession:false,autoRefreshToken:false}});
-const sql=postgres(env('RUINS_BACKEND_DB_URL'),{max:3,prepare:false,idle_timeout:20});
+const sql=postgres(env('RUINS_BACKEND_DB_URL'),{max:1,prepare:false,ssl:'require',idle_timeout:20});
 const signProof=await createPrincipalProofSigner({
   kid:env('RUINS_PRINCIPAL_PROOF_KID'),
   keyBytes:Uint8Array.from(atob(env('RUINS_PRINCIPAL_PROOF_KEY')),c=>c.charCodeAt(0))
@@ -34,7 +36,7 @@ const handle=createRuinsExpeditionHandler({
   signProof,
   db:{
     // Fixed routine names only; each call is its own implicit transaction (commit before success).
-    async call(routine: string,principalId: string,command: unknown,proof: unknown){
+    async call(routine: string,principalId: string,command: JsonValue,proof: JsonValue){
       if(routine===ROUTINES.state)return (await sql`select ruins_private.get_account_expedition(${principalId}::uuid, ${sql.json(proof)}::jsonb) as r`)[0].r;
       if(routine===ROUTINES.bootstrap)return (await sql`select ruins_private.bootstrap_account_expedition(${principalId}::uuid, ${sql.json(command)}::jsonb, ${sql.json(proof)}::jsonb) as r`)[0].r;
       if(routine===ROUTINES.command)return (await sql`select ruins_private.apply_account_expedition_command(${principalId}::uuid, ${sql.json(command)}::jsonb, ${sql.json(proof)}::jsonb) as r`)[0].r;

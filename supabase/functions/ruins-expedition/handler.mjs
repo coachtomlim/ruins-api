@@ -19,6 +19,8 @@ const RETRYABLE=new Set(['40P01','40001']); // deadlock / serialization: retried
 export const ROUTINES=Object.freeze({state:'get_account_expedition',bootstrap:'bootstrap_account_expedition',command:'apply_account_expedition_command'});
 const PURPOSE=Object.freeze({[ROUTINES.state]:'STATE',[ROUTINES.bootstrap]:'BOOTSTRAP',[ROUTINES.command]:'COMMAND'});
 
+/** @typedef {string|number|boolean|null|JsonValue[]|{[key:string]:JsonValue}} JsonValue */
+
 class Rejection extends Error{constructor(code,reason){super(code);this.code=code;this.reason=reason}}
 const reject=(code,reason)=>{throw new Rejection(code,reason)};
 
@@ -55,6 +57,16 @@ function projectDbError(error){
   return new Rejection('INTERNAL_RETRY_SAFE','RETRY'); // never leak SQL text, object names or IDs
 }
 
+/**
+ * @param {{
+ *   verifyUser:(token:string)=>Promise<{id:string}|null>,
+ *   signProof:(args:{principalId:string,purpose:string,command:JsonValue})=>Promise<JsonValue>,
+ *   db:{call:(routine:string,principalId:string,command:JsonValue,proof:JsonValue)=>Promise<JsonValue>},
+ *   allowedOrigins?:string[],
+ *   maxRetries?:number,
+ *   log?:(entry:unknown)=>void
+ * }} options
+ */
 export function createRuinsExpeditionHandler({verifyUser,signProof,db,allowedOrigins=[],maxRetries=3,log=()=>{}}){
   if(typeof verifyUser!=='function'||typeof signProof!=='function'||typeof db?.call!=='function')throw new Error('RUINS_HANDLER_SEAMS_REQUIRED');
   const origins=new Set(allowedOrigins);
