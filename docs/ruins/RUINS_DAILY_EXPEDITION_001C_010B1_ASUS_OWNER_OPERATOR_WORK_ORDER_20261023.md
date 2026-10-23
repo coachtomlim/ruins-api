@@ -1,0 +1,37 @@
+# RUINS 001C/010B-1 — ASUS encrypted backup + disposable local restore work order
+
+**Status:** OWNER-AUTHORIZED BACKUP-ONLY, NOT EXECUTED. **Executor:** Claude Code as sole *local supervisor*; **Owner is the human credential operator**. Dev4 independently accepts/rejects sanitized evidence. No Codex coexecution. **Free plan only.** Project `qpgwqmduqtqidmhbuclw` (`Dungeon Runner S8B Staging`). The Owner expressly authorized 010B-1 on 2026-10-23.
+
+Read before acting:
+- `docs/ruins/RUINS_DAILY_EXPEDITION_001C_010B1_OWNER_AUTHORIZATION_RECEIPT_20261023.md` (the limits, not extra authorization);
+- `docs/ruins/RUINS_DAILY_EXPEDITION_001C_010B1_NATIVE_WINDOWS_BACKUP_OPTION_20261023.md`;
+- `docs/ruins/RUINS_DAILY_EXPEDITION_001C_010B1_OWNER_BACKUP_ONLY_AUTHORIZATION_PROPOSAL_20261023.md`;
+- Claude's prior `010B` synthetic proof and `rehearsal-S1.json`, `rehearsal-S2.json`, `rehearsal-S2FIX.json` in the existing G: RECOVERY_010B folder.
+
+## Gate 0: No live access until preflight passes
+
+1. Recheck GitHub authority `work/ruins-001c-staging-readiness-010-dev4` at recorded governance commit and staging project/ref through *read-only* metadata. If the live staging source is no longer pre-r2 (`ruins_private` schema or RUINS roles exist), STOP: the pre-r2 recipe is no longer valid. Other projects/production are forbidden.
+2. **Use the local ASUS native-client option only if its exact CLI-derived command families match the reviewed 010B dry-run.** ASUS currently lacks Docker. No new Docker installation, subscription or billed project. Verify official PostgreSQL 17.6 `pg_dump`/`pg_dumpall`/`psql` binary provenance/checksums and current CLI 2.121.0 provenance. Run `--help` and a local synthetic replay first. The prior dry-run required spelling `--quote-all-identifiers` instead of `--quote-all-identifier`, and correctly quoting multi-schema filters. If other changes are needed, STOP and request Dev4 review.
+3. Catalog **all current real user schemas** and their included/excluded relation types; the known set is `public`, `sl_sim`, `sl_sim_basic1_hosted_poc`, `sl_sim_basic1_postpilot`. Include all of them; if the catalog differs, STOP for reviewer decision. Also account for `auth` and `storage` *data* and separate `supabase_migrations` capture. Read catalog metadata only; no row/PII reads in preflight.
+4. Confirm an **Owner-controlled encrypted non-synced volume** exists and is unlocked; do not presume `E:` or `%TEMP%` is encrypted. Dump files, shell history, scripts, error streams, local PGDATA, temp, WAL and any raw output must remain on encrypted storage. If unable to ensure this, return `BLOCKED_ENCRYPTED_STORAGE`. Never synchronize `.git`, real dumps or temporary restores to G:.
+5. Review commands as **parameterised command families without any connection URL/password** with Dev4/second reviewer; verify all source and local target identifiers. Don't place a password in a command-line argument, script, environment dump, terminal transcript, tool log, chat or screenshot. Human Owner enters password in a private, masked terminal prompt. No assistant/Claude inspection of credential fields. If a credential must be handed to the model, STOP.
+
+## Gate 1: One remote logical export, read-only
+
+- Export role definitions (`--role-only`/`pg_dumpall --roles-only`, without role passwords), application schema definitions, relevant data (`--data-only --use-copy`, incl. Auth/Storage rows), and migration history **in a separate, explicit export**. Follow the audited 010B CLI 2.121.0 or exact native command families, not guessed flags. The source is `qpgwqmduqtqidmhbuclw` *only*.
+- No SQL DDL/DML/grants, Auth changes, role changes, browser secret exposure, or service-role bypass; a normal `pg_dump` may acquire read locks. No writing to Supabase. If privilege errors occur, stop; do NOT create a backup role, add `pg_read_all_data`, BYPASSRLS, public grants or passwords.
+- For **every** dump: require exit 0, nonempty plausible byte size, recorded SHA-256 and sanitized error summary. A zero-byte file or success from restoring an empty dump is a **failure**; check all component exports before attempting restore. Do not store dump contents or raw logs in G:/GitHub.
+
+## Gate 2: Disposable local restore on encrypted storage
+
+1. Create a fresh *local* PostgreSQL 17.6 target (and any necessary synthetic platform roles/schemas) only on the encrypted volume. No paid/remote project; no staging restore. Validate source schema coverage and pre-existing managed-schema dependencies before restore; documented CLI restore recipe can be adapted only in local scope and subject to prior reviewed procedures.
+2. Restore roles, application schema, migrated Auth/Storage data, and migration history in the correct order with fail-fast psql `ON_ERROR_STOP=1` and one transaction where supported. NEVER connect a restore tool to the staging endpoint. Verify passwords/role secrets were not recovered; don't attempt real login/session flows.
+3. Compare read-only source metadata and restored target: all in-scope objects; 12 SL-SIM protected tables' RLS/privileges; Friend and Daily Trial interfaces; sequences, indexes, constraints, policies, functions, grants/default ACLs and source/restore relation counts. Compare per-table row counts and content equality privately, without returning row hashes or contents to a model (only yes/no equality results, counts and aggregate mismatches). A difference returns REVISE/BLOCKED, not 'nearly PASS'.
+4. Explicitly record excluded components: Storage binaries, Vault secrets/root key, provider Auth/Storage schema DDL, role passwords, Realtime publication, Edge code/secrets, project settings. A missing migration-history dump is FAIL against 010B-1 scope. A restored Auth row is **not** proof that an actual user can sign in.
+5. Stop/local cleanup only after privately verifying a recoverable encrypted snapshot exists; close local PG process, delete disposable PGDATA using the approved local procedure, do not delete the only recovery archive. Adopt default 14-day snapshot retention from capture pending Owner extension; record deletion decision/date, never export private data to receipts.
+
+## Gate 3: Deliver sanitized evidence
+
+Save **only** sanitized metadata to `G:\My Drive\Quick Dungeon\Owner Review\RUINS_DAILY_EXPEDITION_001C\STAGING_READINESS_010\RECOVERY_010B\BACKUP_010B1\`: tool versions/checksums, target project ref, scope, command *families without credentials/URLs*, component exit statuses, encrypted archive size/SHA-256, object counts, ACL/RLS comparison status, mismatch counts, in-scope row count/hash *equality booleans*, exclusions, private archive retained `YES/NO` (no local sensitive path unless needed), retention/deletion date, and negative statement of no staging mutations. No raw dumps, original row hashes, database user rows, password hashes, auth tokens, credentials, MACs, connection strings or real data in G:, GitHub, chat, logs or evidence attachments.
+
+Return exactly `RUINS_DAILY_EXPEDITION_001C_010B1_REAL_BACKUP_RESTORE: PASS | REVISE | BLOCKED | WAITING_FOR_OWNER_CREDENTIAL`. `PASS` means successful bounded capture+local restore of *specified components only*, NOT full project recovery. Include `AUTH_CONTINUITY: NOT_PROVEN`, `STORAGE_BINARIES: OUT_OF_SCOPE`, `VAULT: OUT_OF_SCOPE`, `PRODUCTION_TOUCHED: NO`, `011A_AUTHORIZED: NO`. If Owner password entry or encrypted storage is unavailable, stop with a precise blocker and leave the shared project untouched.
