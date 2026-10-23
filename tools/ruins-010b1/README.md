@@ -18,12 +18,13 @@ Dev4 must publish three lowercase SHA-256 pins in the accepted Gate 0.5 packet: 
 ```powershell
 $VerifierSha = '<DEV4_VERIFIER_SHA256>'
 $ManifestSha = '<DEV4_MANIFEST_SHA256>'
-$CaSha = '<DEV4_CA_SHA256>'
+$CaSha = '700723581420dd1ac98fd7e9ac529f0ef210eadcaf87fc868a3ad7d114c2f3b7'
+$SessionPoolerHost = '<DEV4_PINNED_AP_SOUTHEAST_1_SESSION_POOLER_HOST>'
 $Verifier = 'R:\010b1\codex-independent-002\scripts\verify-bundle.ps1'
 if ((Get-FileHash -Algorithm SHA256 -LiteralPath $Verifier).Hash.ToLowerInvariant() -ne $VerifierSha) { throw 'verifier pin mismatch' }
 & $Verifier -ExpectedManifestSha256 $ManifestSha
 & 'R:\010b1\codex-independent-002\scripts\protect-workspace-acl.ps1' -ExpectedManifestSha256 $ManifestSha
-$capture = & 'R:\010b1\codex-independent-002\scripts\run-010b1-capture.ps1' -ExpectedManifestSha256 $ManifestSha -RootCertificate 'R:\010b1\codex-independent-002\operator-input\prod-supabase.cer' -ExpectedRootCertificateSha256 $CaSha
+$capture = & 'R:\010b1\codex-independent-002\scripts\run-010b1-capture.ps1' -ExpectedManifestSha256 $ManifestSha -SessionPoolerHost $SessionPoolerHost -RootCertificate 'R:\010b1\codex-independent-002\operator-input\prod-supabase.cer' -ExpectedRootCertificateSha256 $CaSha
 $capture
 ```
 

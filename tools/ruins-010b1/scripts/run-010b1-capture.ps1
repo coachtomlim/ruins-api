@@ -3,6 +3,7 @@ param(
   [switch]$SyntheticTest,
   [int]$SyntheticPort=0,
   [Security.SecureString]$SyntheticPassword,
+  [string]$SessionPoolerHost,
   [string]$RootCertificate,
   [ValidatePattern('^[0-9a-fA-F]{64}$')][string]$ExpectedRootCertificateSha256
 )
@@ -26,10 +27,9 @@ try{
     $secure=$SyntheticPassword;$hostName='127.0.0.1';$user='postgres'
   }else{
     if(-not$RootCertificate-or-not$ExpectedRootCertificateSha256){throw 'STOP: pinned Supabase root certificate is required before credential entry.'}
-    $certPath=Assert-EncryptedPath $RootCertificate
-    if(-not(Test-Path -LiteralPath $certPath -PathType Leaf)-or(Get-Sha256 $certPath)-ne$ExpectedRootCertificateSha256.ToLowerInvariant()){throw 'STOP: Supabase root certificate pin mismatch.'}
-    $hostName=(Read-Host "Session pooler hostname for $ProjectRef").Trim()
-    if($hostName-notmatch'^aws-[0-9]+-[a-z0-9-]+\.pooler\.supabase\.com$'){throw 'STOP: hostname is not an approved Supabase session pooler.'}
+    $certEvidence=Assert-SupabaseRootCertificate -Path $RootCertificate -ExpectedFileSha256 $ExpectedRootCertificateSha256
+    $certPath=$certEvidence.path
+    $hostName=Assert-SupabaseSessionPoolerHost $SessionPoolerHost
     $user="postgres.$ProjectRef";$secure=Read-Host 'Database password (hidden)' -AsSecureString
   }
   $b=[Runtime.InteropServices.Marshal]::SecureStringToBSTR($secure);$plain=[Runtime.InteropServices.Marshal]::PtrToStringBSTR($b)
@@ -37,7 +37,7 @@ try{
   New-Item -ItemType Directory -Path $dump|Out-Null
   New-Item -ItemType Directory -Force -Path (Join-Path $AllowedRoot 'tmp')|Out-Null
   $conn.TMP=Join-Path $AllowedRoot 'tmp';$conn.TEMP=$conn.TMP
-  $summary.steps.connection=[ordered]@{hostPatternValid=$true;projectScopedUser=(-not$SyntheticTest);port=$(if($SyntheticTest){$SyntheticPort}else{5432});tls=$(if($SyntheticTest){'disabled-localhost-only'}else{'verify-full'});rootCertificateSha256=$(if($SyntheticTest){$null}else{$ExpectedRootCertificateSha256.ToLowerInvariant()});readOnlyEnforced=$true}
+  $summary.steps.connection=[ordered]@{hostPatternValid=$true;projectScopedUser=(-not$SyntheticTest);port=$(if($SyntheticTest){$SyntheticPort}else{5432});tls=$(if($SyntheticTest){'disabled-localhost-only'}else{'verify-full'});rootCertificateSha256=$(if($SyntheticTest){$null}else{$certEvidence.fileSha256});rootCertificateDerSha256=$(if($SyntheticTest){$null}else{$certEvidence.derSha256});rootCertificateNotAfterUtc=$(if($SyntheticTest){$null}else{$certEvidence.notAfterUtc});readOnlyEnforced=$true}
   $preflight=Join-Path $out 'preflight.json';Invoke-Psql $conn @('-At','-f',(Join-Path $Sql 'F0-preflight.sql'),'-o',$preflight) -StderrPath (Join-Path $out 'F0.stderr.txt')|Out-Null
   $pf=Get-Content -Raw -LiteralPath $preflight|ConvertFrom-Json
   $userSchemas=@($pf.schemas|Where-Object{$_.name-notmatch$PlatformRegex}|ForEach-Object{$_.name}|Sort-Object)

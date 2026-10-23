@@ -14,8 +14,8 @@
     },
     {
       "path": "config/runtime-policy.json",
-      "bytes": 800,
-      "sha256": "658ebd3ad312aa3417cf161147fd585bd954684e3ea0dbb4ec80b1e8ddaacb62"
+      "bytes": 962,
+      "sha256": "c2c3647827a09891ada2c9daa18c5b5a4729734b692e2d019505a4faa944d089"
     },
     {
       "path": "config/tool-pins.json",
@@ -49,8 +49,8 @@
     },
     {
       "path": "scripts/lib-010b1.ps1",
-      "bytes": 12963,
-      "sha256": "97885bdbdf61a83f9f65895eeb6ddf614079bf20013e3d3039f99f631c3e62b8"
+      "bytes": 16411,
+      "sha256": "49c37840e2fefb611d494945129f677f8b390a38b2c3e3eb7ab4797945baee5f"
     },
     {
       "path": "scripts/protect-workspace-acl.ps1",
@@ -59,8 +59,8 @@
     },
     {
       "path": "scripts/run-010b1-capture.ps1",
-      "bytes": 9483,
-      "sha256": "aece8359598c789c4ab95e96587f9ad09ab5bb7b73dda6bfd517965ab2586beb"
+      "bytes": 9416,
+      "sha256": "db25c8c4f848d3f0cdbc13b6227fdbd940444f3a16aa7fd901613f65d82c3f0b"
     },
     {
       "path": "scripts/run-010b1-restore-verify.ps1",
@@ -79,8 +79,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 2984,
-      "sha256": "f4ced8324fd95cf6b6fa123fdb980354a410e42db890c952165cd08f0b2bc8bf"
+      "bytes": 3142,
+      "sha256": "9a791db5621e4c70c2df96c74b28543bb384806fcd66be515fe37c50d5f6c692"
     }
   ]
 }

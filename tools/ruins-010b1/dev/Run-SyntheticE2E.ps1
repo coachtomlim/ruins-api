@@ -1,5 +1,7 @@
 param(
   [Parameter(Mandatory)][ValidatePattern('^[0-9a-f]{64}$')][string]$ManifestSha256,
+  [Parameter(Mandatory)][string]$RootCertificate,
+  [Parameter(Mandatory)][ValidatePattern('^[0-9a-f]{64}$')][string]$ExpectedRootCertificateSha256,
   [switch]$Deploy
 )
 Set-StrictMode -Version 2.0;$ErrorActionPreference='Stop'
@@ -54,9 +56,30 @@ try{
   try{if(Test-Path -LiteralPath $junction){Remove-Item -Force -LiteralPath $junction};New-Item -ItemType Junction -Path $junction -Target $env:TEMP|Out-Null;try{& (Join-Path $targetRoot 'scripts\run-010b1-restore-verify.ps1') -ExpectedManifestSha256 $ManifestSha256 -ExpectedArtifactManifestSha256 ('0'*64) -CaptureDir $junction|Out-Null}catch{$junctionRejected=$true}}finally{if(Test-Path -LiteralPath $junction){Remove-Item -Force -LiteralPath $junction}}
   $receipt.tests.captureReparsePointRejected=$junctionRejected
   $receipt.tests.parentCredentialEnvironmentClean=(-not[bool]$env:PGPASSWORD-and-not[bool]$env:PGPASSFILE)
+  $certEvidence=Assert-SupabaseRootCertificate -Path $RootCertificate -ExpectedFileSha256 $ExpectedRootCertificateSha256
+  $receipt.tests.caIdentity=[ordered]@{fileSha256=$certEvidence.fileSha256;derSha256=$certEvidence.derSha256;notAfterUtc=$certEvidence.notAfterUtc}
+  $wrongCaPinRejected=$false;try{Assert-SupabaseRootCertificate -Path $RootCertificate -ExpectedFileSha256 ('0'*64)|Out-Null}catch{$wrongCaPinRejected=$true}
+  $receipt.tests.wrongCaPinRejected=$wrongCaPinRejected
+  $badCert=Join-Path $testRoot 'malformed-ca.cer';[IO.File]::WriteAllText($badCert,'not a certificate',(New-Object Text.UTF8Encoding($false)));$malformedCaRejected=$false
+  try{Assert-SupabaseRootCertificate -Path $badCert -ExpectedFileSha256 (Get-Sha256 $badCert)|Out-Null}catch{$malformedCaRejected=$true}
+  $receipt.tests.malformedCaRejected=$malformedCaRejected
+  $wrongHostRejected=$false;try{Assert-SupabaseSessionPoolerHost 'aws-0-ap-southeast-1.pooler.supabase.com.evil'|Out-Null}catch{$wrongHostRejected=$true}
+  $receipt.tests.wrongHostnameRejected=$wrongHostRejected
+  $aclProbe=Join-Path $testRoot 'inherited-acl-probe';New-Item -ItemType Directory -Path $aclProbe|Out-Null;$inheritedAclRejected=$false
+  try{Assert-RestrictedAcl $aclProbe}catch{$inheritedAclRejected=$true}
+  $receipt.tests.inheritedAclRejected=$inheritedAclRejected
+  $containerInput=Join-Path $targetRoot 'operator-input\container-path.txt';$containerInputBytes=[IO.File]::ReadAllBytes($containerInput);$wrongContainerPathRejected=$false
+  try{[IO.File]::WriteAllText($containerInput,'E:\nonexistent\wrong-container.hc',(New-Object Text.UTF8Encoding($false)));try{Assert-EncryptedMount}catch{$wrongContainerPathRejected=$true}}finally{[IO.File]::WriteAllBytes($containerInput,$containerInputBytes)}
+  $receipt.tests.wrongContainerPathRejected=$wrongContainerPathRejected
+  $captureRoot=Join-Path $targetRoot 'synthetic\captures';$beforeInterrupted=@(Get-ChildItem -LiteralPath $captureRoot -Directory -ErrorAction SilentlyContinue|ForEach-Object{$_.Name});$interruptedRejected=$false
+  try{& (Join-Path $targetRoot 'scripts\run-010b1-capture.ps1') -ExpectedManifestSha256 $ManifestSha256 -SyntheticTest -SyntheticPort 1 -SyntheticPassword $secure|Out-Null}catch{$interruptedRejected=$true}
+  $afterInterrupted=@(Get-ChildItem -LiteralPath $captureRoot -Directory -ErrorAction SilentlyContinue|Where-Object{$beforeInterrupted-notcontains$_.Name}|Sort-Object LastWriteTimeUtc -Descending)
+  $interruptedSummary=if($afterInterrupted.Count){Join-Path $afterInterrupted[0].FullName 'summary-metadata.json'}else{$null}
+  $interruptedFailsClosed=$interruptedRejected-and$interruptedSummary-and(Test-Path -LiteralPath $interruptedSummary)-and((Get-Content -Raw -LiteralPath $interruptedSummary|ConvertFrom-Json).result-like'STOPPED:*')-and-not(Test-Path -LiteralPath (Join-Path $afterInterrupted[0].FullName 'capture-artifacts.json'))
+  $receipt.tests.interruptedExportFailsClosed=[bool]$interruptedFailsClosed
   $envCheck=New-PgEnvironment 'example.invalid' 5432 'postgres.example' 'not-a-real-secret' -RootCertificate (Join-Path $targetRoot 'operator-input\ca.cer')
   $receipt.tests.tlsPolicy=[ordered]@{sslmode=$envCheck.PGSSLMODE;hostnameVerification=($envCheck.PGSSLMODE-eq'verify-full');rootCertificateExplicit=[bool]$envCheck.PGSSLROOTCERT;targetSessionReadOnly=($envCheck.PGTARGETSESSIONATTRS-eq'read-only');serverReadOnly=($envCheck.PGOPTIONS-like'*default_transaction_read_only=on*')}
-  $all=@($wrongPinRejected,$extraRejected,$sqlTamperRejected,$captureTamperRejected,$outsideRejected,$junctionRejected,$receipt.tests.parentCredentialEnvironmentClean,$restore.result-eq'RESTORE_VERIFIED',$envCheck.PGSSLMODE-eq'verify-full')
+  $all=@($wrongPinRejected,$extraRejected,$sqlTamperRejected,$captureTamperRejected,$outsideRejected,$junctionRejected,$receipt.tests.parentCredentialEnvironmentClean,$wrongCaPinRejected,$malformedCaRejected,$wrongHostRejected,$inheritedAclRejected,$wrongContainerPathRejected,$interruptedFailsClosed,$restore.result-eq'RESTORE_VERIFIED',$envCheck.PGSSLMODE-eq'verify-full')
   $receipt.result=if($all-notcontains$false){'PASS'}else{'FAIL'}
 }finally{
   if(Test-Path -LiteralPath $pwFile){Remove-Item -Force -LiteralPath $pwFile}

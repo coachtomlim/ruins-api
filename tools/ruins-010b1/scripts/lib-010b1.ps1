@@ -70,13 +70,18 @@ function Assert-EncryptedMount {
   $disk = Get-CimInstance Win32_LogicalDisk -Filter "DeviceID='R:'"
   if (-not $disk -or $disk.FileSystem -ne 'NTFS' -or $disk.VolumeSerialNumber -ne $Policy.encryptedVolumeSerial) { throw 'STOP: encrypted volume identity mismatch.' }
   if ((Get-FullPath $BundleRoot) -ne $AllowedRoot) { throw "STOP: bundle must execute from $AllowedRoot" }
-  $container = Get-Item -Force -LiteralPath $Policy.containerPath
+  $containerPathFile=Assert-EncryptedPath (Join-Path $AllowedRoot 'operator-input\container-path.txt')
+  if(-not(Test-Path -LiteralPath $containerPathFile -PathType Leaf)-or(Get-Item -Force -LiteralPath $containerPathFile).Attributes-band[IO.FileAttributes]::ReparsePoint){throw 'STOP: local container path input is missing or unsafe.'}
+  $containerPath=([IO.File]::ReadAllText($containerPathFile)).Trim()
+  if(-not[IO.Path]::IsPathRooted($containerPath)-or(Get-ByteArraySha256 ([Text.Encoding]::UTF8.GetBytes($containerPath)))-ne$Policy.containerPathSha256){throw 'STOP: local container path identity mismatch.'}
+  $container = Get-Item -Force -LiteralPath $containerPath
   if ($container.Attributes -band [IO.FileAttributes]::ReparsePoint -or $container.Length -ne [int64]$Policy.containerBytes) { throw 'STOP: VeraCrypt container metadata mismatch.' }
   Assert-NoReparse $AllowedRoot -IncludeChildren
 }
 
-function Assert-WorkspaceAcl {
-  $acl=Get-Acl -LiteralPath $AllowedRoot
+function Assert-RestrictedAcl([string]$Path) {
+  $full=Get-FullPath $Path
+  $acl=Get-Acl -LiteralPath $full
   if(-not$acl.AreAccessRulesProtected){throw 'STOP: encrypted workspace ACL still inherits broad permissions.'}
   $ownerSid=[Security.Principal.WindowsIdentity]::GetCurrent().User.Value
   $allowed=@($ownerSid,'S-1-5-18','S-1-5-32-544')
@@ -88,6 +93,43 @@ function Assert-WorkspaceAcl {
     if(($rule.FileSystemRights-band[Security.AccessControl.FileSystemRights]::FullControl)-eq[Security.AccessControl.FileSystemRights]::FullControl){$full[$sid]=$true}
   }
   foreach($sid in $allowed){if(-not$full.ContainsKey($sid)){throw "STOP: encrypted workspace ACL lacks FullControl for required principal: $sid"}}
+}
+
+function Assert-WorkspaceAcl { Assert-RestrictedAcl $AllowedRoot }
+
+function Get-ByteArraySha256([byte[]]$Bytes) {
+  $sha=[Security.Cryptography.SHA256]::Create()
+  try {-join ($sha.ComputeHash($Bytes)|ForEach-Object{$_.ToString('x2')})} finally {$sha.Dispose()}
+}
+
+function Assert-SupabaseRootCertificate {
+  param([Parameter(Mandatory)][string]$Path,[Parameter(Mandatory)][string]$ExpectedFileSha256)
+  $full=Assert-EncryptedPath $Path
+  if(-not(Test-Path -LiteralPath $full -PathType Leaf)){throw 'STOP: Supabase root certificate is missing.'}
+  if((Get-Item -Force -LiteralPath $full).Attributes-band[IO.FileAttributes]::ReparsePoint){throw 'STOP: Supabase root certificate is a reparse point.'}
+  if((Get-Sha256 $full)-ne$ExpectedFileSha256.ToLowerInvariant()){throw 'STOP: Supabase root certificate pin mismatch.'}
+  try{$cert=[Security.Cryptography.X509Certificates.X509Certificate2]::new([IO.File]::ReadAllBytes($full))}catch{throw 'STOP: Supabase root certificate is not a valid X.509 certificate.'}
+  try{
+    $der=Get-ByteArraySha256 $cert.RawData
+    if($der-ne$Policy.supabaseCaDerSha256){throw 'STOP: Supabase root certificate identity mismatch.'}
+    $now=(Get-Date).ToUniversalTime()
+    if($cert.NotBefore.ToUniversalTime()-gt$now-or$cert.NotAfter.ToUniversalTime()-lt$now.AddDays(30)){throw 'STOP: Supabase root certificate is outside its approved validity window.'}
+    if($cert.Subject-ne$cert.Issuer-or$cert.HasPrivateKey){throw 'STOP: Supabase trust anchor structure is invalid.'}
+    $basic=$cert.Extensions|Where-Object{$_.Oid.Value-eq'2.5.29.19'}|Select-Object -First 1
+    $usage=$cert.Extensions|Where-Object{$_.Oid.Value-eq'2.5.29.15'}|Select-Object -First 1
+    if(-not$basic-or-not$usage){throw 'STOP: Supabase trust anchor constraints are missing.'}
+    $basicTyped=New-Object Security.Cryptography.X509Certificates.X509BasicConstraintsExtension($basic,$basic.Critical)
+    $usageTyped=New-Object Security.Cryptography.X509Certificates.X509KeyUsageExtension($usage,$usage.Critical)
+    if(-not$basicTyped.CertificateAuthority-or-not($usageTyped.KeyUsages-band[Security.Cryptography.X509Certificates.X509KeyUsageFlags]::KeyCertSign)){throw 'STOP: Supabase trust anchor is not authorized to sign certificates.'}
+    [pscustomobject]@{path=$full;fileSha256=(Get-Sha256 $full);derSha256=$der;subject=$cert.Subject;notAfterUtc=$cert.NotAfter.ToUniversalTime().ToString('o')}
+  }finally{$cert.Dispose()}
+}
+
+function Assert-SupabaseSessionPoolerHost([string]$HostName) {
+  $hostValue=if($null-eq$HostName){''}else{$HostName.Trim().ToLowerInvariant()}
+  $region=[regex]::Escape([string]$Policy.supabaseRegion)
+  if($hostValue-notmatch("^aws-[0-9]+-$region\.pooler\.supabase\.com$")){throw 'STOP: hostname is not the approved regional Supabase session pooler form.'}
+  $hostValue
 }
 
 function Assert-EncryptedWorkspace { Assert-EncryptedMount;Assert-WorkspaceAcl }

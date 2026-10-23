@@ -1,5 +1,7 @@
 # RUINS 001C / 010B-1 — Codex independent Gate 0.5 evidence
 
+> **Superseded for Gate 0.5 disposition:** source-provenance and Windows/VeraCrypt remediation produced new evidence and a `REVISE / LIVE_BACKUP_HOLD` decision. Use `RUINS_001C_010B1_CODEX_GATE05_REMEDIATION_EVIDENCE_20261023.md` and the latest branch HEAD; the hashes and `PASS_READY_FOR_DEV4_GATE_0_5` disposition below are historical only.
+
 **Disposition:** `PASS_READY_FOR_DEV4_GATE_0_5 / LIVE_HOLD`
 
 This is independent implementation and verification evidence, not acceptance of Claude's packet and not authorization to contact staging. No Supabase credential was requested, received, or used. No staging or production endpoint was contacted. No real export was started.

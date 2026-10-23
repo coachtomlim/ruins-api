@@ -5,9 +5,11 @@
   "encryptedDevice": "\\Device\\VeraCryptVolumeR",
   "encryptedVolumeSerial": "04E4F605",
   "workspaceRoot": "R:\\010b1\\codex-independent-002",
-  "containerPath": "E:\\RUINS_010B1_PRIVATE\\ruins-010b1.hc",
+  "containerPathSha256": "78b940a3f81c26a00b23e3d665193f1a5d14958f3dd4475ebfb5eb3b7f060780",
   "containerBytes": 8589934592,
   "projectRef": "qpgwqmduqtqidmhbuclw",
+  "supabaseRegion": "ap-southeast-1",
+  "supabaseCaDerSha256": "807025ad50d4ed219d2c9c7d299c004f824eb00cf7f65afef607d07b72e6cafa",
   "expectedLiveSchemas": [
     "public",
     "sl_sim",
