@@ -49,8 +49,13 @@
     },
     {
       "path": "scripts/lib-010b1.ps1",
-      "bytes": 11829,
-      "sha256": "f72ab28ad71c46276ee0b6e3626891bd23156968e3c12cefe296df788e8e9c41"
+      "bytes": 12963,
+      "sha256": "97885bdbdf61a83f9f65895eeb6ddf614079bf20013e3d3039f99f631c3e62b8"
+    },
+    {
+      "path": "scripts/protect-workspace-acl.ps1",
+      "bytes": 1422,
+      "sha256": "71ef0a8413daae3f8b665c598e953d25fa4a14b039ccc93c2f66d6c02acfd4e0"
     },
     {
       "path": "scripts/run-010b1-capture.ps1",
@@ -74,8 +79,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 2878,
-      "sha256": "9034e4957f3fea6503d1570c28d48abbea79441d0973f273273eed0232c7d846"
+      "bytes": 2984,
+      "sha256": "f4ced8324fd95cf6b6fa123fdb980354a410e42db890c952165cd08f0b2bc8bf"
     }
   ]
 }

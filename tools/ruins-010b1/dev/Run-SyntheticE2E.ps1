@@ -16,6 +16,7 @@ if($Deploy){
   foreach($name in @('README.md','bundle-manifest.json')){Copy-Item -Force -LiteralPath (Join-Path $sourceRoot $name) -Destination (Join-Path $targetRoot $name)}
 }
 $verify=Join-Path $targetRoot 'scripts\verify-bundle.ps1';& $verify -ExpectedManifestSha256 $ManifestSha256|Out-Null
+& (Join-Path $targetRoot 'scripts\protect-workspace-acl.ps1') -ExpectedManifestSha256 $ManifestSha256|Out-Null
 . (Join-Path $targetRoot 'scripts\lib-010b1.ps1');Assert-EncryptedWorkspace
 $testId=(Get-Date).ToUniversalTime().ToString('yyyyMMddTHHmmssZ')+'-'+(New-CryptoHex 4)
 $testRoot=Join-Path $targetRoot "synthetic\e2e\$testId";New-Item -ItemType Directory -Path $testRoot -Force|Out-Null

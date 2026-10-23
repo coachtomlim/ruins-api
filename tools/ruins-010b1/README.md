@@ -22,6 +22,7 @@ $CaSha = '<DEV4_CA_SHA256>'
 $Verifier = 'R:\010b1\codex-independent-002\scripts\verify-bundle.ps1'
 if ((Get-FileHash -Algorithm SHA256 -LiteralPath $Verifier).Hash.ToLowerInvariant() -ne $VerifierSha) { throw 'verifier pin mismatch' }
 & $Verifier -ExpectedManifestSha256 $ManifestSha
+& 'R:\010b1\codex-independent-002\scripts\protect-workspace-acl.ps1' -ExpectedManifestSha256 $ManifestSha
 $capture = & 'R:\010b1\codex-independent-002\scripts\run-010b1-capture.ps1' -ExpectedManifestSha256 $ManifestSha -RootCertificate 'R:\010b1\codex-independent-002\operator-input\prod-supabase.cer' -ExpectedRootCertificateSha256 $CaSha
 $capture
 ```

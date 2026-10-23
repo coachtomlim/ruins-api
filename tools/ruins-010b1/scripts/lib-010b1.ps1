@@ -63,7 +63,7 @@ function Assert-EncryptedPath([string]$Path, [switch]$IncludeChildren) {
   $full
 }
 
-function Assert-EncryptedWorkspace {
+function Assert-EncryptedMount {
   $sb = New-Object Text.StringBuilder 1024
   $rc = [Ruins010B1.Native]::QueryDosDevice($Policy.encryptedDrive, $sb, $sb.Capacity)
   if ($rc -eq 0 -or $sb.ToString() -cne $Policy.encryptedDevice) { throw "STOP: R: is not the pinned VeraCrypt device." }
@@ -74,6 +74,23 @@ function Assert-EncryptedWorkspace {
   if ($container.Attributes -band [IO.FileAttributes]::ReparsePoint -or $container.Length -ne [int64]$Policy.containerBytes) { throw 'STOP: VeraCrypt container metadata mismatch.' }
   Assert-NoReparse $AllowedRoot -IncludeChildren
 }
+
+function Assert-WorkspaceAcl {
+  $acl=Get-Acl -LiteralPath $AllowedRoot
+  if(-not$acl.AreAccessRulesProtected){throw 'STOP: encrypted workspace ACL still inherits broad permissions.'}
+  $ownerSid=[Security.Principal.WindowsIdentity]::GetCurrent().User.Value
+  $allowed=@($ownerSid,'S-1-5-18','S-1-5-32-544')
+  $full=@{}
+  foreach($rule in $acl.GetAccessRules($true,$true,[Security.Principal.SecurityIdentifier])){
+    $sid=$rule.IdentityReference.Value
+    if($rule.IsInherited-or$allowed-notcontains$sid){throw "STOP: encrypted workspace ACL contains an unapproved principal: $sid"}
+    if($rule.AccessControlType-ne[Security.AccessControl.AccessControlType]::Allow){throw "STOP: encrypted workspace ACL contains a deny rule: $sid"}
+    if(($rule.FileSystemRights-band[Security.AccessControl.FileSystemRights]::FullControl)-eq[Security.AccessControl.FileSystemRights]::FullControl){$full[$sid]=$true}
+  }
+  foreach($sid in $allowed){if(-not$full.ContainsKey($sid)){throw "STOP: encrypted workspace ACL lacks FullControl for required principal: $sid"}}
+}
+
+function Assert-EncryptedWorkspace { Assert-EncryptedMount;Assert-WorkspaceAcl }
 
 function Assert-PrivateShell {
   if ($env:PGPASSWORD -or $env:PGPASSFILE -or $env:PGSERVICE) { throw 'STOP: inherited PostgreSQL credential/service variables are forbidden.' }
