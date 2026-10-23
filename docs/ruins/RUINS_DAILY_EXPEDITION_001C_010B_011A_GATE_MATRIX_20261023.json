@@ -1,0 +1,34 @@
+{
+  "program": "RUINS_DAILY_EXPEDITION_001C",
+  "dateSGT": "2026-10-23",
+  "stagingProjectRef": "qpgwqmduqtqidmhbuclw",
+  "review": "DEV4_010B_SYNTHETIC_RECOVERY",
+  "status": "011A_REVISE_HOLD",
+  "offlineProof": "PASS_WITH_FINDING",
+  "preR2": {
+    "objects": "96/96",
+    "privileges": "54/54",
+    "rowHashes": "15/17",
+    "outOfScope": [
+      "vault.secrets",
+      "supabase_migrations.schema_migrations"
+    ]
+  },
+  "postR2StockCli": {
+    "schemaDumpExit": 1,
+    "dataDumpExit": 1,
+    "cause": "permission denied for schema ruins_private",
+    "backupUsable": false
+  },
+  "postR2SplitSynthetic": {
+    "objects": "182/182",
+    "privileges": "182/182",
+    "rowHashes": "23/25",
+    "backupUsableSynthetic": true
+  },
+  "liveBackupPerformed": false,
+  "restoreToLiveStagingPerformed": false,
+  "backupOnlyApprovalGranted": false,
+  "ddl011AApprovalGranted": false,
+  "productionApprovalGranted": false
+}
