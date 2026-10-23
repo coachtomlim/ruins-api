@@ -1,0 +1,36 @@
+{
+  "program": "RUINS_DAILY_EXPEDITION_001C",
+  "gate": "STAGING_READINESS_010",
+  "reviewDateSGT": "2026-10-23",
+  "verdict": "CONDITIONAL",
+  "implementationSourceCommit": "f6ffc53ceb7e654515001abe194b9cb686af721a",
+  "targetStagingRef": "qpgwqmduqtqidmhbuclw",
+  "r2SqlSha256": "e1ef979945cb0b0c89155e80b69fd1f779e5c5d512f02c4f44436440c602cb57",
+  "structure": {"privateTables": 8, "privateFunctions": 12, "securityDefinerEntrypoints": 3, "newNoLoginRoles": 2, "newSigningKeys": 0},
+  "gates": [
+    {"id": "A1", "name": "Source and migration inventory", "result": "PASS_SOURCE_ONLY"},
+    {"id": "A2", "name": "Read-only live role and ACL baseline", "result": "PASS"},
+    {"id": "A3", "name": "Exact exposed Data API schemas", "result": "PASS_007_EVIDENCE_REFRESH_REQUIRED"},
+    {"id": "A4", "name": "Managed role creation and SET membership", "result": "CONDITIONAL_MANAGED_EXECUTION_UNPROVEN"},
+    {"id": "A5", "name": "Backup and restore readiness", "result": "NOT_OBSERVED_BLOCKS_APPLY"},
+    {"id": "A6", "name": "Staging signing-key custody", "result": "DESIGN_ONLY_NO_KEYS"},
+    {"id": "A7", "name": "Custom role actual pooler login", "result": "NOT_OBSERVED_DEFER_011B"},
+    {"id": "A8", "name": "Live Supabase Auth", "result": "NOT_OBSERVED_DEFER_011B"},
+    {"id": "A9", "name": "Distributed provider rate limiting", "result": "NOT_OBSERVED_DEFER_011B"},
+    {"id": "A10", "name": "Real Edge DB clock-skew and nonce retention", "result": "NOT_OBSERVED_DEFER_011B"},
+    {"id": "B", "name": "Disposable PostgreSQL and Deno fake-Auth integration", "result": "PASS_OFFLINE"},
+    {"id": "C", "name": "Shared staging migration", "result": "NOT_AUTHORIZED"}
+  ],
+  "baseline": {
+    "ruinsSchemaPresent": false,
+    "ruinsRolesPresent": false,
+    "postgresCreateRole": true,
+    "extensionsSchemaOwner": "postgres",
+    "postgresExtensionsUsageGrantOption": true,
+    "legacyClientDeniedTables": 12,
+    "securityAdvisorCounts": {"info": 15, "warn": 22, "error": 0, "critical": 0},
+    "performanceAdvisorInfo": 16,
+    "existingRuinsEdgeFunction": false
+  },
+  "proposal": {"id": "011A_DB_ONLY", "authorizationGranted": false, "migrationsApplied": false, "edgesDeployed": false, "realCredentialsOrHmacKeysCreated": false, "productionTouched": false}
+}
