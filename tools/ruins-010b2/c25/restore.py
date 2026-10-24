@@ -24,7 +24,10 @@ try:
    attempt=m.pg(m.DST,['pg_restore','-U','postgres','-d','postgres','--exit-on-error','--single-transaction'],files[label+'.bin'],ok=False)
    m.need(attempt.returncode!=0,'expected read-only managed baseline restore denial')
   # Bootstrap restore is deliberately labeled; platform-compatible restore is still gated.
-  m.pg(m.DST,['pg_restore','-U','bootstrap','-d','postgres','--exit-on-error','--single-transaction'],files[label+'.bin'])
+  args=['pg_restore','-U','bootstrap','-d','postgres','--exit-on-error','--single-transaction']
+  if label=='schema':args+=['--clean','--if-exists']
+  result=m.pg(m.DST,args,files[label+'.bin'],ok=False)
+  if result.returncode:raise RuntimeError('FAKE_ONLY restore '+label+': '+result.stderr.decode()[:600])
  m.need(m.inv(m.DST)==expected,'restored inventory mismatch')
  m.need(m.sql(m.DST,"SET ROLE authenticated; SET app.principal='alice'; SELECT count(*) FROM public.records",user='bootstrap').stdout.strip()==b'1','RLS')
  m.need(m.sql(m.DST,'SET ROLE anon; SELECT * FROM public.records',user='bootstrap',ok=False).returncode!=0,'anon exposed')
