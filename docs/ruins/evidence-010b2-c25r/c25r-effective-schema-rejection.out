@@ -1,0 +1,22 @@
+C25R_STAGE: target ready; replaying roles
+C25R_STAGE: roles replayed; creating managed baseline
+C25R_STAGE: restore schema/pre-data
+C25R_STAGE: restore history/pre-data
+C25R_STAGE: restore data/data
+C25R_STAGE: restore history/data
+C25R_STAGE: restore schema/post-data
+C25R_STAGE: restore history/post-data
+C25R_STAGE: logical restore loaded; checking full inventory
+Traceback (most recent call last):
+  File "/tmp/c25r/runner.py", line 255, in <module>
+    elif mode=='restore' and len(sys.argv)==5:ROOT.mkdir(mode=0o700,exist_ok=True);restore(*sys.argv[2:])
+                                                                                   ^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/c25r/runner.py", line 231, in restore
+    semantic_schema=verify_schema_acl_semantics(DST,expected,manifest);different=[]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/c25r/runner.py", line 105, in verify_schema_acl_semantics
+    require(sql(SRC,semantic).stdout==sql(n,semantic).stdout,'schema ownership/effective ACL differs')
+  File "/tmp/c25r/protocol.py", line 6, in require
+    if not v:raise Rejected(reason)
+             ^^^^^^^^^^^^^^^^^^^^^^
+protocol.Rejected: schema ownership/effective ACL differs
