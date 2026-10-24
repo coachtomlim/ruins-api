@@ -14,7 +14,9 @@ MAX=8*1024*1024
 checks=[]
 def check(label,ok):require(ok,label);checks.append(label)
 def run(args,data=None,ok=True,timeout=90):
- try:p=sp.run(args,input=data,stdout=sp.PIPE,stderr=sp.PIPE,timeout=timeout)
+ # No accidental inherited terminal reads or background SIGTTIN. Explicit data uses a pipe.
+ incoming={'input':data} if data is not None else {'stdin':sp.DEVNULL}
+ try:p=sp.run(args,stdout=sp.PIPE,stderr=sp.PIPE,timeout=timeout,**incoming)
  except sp.TimeoutExpired:raise Rejected('subprocess timeout (details redacted)')
  require(len(p.stdout)<=MAX and len(p.stderr)<=MAX,'synthetic output limit')
  if ok and p.returncode:raise Rejected('FAKE_ONLY command failed rc='+str(p.returncode)+' '+p.stderr.decode(errors='replace')[:500])
