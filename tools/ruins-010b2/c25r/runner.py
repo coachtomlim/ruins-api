@@ -102,8 +102,22 @@ def verify_schema_acl_semantics(n,expected,manifest):
  try:
   seed(SRC)
   require(sha(sql(SRC,raw).stdout)==expected['schemas'],'rebuilt fake baseline does not match original raw schema pin')
-  require(sql(SRC,semantic).stdout==sql(n,semantic).stdout,'schema ownership/effective ACL differs')
-  return {'raw_source_schema_pin_matched':True,'owner_and_exploded_acl_match':True,'difference':'ACL serialization order only'}
+  source=sql(SRC,semantic).stdout;target=sql(n,semantic).stdout
+  (ROOT/'schema-acl-diagnostic.json').write_text(json.dumps({'raw_source':sql(SRC,raw).stdout.decode(),'raw_target':sql(n,raw).stdout.decode(),'semantic_source':source.decode(),'semantic_target':target.decode()},sort_keys=True))
+  repaired=False
+  if source!=target:
+   wanted={r.split('|',2)[0]:r.split('|',2) for r in source.decode().splitlines()}
+   got={r.split('|',2)[0]:r.split('|',2) for r in target.decode().splitlines()}
+   different=[s for s in wanted if wanted[s]!=got.get(s)]
+   require(different==['public'] and wanted['public'][1]==got['public'][1]=='postgres','schema ownership/effective ACL differs')
+   a=set(wanted['public'][2].split('|'));b=set(got['public'][2].split('|'))
+   require(a-b=={'postgres:PUBLIC:USAGE:false'} and not b-a,'unexpected schema privilege difference')
+   # pg_restore --clean recreates public and loses initdb's implicit PUBLIC USAGE.
+   # Recreate ONLY that proven original baseline grant in the disposable target.
+   script(n,b'SET ROLE postgres; GRANT USAGE ON SCHEMA public TO PUBLIC; RESET ROLE;')
+   target=sql(n,semantic).stdout;repaired=True
+  require(source==target,'schema ownership/effective ACL differs')
+  return {'raw_source_schema_pin_matched':True,'owner_and_exploded_acl_match':True,'restored_original_public_usage_baseline':repaired,'comparison':'semantic ACLs; original raw pin retained'}
  finally:remove(SRC)
 def dump(n,args,snap=None):
  cmd=['pg_dump','-U','postgres','-d','postgres','-Fc']+(['--snapshot='+snap] if snap else [])+args
