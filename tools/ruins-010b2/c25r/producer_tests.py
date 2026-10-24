@@ -4,6 +4,8 @@ import subprocess as sp,json,sys,time
 from runner import IMAGE,run
 from protocol import require,Rejected
 checks=[]
+p=run([sys.executable,'-c','import sys;print(repr(sys.stdin.read()))'])
+require(p.stdout.strip()==b"''",'input-less subprocess inherited stdin');checks.append('inputless_stdin_is_EOF')
 for label,b in [('empty',b''),('partial_header',b'PGDMP\x01\x10'),('not_an_archive',b'FAKE_ONLY_TRUNCATED_DUMP')]:
  p=run(['docker','run','--rm','--network','none','--read-only',IMAGE,'pg_restore','--list'],b,ok=False)
  require(p.returncode!=0,'invalid archive accepted');checks.append(label)
