@@ -25,7 +25,8 @@ def script(n,b):return pg(n,['psql','-Xq','-U','bootstrap','-d','postgres','-v',
 def qi(x):return '"'+x.replace('"','""')+'"'
 def start(n):
  require(run(['docker','inspect',n],ok=False).returncode!=0,'container name already exists')
- run(['docker','run','-d','--name',n,'--network','none','--memory','512m','--tmpfs','/var/lib/postgresql/data:rw,nosuid,size=268435456','-e','POSTGRES_USER=bootstrap','-e','POSTGRES_HOST_AUTH_METHOD=trust',IMAGE])
+ require(run(['docker','image','inspect',IMAGE],ok=False).returncode==0,'pinned image not cached; finish separate provisioning before starting a database')
+ run(['docker','run','--pull=never','-d','--name',n,'--network','none','--memory','512m','--tmpfs','/var/lib/postgresql/data:rw,nosuid,size=268435456','-e','POSTGRES_USER=bootstrap','-e','POSTGRES_HOST_AUTH_METHOD=trust',IMAGE])
  for _ in range(150):
   if b'PostgreSQL init process complete' in run(['docker','logs',n]).stdout and pg(n,['pg_isready','-U','bootstrap'],ok=False).returncode==0:return
   time.sleep(.2)
