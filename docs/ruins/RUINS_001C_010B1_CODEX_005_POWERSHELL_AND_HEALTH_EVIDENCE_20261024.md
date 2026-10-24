@@ -1,8 +1,10 @@
 # RUINS 001C / 010B-1 — Codex 005 PowerShell and health preflight evidence
 
-**Observed:** 2026-10-24 SGT  
-**Executor:** Codex Desktop, sole independent developer  
-**Disposition:** `010B1_CODEX_005: PASS_READY_FOR_OWNER_DECISION`  
+**Observed:** 2026-10-24 SGT
+
+**Executor:** Codex Desktop, sole independent developer
+
+**Disposition:** `010B1_CODEX_005: PASS_READY_FOR_OWNER_DECISION`
 **Gate 0.5 / live backup / 011A:** HOLD
 
 No elevation, live E: or R: permission mutation, VeraCrypt mount/unmount, full-container copy, header operation, staging database connection, credential access, SQL, Auth, DDL, deployment, billing or production action occurred.
