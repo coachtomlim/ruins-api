@@ -89,6 +89,22 @@ def privileges(n):
  require(sql(n,"select has_table_privilege('postgres','sl_sim_basic1_postpilot.sessions','SELECT') and not has_table_privilege('postgres','sl_sim_basic1_postpilot.sessions','UPDATE,DELETE,TRUNCATE,MAINTAIN')").stdout.strip()==b't','SELECT-only source');labels.append('source:SELECT-only')
  require(sql(n,"insert into public.daily_trials(id,trial_date,seed,reward_xp) overriding system value values(99,'2099-01-01',1,-1)",user='bootstrap',ok=False).returncode!=0,'CHECK invariant');labels.append('negative:check')
  return labels
+def verify_schema_acl_semantics(n,expected,manifest):
+ # ACL arrays can serialize grants in a different order without changing rights.
+ # Rebuild ONLY the known fake baseline, prove its raw schema pin equals the
+ # captured raw pin, then compare owner+exploded ACL semantics with the target.
+ files=['roles.sql','managed-baseline.sql','application-fixture.sql','seed.sql']
+ require(digest({f:sha((BASE/f).read_bytes()) for f in files})==manifest['identity']['fixture_pin'],'fixture pin differs')
+ ns=','.join("'%s'"%s for s in SCHEMAS)
+ raw=f'select nspname,pg_get_userbyid(nspowner),nspacl::text from pg_namespace where nspname in ({ns}) order by 1'
+ semantic=f"select n.nspname,pg_get_userbyid(n.nspowner),coalesce((select string_agg(pg_get_userbyid(a.grantor)||':'||case when a.grantee=0 then 'PUBLIC' else pg_get_userbyid(a.grantee) end||':'||a.privilege_type||':'||a.is_grantable::text,'|' order by pg_get_userbyid(a.grantor),case when a.grantee=0 then 'PUBLIC' else pg_get_userbyid(a.grantee) end,a.privilege_type,a.is_grantable) from aclexplode(coalesce(n.nspacl,acldefault('n',n.nspowner))) a),'') from pg_namespace n where n.nspname in ({ns}) order by 1"
+ start(SRC)
+ try:
+  seed(SRC)
+  require(sha(sql(SRC,raw).stdout)==expected['schemas'],'rebuilt fake baseline does not match original raw schema pin')
+  require(sql(SRC,semantic).stdout==sql(n,semantic).stdout,'schema ownership/effective ACL differs')
+  return {'raw_source_schema_pin_matched':True,'owner_and_exploded_acl_match':True,'difference':'ACL serialization order only'}
+ finally:remove(SRC)
 def dump(n,args,snap=None):
  cmd=['pg_dump','-U','postgres','-d','postgres','-Fc']+(['--snapshot='+snap] if snap else [])+args
  p=pg(n,cmd);require(p.stdout.startswith(b'PGDMP') and len(p.stdout)>100,'empty/partial custom dump')
@@ -209,7 +225,11 @@ def restore(blobpath,key,relayhash):
    if label=='schema' and section=='pre-data':args+=['--clean','--if-exists']
    pg(DST,args,data[label])
   print('C25R_STAGE: logical restore loaded; checking full inventory',file=sys.stderr,flush=True)
-  actual=inventory(DST);require(actual==expected,'fresh restore inventory mismatch '+','.join(k for k in expected if actual.get(k)!=expected[k]))
+  actual=inventory(DST);different=[k for k in expected if actual.get(k)!=expected[k]]
+  semantic_schema=None
+  if different==['schemas']:
+   semantic_schema=verify_schema_acl_semantics(DST,expected,manifest);different=[]
+  require(not different,'fresh restore inventory mismatch '+','.join(different))
   print('C25R_STAGE: full inventory matched; checking effective privileges',file=sys.stderr,flush=True)
   labels=privileges(DST);require(labels==manifest['effective_tests'],'effective behavior differs')
   # Negative cases independently check values/catalog and actual access, not only return codes.
@@ -224,7 +244,7 @@ def restore(blobpath,key,relayhash):
   sql(DST,'alter role app_operator createdb',user='bootstrap');require(inventory(DST,metadata_only=True)['roles']!=expected['roles'],'role drift invisible');negatives.append('role_drift_detected')
   sql(DST,'alter role app_operator nocreatedb',user='bootstrap')
   sql(DST,"delete from supabase_migrations.schema_migrations where version='20261024000000'",user='bootstrap');require(int(sql(DST,'select count(*) from supabase_migrations.schema_migrations').stdout)!=expected['history_rows'],'history incomplete invisible');negatives.append('incomplete_history_detected')
-  receipt={'status':'C25R_FRESH_ADMIN_RESTORE_PASS','tables':len(expected['rows']),'rows':sum(x['rows'] for x in expected['rows'].values()),'inventory_categories':len(expected)-2,'inventory_sha256':sha(data['inventory']),'effective_checks':len(labels),'negative_checks':negatives,'relay_sha256':sha(blob),'original_artifact_sha256':manifest['original_artifact_sha256'],'managed_supabase_restore':'UNOBSERVED_SEPARATE_GATE','live_export':False}
+  receipt={'status':'C25R_FRESH_ADMIN_RESTORE_PASS','tables':len(expected['rows']),'rows':sum(x['rows'] for x in expected['rows'].values()),'inventory_categories':len(expected)-2,'inventory_sha256':sha(data['inventory']),'effective_checks':len(labels),'negative_checks':negatives,'schema_acl_semantics':semantic_schema,'relay_sha256':sha(blob),'original_artifact_sha256':manifest['original_artifact_sha256'],'managed_supabase_restore':'UNOBSERVED_SEPARATE_GATE','live_export':False}
   (ROOT/'restore-receipt.json').write_text(json.dumps(receipt,sort_keys=True));print(json.dumps(receipt,sort_keys=True))
  finally:remove(DST)
 if __name__=='__main__':
