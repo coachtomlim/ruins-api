@@ -1,0 +1,27 @@
+\set ON_ERROR_STOP on
+CREATE SCHEMA auth AUTHORIZATION supabase_auth_admin;
+CREATE SCHEMA storage AUTHORIZATION supabase_storage_admin;
+SET ROLE supabase_auth_admin;
+CREATE TABLE auth.users(id uuid PRIMARY KEY,email text UNIQUE,encrypted_password text,raw_app_meta_data jsonb NOT NULL DEFAULT '{}',created_at timestamptz NOT NULL DEFAULT now());
+CREATE TABLE auth.identities(id uuid PRIMARY KEY,user_id uuid NOT NULL REFERENCES auth.users(id),provider text NOT NULL,identity_data jsonb NOT NULL DEFAULT '{}',UNIQUE(provider,user_id));
+CREATE TABLE auth.sessions(id uuid PRIMARY KEY,user_id uuid NOT NULL REFERENCES auth.users(id),created_at timestamptz DEFAULT now());
+CREATE TABLE auth.schema_migrations(version text PRIMARY KEY);
+CREATE FUNCTION auth.uid() RETURNS uuid LANGUAGE sql STABLE SECURITY INVOKER AS $$ SELECT nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
+REVOKE ALL ON FUNCTION auth.uid() FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION auth.uid() TO authenticated,postgres;
+ALTER DEFAULT PRIVILEGES IN SCHEMA auth REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC;
+RESET ROLE;
+GRANT USAGE ON SCHEMA auth TO postgres,authenticated,supabase_storage_admin,sl_postpilot_owner;
+GRANT EXECUTE ON FUNCTION auth.uid() TO supabase_storage_admin,sl_postpilot_owner;
+SET ROLE supabase_storage_admin;
+CREATE TABLE storage.buckets(id text PRIMARY KEY,name text NOT NULL UNIQUE,public boolean NOT NULL DEFAULT false);
+CREATE TABLE storage.objects(id uuid PRIMARY KEY,bucket_id text NOT NULL REFERENCES storage.buckets(id),name text NOT NULL,owner_id uuid,metadata jsonb,UNIQUE(bucket_id,name));
+CREATE TABLE storage.migrations(id integer PRIMARY KEY,name text NOT NULL);
+ALTER TABLE storage.objects ENABLE ROW LEVEL SECURITY;
+CREATE POLICY storage_owner_read ON storage.objects FOR SELECT TO authenticated USING(owner_id=auth.uid());
+RESET ROLE;
+GRANT USAGE ON SCHEMA auth TO postgres,authenticated,supabase_storage_admin;
+GRANT EXECUTE ON FUNCTION auth.uid() TO supabase_storage_admin;
+GRANT USAGE ON SCHEMA storage TO postgres,authenticated;
+GRANT SELECT ON ALL TABLES IN SCHEMA auth,storage TO postgres;
+GRANT SELECT ON storage.objects,storage.buckets TO authenticated;
