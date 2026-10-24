@@ -197,8 +197,12 @@ def restore(blobpath,key,relayhash):
  try:
   # A new administrative bootstrap recreates the provider baseline. It is not source credential elevation.
   roles=re.sub(br'^CREATE ROLE bootstrap;\r?\n',b'',data['roles'],flags=re.M)
-  script(DST,roles);script(DST,data['managed_baseline'])
+  print('C25R_STAGE: target ready; replaying roles',file=sys.stderr,flush=True)
+  script(DST,roles)
+  print('C25R_STAGE: roles replayed; creating managed baseline',file=sys.stderr,flush=True)
+  script(DST,data['managed_baseline'])
   for label,section in [('schema','pre-data'),('history','pre-data'),('data','data'),('history','data'),('schema','post-data'),('history','post-data')]:
+   print('C25R_STAGE: restore '+label+'/'+section,file=sys.stderr,flush=True)
    args=['pg_restore','-U','bootstrap','-d','postgres','--exit-on-error','--single-transaction','--section='+section]
    if label=='schema' and section=='pre-data':args+=['--clean','--if-exists']
    pg(DST,args,data[label])
