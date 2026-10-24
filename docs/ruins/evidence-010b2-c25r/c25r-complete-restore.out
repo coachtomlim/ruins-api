@@ -1,0 +1,11 @@
+C25R_STAGE: target ready; replaying roles
+C25R_STAGE: roles replayed; creating managed baseline
+C25R_STAGE: restore schema/pre-data
+C25R_STAGE: restore history/pre-data
+C25R_STAGE: restore data/data
+C25R_STAGE: restore history/data
+C25R_STAGE: restore schema/post-data
+C25R_STAGE: restore history/post-data
+C25R_STAGE: logical restore loaded; checking full inventory
+C25R_STAGE: full inventory matched; checking effective privileges
+{"effective_checks": 19, "inventory_categories": 13, "inventory_sha256": "42cc3e7f91d74a260b16966d7338d0200f6f52bc7f1acf1e7c18de57f244cda8", "live_export": false, "managed_supabase_restore": "UNOBSERVED_SEPARATE_GATE", "negative_checks": ["wrong_key", "authenticated_ciphertext_corruption", "effective_ACL_drift_detected", "role_drift_detected", "incomplete_history_detected"], "original_artifact_sha256": "7fe9463f6451d6139308bbf47f5cf580170d562c61a709f34b080a6768c04734", "relay_sha256": "a1d0c34e816b0f879915b2fb6b9d9f72f58660db6a6269d6368cea8e66a030ac", "rows": 35, "schema_acl_semantics": {"comparison": "semantic ACLs; original raw pin retained", "owner_and_exploded_acl_match": true, "raw_source_schema_pin_matched": true, "restored_original_public_usage_baseline": true}, "status": "C25R_FRESH_ADMIN_RESTORE_PASS", "tables": 32}
