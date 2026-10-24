@@ -45,7 +45,7 @@ def close_keeper(p):
  if p.poll() is None:
   try:p.stdin.write(b'ROLLBACK;\n\\q\n');p.stdin.flush();p.communicate(timeout=10)
   except (BrokenPipeError,sp.TimeoutExpired):p.kill();p.communicate()
-def inventory(n):
+def inventory(n,metadata_only=False):
  ns=','.join("'%s'"%s for s in SCHEMAS)
  qs={
  'schemas':f'select nspname,pg_get_userbyid(nspowner),nspacl::text from pg_namespace where nspname in ({ns}) order by 1',
@@ -61,6 +61,7 @@ def inventory(n):
  'roles':"select rolname,rolsuper,rolinherit,rolcreaterole,rolcreatedb,rolcanlogin,rolreplication,rolbypassrls,rolconnlimit,rolconfig::text from pg_roles where rolname !~ '^pg_' order by 1",
  'memberships':'select r.rolname,m.rolname,g.rolname,a.admin_option,a.inherit_option,a.set_option from pg_auth_members a join pg_roles r on r.oid=a.roleid join pg_roles m on m.oid=a.member join pg_roles g on g.oid=a.grantor order by 1,2,3'}
  out={k:sha(sql(n,q).stdout) for k,q in qs.items()}
+ if metadata_only:return out
  tables=sql(n,f"select n.nspname,c.relname from pg_class c join pg_namespace n on n.oid=c.relnamespace where c.relkind='r' and n.nspname in ({ns}) order by 1,2").stdout.decode().splitlines()
  out['rows']={}
  for t in tables:
@@ -201,7 +202,9 @@ def restore(blobpath,key,relayhash):
    args=['pg_restore','-U','bootstrap','-d','postgres','--exit-on-error','--single-transaction','--section='+section]
    if label=='schema' and section=='pre-data':args+=['--clean','--if-exists']
    pg(DST,args,data[label])
+  print('C25R_STAGE: logical restore loaded; checking full inventory',file=sys.stderr,flush=True)
   actual=inventory(DST);require(actual==expected,'fresh restore inventory mismatch '+','.join(k for k in expected if actual.get(k)!=expected[k]))
+  print('C25R_STAGE: full inventory matched; checking effective privileges',file=sys.stderr,flush=True)
   labels=privileges(DST);require(labels==manifest['effective_tests'],'effective behavior differs')
   # Negative cases independently check values/catalog and actual access, not only return codes.
   negatives=[]
@@ -209,12 +212,12 @@ def restore(blobpath,key,relayhash):
   require(run(['age','-d','-i',str(wrong)],blob,ok=False).returncode!=0,'wrong identity accepted');wrong.unlink();negatives.append('wrong_key')
   corrupt=blob[:-1]+bytes([blob[-1]^1]);require(run(['age','-d','-i',key],corrupt,ok=False).returncode!=0,'corruption accepted');negatives.append('authenticated_ciphertext_corruption')
   sql(DST,'grant select on auth.sessions to authenticated',user='bootstrap')
-  require(inventory(DST)!=expected,'ACL drift invisible')
+  require(inventory(DST,metadata_only=True)['relations']!=expected['relations'],'ACL drift invisible')
   require(sql(DST,'set role authenticated; select count(*) from auth.sessions',user='bootstrap').stdout.strip()==b'1','effective ACL drift not exposed');negatives.append('effective_ACL_drift_detected')
   sql(DST,'revoke select on auth.sessions from authenticated',user='bootstrap')
-  sql(DST,'alter role app_operator createdb',user='bootstrap');require(inventory(DST)['roles']!=expected['roles'],'role drift invisible');negatives.append('role_drift_detected')
+  sql(DST,'alter role app_operator createdb',user='bootstrap');require(inventory(DST,metadata_only=True)['roles']!=expected['roles'],'role drift invisible');negatives.append('role_drift_detected')
   sql(DST,'alter role app_operator nocreatedb',user='bootstrap')
-  sql(DST,"delete from supabase_migrations.schema_migrations where version='20261024000000'",user='bootstrap');require(inventory(DST)['history_rows']!=expected['history_rows'],'history incomplete invisible');negatives.append('incomplete_history_detected')
+  sql(DST,"delete from supabase_migrations.schema_migrations where version='20261024000000'",user='bootstrap');require(int(sql(DST,'select count(*) from supabase_migrations.schema_migrations').stdout)!=expected['history_rows'],'history incomplete invisible');negatives.append('incomplete_history_detected')
   receipt={'status':'C25R_FRESH_ADMIN_RESTORE_PASS','tables':len(expected['rows']),'rows':sum(x['rows'] for x in expected['rows'].values()),'inventory_categories':len(expected)-2,'inventory_sha256':sha(data['inventory']),'effective_checks':len(labels),'negative_checks':negatives,'relay_sha256':sha(blob),'original_artifact_sha256':manifest['original_artifact_sha256'],'managed_supabase_restore':'UNOBSERVED_SEPARATE_GATE','live_export':False}
   (ROOT/'restore-receipt.json').write_text(json.dumps(receipt,sort_keys=True));print(json.dumps(receipt,sort_keys=True))
  finally:remove(DST)
