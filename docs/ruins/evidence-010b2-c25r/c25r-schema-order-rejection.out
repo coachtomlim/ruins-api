@@ -1,0 +1,20 @@
+C25R_STAGE: target ready; replaying roles
+C25R_STAGE: roles replayed; creating managed baseline
+C25R_STAGE: restore schema/pre-data
+C25R_STAGE: restore history/pre-data
+C25R_STAGE: restore data/data
+C25R_STAGE: restore history/data
+C25R_STAGE: restore schema/post-data
+C25R_STAGE: restore history/post-data
+C25R_STAGE: logical restore loaded; checking full inventory
+Traceback (most recent call last):
+  File "/tmp/c25r/runner.py", line 235, in <module>
+    elif mode=='restore' and len(sys.argv)==5:ROOT.mkdir(mode=0o700,exist_ok=True);restore(*sys.argv[2:])
+                                                                                   ^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/c25r/runner.py", line 212, in restore
+    actual=inventory(DST);require(actual==expected,'fresh restore inventory mismatch '+','.join(k for k in expected if actual.get(k)!=expected[k]))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/c25r/protocol.py", line 6, in require
+    if not v:raise Rejected(reason)
+             ^^^^^^^^^^^^^^^^^^^^^^
+protocol.Rejected: fresh restore inventory mismatch schemas
