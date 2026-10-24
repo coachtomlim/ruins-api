@@ -55,3 +55,9 @@ Only after matching all inventory classes, per-table rows/hashes, actual sequenc
 The fixture has 32 representative tables/35 fake rows across seven schemas, not the live 107-table catalog. SQL recovery to administrative PG17 is the tested result. Managed Supabase restore, Auth/session continuity, Storage files and other platform dependencies remain excluded/unobserved as detailed in the coverage register.
 
 After receipts, remove only the specifically owned proof containers/keys/relay/workspace and verify those names/paths absent. Closing an ephemeral Cloud Shell tab relies on provider lifecycle, not secure erasure. Do not silently discard the secondary key and later imply retained fake ciphertext is durably recoverable. Temporary Work custody must be explicitly recorded in the final report; future long-term custody is an Owner decision.
+
+## C2.5R execution corrections
+
+Input-less subprocesses explicitly use /dev/null so unattended Docker checks do not inherit the terminal and stop on SIGTTIN. Commands with data still receive explicit pipes. Preflight requires the pinned image already cached; registry provisioning is separate from database-start deadlines. Fault receipts were retained before fresh-target retries.
+
+pg_restore --clean recreates the public schema and can lose initdb's original PUBLIC USAGE baseline. The synthetic verifier does not ignore a schema hash mismatch. It rebuilds the original pinned fake fixture in a separate disposable source, requires its raw schema fingerprint to match the captured original, and compares owner plus exploded ACL semantics. Only the precisely identified missing original PUBLIC USAGE on public can be reconstructed by the target administrator. Any other ownership/right difference fails. This changes only the disposable target to match the original source; it never grants backup convenience rights on a shared source. The receipt records both original pin validation and semantic comparison.
