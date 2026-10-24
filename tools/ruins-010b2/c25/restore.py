@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Fresh fake-only restore. Uses explicit bootstrap admin, NOT live authority."""
-import sys,io,tarfile,json,hashlib,importlib.util,pathlib
+import sys,io,tarfile,json,hashlib,importlib.util,pathlib,re
 spec=importlib.util.spec_from_file_location('c25stream','/tmp/c25-stream.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 blob=pathlib.Path(sys.argv[1]).read_bytes();m.need(hashlib.sha256(blob).hexdigest()==sys.argv[3],'relay hash mismatch')
 plain=m.run(['age','-d','-i',sys.argv[2]],blob).stdout
@@ -11,10 +11,18 @@ expected=json.loads(files['manifest.json'])['inventory']
 m.start(m.DST)
 try:
  m.fixture(m.DST,False)
+ # Reconstruct the custom role from captured output, without replaying platform roles.
+ m.sql(m.DST,'REVOKE app_member FROM authenticated; DROP ROLE app_member;',user='bootstrap')
+ role_lines=[line for line in files['roles.bin'].decode().splitlines() if line.startswith(('CREATE ROLE app_member;','ALTER ROLE app_member WITH ','GRANT app_member TO authenticated '))]
+ m.need(len(role_lines)==3,'custom role export block mismatch')
+ m.pg(m.DST,['psql','-X','-U','bootstrap','-d','postgres','-v','ON_ERROR_STOP=1'],('\n'.join(role_lines)+'\n').encode())
  # Managed baseline supplied by disposable fixture; custom schema definitions come from dump.
  for s in m.APPS[1:]+['supabase_migrations']:m.sql(m.DST,'DROP SCHEMA '+s+' CASCADE;')
  m.sql(m.DST,'DROP TABLE public.records CASCADE;')
  for label in ['schema','history','data']:
+  if label=='data':
+   attempt=m.pg(m.DST,['pg_restore','-U','postgres','-d','postgres','--exit-on-error','--single-transaction'],files[label+'.bin'],ok=False)
+   m.need(attempt.returncode!=0,'expected read-only managed baseline restore denial')
   # Bootstrap restore is deliberately labeled; platform-compatible restore is still gated.
   m.pg(m.DST,['pg_restore','-U','bootstrap','-d','postgres','--exit-on-error','--single-transaction'],files[label+'.bin'])
  m.need(m.inv(m.DST)==expected,'restored inventory mismatch')
@@ -26,7 +34,7 @@ try:
  m.need(m.run(['age','-d','-i','/dev/shm/c25-wrong.key'],blob,ok=False).returncode!=0,'wrong key accepted')
  corrupt=blob[:-1]+bytes([blob[-1]^1])
  m.need(m.run(['age','-d','-i',sys.argv[2]],corrupt,ok=False).returncode!=0,'corruption accepted')
- print(json.dumps({'status':'FRESH_SYNTHETIC_RESTORE_PASS_BOOTSTRAP_ONLY','tables':7,'rows':14,'per_table_hashes':True,'sequences':True,'roles_and_memberships':'baseline reconciled, not reconstructed from captured roles.bin','rls':True,'negative_cases':['anon','auth-access','wrong-key','ciphertext-corruption'],'live_pack':'REVISE','live':False},sort_keys=True))
+ print(json.dumps({'status':'FRESH_SYNTHETIC_RESTORE_PASS_BOOTSTRAP_ONLY','tables':7,'rows':14,'per_table_hashes':True,'sequences':True,'roles_and_memberships':'custom app_member reconstructed from capture; managed roles supplied by baseline','rls':True,'negative_cases':['anon','auth-access','wrong-key','ciphertext-corruption','managed-read-only-restore-denied'],'live_pack':'REVISE','live':False},sort_keys=True))
 finally:
  m.run(['docker','rm','-fv',m.DST],ok=False)
  pathlib.Path('/dev/shm/c25-wrong.key').unlink(missing_ok=True)
