@@ -21,7 +21,8 @@ def start(name):
          "-e","POSTGRES_HOST_AUTH_METHOD=trust",IMAGE])
     import time
     for _ in range(40):
-        if pg(name,["pg_isready","-U","postgres"],ok=False).returncode==0:return
+        logs=run(["docker","logs",name]).stdout
+        if b"PostgreSQL init process complete" in logs and pg(name,["pg_isready","-U","postgres"],ok=False).returncode==0:return
         time.sleep(.25)
     raise RuntimeError("database not ready")
 def digest(b):return hashlib.sha256(b).hexdigest()
@@ -126,7 +127,7 @@ elif phase=="restore":
         raise AssertionError("negative test accepted: "+label)
     reject("corrupt-ciphertext",lambda:validate(blob[:-1]+bytes([blob[-1]^1]),manifest,key))
     reject("missing-file",lambda:pathlib.Path("/dev/shm/ruins010b2/absent.age").read_bytes())
-    wrong=ROOT/"wrong-key.txt";run(["age-keygen","-o",str(wrong)])
+    wrong=ROOT/"wrong-key.txt";wrong.unlink(missing_ok=True);run(["age-keygen","-o",str(wrong)])
     assert decrypt(blob,wrong).returncode!=0;tests.append("wrong-key")
     changed=dict(manifest,sha256="0"*64)
     reject("wrong-manifest",lambda:validate(blob,changed,key))
