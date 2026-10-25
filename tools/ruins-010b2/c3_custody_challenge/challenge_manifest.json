@@ -1,0 +1,13 @@
+{
+  "011A_authorized": false,
+  "C3_live_export_authorized": false,
+  "bytes": 288,
+  "challenge_id": "80c7192affb024734ac8c672",
+  "encrypted_challenge_produced": false,
+  "owner_age_public_recipient": null,
+  "primary_bitwarden_decryption_verified": false,
+  "public_data_only": true,
+  "schema": "ruins-010b2-offline-recovery-challenge-v1",
+  "secondary_offline_decryption_verified": false,
+  "sha256_utf8": "328d61d9418ce260eb3e4d088551dfed8975525afeb369638ff62220c87363ba"
+}

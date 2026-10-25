@@ -1,0 +1,6 @@
+original_rc=0
+stdout=RECOVERY_CHALLENGE_HASH_PASS (local file only, no secret printed)
+stderr=
+tampered_rc=1
+stdout=
+stderr=FAIL: recovered content does not match the challenge

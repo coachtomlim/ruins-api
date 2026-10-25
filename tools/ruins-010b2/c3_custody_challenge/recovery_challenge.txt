@@ -1,0 +1,7 @@
+RUINS-010B2-BITWARDEN-RECOVERY-CHALLENGE
+Version: 1
+This text is harmless synthetic test data, not a credential, token, key or backup.
+Challenge-ID: 80c7192affb024734ac8c672
+Purpose: test independent primary and offline age private-key recovery.
+C3-live-export: HOLD
+011A-migration: HOLD
