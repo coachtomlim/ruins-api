@@ -1,0 +1,19 @@
+{
+  "project_ref": "qpgwqmduqtqidmhbuclw",
+  "project_status": "ACTIVE_HEALTHY",
+  "database_name": "postgres",
+  "server_version": "17.6",
+  "ruins_private_present": false,
+  "ruins_owner_present": false,
+  "source": "supabase_connector_read_only_catalog",
+  "observed_at_utc": "2026-10-25T09:58:59Z",
+  "schemas": [
+    {"schema_name":"auth", "table_count":27, "readable_count":27, "postgres_owned":0},
+    {"schema_name":"public", "table_count":38, "readable_count":38, "postgres_owned":38},
+    {"schema_name":"sl_sim", "table_count":9, "readable_count":9, "postgres_owned":9},
+    {"schema_name":"sl_sim_basic1_hosted_poc", "table_count":12, "readable_count":12, "postgres_owned":12},
+    {"schema_name":"sl_sim_basic1_postpilot", "table_count":12, "readable_count":12, "postgres_owned":0},
+    {"schema_name":"storage", "table_count":8, "readable_count":8, "postgres_owned":0},
+    {"schema_name":"supabase_migrations", "table_count":1, "readable_count":1, "postgres_owned":1}
+  ]
+}

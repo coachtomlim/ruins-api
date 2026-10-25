@@ -1,0 +1,23 @@
+{
+  "scope": "PRE_R2_SCOPED_SQL_LOGICAL_BASELINE_ONLY",
+  "owner_c3_authorization": false,
+  "maintenance": {
+    "start_utc": null,
+    "end_utc": null,
+    "admin_change_hold_agreed": false,
+    "no_autonomous_ddl_paths_unmanaged": false,
+    "operator_acknowledgements": {
+      "supabase_admin": false,
+      "ruins_friend_trial": false,
+      "sl_sim": false,
+      "deployments": false
+    }
+  },
+  "custody": {
+    "bitwarden_secure_note_attested": false,
+    "offline_independent_copy_attested": false,
+    "offline_recovery_challenge_pass": false,
+    "public_recipient_sha256": null,
+    "verified_at_utc": null
+  }
+}
