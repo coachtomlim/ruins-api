@@ -1,0 +1,25 @@
+{
+  "crypto_test": "MOCKED_SUBPROCESS_ONLY_NO_KEYS_GENERATED",
+  "date_sgt": "2026-10-25",
+  "kind": "RUINS_C3_HARDENING_RECEIPT",
+  "last_observed_utc": "2026-10-25T10:45:15Z",
+  "live_export_authorized": false,
+  "maintenance_ack": "PENDING",
+  "migration_011A_authorized": false,
+  "owner_custody": "PENDING",
+  "sha256": {
+    "README.md": "52947d257f4a0cd080ade8d6929cb9f7edea97bbac637d7482e136b04da018d3",
+    "audit.py": "4173171f1690c33c6992a779e90c353af25f853d5cf6c1102eef78a2b9a8b2d6",
+    "catalog_20261025.json": "32768efc3c7a4f79c8053732162e02669c205eb5a37f2c0d63e02993d0ec22b7",
+    "owner_pending.json": "412ac356c3a463904ecf3678ca3efcd5fcc5e5435a65b8dfcc6d288c0ad431da",
+    "pending_result.json": "15600a76edd93520986c93c93f8fc6f4b097622dd5c27d566e67aca19a583727",
+    "public_challenge.py": "7bfa8c2923b981b0bff2d43a588f768bc9487ac02bca8665721262a71c356860",
+    "test_audit.py": "fa86f6d0d1cd012bb7b7041ff3d4c7ff7a69ff5a7669c7a0bbd5ffd62ee73830",
+    "test_output.txt": "7973e1c5d6c2927caee995dbd7ffda518fc0ef9941ddd00503fd15bde8722c8a",
+    "test_public_challenge.py": "674b5f6e9ae452ef93a6b0052f831c8ba82878f05004d9f7c55bce0e01cbed66"
+  },
+  "status": "C3_PREFLIGHT_HOLD",
+  "supabase_catalog": "READ_ONLY_METADATA",
+  "test_count": 31,
+  "test_failed": 0
+}

@@ -1,0 +1,36 @@
+test_auto_authorization_cannot_be_granted (test_audit.Check.test_auto_authorization_cannot_be_granted) ... ok
+test_bad_freeze_interval (test_audit.Check.test_bad_freeze_interval) ... ok
+test_complete_attestations_still_no_authorization (test_audit.Check.test_complete_attestations_still_no_authorization) ... ok
+test_current_in_progress_window_allowed_for_review_only (test_audit.Check.test_current_in_progress_window_allowed_for_review_only) ... ok
+test_duplicate_schema (test_audit.Check.test_duplicate_schema) ... ok
+test_expired_maintenance_window_rejected (test_audit.Check.test_expired_maintenance_window_rejected) ... ok
+test_future_maintenance_window_too_distant (test_audit.Check.test_future_maintenance_window_too_distant) ... ok
+test_metadata_expiry (test_audit.Check.test_metadata_expiry) ... ok
+test_missing_operator_ack (test_audit.Check.test_missing_operator_ack) ... ok
+test_missing_schema (test_audit.Check.test_missing_schema) ... ok
+test_not_healthy (test_audit.Check.test_not_healthy) ... ok
+test_pending_holds (test_audit.Check.test_pending_holds) ... ok
+test_post_r2_blocks (test_audit.Check.test_post_r2_blocks) ... ok
+test_secret_marker_rejected (test_audit.Check.test_secret_marker_rejected) ... ok
+test_stale_custody_test_not_accepted (test_audit.Check.test_stale_custody_test_not_accepted) ... ok
+test_unidentified_ddl_path (test_audit.Check.test_unidentified_ddl_path) ... ok
+test_unknown_catalog_field (test_audit.Check.test_unknown_catalog_field) ... ok
+test_unknown_key_rejected (test_audit.Check.test_unknown_key_rejected) ... ok
+test_wrong_key_recovery (test_audit.Check.test_wrong_key_recovery) ... ok
+test_wrong_project (test_audit.Check.test_wrong_project) ... ok
+test_wrong_read_rights (test_audit.Check.test_wrong_read_rights) ... ok
+test_wrong_table_count (test_audit.Check.test_wrong_table_count) ... ok
+test_encryption_stub_success_not_crypto_proof (test_public_challenge.ChallengeTests.test_encryption_stub_success_not_crypto_proof) ... ok
+test_manifest_auto_grant_rejected (test_public_challenge.ChallengeTests.test_manifest_auto_grant_rejected) ... ok
+test_manifest_owner_proof_rejected (test_public_challenge.ChallengeTests.test_manifest_owner_proof_rejected) ... ok
+test_public_shape_rejects_bad (test_public_challenge.ChallengeTests.test_public_shape_rejects_bad) ... ok
+test_public_shape_rejects_identity (test_public_challenge.ChallengeTests.test_public_shape_rejects_identity) ... ok
+test_public_shape_rejects_multiline (test_public_challenge.ChallengeTests.test_public_shape_rejects_multiline) ... ok
+test_reject_existing_destination (test_public_challenge.ChallengeTests.test_reject_existing_destination) ... ok
+test_rejects_failed_encrypt_and_no_files (test_public_challenge.ChallengeTests.test_rejects_failed_encrypt_and_no_files) ... ok
+test_wrong_age_version (test_public_challenge.ChallengeTests.test_wrong_age_version) ... ok
+
+----------------------------------------------------------------------
+Ran 31 tests in 0.006s
+
+OK
